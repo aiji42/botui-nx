@@ -1,7 +1,7 @@
 import React, { FC, ButtonHTMLAttributes } from 'react'
 import Button from './Button'
 import { useFormikContext } from 'formik'
-import { useMessageContext } from '@botui/chat-hooks'
+import { useMessageContext } from '@botui/hooks'
 
 const ButtonSubmit: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
