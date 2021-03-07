@@ -1,13 +1,11 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import Head from 'next/head';
+import { GlobalStyle } from '../components/GrobalStyle';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Welcome to chat!</title>
-      </Head>
+      <GlobalStyle />
       <Component {...pageProps} />
     </>
   )
