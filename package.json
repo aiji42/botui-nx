@@ -29,7 +29,6 @@
   "dependencies": {
     "@aws-amplify/api": "^3.2.25",
     "@aws-amplify/storage": "^3.3.25",
-    "@botui/chat-hooks": "^1.2.8",
     "@emotion/react": "11.1.5",
     "@emotion/server": "11.0.0",
     "@emotion/styled": "11.1.5",

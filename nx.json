@@ -18,6 +18,8 @@
   "projects": {
     "chat": { "tags": [] },
     "chat-e2e": { "tags": [], "implicitDependencies": ["chat"] },
-    "components": { "tags": [] }
+    "components": { "tags": [] },
+    "hooks": { "tags": [] },
+    "api": { "tags": [] }
   }
 }
