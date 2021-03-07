@@ -4,11 +4,14 @@ import { MessageLoading } from '@botui/components'
 import { css } from '@emotion/react'
 import { ContentImage } from '@botui/types'
 
-const style = (loading: boolean) => loading ? css({
-    display: 'none'
-  }) : css({
-    width: '100%'
-  })
+const style = (loading: boolean) =>
+  loading
+    ? css({
+        display: 'none'
+      })
+    : css({
+        width: '100%'
+      })
 
 const Image: FC = () => {
   const { message, handleUpdate } = useMessageContext<ContentImage>()
@@ -17,7 +20,10 @@ const Image: FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const mounted = useRef(true)
   useEffect(() => {
-    setTimeout(() => mounted.current && setLoading(false), message.content.delay ?? 0)
+    setTimeout(
+      () => mounted.current && setLoading(false),
+      message.content.delay ?? 0
+    )
     return () => {
       mounted.current = false
     }
@@ -31,7 +37,6 @@ const Image: FC = () => {
   const handleImageLoaded = useCallback(() => {
     setImageLoaded(true)
   }, [setImageLoaded])
-
 
   return (
     <>

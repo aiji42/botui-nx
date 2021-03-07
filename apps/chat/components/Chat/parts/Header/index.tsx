@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, useImageUrl } from "@botui/chat-hooks";
-import { Header as ChatHeader } from '@botui/chat-components'
+import { useChatConfigContext, useImageUrl } from '@botui/chat-hooks'
+import { Header as ChatHeader } from '@botui/components'
 import { css } from '@emotion/react'
 
 const style = {
@@ -22,7 +22,11 @@ const style = {
 }
 
 export const Header: FC = () => {
-  const { theme: { header }, images, title } = useChatConfigContext()
+  const {
+    theme: { header },
+    images,
+    title
+  } = useChatConfigContext()
   const imageURL = useImageUrl(images.logo?.key)
 
   return (

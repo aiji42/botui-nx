@@ -18,7 +18,12 @@ export const closerEvaluate = async (
   values: Values,
   chatConfig: ChatConfig
 ): Promise<void> => {
-  if (closer.job === 'store') await addEntry({ sessionId: chatConfig.id, owner: chatConfig.owner, inputs: values })
+  if (closer.job === 'store')
+    await addEntry({
+      sessionId: chatConfig.id,
+      owner: chatConfig.owner,
+      inputs: values
+    })
   if (closer.job === 'script') await evalFunction(closer.script, values)
   if (closer.job === 'webhook') await webhook(closer.endpoint, values)
   if (closer.notify && chatConfig.email) await notify(values, chatConfig)

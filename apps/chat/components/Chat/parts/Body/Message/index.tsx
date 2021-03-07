@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import String from './String'
 import Image from './Image'
 import Form from './Form'
-import { MessageLoading } from '@botui/chat-components'
+import { MessageLoading } from '@botui/components'
 import { useMessageContext } from '@botui/chat-hooks'
 
 export const Message: FC = () => {

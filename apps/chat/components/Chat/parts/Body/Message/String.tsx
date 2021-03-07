@@ -10,7 +10,9 @@ const String: FC = () => {
   const { children, ...rest } = props
   const mounted = useRef(true)
   useEffect(() => {
-    mounted.current && handleUpdate && handleUpdate({ ...message, completed: true })
+    mounted.current &&
+      handleUpdate &&
+      handleUpdate({ ...message, completed: true })
     return () => {
       mounted.current = false
     }

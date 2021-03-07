@@ -1,5 +1,18 @@
 import React, { FC, useCallback } from 'react'
-import * as Forms from '@botui/chat-components'
+import {
+  FormAddress,
+  FormBirthDay,
+  FormConfirm,
+  FormCreditCard,
+  FormCustomCheckbox,
+  FormCustomInput,
+  FormCustomRadioGroup,
+  FormCustomSelect,
+  FormCustomTextarea,
+  FormEmail,
+  FormName,
+  FormTel
+} from '@botui/components'
 import { useMessageContext } from '@botui/chat-hooks'
 import { ContentForm, Form as FormType } from '@botui/types'
 import { css } from '@emotion/react'
@@ -27,40 +40,40 @@ const Form: FC = () => {
   return (
     <div css={style.form}>
       {props.type === 'FormAddress' && (
-        <Forms.FormAddress {...props} onSubmitted={handleComplete} />
+        <FormAddress {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormBirthDay' && (
-        <Forms.FormBirthDay {...props} onSubmitted={handleComplete} />
+        <FormBirthDay {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormEmail' && (
-        <Forms.FormEmail {...props} onSubmitted={handleComplete} />
+        <FormEmail {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormName' && (
-        <Forms.FormName {...props} onSubmitted={handleComplete} />
+        <FormName {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormTel' && (
-        <Forms.FormTel {...props} onSubmitted={handleComplete} />
+        <FormTel {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCreditCard' && (
-        <Forms.FormCreditCard {...props} onSubmitted={handleComplete} />
+        <FormCreditCard {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomRadioGroup' && (
-        <Forms.FormCustomRadioGroup {...props} onSubmitted={handleComplete} />
+        <FormCustomRadioGroup {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomSelect' && (
-        <Forms.FormCustomSelect {...props} onSubmitted={handleComplete} />
+        <FormCustomSelect {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomInput' && (
-        <Forms.FormCustomInput {...props} onSubmitted={handleComplete} />
+        <FormCustomInput {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomTextarea' && (
-        <Forms.FormCustomTextarea {...props} onSubmitted={handleComplete} />
+        <FormCustomTextarea {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomCheckbox' && (
-        <Forms.FormCustomCheckbox {...props} onSubmitted={handleComplete} />
+        <FormCustomCheckbox {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormConfirm' && (
-        <Forms.FormConfirm {...props} onSubmitted={handleComplete} />
+        <FormConfirm {...props} onSubmitted={handleComplete} />
       )}
     </div>
   )

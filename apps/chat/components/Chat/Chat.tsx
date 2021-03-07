@@ -45,10 +45,7 @@ export const Chat: FC<ChatProps> = ({
   }, [messages])
 
   useEffect(() => {
-    controlMessage(
-      proposals,
-      config
-    ).then(([messages, percentOfProgress]) =>
+    controlMessage(proposals, config).then(([messages, percentOfProgress]) =>
       setConfig({ ...config, percentOfProgress, messages })
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps

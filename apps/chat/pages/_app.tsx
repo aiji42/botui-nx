@@ -1,6 +1,6 @@
-import React from 'react';
-import { AppProps } from 'next/app';
-import { GlobalStyle } from '../components/GrobalStyle';
+import React from 'react'
+import { AppProps } from 'next/app'
+import { GlobalStyle } from '../components/GrobalStyle'
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,4 +11,4 @@ function CustomApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default CustomApp;
+export default CustomApp

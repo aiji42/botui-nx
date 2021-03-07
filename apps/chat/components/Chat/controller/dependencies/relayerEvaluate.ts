@@ -13,7 +13,10 @@ export const evalFunction = async (
   await func(values)
 }
 
-export const formPush = async (job: JobFormPush, values: Values): Promise<void> => {
+export const formPush = async (
+  job: JobFormPush,
+  values: Values
+): Promise<void> => {
   const form = document.querySelector<HTMLFormElement>(job.formSelector)
   if (!form) return
   job.dataMapper.forEach((mapper) => {
@@ -22,7 +25,9 @@ export const formPush = async (job: JobFormPush, values: Values): Promise<void> 
       return
     }
     // eslint-disable-next-line no-new-func
-    form[mapper.to].value = new Function('values', mapper.customValueScript)(values)
+    form[mapper.to].value = new Function('values', mapper.customValueScript)(
+      values
+    )
   })
   if (!job.ajax) {
     form.submit()
@@ -33,12 +38,18 @@ export const formPush = async (job: JobFormPush, values: Values): Promise<void> 
   new Function('response', job.onSubmit ?? '')(res)
 }
 
-export const webhook = async (endpoint: string, values: Values): Promise<void> => {
+export const webhook = async (
+  endpoint: string,
+  values: Values
+): Promise<void> => {
   console.log(endpoint, values)
   // TODO:
 }
 
-export const relayerEvaluate = async (relayer: Relayer, values: Values): Promise<void> => {
+export const relayerEvaluate = async (
+  relayer: Relayer,
+  values: Values
+): Promise<void> => {
   if (relayer.job === 'script') await evalFunction(relayer.script, values)
   if (relayer.job === 'webhook') await webhook(relayer.endpoint, values)
   if (relayer.job === 'formPush') await formPush(relayer, values)

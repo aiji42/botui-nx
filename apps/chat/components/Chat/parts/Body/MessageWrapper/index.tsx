@@ -33,7 +33,8 @@ const style = {
 export const MessageWrapper: FC = (props) => {
   const { message } = useMessageContext()
   const {
-    images: { agent }, theme
+    images: { agent },
+    theme
   } = useChatConfigContext()
   useEffect(() => {
     setTimeout(
@@ -49,9 +50,18 @@ export const MessageWrapper: FC = (props) => {
   return (
     <Scroll.Element css={style.base} name={`${message.id}`}>
       {message.human ? (
-        <HumanMessageWrapper {...props} baseColor={theme.user?.backgroundColor} messageColor={theme.user?.color} />
+        <HumanMessageWrapper
+          {...props}
+          baseColor={theme.user?.backgroundColor}
+          messageColor={theme.user?.color}
+        />
       ) : (
-        <AgentMessageWrapper {...props} iconSrc={agent ?? ''} baseColor={theme.agent?.backgroundColor} messageColor={theme.agent?.color} />
+        <AgentMessageWrapper
+          {...props}
+          iconSrc={agent ?? ''}
+          baseColor={theme.agent?.backgroundColor}
+          messageColor={theme.agent?.color}
+        />
       )}
     </Scroll.Element>
   )

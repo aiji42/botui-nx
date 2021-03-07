@@ -2398,28 +2398,6 @@
     "@aws-amplify/api" "^3.2.22"
     "@aws-amplify/storage" "^3.3.22"
 
-"@botui/chat-components@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/@botui/chat-components/-/chat-components-1.1.11.tgz#4c269cb9771d8cece0d7dd3458f372b2c8795c77"
-  integrity sha512-F1ZUHrLl5iQFhOSZOF6R+KfXn8e5EAHAeAO3wX1vtJntt8nP4qiPq8e8JVcN5TjvMAYh4d/s8xnGsFBt8MjrpA==
-  dependencies:
-    "@botui/chat-hooks" "^1.2.8"
-    "@emotion/react" "^11.1.5"
-    "@fortawesome/fontawesome-svg-core" "^1.2.34"
-    "@fortawesome/free-regular-svg-icons" "^5.15.2"
-    "@fortawesome/free-solid-svg-icons" "^5.15.2"
-    "@fortawesome/react-fontawesome" "^0.1.14"
-    card-validator "^8.1.0"
-    fill-range "^7.0.1"
-    formik "^2.2.6"
-    jp-prefecture "^0.2.1"
-    libphonenumber-js "^1.9.11"
-    react-loading "^2.0.3"
-    react-textarea-autosize "^8.3.1"
-    react-use-kana "^2.3.0"
-    use-postal-jp "^1.1.4"
-    yup "^0.32.9"
-
 "@botui/chat-hooks@^1.2.8":
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/@botui/chat-hooks/-/chat-hooks-1.2.8.tgz#ae618a430e120e535f59867aad4a11a7ef751587"
@@ -2562,7 +2540,7 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
-"@emotion/react@11.1.5", "@emotion/react@^11.1.5":
+"@emotion/react@11.1.5":
   version "11.1.5"
   resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.1.5.tgz#15e78f9822894cdc296e6f4e0688bac8120dfe66"
   integrity sha512-xfnZ9NJEv9SU9K2sxXM06lzjK245xSeHRpUh67eARBm3PBHjjKIZlfWZ7UQvD0Obvw6ZKjlC79uHrlzFYpOB/Q==
@@ -9462,7 +9440,7 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libphonenumber-js@^1.9.11:
+libphonenumber-js@^1.9.12:
   version "1.9.12"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.9.12.tgz#2fc4efb88e57c7909d5329ae3a1619a65389dbe6"
   integrity sha512-UNSBMB+lIn2XJtESlW4qDMxeZWcHhk50n8NlxQOlomrjDMTwNlq7UdD4gOR/ibS54M4Pw0mRFw6geddRBHGHNw==
@@ -11881,7 +11859,7 @@ react-scroll@^1.8.1:
     lodash.throttle "^4.1.1"
     prop-types "^15.7.2"
 
-react-textarea-autosize@^8.3.1:
+react-textarea-autosize@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-8.3.2.tgz#4f9374d357b0a6f6469956726722549124a1b2db"
   integrity sha512-JrMWVgQSaExQByP3ggI1eA8zF4mF0+ddVuX7acUeK2V7bmrpjVOY72vmLz2IXFJSAXoY3D80nEzrn0GWajWK3Q==

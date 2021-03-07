@@ -47,11 +47,12 @@ export const controlMessage = async (
       continue
     }
     if (proposal.type === 'relayer') {
-      !proposal.completed && await relayerEvaluate(proposal.data, values)
+      !proposal.completed && (await relayerEvaluate(proposal.data, values))
       continue
     }
     if (proposal.type === 'closer') {
-      !proposal.completed && await closerEvaluate(proposal.data, values, chatConfig)
+      !proposal.completed &&
+        (await closerEvaluate(proposal.data, values, chatConfig))
       if (chatConfig.onClose) chatConfig.onClose()
       break
     }
@@ -110,7 +111,8 @@ const messageReplace = (
         ...message.content.props,
         children: message.content.props.children.replace(
           /\{\{(.+?)\}\}/g,
-          (_, key) => `${window.botui?.customMessage?.[key] ?? values[key] ?? ''}`
+          (_, key) =>
+            `${window.botui?.customMessage?.[key] ?? values[key] ?? ''}`
         )
       }
     }
@@ -138,11 +140,13 @@ const fillFormMessage = (
     }
   }
   if (message.content.props.type === 'FormCustomSelect') {
-    const selects = message.content.props.selects.map<CustomSelect>((select) => {
-      const choices = window.botui?.customChoice?.[select.name]
-      if (!choices) return select
-      return { ...select, options: choices }
-    })
+    const selects = message.content.props.selects.map<CustomSelect>(
+      (select) => {
+        const choices = window.botui?.customChoice?.[select.name]
+        if (!choices) return select
+        return { ...select, options: choices }
+      }
+    )
 
     return {
       ...message,
@@ -158,10 +162,7 @@ const fillFormMessage = (
   return message
 }
 
-const progressPercent = (
-  proposals: Proposals,
-  edge?: Proposal
-) => {
+const progressPercent = (proposals: Proposals, edge?: Proposal) => {
   if (!edge) return 0
   const edgeIndex = proposals.findIndex(({ id }) => id === edge.id)
   return (edgeIndex + 1) / proposals.length
