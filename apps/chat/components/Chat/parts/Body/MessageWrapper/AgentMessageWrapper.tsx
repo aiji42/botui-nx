@@ -1,6 +1,10 @@
 import React, { FC } from 'react'
-import { MessageBubble, MessageBubbleProps, ProfileIcon } from '@botui/chat-components'
 import { css } from '@emotion/react'
+import {
+  ProfileIcon,
+  MessageBubble,
+  MessageBubbleProps
+} from '@botui/components'
 
 const style = {
   wrapper: css({

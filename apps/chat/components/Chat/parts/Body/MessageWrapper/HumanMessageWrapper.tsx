@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { MessageBubble, MessageBubbleProps } from '@botui/chat-components'
+import { MessageBubble, MessageBubbleProps } from '@botui/components'
 import { css } from '@emotion/react'
 
 const style = {
