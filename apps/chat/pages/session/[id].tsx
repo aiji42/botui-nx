@@ -1,30 +1,35 @@
 import React, { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import Amplify from 'aws-amplify'
-import { fetchSession } from '../api/session'
-// import { Chat } from '../components'
+import { fetchSession } from '../../api/session'
+import { Chat } from '../../components'
 import { Session } from '@botui/types'
 
-if (process.env.AWS_EXPORTS) Amplify.configure(JSON.parse(process.env.AWS_EXPORTS))
+if (process.env.NEXT_PUBLIC_AWS_EXPORTS)
+  Amplify.configure(JSON.parse(process.env.NEXT_PUBLIC_AWS_EXPORTS))
 
 interface ChatMainProps {
   session: Session
 }
 
 const ChatMain: FC<ChatMainProps> = (props) => {
-  // return <Chat config={{ ...props.session, messages: [], percentOfProgress: 0 }} proposals={props.session.proposals} />
-  return <div>{props.session.email}</div>
+  return (
+    <Chat
+      config={{ ...props.session, messages: [], percentOfProgress: 0 }}
+      proposals={props.session.proposals}
+    />
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<
   ChatMainProps,
-  { sessionId: string }
+  { id: string }
 > = async (context) => {
   if (!context.params)
     return { redirect: { permanent: true, destination: '/invalid' } }
-  const { sessionId } = context.params
+  const { id } = context.params
 
-  const session = await fetchSession(sessionId)
+  const session = await fetchSession(id)
   if (!session || !session.active) {
     return { redirect: { permanent: true, destination: '/invalid' } }
   }
