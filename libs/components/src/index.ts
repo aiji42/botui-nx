@@ -1,1 +1,1 @@
-export * from './lib/chat'
+export * from './chat'
