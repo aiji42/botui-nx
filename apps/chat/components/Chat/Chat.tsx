@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import { ChatConfigContextProvider } from '@botui/chat-hooks'
+import { ChatConfigContextProvider } from '@botui/hooks'
 import { Proposals, ChatConfig, Message as MessageType } from '@botui/types'
 import { Header, Body, Footer } from './parts'
 import { controlMessage, effectToProposals } from './controller/dependencies'

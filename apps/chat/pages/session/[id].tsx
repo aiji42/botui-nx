@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import Amplify from 'aws-amplify'
-import { fetchSession } from '../../api/session'
+import { fetchSession } from '@botui/api'
 import { Chat } from '../../components'
 import { Session } from '@botui/types'
 

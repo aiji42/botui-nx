@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { useChatConfigContext, useMessageContext } from '@botui/chat-hooks'
+import { useChatConfigContext, useMessageContext } from '@botui/hooks'
 import { css, keyframes } from '@emotion/react'
 import Scroll from 'react-scroll'
 import { HumanMessageWrapper } from './HumanMessageWrapper'

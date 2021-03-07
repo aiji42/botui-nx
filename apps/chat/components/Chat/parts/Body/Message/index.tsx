@@ -3,7 +3,7 @@ import String from './String'
 import Image from './Image'
 import Form from './Form'
 import { MessageLoading } from '@botui/components'
-import { useMessageContext } from '@botui/chat-hooks'
+import { useMessageContext } from '@botui/hooks'
 
 export const Message: FC = () => {
   const {

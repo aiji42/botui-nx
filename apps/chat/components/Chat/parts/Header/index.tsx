@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, useImageUrl } from '@botui/chat-hooks'
+import { useChatConfigContext, useImageUrl } from '@botui/hooks'
 import { Header as ChatHeader } from '@botui/components'
 import { css } from '@emotion/react'
 

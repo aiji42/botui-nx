@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, MessageContextProvider } from '@botui/chat-hooks'
+import { useChatConfigContext, MessageContextProvider } from '@botui/hooks'
 import { css } from '@emotion/react'
 import { MessageWrapper } from './MessageWrapper'
 import { Message } from './Message'

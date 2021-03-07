@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useCallback, useState, useRef } from 'react'
-import { useMessageContext, useImageUrl } from '@botui/chat-hooks'
+import { useMessageContext, useImageUrl } from '@botui/hooks'
 import { MessageLoading } from '@botui/components'
 import { css } from '@emotion/react'
 import { ContentImage } from '@botui/types'

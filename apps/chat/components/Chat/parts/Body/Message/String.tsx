@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react'
 import nl2br from 'react-nl2br'
-import { useMessageContext } from '@botui/chat-hooks'
+import { useMessageContext } from '@botui/hooks'
 import { ContentString } from '@botui/types'
 import Linkify from 'react-linkify'
 

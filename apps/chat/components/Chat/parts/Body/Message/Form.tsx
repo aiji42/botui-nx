@@ -13,7 +13,7 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import { useMessageContext } from '@botui/chat-hooks'
+import { useMessageContext } from '@botui/hooks'
 import { ContentForm, Form as FormType } from '@botui/types'
 import { css } from '@emotion/react'
 

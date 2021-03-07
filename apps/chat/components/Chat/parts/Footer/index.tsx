@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useChatConfigContext } from '@botui/chat-hooks'
+import { useChatConfigContext } from '@botui/hooks'
 import { Footer as ChatFooter } from '@botui/components'
 import { css } from '@emotion/react'
 
