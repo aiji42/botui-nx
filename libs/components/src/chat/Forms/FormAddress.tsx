@@ -8,10 +8,7 @@ import SpanErrorMessage from './Elements/SpanErrorMessage'
 import ButtonSubmit from './Elements/ButtonSubmit'
 import { usePostalJp } from 'use-postal-jp'
 import { customHandleSubmit } from './modules'
-import {
-  FormAddressValues,
-  FormAddress as FormAddressType
-} from '@botui/types'
+import { FormAddressValues, FormAddress as FormAddressType } from '@botui/types'
 import jpPrefecture from 'jp-prefecture'
 
 const prefectures: Array<{
@@ -40,7 +37,7 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
     const { prefectureCode, address1, address2, address3, address4 } = address
     if (prefectureCode) prefectureIdHelper.setValue(prefectureCode)
     if (address1) cityHelper.setValue(address1 + address2 + address3 + address4)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
   useEffect(() => {
@@ -51,7 +48,7 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
     if (sanitizedCode.length !== 7) return
     postalCodeHelper.setValue(sanitizedCode)
     !pending && !postalError && inputStreetEl.current?.focus()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sanitizedCode, postalError, pending])
 
   useEffect(() => {
@@ -60,7 +57,7 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
         jpPrefecture.prefFindBy('id', parseInt(prefectureIdMeta.value), 'name')
       )
     else prefectureHelper.setValue('')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefectureIdMeta.value])
 
   return (

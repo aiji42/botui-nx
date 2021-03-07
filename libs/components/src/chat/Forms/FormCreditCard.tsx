@@ -50,7 +50,7 @@ const Form: FC<FormikProps<FormCreditCardValues>> = (props) => {
   const [, , { setValue: setNum }] = useField('creditCardNumber')
   useEffect(() => {
     setNum(onlyNum(dummyNum))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dummyNum])
 
   return (

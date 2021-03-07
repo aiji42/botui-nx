@@ -9,10 +9,7 @@ import ButtonSubmit from './Elements/ButtonSubmit'
 import { css } from '@emotion/react'
 import { useKana } from 'react-use-kana'
 import { customHandleSubmit } from './modules'
-import {
-  FormNameValues,
-  FormName as FormNameType
-} from '@botui/types'
+import { FormNameValues, FormName as FormNameType } from '@botui/types'
 
 const style = {
   formBlockDetailHalf: css`
@@ -49,7 +46,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
     if (!status.kana) return
     familyNameKanaHelper.setValue(familyNameKana)
     !!familyNameKana && familyNameKanaHelper.setTouched(true)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [familyNameKana])
 
   useEffect(() => {
@@ -60,7 +57,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
     if (!status.kana) return
     firstNameKanaHelper.setValue(firstNameKana)
     !!firstNameKana && firstNameKanaHelper.setTouched(true)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstNameKana])
 
   return (
