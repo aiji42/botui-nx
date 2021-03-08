@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 const Index: FC = () => {
   const router = useRouter()
   useEffect(() => {
-    router.push({
+    router.replace({
       pathname: '/session/[id]',
       query: { id: router.query.sessionId ?? 'invalid' }
     })
