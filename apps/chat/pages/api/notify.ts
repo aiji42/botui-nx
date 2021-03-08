@@ -7,9 +7,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
 
 interface RequestBody {
   values?: Record<string, string>
-  config?: Required<
-    Pick<Session, 'id' | 'title' | 'email'>
-  >
+  config?: Required<Pick<Session, 'id' | 'title' | 'email'>>
 }
 
 const notify: NextApiHandler = async (req, res) => {
@@ -19,9 +17,9 @@ const notify: NextApiHandler = async (req, res) => {
   }
 
   try {
-
     const { values, config } = req.body as RequestBody
-    if (!values || !config?.email) throw new Error('The request is in the wrong format.')
+    if (!values || !config?.email)
+      throw new Error('The request is in the wrong format.')
 
     const data = {
       session_title: config.title,
@@ -30,7 +28,7 @@ const notify: NextApiHandler = async (req, res) => {
     await sgMail.send(msg(config.email, data))
 
     res.status(200).json({ message: 'succeed' })
-  } catch(e) {
+  } catch (e) {
     res.status(400).json({ message: e?.message ?? '' })
   }
 }
