@@ -20,6 +20,7 @@
     "chat-e2e": { "tags": [], "implicitDependencies": ["chat"] },
     "components": { "tags": [] },
     "hooks": { "tags": [] },
-    "api": { "tags": [] }
+    "api": { "tags": [] },
+    "embedded": { "tags": [] }
   }
 }

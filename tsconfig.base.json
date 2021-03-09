@@ -17,7 +17,8 @@
     "paths": {
       "@botui/components": ["libs/components/src/index.ts"],
       "@botui/hooks": ["libs/hooks/src/index.ts"],
-      "@botui/api": ["libs/api/src/index.ts"]
+      "@botui/api": ["libs/api/src/index.ts"],
+      "@botui/embedded": ["libs/embedded/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
