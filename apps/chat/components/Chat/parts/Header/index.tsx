@@ -1,7 +1,11 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, useChatController, useImageUrl } from '@botui/hooks'
+import {
+  useChatConfigContext,
+  useChatController,
+  useImageUrl
+} from '@botui/hooks'
 import Close from '@material-ui/icons/Close'
-import Fab from '@material-ui/core/Fab'
+import IconButton from '@material-ui/core/IconButton'
 import { Header as ChatHeader } from '@botui/components'
 import { css } from '@emotion/react'
 
@@ -49,7 +53,9 @@ export const Header: FC = () => {
           )
         }
       />
-      <Fab onClick={close} css={style.closeButton}><Close /></Fab>
+      <IconButton onClick={close} css={style.closeButton}>
+        <Close />
+      </IconButton>
     </div>
   )
 }

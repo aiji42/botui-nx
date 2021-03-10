@@ -20,8 +20,7 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
 
   const ref = useRef<HTMLIFrameElement>()
-  useEffect(() => {
-    if (!open || !ref.current) return
+  const controller = useCallback(() => {
     const messenger = new WindowMessenger({
       localWindow: window,
       remoteWindow: ref.current.contentWindow,
@@ -29,14 +28,23 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
     })
     ParentHandshake(messenger, {}, 20, 1000).then((connection) => {
       const remoteHandle = connection.remoteHandle()
-      remoteHandle.addEventListener('onClose', handleClose)
+      remoteHandle.addEventListener('onClose', () => {
+        handleClose()
+      })
     })
-  }, [open, ref])
+  }, [handleClose])
 
   return (
     <>
       <Wrapper isFull={window.innerWidth < 600} isOpen={open}>
-        <iframe src={url} title="botui" width="100%" height="100%" ref={ref} />
+        <iframe
+          src={url}
+          title="botui"
+          width="100%"
+          height="100%"
+          onLoad={controller}
+          ref={ref}
+        />
       </Wrapper>
       <Fab onClick={toggleOpen} isOpen={open} />
     </>
