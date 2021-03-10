@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import { ChatConfigContextProvider } from '@botui/hooks'
+import { ChatConfigContextProvider, ChatControllerProvider } from '@botui/hooks'
 import { Proposals, ChatConfig, Message as MessageType } from '@botui/types'
 import { Header, Body, Footer } from './parts'
 import { controlMessage, effectToProposals } from './controller/dependencies'
@@ -59,9 +59,11 @@ export const Chat: FC<ChatProps> = ({
 
   return (
     <ChatConfigContextProvider {...config}>
-      <Header />
-      <Body onUpdated={handleUpdate} />
-      <Footer />
+      <ChatControllerProvider>
+        <Header />
+        <Body onUpdated={handleUpdate} />
+        <Footer />
+      </ChatControllerProvider>
     </ChatConfigContextProvider>
   )
 }

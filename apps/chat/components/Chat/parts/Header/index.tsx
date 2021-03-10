@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, useImageUrl } from '@botui/hooks'
+import { useChatConfigContext, useChatController, useImageUrl } from '@botui/hooks'
+import Close from '@material-ui/icons/Close'
+import Fab from '@material-ui/core/Fab'
 import { Header as ChatHeader } from '@botui/components'
 import { css } from '@emotion/react'
 
@@ -18,6 +20,11 @@ const style = {
   }),
   title: css({
     padding: 15
+  }),
+  closeButton: css({
+    position: 'absolute',
+    right: 4,
+    top: 4
   })
 }
 
@@ -28,6 +35,7 @@ export const Header: FC = () => {
     title
   } = useChatConfigContext()
   const imageURL = useImageUrl(images.logo?.key)
+  const { close } = useChatController()
 
   return (
     <div css={style.root}>
@@ -41,6 +49,7 @@ export const Header: FC = () => {
           )
         }
       />
+      <Fab onClick={close} css={style.closeButton}><Close /></Fab>
     </div>
   )
 }

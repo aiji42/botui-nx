@@ -1,7 +1,13 @@
 import React, { FC, useState, useCallback, useRef, useEffect } from 'react'
 import { Wrapper } from './Wrapper'
 import { Fab } from './Fab'
-import { ParentHandshake, WindowMessenger, RemoteHandle, debug, DebugMessenger } from 'post-me'
+import {
+  ParentHandshake,
+  WindowMessenger,
+  RemoteHandle,
+  debug,
+  DebugMessenger
+} from 'post-me'
 
 interface Props {
   url: string
@@ -10,25 +16,21 @@ interface Props {
 
 export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
   const [open, setOpen] = useState<boolean>(defaultOpen)
-  // const handleClose = useCallback(() => setOpen(false), [setOpen])
+  const handleClose = useCallback(() => setOpen(false), [setOpen])
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
 
   const ref = useRef<HTMLIFrameElement>()
   useEffect(() => {
     if (!open || !ref.current) return
-    const interval = setInterval(() => {
-      console.log('retry')
-      const messenger = new WindowMessenger({
-        localWindow: window,
-        remoteWindow: ref.current.contentWindow,
-        remoteOrigin: '*'
-      })
-      ParentHandshake(messenger).then((connection) => {
-        clearInterval(interval)
-        const remoteHandle: RemoteHandle = connection.remoteHandle()
-        remoteHandle.call('connected')
-      })
-    }, 1000)
+    const messenger = new WindowMessenger({
+      localWindow: window,
+      remoteWindow: ref.current.contentWindow,
+      remoteOrigin: '*'
+    })
+    ParentHandshake(messenger, {}, 20, 1000).then((connection) => {
+      const remoteHandle = connection.remoteHandle()
+      remoteHandle.addEventListener('onClose', handleClose)
+    })
   }, [open, ref])
 
   return (
