@@ -27,7 +27,7 @@ const style = {
   }),
   closeButton: css({
     position: 'absolute',
-    right: 4,
+    right: 0,
     top: 4
   })
 }
@@ -53,9 +53,11 @@ export const Header: FC = () => {
           )
         }
       />
-      <IconButton onClick={close} css={style.closeButton}>
-        <Close />
-      </IconButton>
+      <div css={style.closeButton}>
+        <IconButton onClick={close}>
+          <Close style={{ color: 'white' }} />
+        </IconButton>
+      </div>
     </div>
   )
 }
