@@ -1,6 +1,8 @@
 import React, {
+  cloneElement,
   createContext,
   FC,
+  ReactElement,
   useCallback,
   useEffect,
   useRef,
@@ -73,10 +75,10 @@ export const ChatControllerProvider: FC = ({ children }) => {
   )
 }
 
-const ChatControllReceiver: FC<{ handleClose: () => void }> = ({ handleClose, children }) => {
+export const ChatControllReceiver: FC<{ handleClose: () => void, children: ReactElement }> = ({ handleClose, children }) => {
   const ref = useRef<HTMLIFrameElement>()
 
-  const start = useCallback(() => {
+  useEffect(() => {
     if (!ref.current?.contentWindow) return
     const messenger = new WindowMessenger({
       localWindow: window,
@@ -85,11 +87,9 @@ const ChatControllReceiver: FC<{ handleClose: () => void }> = ({ handleClose, ch
     })
     ParentHandshake<typeof methods>(messenger, methods, 20, 1000).then((connection) => {
       const remoteHandle = connection.remoteHandle()
-      remoteHandle.addEventListener('onClose', () => {
-        handleClose()
-      })
+      remoteHandle.addEventListener('onClose', handleClose)
     })
   }, [handleClose])
 
-  return children
+  return cloneElement(children, { ref })
 }
