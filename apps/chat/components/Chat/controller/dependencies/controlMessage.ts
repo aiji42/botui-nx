@@ -77,12 +77,6 @@ const isStringMessage = (message: Message): message is Message<ContentString> =>
 const isFormMessage = (message: Message): message is Message<ContentForm> =>
   message.content.type === 'form'
 
-const prepareMessage = (message: Message, values: Values): Message => {
-  if (isStringMessage(message)) return messageReplace(message, values)
-  if (isFormMessage(message)) return fillFormMessage(message)
-  return message
-}
-
 interface Window {
   botui?: {
     customChoice?: Record<string, Array<{ value: string; label: string }>>
@@ -98,9 +92,16 @@ const windowInitialize = () => {
   }
 }
 
+const prepareMessage = (message: Message, values: Values): Message => {
+  if (isStringMessage(message)) return messageReplace(message, values)
+  if (isFormMessage(message)) return fillFormMessage(message)
+  return message
+}
+
 const messageReplace = (
   message: Message<ContentString>,
-  values: Values
+  values: Values,
+  customMessages: Record<string, string>
 ): Message<ContentString> => {
   if (typeof message.content.props.children !== 'string') return message
   return {
@@ -112,7 +113,7 @@ const messageReplace = (
         children: message.content.props.children.replace(
           /\{\{(.+?)\}\}/g,
           (_, key) =>
-            `${window.botui?.customMessage?.[key] ?? values[key] ?? ''}`
+            `${customMessages[key] ?? values[key] ?? ''}`
         )
       }
     }
@@ -120,7 +121,8 @@ const messageReplace = (
 }
 
 const fillFormMessage = (
-  message: Message<ContentForm>
+  message: Message<ContentForm>,
+  customChoice: Record<string, Array<{ value: string; label: string }>>
 ): Message<ContentForm> => {
   if (
     message.content.props.type === 'FormCustomCheckbox' ||
@@ -142,7 +144,7 @@ const fillFormMessage = (
   if (message.content.props.type === 'FormCustomSelect') {
     const selects = message.content.props.selects.map<CustomSelect>(
       (select) => {
-        const choices = window.botui?.customChoice?.[select.name]
+        const choices = customChoice[select.name]
         if (!choices) return select
         return { ...select, options: choices }
       }

@@ -19,14 +19,16 @@ const noop = () => {
 interface ChatContollorContextValue {
   close: () => void
   evalFunction: (t: string, v: Record<string, string>) => Promise<void>
-  getCustomChoice: (k: string) => Promise<Array<{ value: string; label: string }> | undefined>
+  getCustomChoice: () => Promise<Record<string, Array<{ value: string; label: string }>> | undefined>
+  getCustomMessage: () => Promise<Record<string, string> | undefined>
   formPush: (j: JobFormPush, v: Record<string, string>) => Promise<void>
 }
 
 export const ChatControllerContext = createContext<ChatContollorContextValue>({
   close: noop,
   evalFunction: () => Promise.resolve(),
-  getCustomChoice: () => Promise.resolve([]),
+  getCustomChoice: () => Promise.resolve({}),
+  getCustomMessage: () => Promise.resolve({}),
   formPush: () => Promise.resolve()
 })
 
@@ -61,7 +63,8 @@ export const ChatControllerProvider: FC = ({ children }) => {
     [remoteHandle]
   )
 
-  const getCustomChoice = useCallback<ChatContollorContextValue['getCustomChoice']>(async (key) => await remoteHandle?.call('getCustomChoice', key), [remoteHandle])
+  const getCustomChoice = useCallback<ChatContollorContextValue['getCustomChoice']>(async () => await remoteHandle?.call('getCustomChoice'), [remoteHandle])
+  const getCustomMessage = useCallback<ChatContollorContextValue['getCustomMessage']>(async () => await remoteHandle?.call('getCustomMessage'), [remoteHandle])
 
   const formPush = useCallback<ChatContollorContextValue['formPush']>(async (job, values) => {
     await remoteHandle?.call('formPush', job, values)
@@ -70,7 +73,7 @@ export const ChatControllerProvider: FC = ({ children }) => {
   return (
     <ChatControllerContext.Provider
       children={children}
-      value={{ close, evalFunction, getCustomChoice, formPush }}
+      value={{ close, evalFunction, getCustomChoice, getCustomMessage, formPush }}
     />
   )
 }
@@ -85,7 +88,7 @@ export const ChatControllReceiver: FC<{ handleClose: () => void, children: React
       remoteWindow: ref.current.contentWindow,
       remoteOrigin: '*'
     })
-    ParentHandshake<typeof methods>(messenger, methods, 20, 1000).then((connection) => {
+    ParentHandshake(messenger, methods, 20, 1000).then((connection) => {
       const remoteHandle = connection.remoteHandle()
       remoteHandle.addEventListener('onClose', handleClose)
     })

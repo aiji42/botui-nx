@@ -39,10 +39,12 @@ const evalFunction = async (functional: string, values: Values) => {
   await func(values)
 }
 
-const getCustomChoice = (key: string) => window.botui?.customChoice?.[key]
+const getCustomChoice = () => window.botui?.customChoice ?? {}
+const getCustomMessage = () => window.botui?.customMessage ?? {}
 
 export const methods = {
   evalFunction,
   getCustomChoice,
+  getCustomMessage,
   formPush
 }
