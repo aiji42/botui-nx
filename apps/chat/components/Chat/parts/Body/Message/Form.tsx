@@ -28,15 +28,17 @@ const Form: FC = () => {
   const props = message.content.props
   const handleComplete = useCallback(
     (props: FormType) => {
-      const newContent = { ...message.content, props }
-      if (!handleUpdate) return
-      if (message.completed)
-        handleUpdate({ ...message, content: newContent, updated: true })
-      else handleUpdate({ ...message, content: newContent, completed: true })
+      // const newContent = { ...message.content, props }
+      // if (!handleUpdate) return
+      // if (message.completed)
+      //   handleUpdate({ ...message, content: newContent, updated: true })
+      // else handleUpdate({ ...message, content: newContent, completed: true })
+      handleUpdate()
     },
     [message, handleUpdate]
   )
 
+  // TODO: customChoiceの置換
   return (
     <div css={style.form}>
       {props.type === 'FormAddress' && (

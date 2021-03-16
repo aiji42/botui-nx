@@ -25,6 +25,7 @@ export const Body: FC = (props) => {
       {proposals.map((proposal) => proposal.type === 'message' ? (
         <MessageContextProvider
           key={proposal.id}
+          id={proposal.id}
           message={proposal.data}
         >
           <MessageWrapper>

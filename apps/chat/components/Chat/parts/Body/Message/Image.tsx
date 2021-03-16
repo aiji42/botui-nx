@@ -31,7 +31,7 @@ const Image: FC = () => {
   const completed = useRef(false)
   useEffect(() => {
     if (completed.current || !imageLoaded || loading) return
-    handleUpdate && handleUpdate({ ...message, completed: true })
+    handleUpdate()
     completed.current = true
   }, [loading, imageLoaded, handleUpdate, message])
   const handleImageLoaded = useCallback(() => {
