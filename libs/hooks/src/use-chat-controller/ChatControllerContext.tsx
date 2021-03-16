@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import { ChildHandshake, WindowMessenger, ParentHandshake, LocalHandle, RemoteHandle } from 'post-me'
 import { methods } from './common'
-import { JobFormPush } from '@botui/types'
+import { JobFormPush, Proposals } from '@botui/types'
 
 const noop = () => {
   // noop
@@ -22,6 +22,7 @@ interface ChatContollorContextValue {
   getCustomChoice: () => Promise<Record<string, Array<{ value: string; label: string }>> | undefined>
   getCustomMessage: () => Promise<Record<string, string> | undefined>
   formPush: (j: JobFormPush, v: Record<string, string>) => Promise<void>
+  proposals: Proposals
 }
 
 export const ChatControllerContext = createContext<ChatContollorContextValue>({
@@ -29,14 +30,19 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
   evalFunction: () => Promise.resolve(),
   getCustomChoice: () => Promise.resolve({}),
   getCustomMessage: () => Promise.resolve({}),
-  formPush: () => Promise.resolve()
+  formPush: () => Promise.resolve(),
+  proposals: []
 })
 
 type Event = {
   onClose: Record<string, unknown>
 }
 
-export const ChatControllerProvider: FC = ({ children }) => {
+interface ChatControllerProviderValue {
+  proposals: Proposals
+}
+
+export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({ children, proposals }) => {
   const [localHandle, setLocalHandle] = useState<LocalHandle<typeof methods, Event>>()
   const [remoteHandle, setRemoteHandle] = useState<RemoteHandle<typeof methods, Event>>()
 
@@ -73,7 +79,7 @@ export const ChatControllerProvider: FC = ({ children }) => {
   return (
     <ChatControllerContext.Provider
       children={children}
-      value={{ close, evalFunction, getCustomChoice, getCustomMessage, formPush }}
+      value={{ close, evalFunction, getCustomChoice, getCustomMessage, formPush, proposals }}
     />
   )
 }

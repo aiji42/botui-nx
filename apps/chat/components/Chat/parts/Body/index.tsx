@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useChatConfigContext, MessageContextProvider } from '@botui/hooks'
+import { useChatConfigContext, MessageContextProvider, useChatController } from '@botui/hooks'
 import { css } from '@emotion/react'
 import { MessageWrapper } from './MessageWrapper'
 import { Message } from './Message'
@@ -17,26 +17,22 @@ const style = {
   })
 }
 
-type Props = {
-  onUpdated: (arg: MessageType) => void
-}
-
-export const Body: FC<Props> = (props) => {
-  const { messages } = useChatConfigContext()
+export const Body: FC = (props) => {
+  const { proposals } = useChatController()
 
   return (
     <div css={style.root}>
-      {messages.map((message) => (
+      {proposals.map((proposal) => proposal.type === 'message' ? (
         <MessageContextProvider
-          key={message.id}
-          message={message}
-          handleUpdate={props.onUpdated}
+          key={proposal.id}
+          message={proposal.data}
         >
           <MessageWrapper>
             <Message />
           </MessageWrapper>
         </MessageContextProvider>
-      ))}
+      ) : null)
+    }
     </div>
   )
 }

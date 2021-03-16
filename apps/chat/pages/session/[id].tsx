@@ -14,10 +14,7 @@ interface ChatMainProps {
 
 const ChatMain: FC<ChatMainProps> = (props) => {
   return (
-    <Chat
-      config={{ ...props.session, messages: [], percentOfProgress: 0 }}
-      proposals={props.session.proposals}
-    />
+    <Chat session={props.session} />
   )
 }
 
