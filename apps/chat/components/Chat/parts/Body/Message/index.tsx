@@ -6,11 +6,7 @@ import { MessageLoading } from '@botui/components'
 import { useMessageContext } from '@botui/hooks'
 
 export const Message: FC = () => {
-  const {
-    message: {
-      content: { delay, type }
-    }
-  } = useMessageContext()
+  const { content: { delay, type } } = useMessageContext()
   const [loading, setLoading] = useState<boolean>(true)
   const mounted = useRef(true)
   useEffect(() => {

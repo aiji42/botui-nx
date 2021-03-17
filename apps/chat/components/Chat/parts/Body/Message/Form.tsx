@@ -13,7 +13,7 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import { useMessageContext } from '@botui/hooks'
+import { useMessageContext, useProposal } from '@botui/hooks'
 import { ContentForm, Form as FormType } from '@botui/types'
 import { css } from '@emotion/react'
 
@@ -24,7 +24,8 @@ const style = {
 }
 
 const Form: FC = () => {
-  const { message, handleUpdate } = useMessageContext<ContentForm>()
+  const message = useMessageContext<ContentForm>()
+  const [, { handleUpdate }] = useProposal()
   const props = message.content.props
   const handleComplete = useCallback(
     (props: FormType) => {

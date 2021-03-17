@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { useChatConfigContext, MessageContextProvider, useChatController, useMessageContext } from '@botui/hooks'
+import { useChatConfigContext, MessageContextProvider, useChatController, useMessageContext, ProposalContextProvider, useProposal } from '@botui/hooks'
 import { css } from '@emotion/react'
 import { MessageWrapper } from './MessageWrapper'
 import { Message } from './Message'
@@ -24,17 +24,19 @@ export const Body: FC = (props) => {
 
   return (
     <div css={style.root}>
-      {proposals.map((proposal) => proposal.type === 'message' ? (
-        <MessageContextProvider
-          key={proposal.id}
-          id={proposal.id}
-          message={proposal.data}
-        >
-          <MessageWrapper>
-            <Message />
-          </MessageWrapper>
-        </MessageContextProvider>
-      ) : null)
+      {proposals.map((proposal) => (
+        <ProposalContextProvider key={proposal.id} proposal={proposal}>
+          {proposal.type === 'message' ? (
+            <MessageContextProvider
+              message={proposal.data}
+            >
+              <MessageWrapper>
+                <Message />
+              </MessageWrapper>
+            </MessageContextProvider>
+          ) : null}
+        </ProposalContextProvider>
+      ))
     }
     </div>
   )
@@ -42,7 +44,7 @@ export const Body: FC = (props) => {
 
 const Relayer: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatController()
-  const { handleUpdate } = useMessageContext()
+  const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
@@ -67,7 +69,7 @@ const Relayer: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
 
 const Closer: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatController()
-  const { handleUpdate } = useMessageContext()
+  const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return

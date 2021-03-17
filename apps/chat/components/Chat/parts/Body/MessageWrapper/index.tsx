@@ -31,7 +31,7 @@ const style = {
 }
 
 export const MessageWrapper: FC = (props) => {
-  const { message } = useMessageContext()
+  const message = useMessageContext()
   const {
     images: { agent },
     theme

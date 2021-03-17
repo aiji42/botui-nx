@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react'
 import nl2br from 'react-nl2br'
-import { useMessageContext } from '@botui/hooks'
+import { useMessageContext, useProposal } from '@botui/hooks'
 import Linkify from 'react-linkify'
 import { ContentString } from '@botui/types'
 
 const String: FC = () => {
-  const { message, handleUpdate } = useMessageContext<ContentString>()
+  const message = useMessageContext<ContentString>()
+  const [, { handleUpdate }] = useProposal()
   const props = message.content.props
   const { children, ...rest } = props
   const mounted = useRef(true)

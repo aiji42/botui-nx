@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useCallback, useState, useRef } from 'react'
-import { useMessageContext, useImageUrl } from '@botui/hooks'
+import { useMessageContext, useImageUrl, useProposal } from '@botui/hooks'
 import { MessageLoading } from '@botui/components'
 import { css } from '@emotion/react'
 import { ContentImage } from '@botui/types'
@@ -14,7 +14,8 @@ const style = (loading: boolean) =>
       })
 
 const Image: FC = () => {
-  const { message, handleUpdate } = useMessageContext<ContentImage>()
+  const message = useMessageContext<ContentImage>()
+  const [, { handleUpdate }] = useProposal()
   const url = useImageUrl(message.content.props.imgKey)
   const [loading, setLoading] = useState(true)
   const [imageLoaded, setImageLoaded] = useState(false)
