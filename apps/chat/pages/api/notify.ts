@@ -41,3 +41,22 @@ const msg = (to: string, data: Record<string, unknown>): MailDataRequired => ({
   templateId: 'd-812677117fa7414ea9cb219d8dc0ab45',
   dynamicTemplateData: data
 })
+
+export const requestNotify = async (
+  values: Record<string, unknown>,
+  session: Session
+): Promise<Response | void> => {
+  const { id, title, email } = session
+  if (!email) return
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+  const res = await fetch('/api/notify', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ values, config: { id, title, email } })
+  })
+
+  return res
+}
