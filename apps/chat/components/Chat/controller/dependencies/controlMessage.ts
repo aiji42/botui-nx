@@ -112,8 +112,7 @@ const messageReplace = (
         ...message.content.props,
         children: message.content.props.children.replace(
           /\{\{(.+?)\}\}/g,
-          (_, key) =>
-            `${customMessages[key] ?? values[key] ?? ''}`
+          (_, key) => `${customMessages[key] ?? values[key] ?? ''}`
         )
       }
     }

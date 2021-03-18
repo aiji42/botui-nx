@@ -13,9 +13,7 @@ interface ChatMainProps {
 }
 
 const ChatMain: FC<ChatMainProps> = (props) => {
-  return (
-    <Chat session={props.session} />
-  )
+  return <Chat session={props.session} />
 }
 
 export const getServerSideProps: GetServerSideProps<

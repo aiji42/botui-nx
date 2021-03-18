@@ -5,24 +5,40 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react'
-import { ChildHandshake, WindowMessenger, ParentHandshake, LocalHandle, RemoteHandle } from 'post-me'
+import {
+  ChildHandshake,
+  WindowMessenger,
+  ParentHandshake,
+  LocalHandle,
+  RemoteHandle
+} from 'post-me'
 import { methods } from './common'
-import { JobFormPush, Proposals } from '@botui/types'
+import { JobFormPush, Session } from '@botui/types'
 
 const noop = () => {
   // noop
 }
 
+type Values = Record<string, unknown>
+type Store = {
+  get: <T extends string | undefined | null>(k?: T) => (T extends string ? unknown : Values)
+  set: (k: string, v: unknown) => void
+}
+
 interface ChatContollorContextValue {
   close: () => void
   evalFunction: (t: string, v: Record<string, string>) => Promise<void>
-  getCustomChoice: () => Promise<Record<string, Array<{ value: string; label: string }>> | undefined>
+  getCustomChoice: () => Promise<
+    Record<string, Array<{ value: string; label: string }>> | undefined
+  >
   getCustomMessage: () => Promise<Record<string, string> | undefined>
-  formPush: (j: JobFormPush, v: Record<string, string>) => Promise<void>
-  proposals: Proposals
+  formPush: (j: JobFormPush, v: Record<string, unknown>) => Promise<void>
+  store: Store
+  session: Session
 }
 
 export const ChatControllerContext = createContext<ChatContollorContextValue>({
@@ -31,7 +47,8 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
   getCustomChoice: () => Promise.resolve({}),
   getCustomMessage: () => Promise.resolve({}),
   formPush: () => Promise.resolve(),
-  proposals: []
+  store: {} as Store,
+  session: {} as Session
 })
 
 type Event = {
@@ -39,12 +56,20 @@ type Event = {
 }
 
 interface ChatControllerProviderValue {
-  proposals: Proposals
+  session: Session
 }
 
-export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({ children, proposals }) => {
-  const [localHandle, setLocalHandle] = useState<LocalHandle<typeof methods, Event>>()
-  const [remoteHandle, setRemoteHandle] = useState<RemoteHandle<typeof methods, Event>>()
+export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
+  children,
+  session
+}) => {
+  const [localHandle, setLocalHandle] = useState<
+    LocalHandle<typeof methods, Event>
+  >()
+  const [remoteHandle, setRemoteHandle] = useState<
+    RemoteHandle<typeof methods, Event>
+  >()
+  const [values, setValues] = useState<Record<string, unknown>>({})
 
   useEffect(() => {
     const messenger = new WindowMessenger({
@@ -58,33 +83,59 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({ childr
     })
   }, [])
 
+  const store = useMemo<Store>(
+    () => ({
+      get: (k?: string) => (k ? values[k] : values),
+      set: (k: string, v: unknown) => setValues((prev) => ({ ...prev, [k]: v }))
+    }),
+    [values]
+  )
+
   const close = useCallback<ChatContollorContextValue['close']>(() => {
     localHandle?.emit('onClose', {})
   }, [localHandle])
 
   const evalFunction = useCallback<ChatContollorContextValue['evalFunction']>(
-    async (functionString, values) => {
+    async (functionString) => {
       await remoteHandle?.call('evalFunction', functionString, values)
     },
-    [remoteHandle]
+    [remoteHandle, values]
   )
 
-  const getCustomChoice = useCallback<ChatContollorContextValue['getCustomChoice']>(async () => await remoteHandle?.call('getCustomChoice'), [remoteHandle])
-  const getCustomMessage = useCallback<ChatContollorContextValue['getCustomMessage']>(async () => await remoteHandle?.call('getCustomMessage'), [remoteHandle])
+  const getCustomChoice = useCallback<
+    ChatContollorContextValue['getCustomChoice']
+  >(async () => await remoteHandle?.call('getCustomChoice'), [remoteHandle])
+  const getCustomMessage = useCallback<
+    ChatContollorContextValue['getCustomMessage']
+  >(async () => await remoteHandle?.call('getCustomMessage'), [remoteHandle])
 
-  const formPush = useCallback<ChatContollorContextValue['formPush']>(async (job, values) => {
-    await remoteHandle?.call('formPush', job, values)
-  }, [remoteHandle])
+  const formPush = useCallback<ChatContollorContextValue['formPush']>(
+    async (job) => {
+      await remoteHandle?.call('formPush', job, values)
+    },
+    [remoteHandle, values]
+  )
 
   return (
     <ChatControllerContext.Provider
       children={children}
-      value={{ close, evalFunction, getCustomChoice, getCustomMessage, formPush, proposals }}
+      value={{
+        close,
+        evalFunction,
+        getCustomChoice,
+        getCustomMessage,
+        formPush,
+        session,
+        store
+      }}
     />
   )
 }
 
-export const ChatControllReceiver: FC<{ handleClose: () => void, children: ReactElement }> = ({ handleClose, children }) => {
+export const ChatControllReceiver: FC<{
+  handleClose: () => void
+  children: ReactElement
+}> = ({ handleClose, children }) => {
   const ref = useRef<HTMLIFrameElement>()
 
   useEffect(() => {

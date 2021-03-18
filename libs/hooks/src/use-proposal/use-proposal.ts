@@ -1,7 +1,7 @@
-import { Proposal } from "@botui/types"
-import { useRouter } from "next/router"
-import { useCallback, useContext } from "react"
-import { ProposalContext } from "./ProposalContext"
+import { Proposal } from '@botui/types'
+import { useRouter } from 'next/router'
+import { useCallback, useContext } from 'react'
+import { ProposalContext } from './ProposalContext'
 
 interface Helper {
   handleUpdate: () => void

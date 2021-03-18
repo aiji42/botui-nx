@@ -4,12 +4,9 @@ import { pushForm } from './pushForm'
 
 declare const window: CustomWindow
 
-type Values = Record<string, string>
+type Values = Record<string, unknown>
 
-const formPush = async (
-  job: JobFormPush,
-  values: Values
-): Promise<void> => {
+const formPush = async (job: JobFormPush, values: Values): Promise<void> => {
   const form = document.querySelector<HTMLFormElement>(job.formSelector)
   if (!form) return
   job.dataMapper.forEach((mapper) => {
@@ -33,8 +30,7 @@ const formPush = async (
 
 const evalFunction = async (functional: string, values: Values) => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const AsyncFunction = Object.getPrototypeOf(async function () {})
-    .constructor
+  const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
   const func = new AsyncFunction('values', functional)
   await func(values)
 }

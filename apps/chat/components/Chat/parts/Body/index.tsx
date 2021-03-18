@@ -1,9 +1,24 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { useChatConfigContext, MessageContextProvider, useChatController, useMessageContext, ProposalContextProvider, useProposal } from '@botui/hooks'
+import {
+  useChatConfigContext,
+  MessageContextProvider,
+  useChatController,
+  useMessageContext,
+  ProposalContextProvider,
+  useProposal
+} from '@botui/hooks'
 import { css } from '@emotion/react'
 import { MessageWrapper } from './MessageWrapper'
 import { Message } from './Message'
-import { ProposalCloser, ProposalRelayer, ProposalSkipper, Session, Skipper, SkipperCondition, SkipperConditionOperator } from '@botui/types'
+import {
+  ProposalCloser,
+  ProposalRelayer,
+  ProposalSkipper,
+  Session,
+  Skipper,
+  SkipperCondition,
+  SkipperConditionOperator
+} from '@botui/types'
 import { addEntry } from '@botui/api'
 import { requestNotify } from '../../../../pages/api/notify'
 
@@ -27,17 +42,14 @@ export const Body: FC = (props) => {
       {proposals.map((proposal) => (
         <ProposalContextProvider key={proposal.id} proposal={proposal}>
           {proposal.type === 'message' ? (
-            <MessageContextProvider
-              message={proposal.data}
-            >
+            <MessageContextProvider message={proposal.data}>
               <MessageWrapper>
                 <Message />
               </MessageWrapper>
             </MessageContextProvider>
           ) : null}
         </ProposalContextProvider>
-      ))
-    }
+      ))}
     </div>
   )
 }
@@ -61,7 +73,9 @@ const Relayer: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
       formPush(proposal.data, {}).then(handleUpdate)
     }
-    return () => { mounted.current = false }
+    return () => {
+      mounted.current = false
+    }
   }, [evalFunction, formPush, handleUpdate, proposal.data])
 
   return null
@@ -95,7 +109,9 @@ const Closer: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
       formPush(proposal.data, {}).then(handleUpdate)
     }
-    return () => { mounted.current = false }
+    return () => {
+      mounted.current = false
+    }
   }, [evalFunction, formPush, handleUpdate, proposal.data])
 
   return null
@@ -107,7 +123,9 @@ const Skipper: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
     if (!mounted.current) return
     const skipNum = skipperEvaluate(proposal.data, {})
     // FIXME: update
-    return () => { mounted.current = false }
+    return () => {
+      mounted.current = false
+    }
   }, [proposal.data])
 
   return null
