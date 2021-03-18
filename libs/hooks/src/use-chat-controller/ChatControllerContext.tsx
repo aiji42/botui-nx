@@ -25,7 +25,7 @@ const noop = () => {
 
 type Values = Record<string, unknown>
 type Store = {
-  get: <T extends string | undefined | null>(k?: T) => (T extends string ? unknown : Values)
+  get: (() => Values) | ((k: string) => Values[string])
   set: (k: string, v: unknown) => void
 }
 
@@ -69,7 +69,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   const [remoteHandle, setRemoteHandle] = useState<
     RemoteHandle<typeof methods, Event>
   >()
-  const [values, setValues] = useState<Record<string, unknown>>({})
+  const [values, setValues] = useState<Values>({})
 
   useEffect(() => {
     const messenger = new WindowMessenger({
@@ -85,7 +85,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
 
   const store = useMemo<Store>(
     () => ({
-      get: (k?: string) => (k ? values[k] : values),
+      get: (k?: string) => k === undefined ? values : values[k],
       set: (k: string, v: unknown) => setValues((prev) => ({ ...prev, [k]: v }))
     }),
     [values]
