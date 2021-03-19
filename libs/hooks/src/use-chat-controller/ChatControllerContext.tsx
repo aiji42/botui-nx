@@ -17,7 +17,9 @@ import {
   RemoteHandle
 } from 'post-me'
 import { methods } from './common'
-import { JobFormPush, Session } from '@botui/types'
+import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
+import { useRouter } from 'next/router'
+import { addEntry as addEntryOriginal } from '@botui/api'
 
 const noop = () => {
   // noop
@@ -31,13 +33,16 @@ type Store = {
 
 interface ChatContollorContextValue {
   close: () => void
-  evalFunction: (t: string, v: Record<string, string>) => Promise<void>
+  evalFunction: (t: string) => Promise<void>
   getCustomChoice: () => Promise<
     Record<string, Array<{ value: string; label: string }>> | undefined
   >
-  getCustomMessage: () => Promise<Record<string, string> | undefined>
-  formPush: (j: JobFormPush, v: Record<string, unknown>) => Promise<void>
+  getCustomMessage: () => Promise<Values | undefined>
+  formPush: (j: JobFormPush) => Promise<void>
+  addEntry: () => void
   store: Store
+  values: Values
+  proposals: Proposals
   session: Session
 }
 
@@ -47,7 +52,10 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
   getCustomChoice: () => Promise.resolve({}),
   getCustomMessage: () => Promise.resolve({}),
   formPush: () => Promise.resolve(),
+  addEntry: noop,
   store: {} as Store,
+  values: {},
+  proposals: [],
   session: {} as Session
 })
 
@@ -63,6 +71,22 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   children,
   session
 }) => {
+  const [proposals, setProposals] = useState<Proposals>([])
+  const { query } = useRouter()
+
+  useEffect(() => {
+    const id = query['currentId']
+    const skipNum = query['skipNum']
+    if (typeof id !== 'string') return
+    const nextProposal = getNextProposal(
+      session.proposals,
+      id,
+      typeof skipNum === 'number' ? skipNum : 0
+    )
+    if (!nextProposal) return // complete
+    setProposals((prev) => [...prev, nextProposal])
+  }, [query, session.proposals])
+
   const [localHandle, setLocalHandle] = useState<
     LocalHandle<typeof methods, Event>
   >()
@@ -85,7 +109,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
 
   const store = useMemo<Store>(
     () => ({
-      get: (k?: string) => k === undefined ? values : values[k],
+      get: (k: string) => values[k],
       set: (k: string, v: unknown) => setValues((prev) => ({ ...prev, [k]: v }))
     }),
     [values]
@@ -116,6 +140,14 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
     [remoteHandle, values]
   )
 
+  const addEntry = useCallback<ChatContollorContextValue['addEntry']>(() => {
+    addEntryOriginal({
+      sessionId: session.id,
+      owner: session.owner,
+      inputs: values
+    })
+  }, [session, values])
+
   return (
     <ChatControllerContext.Provider
       children={children}
@@ -125,11 +157,23 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
         getCustomChoice,
         getCustomMessage,
         formPush,
+        addEntry,
         session,
+        proposals,
+        values,
         store
       }}
     />
   )
+}
+
+const getNextProposal = (
+  proposals: Proposals,
+  id: string,
+  skipNum = 0
+): Proposal | null => {
+  const index = proposals.findIndex((p) => p.id === id) ?? 0
+  return proposals[index + 1 + skipNum] ?? null
 }
 
 export const ChatControllReceiver: FC<{

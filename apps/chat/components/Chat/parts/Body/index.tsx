@@ -1,9 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react'
 import {
-  useChatConfigContext,
   MessageContextProvider,
   useChatController,
-  useMessageContext,
   ProposalContextProvider,
   useProposal
 } from '@botui/hooks'
@@ -14,12 +12,10 @@ import {
   ProposalCloser,
   ProposalRelayer,
   ProposalSkipper,
-  Session,
   Skipper,
   SkipperCondition,
   SkipperConditionOperator
 } from '@botui/types'
-import { addEntry } from '@botui/api'
 import { requestNotify } from '../../../../pages/api/notify'
 
 const style = {
@@ -34,7 +30,7 @@ const style = {
   })
 }
 
-export const Body: FC = (props) => {
+export const Body: FC = () => {
   const { proposals } = useChatController()
 
   return (
@@ -47,31 +43,35 @@ export const Body: FC = (props) => {
                 <Message />
               </MessageWrapper>
             </MessageContextProvider>
-          ) : null}
+          ) : proposal.type === 'skipper' ? (
+            <SkipperComponent proposal={proposal} />
+          ) : proposal.type === 'relayer' ? (
+            <RelayerComponent proposal={proposal} />
+          ) : (
+            <CloserComponent proposal={proposal} />
+          )}
         </ProposalContextProvider>
       ))}
     </div>
   )
 }
 
-const Relayer: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
+const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatController()
   const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
     if (proposal.data.job === 'script') {
-      // FIXME: value
-      evalFunction(proposal.data.script, {}).then(handleUpdate)
+      evalFunction(proposal.data.script).then(() => handleUpdate())
     }
     if (proposal.data.job === 'webhook') {
       // FIXME:
       handleUpdate()
     }
     if (proposal.data.job === 'formPush') {
-      // FIXME: value
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
-      formPush(proposal.data, {}).then(handleUpdate)
+      formPush(proposal.data).then(() => handleUpdate())
     }
     return () => {
       mounted.current = false
@@ -81,58 +81,69 @@ const Relayer: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   return null
 }
 
-const Closer: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
-  const { formPush, evalFunction } = useChatController()
+const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
+  const {
+    formPush,
+    evalFunction,
+    addEntry,
+    values,
+    session
+  } = useChatController()
   const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
     if (proposal.data.job === 'store') {
-      // FIXME: value
-      // FIXME: session
-      addEntry({ owner: '', sessionId: '', inputs: {} })
+      addEntry()
     }
     if (proposal.data.job === 'script') {
-      // FIXME: value
-      evalFunction(proposal.data.script, {}).then(handleUpdate)
+      evalFunction(proposal.data.script).then(() => handleUpdate())
     }
     if (proposal.data.job === 'webhook') {
       // TODO:
       handleUpdate()
     }
     if (proposal.data.notify) {
-      // FIXME: Value, session
-      requestNotify({}, {} as Session)
+      requestNotify(values, session)
     }
     if (proposal.data.job === 'formPush') {
-      // FIXME: value
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
-      formPush(proposal.data, {}).then(handleUpdate)
+      formPush(proposal.data).then(() => handleUpdate())
     }
     return () => {
       mounted.current = false
     }
-  }, [evalFunction, formPush, handleUpdate, proposal.data])
+  }, [
+    addEntry,
+    evalFunction,
+    formPush,
+    handleUpdate,
+    proposal.data,
+    session,
+    values
+  ])
 
   return null
 }
 
-const Skipper: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
+const SkipperComponent: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
   const mounted = useRef(true)
+  const { values } = useChatController()
+  const [, { handleUpdate }] = useProposal()
   useEffect(() => {
     if (!mounted.current) return
-    const skipNum = skipperEvaluate(proposal.data, {})
-    // FIXME: update
+    const skipNum = skipperEvaluate(proposal.data, values)
+    handleUpdate(skipNum)
     return () => {
       mounted.current = false
     }
-  }, [proposal.data])
+  }, [handleUpdate, proposal.data, values])
 
   return null
 }
 
 export type PatternType = SkipperCondition['pattern']
-export type ValueType = PatternType | Array<PatternType>
+export type ValueType = unknown
 
 export const skipperEvaluate = (
   skipper: Skipper,
