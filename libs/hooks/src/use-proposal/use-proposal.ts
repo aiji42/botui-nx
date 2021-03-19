@@ -15,7 +15,7 @@ export const useProposal = (): [Proposal, Helper] => {
     (n) => {
       const skip = n ? { skip: n } : {}
       const url = {
-        pathname: router.pathname,
+        pathname: router.asPath,
         query: { currentId: proposal.id, ...skip }
       }
       router.replace(url, url, { shallow: true })

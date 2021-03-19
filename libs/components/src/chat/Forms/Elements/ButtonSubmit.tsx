@@ -7,9 +7,7 @@ const ButtonSubmit: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   ...props
 }) => {
-  const {
-    message: { completed }
-  } = useMessageContext()
+  const { completed } = useMessageContext()
   const { isValid, isSubmitting, dirty } = useFormikContext()
   const disabled = (!dirty && completed) || !isValid || isSubmitting
   const updated = dirty && completed

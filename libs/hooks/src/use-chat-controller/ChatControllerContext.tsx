@@ -77,10 +77,10 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   useEffect(() => {
     const id = query['currentId']
     const skipNum = query['skipNum']
-    if (typeof id !== 'string') return
+    // if (typeof id !== 'string') return
     const nextProposal = getNextProposal(
       session.proposals,
-      id,
+      (typeof id === 'string' ? id : 'start'),
       typeof skipNum === 'number' ? skipNum : 0
     )
     if (!nextProposal) return // complete
@@ -189,7 +189,7 @@ export const ChatControllReceiver: FC<{
       remoteWindow: ref.current.contentWindow,
       remoteOrigin: '*'
     })
-    ParentHandshake(messenger, methods, 20, 1000).then((connection) => {
+    ParentHandshake(messenger, methods, 40, 1000).then((connection) => {
       const remoteHandle = connection.remoteHandle()
       remoteHandle.addEventListener('onClose', handleClose)
     })
