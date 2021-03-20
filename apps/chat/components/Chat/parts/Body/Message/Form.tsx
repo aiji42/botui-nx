@@ -13,7 +13,7 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import { useMessageContext, useProposal } from '@botui/hooks'
+import { useChatController, useMessageContext, useProposal } from '@botui/hooks'
 import { ContentForm, Form as FormType } from '@botui/types'
 import { css } from '@emotion/react'
 
@@ -26,17 +26,14 @@ const style = {
 const Form: FC = () => {
   const message = useMessageContext<ContentForm>()
   const [, { handleUpdate }] = useProposal()
-  const props = message.content.props
+  const { store, values } = useChatController()
+  const props = {...message.content.props, values}
   const handleComplete = useCallback(
-    (props: FormType) => {
-      // const newContent = { ...message.content, props }
-      // if (!handleUpdate) return
-      // if (message.completed)
-      //   handleUpdate({ ...message, content: newContent, updated: true })
-      // else handleUpdate({ ...message, content: newContent, completed: true })
+    (arg: FormType) => {
+      store.set(arg.values)
       handleUpdate()
     },
-    [message, handleUpdate]
+    [store, handleUpdate]
   )
 
   // TODO: customChoiceの置換

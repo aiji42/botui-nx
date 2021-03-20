@@ -27,8 +27,8 @@ const noop = () => {
 
 type Values = Record<string, unknown>
 type Store = {
-  get: (() => Values) | ((k: string) => Values[string])
-  set: (k: string, v: unknown) => void
+  get: (k: string) => Values[string]
+  set: (v: Values) => void
 }
 
 interface ChatContollorContextValue {
@@ -72,7 +72,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   session
 }) => {
   const [proposals, setProposals] = useState<Proposals>([])
-  const { query } = useRouter()
+  const { query, replace, asPath } = useRouter()
 
   useEffect(() => {
     const id = query['currentId']
@@ -84,7 +84,14 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
       typeof skipNum === 'number' ? skipNum : 0
     )
     if (!nextProposal) return // complete
-    setProposals((prev) => [...prev, nextProposal])
+    const index = proposals.findIndex(({ id }) => id === nextProposal?.id)
+    if (index < 0)
+      setProposals((prev) => [...prev, nextProposal])
+    else {
+      setProposals([...proposals.slice(0, index)])
+      replace({ pathname: asPath, query }, { pathname: asPath, query }, { shallow: true })
+    }
+
   }, [query, session.proposals])
 
   const [localHandle, setLocalHandle] = useState<
@@ -110,7 +117,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   const store = useMemo<Store>(
     () => ({
       get: (k: string) => values[k],
-      set: (k: string, v: unknown) => setValues((prev) => ({ ...prev, [k]: v }))
+      set: (v) => setValues((prev) => ({ ...prev, ...v }))
     }),
     [values]
   )
