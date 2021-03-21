@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { useChatConfigContext, useMessageContext } from '@botui/hooks'
+import { useChatController, useMessageContext } from '@botui/hooks'
 import { css, keyframes } from '@emotion/react'
 import Scroll from 'react-scroll'
 import { HumanMessageWrapper } from './HumanMessageWrapper'
@@ -32,10 +32,7 @@ const style = {
 
 export const MessageWrapper: FC = (props) => {
   const message = useMessageContext()
-  const {
-    images: { agent },
-    theme
-  } = useChatConfigContext()
+  const { session: { images: { agent }, theme } } = useChatController()
   useEffect(() => {
     setTimeout(
       () =>

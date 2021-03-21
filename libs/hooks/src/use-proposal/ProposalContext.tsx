@@ -1,11 +1,24 @@
-import React, { FC, createContext } from 'react'
+import React, { FC, createContext, useState, Dispatch, SetStateAction } from 'react'
 import { Proposal } from '@botui/types'
 
-export const ProposalContext = createContext<Proposal>({} as Proposal)
+const noop = () => {
+  // no-op
+}
+
+interface ProposalContextValue {
+  proposal: Proposal,
+  setCompleted: Dispatch<SetStateAction<boolean>>
+}
+
+export const ProposalContext = createContext<ProposalContextValue>({
+  proposal: {} as Proposal,
+  setCompleted: noop
+})
 
 export const ProposalContextProvider: FC<{ proposal: Proposal }> = ({
   children,
   proposal
 }) => {
-  return <ProposalContext.Provider value={proposal} children={children} />
+  const [completed, setCompleted] = useState(false)
+  return <ProposalContext.Provider value={{proposal: {...proposal, completed}, setCompleted}} children={children} />
 }

@@ -72,7 +72,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   session
 }) => {
   const [proposals, setProposals] = useState<Proposals>([])
-  const { query, replace, asPath } = useRouter()
+  const { query, replace, pathname, asPath } = useRouter()
 
   useEffect(() => {
     const id = query['currentId']
@@ -89,10 +89,10 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
       setProposals((prev) => [...prev, nextProposal])
     else {
       setProposals([...proposals.slice(0, index)])
-      replace({ pathname: asPath, query }, { pathname: asPath, query }, { shallow: true })
+      replace({ pathname, query }, asPath, { shallow: true })
     }
 
-  }, [query, session.proposals])
+  }, [pathname, query, replace, session.proposals])
 
   const [localHandle, setLocalHandle] = useState<
     LocalHandle<typeof methods, Event>

@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import {
-  useChatConfigContext,
   useChatController,
   useImageUrl
 } from '@botui/hooks'
@@ -33,11 +32,7 @@ const style = {
 }
 
 export const Header: FC = () => {
-  const {
-    theme: { header },
-    images,
-    title
-  } = useChatConfigContext()
+  const { session: { theme: { header }, images, title } } = useChatController()
   const imageURL = useImageUrl(images.logo?.key)
   const { close } = useChatController()
 

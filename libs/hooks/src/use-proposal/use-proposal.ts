@@ -8,19 +8,20 @@ interface Helper {
 }
 
 export const useProposal = (): [Proposal, Helper] => {
-  const proposal = useContext(ProposalContext)
+  const { proposal, setCompleted } = useContext(ProposalContext)
   const router = useRouter()
 
   const handleUpdate = useCallback<Helper['handleUpdate']>(
     (n) => {
+      setCompleted(true)
       const skip = n ? { skip: n } : {}
       const url = {
-        pathname: router.asPath,
-        query: { currentId: proposal.id, ...skip }
+        pathname: router.pathname,
+        query: { id: router.query.id, currentId: proposal.id, ...skip }
       }
-      router.replace(url, url, { shallow: true })
+      router.replace(url, router.asPath, { shallow: true })
     },
-    [router, proposal.id]
+    [router, proposal.id, setCompleted]
   )
 
   return [proposal, { handleUpdate }]
