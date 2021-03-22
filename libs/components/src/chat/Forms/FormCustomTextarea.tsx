@@ -53,7 +53,6 @@ const FormCustomTextarea = withFormik<
           }
         : {}
     ),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useChatConfigContext } from '@botui/hooks'
+import { useChatConfigContext, useChatController } from '@botui/hooks'
 import { Footer as ChatFooter } from '@botui/components'
 import { css } from '@emotion/react'
 
@@ -14,9 +14,9 @@ const style = {
 
 export const Footer: FC = () => {
   const {
-    theme: { footer, progressBar },
     percentOfProgress
   } = useChatConfigContext()
+  const { session: { theme: { footer, progressBar } } } = useChatController()
 
   return (
     <div css={style.root}>

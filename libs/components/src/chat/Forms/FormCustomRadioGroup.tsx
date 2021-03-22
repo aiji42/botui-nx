@@ -48,7 +48,6 @@ const FormCustomRadioGroup = withFormik<
     yup.object().shape({
       [name]: yup.string().required('選択してください')
     }),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

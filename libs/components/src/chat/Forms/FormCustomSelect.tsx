@@ -55,7 +55,6 @@ const FormCustomSelect = withFormik<
         {}
       )
     ),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

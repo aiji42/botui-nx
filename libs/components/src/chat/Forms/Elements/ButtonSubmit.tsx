@@ -1,13 +1,13 @@
 import React, { FC, ButtonHTMLAttributes } from 'react'
 import Button from './Button'
 import { useFormikContext } from 'formik'
-import { useMessageContext } from '@botui/hooks'
+import { useMessageContext, useProposal } from '@botui/hooks'
 
 const ButtonSubmit: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   ...props
 }) => {
-  const { completed } = useMessageContext()
+  const [{ completed }] = useProposal()
   const { isValid, isSubmitting, dirty } = useFormikContext()
   const disabled = (!dirty && completed) || !isValid || isSubmitting
   const updated = dirty && completed

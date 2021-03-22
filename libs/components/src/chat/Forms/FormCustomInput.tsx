@@ -55,7 +55,6 @@ const FormCustomInput = withFormik<FormCustomInputType, FormCustomInputValues>({
         }
       }, {})
     ),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

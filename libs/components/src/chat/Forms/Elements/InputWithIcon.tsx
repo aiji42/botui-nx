@@ -58,9 +58,8 @@ const styles = ({
   touched,
   initialValue
 }: FieldMetaProps<string | number>): SerializedStyles | SerializedStyles[] => {
-  if (!error) return [style.base, style.isOk]
-  if (!touched && error && `${initialValue ?? ''}`.length === 0)
-    return [style.base, style.noTouched]
+  if (!touched) return [style.base, style.noTouched]
+  if (!error && touched) return [style.base, style.isOk]
   if (error) return [style.base, style.withError]
   return style.base
 }
@@ -80,7 +79,7 @@ const InputWithIcon: FC<InputWithIconProps> = ({
 }) => {
   const ref = useRef<HTMLInputElement>(null)
   const [, meta] = useField(props)
-  const { error } = meta
+  const { error, touched } = meta
 
   useEffect(() => {
     if (!autoFocus) return
@@ -92,7 +91,7 @@ const InputWithIcon: FC<InputWithIconProps> = ({
     <>
       <div css={style.title}>{title}</div>
       <input {...props} ref={innerRef || ref} css={styles(meta)} />
-      {!error && (
+      {!error && touched && (
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>

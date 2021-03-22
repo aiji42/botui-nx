@@ -37,7 +37,6 @@ const FormEmail = withFormik<FormEmailType, FormEmailValues>({
         '正しい形式で入力してください'
       )
   }),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

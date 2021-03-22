@@ -52,7 +52,6 @@ const FormCustomCheckbox = withFormik<
           }
         : {}
     ),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 
