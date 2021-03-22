@@ -81,7 +81,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
     const nextProposal = getNextProposal(
       session.proposals,
       (typeof id === 'string' ? id : 'start'),
-      typeof skipNum === 'number' ? skipNum : 0
+      typeof skipNum === 'string' ? Number(skipNum) : 0
     )
     if (!nextProposal) return // complete
     const index = proposals.findIndex(({ id }) => id === nextProposal?.id)

@@ -14,7 +14,7 @@ export const useProposal = (): [Proposal, Helper] => {
   const handleUpdate = useCallback<Helper['handleUpdate']>(
     (n) => {
       setCompleted(true)
-      const skip = n ? { skip: n } : {}
+      const skip = n ? { skipNum: n } : {}
       const url = {
         pathname: router.pathname,
         query: { id: router.query.id, currentId: proposal.id, ...skip }
