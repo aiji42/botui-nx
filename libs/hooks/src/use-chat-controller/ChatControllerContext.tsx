@@ -16,7 +16,7 @@ import {
   LocalHandle,
   RemoteHandle
 } from 'post-me'
-import { methods } from './common'
+import { methods, initCustomMessageAndChoices } from './common'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
@@ -44,6 +44,7 @@ interface ChatContollorContextValue {
   values: Values
   proposals: Proposals
   session: Session
+  progressPercentage: number
 }
 
 export const ChatControllerContext = createContext<ChatContollorContextValue>({
@@ -56,7 +57,8 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
   store: {} as Store,
   values: {},
   proposals: [],
-  session: {} as Session
+  session: {} as Session,
+  progressPercentage: 0
 })
 
 type Event = {
@@ -72,6 +74,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   session
 }) => {
   const [proposals, setProposals] = useState<Proposals>([])
+  const [progressPercentage, setProgressPercentage] = useState<number>(0)
   const { query, replace, pathname, asPath } = useRouter()
 
   useEffect(() => {
@@ -83,6 +86,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
       (typeof id === 'string' ? id : 'start'),
       typeof skipNum === 'string' ? Number(skipNum) : 0
     )
+    setProgressPercentage(getPercentage(session.proposals, nextProposal?.id))
     if (!nextProposal) return // complete
     const index = proposals.findIndex(({ id }) => id === nextProposal?.id)
     if (index < 0)
@@ -167,11 +171,17 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
         addEntry,
         session,
         proposals,
+        progressPercentage,
         values,
         store
       }}
     />
   )
+}
+
+const getPercentage = (proposals: Proposals, currentId?: string | number) => {
+  const index = proposals.findIndex((p) => p.id === currentId) ?? 0
+  return (index + 1) / proposals.length
 }
 
 const getNextProposal = (
@@ -188,6 +198,10 @@ export const ChatControllReceiver: FC<{
   children: ReactElement
 }> = ({ handleClose, children }) => {
   const ref = useRef<HTMLIFrameElement>()
+
+  useEffect(() => {
+    initCustomMessageAndChoices()
+  }, [])
 
   useEffect(() => {
     if (!ref.current?.contentWindow) return

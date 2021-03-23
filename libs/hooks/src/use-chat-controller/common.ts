@@ -6,6 +6,13 @@ declare const window: CustomWindow
 
 type Values = Record<string, unknown>
 
+export const initCustomMessageAndChoices = () => {
+  window.botui = {
+    customChoice: {},
+    customMessage: {}
+  }
+}
+
 const formPush = async (job: JobFormPush, values: Values): Promise<void> => {
   const form = document.querySelector<HTMLFormElement>(job.formSelector)
   if (!form) return
