@@ -25,7 +25,7 @@ const noop = () => {
   // noop
 }
 
-type Values = Record<string, unknown>
+export type Values = Record<string, unknown>
 type Store = {
   get: (k: string) => Values[string]
   set: (v: Values) => void

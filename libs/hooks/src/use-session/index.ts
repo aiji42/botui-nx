@@ -1,7 +1,6 @@
-// customFunction の実行
 // customChoice
-// customMessage
 // formPush
 // complete
 // notify
 // addEntry
+// リファクタ hooksの整理、コンポネントのファイル分割 型を統一

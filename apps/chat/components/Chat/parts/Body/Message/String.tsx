@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
-import { useChatController, useMessageContext, useProposal } from '@botui/hooks'
+import { useChatController, useMessageContext, useProposal, Values } from '@botui/hooks'
 import Linkify from 'react-linkify'
 import { ContentString } from '@botui/types'
 
 const String: FC = () => {
   const message = useMessageContext<ContentString>()
-  const [customMessage, setCustomMessage] = useState<Record<string, string>>({})
+  const [customMessage, setCustomMessage] = useState<Values>({})
   const [, { handleUpdate }] = useProposal()
   const { values, getCustomMessage } = useChatController()
   const props = message.content.props
@@ -15,7 +15,7 @@ const String: FC = () => {
   useEffect(() => {
     if (mounted.current) {
       handleUpdate()
-      getCustomMessage().then((msgs) => typeof msgs === 'object' && setCustomMessage)
+      getCustomMessage().then((msgs) => typeof msgs === 'object' && setCustomMessage(msgs))
     }
     return () => {
       mounted.current = false
@@ -38,14 +38,14 @@ const String: FC = () => {
       )}
     >
       <span {...rest}>
-        {typeof children === 'string' ? nl2br(replace(children, values)) : children}
+        {typeof children === 'string' ? nl2br(replace(children, {...values, ...customMessage})) : children}
       </span>
     </Linkify>
   )
 }
 export default String
 
-const replace = (message: string, values: Record<string, unknown>) =>
+const replace = (message: string, values: Values) =>
   message.replace(
     /\{\{(.+?)\}\}/g,
     (_, key) => `${values[key] ?? ''}`
