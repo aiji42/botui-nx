@@ -1,6 +1,9 @@
+export type CustomChoice = Record<string, Array<{ value: string; label: string }>>
+export type CustomMessage = Record<string, string>
+
 export interface CustomWindow extends Window {
   botui?: {
-    customChoice?: Record<string, Array<{ value: string; label: string }>>
-    customMessage?: Record<string, string>
+    customChoice?: CustomChoice
+    customMessage?: CustomMessage
   }
 }

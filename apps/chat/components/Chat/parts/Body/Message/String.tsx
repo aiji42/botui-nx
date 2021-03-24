@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
-import { useChatController, useMessageContext, useProposal, Values } from '@botui/hooks'
+import { CustomMessage, useChatController, useMessageContext, useProposal, Values } from '@botui/hooks'
 import Linkify from 'react-linkify'
 import { ContentString } from '@botui/types'
 
 const String: FC = () => {
   const message = useMessageContext<ContentString>()
-  const [customMessage, setCustomMessage] = useState<Values>({})
+  const [customMessage, setCustomMessage] = useState<CustomMessage>({})
   const [, { handleUpdate }] = useProposal()
   const { values, getCustomMessage } = useChatController()
   const props = message.content.props

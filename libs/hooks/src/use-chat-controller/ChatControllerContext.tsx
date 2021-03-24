@@ -20,12 +20,14 @@ import { methods, initCustomMessageAndChoices } from './common'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
+import { CustomChoice, CustomMessage } from './customWindow'
 
 const noop = () => {
   // noop
 }
 
-export type Values = Record<string, unknown>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Values = Record<string, any>
 type Store = {
   get: (k: string) => Values[string]
   set: (v: Values) => void
@@ -35,9 +37,9 @@ interface ChatContollorContextValue {
   close: () => void
   evalFunction: (t: string) => Promise<void>
   getCustomChoice: () => Promise<
-    Record<string, Array<{ value: string; label: string }>> | undefined
+    CustomChoice | undefined
   >
-  getCustomMessage: () => Promise<Values | undefined>
+  getCustomMessage: () => Promise<CustomMessage | undefined>
   formPush: (j: JobFormPush) => Promise<void>
   addEntry: () => void
   store: Store
@@ -96,6 +98,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
       replace({ pathname, query }, asPath, { shallow: true })
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, query, replace, session.proposals])
 
   const [localHandle, setLocalHandle] = useState<

@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import {
   FormAddress,
   FormBirthDay,
@@ -13,8 +13,8 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import { useChatController, useMessageContext, useProposal } from '@botui/hooks'
-import { ContentForm, Form as FormType } from '@botui/types'
+import { useChatController, useMessageContext, useProposal, CustomChoice } from '@botui/hooks'
+import { ContentForm, Form as FormType, FormCustomRadioGroup as FormCustomRadioGroupProps, FormCustomCheckbox as FormCustomCheckboxProps, FormCustomSelect as FormCustomSelectProps } from '@botui/types'
 import { css } from '@emotion/react'
 
 const style = {
@@ -25,8 +25,9 @@ const style = {
 
 const Form: FC = () => {
   const message = useMessageContext<ContentForm>()
+  const [customChoice, setCustomChoice] = useState<CustomChoice>({})
   const [, { handleUpdate }] = useProposal()
-  const { store, values } = useChatController()
+  const { store, values, getCustomChoice } = useChatController()
   const props = {...message.content.props, values}
   const handleComplete = useCallback(
     (arg: FormType) => {
@@ -35,6 +36,9 @@ const Form: FC = () => {
     },
     [store, handleUpdate]
   )
+  useEffect(() => {
+    getCustomChoice().then((choice) => choice && setCustomChoice(choice))
+  }, [getCustomChoice])
 
   // TODO: customChoiceの置換
   return (
@@ -58,10 +62,10 @@ const Form: FC = () => {
         <FormCreditCard {...props} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomRadioGroup' && (
-        <FormCustomRadioGroup {...props} onSubmitted={handleComplete} />
+        <FormCustomRadioGroup {...props} inputs={{ ...props.inputs, ...customChoice }} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomSelect' && (
-        <FormCustomSelect {...props} onSubmitted={handleComplete} />
+        <FormCustomSelect {...props} selects={{ ...props.selects, ...customChoice }} onSubmitted={handleComplete} />
       )}
       {props.type === 'FormCustomInput' && (
         <FormCustomInput {...props} onSubmitted={handleComplete} />
@@ -80,3 +84,12 @@ const Form: FC = () => {
 }
 
 export default Form
+
+const fillInputs = (props: FormCustomRadioGroupProps | FormCustomCheckboxProps, customChoice: CustomChoice) => {
+  if (!customChoice[props.name]) return props
+  return { ...props, inputs: customChoice[props.name].map(({ label: title, value }) => ({ title, value })) }
+}
+
+const fillSelects = (selects: FormCustomSelectProps['selects'], customChoice: CustomChoice) => {
+
+}
