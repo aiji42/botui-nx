@@ -1,4 +1,10 @@
-import React, { FC, createContext, useState, Dispatch, SetStateAction } from 'react'
+import React, {
+  FC,
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import { Proposal } from '@botui/types'
 
 const noop = () => {
@@ -6,7 +12,7 @@ const noop = () => {
 }
 
 interface ProposalContextValue {
-  proposal: Proposal,
+  proposal: Proposal
   setCompleted: Dispatch<SetStateAction<boolean>>
 }
 
@@ -20,5 +26,10 @@ export const ProposalContextProvider: FC<{ proposal: Proposal }> = ({
   proposal
 }) => {
   const [completed, setCompleted] = useState(false)
-  return <ProposalContext.Provider value={{proposal: {...proposal, completed}, setCompleted}} children={children} />
+  return (
+    <ProposalContext.Provider
+      value={{ proposal: { ...proposal, completed }, setCompleted }}
+      children={children}
+    />
+  )
 }

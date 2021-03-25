@@ -1,8 +1,5 @@
 import React, { FC } from 'react'
-import {
-  useChatController,
-  useImageUrl
-} from '@botui/hooks'
+import { useChatController, useImageUrl } from '@botui/hooks'
 import Close from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
 import { Header as ChatHeader } from '@botui/components'
@@ -32,7 +29,13 @@ const style = {
 }
 
 export const Header: FC = () => {
-  const { session: { theme: { header }, images, title } } = useChatController()
+  const {
+    session: {
+      theme: { header },
+      images,
+      title
+    }
+  } = useChatController()
   const imageURL = useImageUrl(images.logo?.key)
   const { close } = useChatController()
 

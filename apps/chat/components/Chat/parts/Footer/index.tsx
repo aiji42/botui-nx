@@ -13,7 +13,12 @@ const style = {
 }
 
 export const Footer: FC = () => {
-  const { session: { theme: { footer, progressBar } }, progressPercentage } = useChatController()
+  const {
+    session: {
+      theme: { footer, progressBar }
+    },
+    progressPercentage
+  } = useChatController()
 
   return (
     <div css={style.root}>

@@ -36,12 +36,11 @@ type Store = {
 interface ChatContollorContextValue {
   close: () => void
   evalFunction: (t: string) => Promise<void>
-  getCustomChoice: () => Promise<
-    CustomChoice | undefined
-  >
+  getCustomChoice: () => Promise<CustomChoice | undefined>
   getCustomMessage: () => Promise<CustomMessage | undefined>
   formPush: (j: JobFormPush) => Promise<void>
   addEntry: () => void
+  complete: () => void
   store: Store
   values: Values
   proposals: Proposals
@@ -56,6 +55,7 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
   getCustomMessage: () => Promise.resolve({}),
   formPush: () => Promise.resolve(),
   addEntry: noop,
+  complete: noop,
   store: {} as Store,
   values: {},
   proposals: [],
@@ -65,6 +65,7 @@ export const ChatControllerContext = createContext<ChatContollorContextValue>({
 
 type Event = {
   onClose: Record<string, unknown>
+  onComplete: Record<string, unknown>
 }
 
 interface ChatControllerProviderValue {
@@ -78,28 +79,6 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   const [proposals, setProposals] = useState<Proposals>([])
   const [progressPercentage, setProgressPercentage] = useState<number>(0)
   const { query, replace, pathname, asPath } = useRouter()
-
-  useEffect(() => {
-    const id = query['currentId']
-    const skipNum = query['skipNum']
-    // if (typeof id !== 'string') return
-    const nextProposal = getNextProposal(
-      session.proposals,
-      (typeof id === 'string' ? id : 'start'),
-      typeof skipNum === 'string' ? Number(skipNum) : 0
-    )
-    setProgressPercentage(getPercentage(session.proposals, nextProposal?.id))
-    if (!nextProposal) return // complete
-    const index = proposals.findIndex(({ id }) => id === nextProposal?.id)
-    if (index < 0)
-      setProposals((prev) => [...prev, nextProposal])
-    else {
-      setProposals([...proposals.slice(0, index)])
-      replace({ pathname, query }, asPath, { shallow: true })
-    }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, query, replace, session.proposals])
 
   const [localHandle, setLocalHandle] = useState<
     LocalHandle<typeof methods, Event>
@@ -133,6 +112,10 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
     localHandle?.emit('onClose', {})
   }, [localHandle])
 
+  const complete = useCallback<ChatContollorContextValue['complete']>(() => {
+    localHandle?.emit('onComplete', {})
+  }, [localHandle])
+
   const evalFunction = useCallback<ChatContollorContextValue['evalFunction']>(
     async (functionString) => {
       await remoteHandle?.call('evalFunction', functionString, values)
@@ -162,6 +145,26 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
     })
   }, [session, values])
 
+  useEffect(() => {
+    const id = query['currentId']
+    const skipNum = query['skipNum']
+    const nextProposal = getNextProposal(
+      session.proposals,
+      typeof id === 'string' ? id : 'start',
+      typeof skipNum === 'string' ? Number(skipNum) : 0
+    )
+    if (!nextProposal) return
+    setProgressPercentage(getPercentage(session.proposals, nextProposal.id))
+    const index = proposals.findIndex(({ id }) => id === nextProposal.id)
+    if (index < 0) setProposals((prev) => [...prev, nextProposal])
+    else {
+      setProposals([...proposals.slice(0, index)])
+      replace({ pathname, query }, asPath, { shallow: true })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, query, replace, session.proposals, complete])
+
   return (
     <ChatControllerContext.Provider
       children={children}
@@ -172,6 +175,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
         getCustomMessage,
         formPush,
         addEntry,
+        complete,
         session,
         proposals,
         progressPercentage,
@@ -197,9 +201,10 @@ const getNextProposal = (
 }
 
 export const ChatControllReceiver: FC<{
-  handleClose: () => void
+  onClose: () => void
+  onComplete: () => void
   children: ReactElement
-}> = ({ handleClose, children }) => {
+}> = ({ onClose: handleClose, onComplete: handleComplete, children }) => {
   const ref = useRef<HTMLIFrameElement>()
 
   useEffect(() => {
@@ -216,8 +221,9 @@ export const ChatControllReceiver: FC<{
     ParentHandshake(messenger, methods, 40, 1000).then((connection) => {
       const remoteHandle = connection.remoteHandle()
       remoteHandle.addEventListener('onClose', handleClose)
+      remoteHandle.addEventListener('onComplete', handleComplete)
     })
-  }, [handleClose])
+  }, [handleClose, handleComplete])
 
   return cloneElement(children, { ref })
 }

@@ -87,34 +87,40 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     evalFunction,
     addEntry,
     values,
-    session
+    session,
+    complete
   } = useChatController()
   const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
-    if (proposal.data.job === 'store') {
-      addEntry()
-    }
-    if (proposal.data.job === 'script') {
-      evalFunction(proposal.data.script).then(() => handleUpdate())
-    }
-    if (proposal.data.job === 'webhook') {
-      // TODO:
-      handleUpdate()
-    }
     if (proposal.data.notify) {
       requestNotify(values, session)
     }
+    if (proposal.data.job === 'store') {
+      addEntry()
+      complete()
+    }
+    if (proposal.data.job === 'script') {
+      evalFunction(proposal.data.script).then(complete)
+    }
+    if (proposal.data.job === 'webhook') {
+      // TODO:
+      complete()
+    }
+
     if (proposal.data.job === 'formPush') {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
-      formPush(proposal.data).then(() => handleUpdate())
+      formPush(proposal.data).then(complete)
     }
+    if (proposal.data.job === 'none') complete()
+
     return () => {
       mounted.current = false
     }
   }, [
     addEntry,
+    complete,
     evalFunction,
     formPush,
     handleUpdate,

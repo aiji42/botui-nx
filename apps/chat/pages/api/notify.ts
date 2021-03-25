@@ -3,7 +3,7 @@ import sgMail from '@sendgrid/mail'
 import { MailDataRequired } from '@sendgrid/helpers/classes/mail'
 import { Session } from '@botui/types'
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
+sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY ?? '')
 
 interface RequestBody {
   values?: Record<string, string>

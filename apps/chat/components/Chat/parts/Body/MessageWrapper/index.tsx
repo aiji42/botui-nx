@@ -32,7 +32,12 @@ const style = {
 
 export const MessageWrapper: FC = (props) => {
   const message = useMessageContext()
-  const { session: { images: { agent }, theme } } = useChatController()
+  const {
+    session: {
+      images: { agent },
+      theme
+    }
+  } = useChatController()
   useEffect(() => {
     setTimeout(
       () =>

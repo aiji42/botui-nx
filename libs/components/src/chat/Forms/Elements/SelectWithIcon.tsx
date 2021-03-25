@@ -63,9 +63,11 @@ const styles = ({
   touched,
   initialValue
 }: FieldMetaProps<string>): SerializedStyles | SerializedStyles[] => {
-  if (!touched) return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])]
+  if (!touched)
+    return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])]
   if (!error && touched) return [style.base, style.isOk]
-  if (error) return [style.base, style.withError, ...(!value ? [style.noValue] : [])]
+  if (error)
+    return [style.base, style.withError, ...(!value ? [style.noValue] : [])]
   return style.base
 }
 
