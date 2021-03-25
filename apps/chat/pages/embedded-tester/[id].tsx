@@ -12,7 +12,16 @@ const Tester: FC<TesterProps> = ({ id }) => {
   useEffect(() => {
     new Botui(`/?sessionId=${id ?? ''}`, Boolean(router.query.open)).start()
   }, [id, router])
-  return <div></div>
+  return (
+    <div>
+      <form id="testForm" method="post" action="/api/form-push-test">
+        <input type="text" name="familyName" placeholder="familyName" />
+        <input type="text" name="firstName" placeholder="firstName" />
+        <input type="text" name="familyNameKana" placeholder="familyNameKana" />
+        <input type="text" name="firstNameKana" placeholder="firstNameKana" />
+      </form>
+    </div>
+  )
 }
 
 export default Tester

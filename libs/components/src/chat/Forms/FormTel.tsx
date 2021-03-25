@@ -37,7 +37,6 @@ const FormTel = withFormik<FormTelType, FormTelValues>({
         value ? isValidPhoneNumber(value, 'JP') : false
       )
   }),
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

@@ -63,9 +63,9 @@ const styles = ({
   touched,
   initialValue
 }: FieldMetaProps<string>): SerializedStyles | SerializedStyles[] => {
-  if (!error) return [style.base, style.isOk]
-  if (!touched && error && initialValue?.length === 0)
+  if (!touched)
     return [style.base, style.noTouched, ...(!value ? [style.noValue] : [])]
+  if (!error && touched) return [style.base, style.isOk]
   if (error)
     return [style.base, style.withError, ...(!value ? [style.noValue] : [])]
   return style.base
@@ -78,12 +78,12 @@ export type SelectWithIconProps = {
 
 const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const [, meta] = useField(props)
-  const { error } = meta
+  const { error, touched } = meta
   return (
     <>
       {title && <div css={style.title}>{title}</div>}
       <select {...props} css={styles(meta)} />
-      {!error ? (
+      {!error && touched ? (
         <div css={style.okIcon}>
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>

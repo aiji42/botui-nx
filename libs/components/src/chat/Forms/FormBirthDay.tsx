@@ -114,7 +114,6 @@ const FormBirthDay = withFormik<FormBirthDayType, FormBirthDayValues>({
     }
     return {}
   },
-  validateOnMount: true,
   mapPropsToStatus: ({ status }) => status,
   handleSubmit: customHandleSubmit
 })(Form)

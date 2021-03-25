@@ -1,23 +1,36 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
-import { useMessageContext } from '@botui/hooks'
-import { ContentString } from '@botui/types'
+import {
+  CustomMessage,
+  useChatController,
+  useMessageContext,
+  useProposal,
+  Values
+} from '@botui/hooks'
 import Linkify from 'react-linkify'
+import { ContentString } from '@botui/types'
 
 const String: FC = () => {
-  const { message, handleUpdate } = useMessageContext<ContentString>()
+  const message = useMessageContext<ContentString>()
+  const [customMessage, setCustomMessage] = useState<CustomMessage>({})
+  const [, { handleUpdate }] = useProposal()
+  const { values, getCustomMessage } = useChatController()
   const props = message.content.props
   const { children, ...rest } = props
   const mounted = useRef(true)
   useEffect(() => {
-    mounted.current &&
-      handleUpdate &&
-      handleUpdate({ ...message, completed: true })
+    if (mounted.current) {
+      handleUpdate()
+      getCustomMessage().then(
+        (msgs) => typeof msgs === 'object' && setCustomMessage(msgs)
+      )
+    }
     return () => {
       mounted.current = false
     }
-  }, [handleUpdate, message])
+  }, [handleUpdate, message, getCustomMessage])
 
+  // TODO: customMessageの置換
   return (
     <Linkify
       componentDecorator={(decoratedHref, decoratedText, key) => (
@@ -33,9 +46,14 @@ const String: FC = () => {
       )}
     >
       <span {...rest}>
-        {typeof children === 'string' ? nl2br(children) : children}
+        {typeof children === 'string'
+          ? nl2br(replace(children, { ...values, ...customMessage }))
+          : children}
       </span>
     </Linkify>
   )
 }
 export default String
+
+const replace = (message: string, values: Values) =>
+  message.replace(/\{\{(.+?)\}\}/g, (_, key) => `${values[key] ?? ''}`)

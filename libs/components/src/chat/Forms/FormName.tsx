@@ -165,7 +165,6 @@ const FormName = withFormik<FormNameType, FormNameValues>({
     return yup.object().shape(validateShape)
   },
   mapPropsToStatus: ({ status }) => status,
-  validateOnMount: true,
   handleSubmit: customHandleSubmit
 })(Form)
 

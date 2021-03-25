@@ -35,8 +35,14 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
 
   useEffect(() => {
     const { prefectureCode, address1, address2, address3, address4 } = address
-    if (prefectureCode) prefectureIdHelper.setValue(prefectureCode)
-    if (address1) cityHelper.setValue(address1 + address2 + address3 + address4)
+    if (prefectureCode) {
+      prefectureIdHelper.setValue(prefectureCode)
+      prefectureIdHelper.setTouched(true)
+    }
+    if (address1) {
+      cityHelper.setValue(address1 + address2 + address3 + address4)
+      cityHelper.setTouched(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
@@ -142,7 +148,6 @@ const FormAddress = withFormik<FormAddressType, FormAddressValues>({
       .max(200, '入力内容が長すぎます'),
     building: yup.string().max(200, '入力内容が長すぎます')
   }),
-  validateOnMount: true,
   mapPropsToStatus: ({ status }) => status,
   handleSubmit: customHandleSubmit
 })(Form)
