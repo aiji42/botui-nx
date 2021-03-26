@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
 import {
-  CustomMessage,
   useChatController,
   useMessageContext,
   useProposal,
   Values
 } from '@botui/hooks'
+import { CustomMessage } from '@botui/embedded'
 import Linkify from 'react-linkify'
 import { ContentString } from '@botui/types'
 

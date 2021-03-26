@@ -17,8 +17,8 @@ import {
   useChatController,
   useMessageContext,
   useProposal,
-  CustomChoice
 } from '@botui/hooks'
+import { CustomChoice } from '@botui/embedded'
 import {
   ContentForm,
   Form as FormType,
