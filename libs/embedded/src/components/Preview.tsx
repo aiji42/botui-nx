@@ -1,7 +1,8 @@
 import React, { FC, useState, useCallback } from 'react'
 import { Wrapper } from './Wrapper'
-import { Fab } from './Fab'
 import { ChatController } from './Controller'
+import ChatIcon from '@material-ui/icons/ChatBubble'
+import { Fab } from './Fab'
 
 interface Props {
   url: string
@@ -24,7 +25,7 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
           <iframe src={url} title="botui" width="100%" height="100%" />
         </ChatController>
       </Wrapper>
-      <Fab onClick={toggleOpen} isOpen={open} />
+      <Fab isOpen={open} onClick={toggleOpen} />
     </>
   )
 }

@@ -1,28 +1,12 @@
-import React, { FC, forwardRef, ReactElement, Ref } from 'react'
+/** @jsxImportSource @emotion/react */
+import React, { FC, forwardRef, ReactElement, Ref, useEffect } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import { TransitionProps } from '@material-ui/core/transitions'
 import Slide from '@material-ui/core/Slide'
 import Paper from '@material-ui/core/Paper'
 import makeStyles from '@material-ui/core/styles/makeStyles'
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    height: 700,
-    width: 400,
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-    backgroundColor: 'white',
-    zIndex: 100
-  }
-}))
-
-// eslint-disable-next-line react/display-name
-const Transition = forwardRef(
-  (props: TransitionProps & { children?: ReactElement }, ref: Ref<unknown>) => (
-    <Slide direction="up" mountOnEnter unmountOnExit ref={ref} {...props} />
-  )
-)
+import Modal from 'react-modal'
+import { css } from '@emotion/react'
 
 export interface WrapperProps {
   isFull: boolean
@@ -30,19 +14,41 @@ export interface WrapperProps {
 }
 
 export const Wrapper: FC<WrapperProps> = (props) => {
+  useEffect(() => {
+    Modal.setAppElement(document.querySelector('body'))
+  }, [])
   const { isFull, isOpen } = props
-  const classes = useStyles()
   if (isFull)
     return (
-      <Dialog TransitionComponent={Transition} open={isOpen} fullScreen>
+      <Modal isOpen={isOpen} style={{ content: { ...customStyles.content, height: '100%', width: '100%' }}}>
         {props.children}
-      </Dialog>
+      </Modal>
     )
   return (
-    <Slide direction="up" in={isOpen} mountOnEnter unmountOnExit>
-      <Paper elevation={2} className={classes.paper}>
+    <div>
+      <Modal isOpen={isOpen} style={customStyles}>
         {props.children}
-      </Paper>
-    </Slide>
+      </Modal>
+    </div>
   )
 }
+
+
+const customStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.85)"
+  },
+  content: {
+    position: "absolute",
+    top: "5rem",
+    left: "5rem",
+    right: "5rem",
+    bottom: "5rem",
+    backgroundColor: "paleturquoise",
+    borderRadius: "1rem",
+    padding: "1.5rem"
+  }
+};
