@@ -16,7 +16,12 @@ import {
   LocalHandle,
   RemoteHandle
 } from 'post-me'
-import { methods, initCustomMessageAndChoices, CustomChoice, CustomMessage } from '@botui/embedded'
+import {
+  methods,
+  initCustomMessageAndChoices,
+  CustomChoice,
+  CustomMessage
+} from '@botui/embedded'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'

@@ -1,25 +1,30 @@
 const commonjs = require('@rollup/plugin-commonjs')
 
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, '__esModule', { value: true })
 function getRollupOptions(options) {
   const extraGlobals = {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      'styled-components': 'styled',
-      '@emotion/react': 'emotionReact',
-      '@emotion/styled': 'emotionStyled',
-  };
-  if (Array.isArray(options.output)) {
-      options.output.forEach((o) => {
-          o.globals = Object.assign(Object.assign({}, o.globals), extraGlobals);
-      });
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    'styled-components': 'styled',
+    '@emotion/react': 'emotionReact',
+    '@emotion/styled': 'emotionStyled'
   }
-  else {
-      options.output = Object.assign(Object.assign({}, options.output), { globals: Object.assign(Object.assign({}, options.output.globals), extraGlobals) });
+  if (Array.isArray(options.output)) {
+    options.output.forEach((o) => {
+      o.globals = Object.assign(Object.assign({}, o.globals), extraGlobals)
+    })
+  } else {
+    options.output = Object.assign(Object.assign({}, options.output), {
+      globals: Object.assign(
+        Object.assign({}, options.output.globals),
+        extraGlobals
+      )
+    })
   }
 
   // console.log(options.plugins.find((plg) => plg.name === 'commonjs').transform)
-  options.plugins.push(commonjs({
+  options.plugins.push(
+    commonjs({
       include: 'node_modules/**',
       // left-hand side can be an absolute path, a path
       // relative to the current directory, or the name
@@ -38,8 +43,9 @@ function getRollupOptions(options) {
           'ForwardRef'
         ]
       }
-    }))
+    })
+  )
 
-  return options;
+  return options
 }
-module.exports = getRollupOptions;
+module.exports = getRollupOptions

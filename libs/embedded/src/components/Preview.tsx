@@ -1,7 +1,6 @@
 import React, { FC, useState, useCallback } from 'react'
 import { Wrapper } from './Wrapper'
 import { ChatController } from './Controller'
-import ChatIcon from '@material-ui/icons/ChatBubble'
 import { Fab } from './Fab'
 
 interface Props {

@@ -13,11 +13,7 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import {
-  useChatController,
-  useMessageContext,
-  useProposal,
-} from '@botui/hooks'
+import { useChatController, useMessageContext, useProposal } from '@botui/hooks'
 import { CustomChoice } from '@botui/embedded'
 import {
   ContentForm,

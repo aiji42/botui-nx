@@ -13,7 +13,9 @@ export const initCustomMessageAndChoices = () => {
   }
 }
 
-const isNotCustom = (arg: JobFormPush['dataMapper'][0]): arg is { from: string; to: string; custom: false } => !arg.custom
+const isNotCustom = (
+  arg: JobFormPush['dataMapper'][0]
+): arg is { from: string; to: string; custom: false } => !arg.custom
 
 const formPush = async (job: JobFormPush, values: Values): Promise<void> => {
   const form = document.querySelector<HTMLFormElement>(job.formSelector)

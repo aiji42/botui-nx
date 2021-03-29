@@ -1,12 +1,6 @@
-/** @jsxImportSource @emotion/react */
-import React, { FC, forwardRef, ReactElement, Ref, useEffect } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import { TransitionProps } from '@material-ui/core/transitions'
-import Slide from '@material-ui/core/Slide'
-import Paper from '@material-ui/core/Paper'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import React, { FC, useEffect } from 'react'
 import Modal from 'react-modal'
-import { css } from '@emotion/react'
+import { ClassNames } from '@emotion/react'
 
 export interface WrapperProps {
   isFull: boolean
@@ -20,35 +14,47 @@ export const Wrapper: FC<WrapperProps> = (props) => {
   const { isFull, isOpen } = props
   if (isFull)
     return (
-      <Modal isOpen={isOpen} style={{ content: { ...customStyles.content, height: '100%', width: '100%' }}}>
+      <Modal
+        isOpen={isOpen}
+        style={{
+          content: { ...customStyles.content, height: '100%', width: '100%' }
+        }}
+      >
         {props.children}
       </Modal>
     )
   return (
-    <div>
-      <Modal isOpen={isOpen} style={customStyles}>
-        {props.children}
-      </Modal>
-    </div>
+    <ClassNames>
+      {({ css }) => (
+        <Modal
+          isOpen={isOpen}
+          style={{ content: { inset: 'unset' } }}
+          portalClassName={css`
+            .ReactModal__Content {
+              position: absolute !important;
+              bottom: 16px !important;
+              right: 16px !important;
+              height: 700px;
+              width: 400px;
+              padding: 0px !important;
+              background-color: white !important;
+            }
+          `}
+        >
+          {props.children}
+        </Modal>
+      )}
+    </ClassNames>
   )
 }
 
-
 const customStyles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    backgroundColor: "rgba(0,0,0,0.85)"
-  },
   content: {
-    position: "absolute",
-    top: "5rem",
-    left: "5rem",
-    right: "5rem",
-    bottom: "5rem",
-    backgroundColor: "paleturquoise",
-    borderRadius: "1rem",
-    padding: "1.5rem"
+    height: 700,
+    width: 400,
+    inset: 'inherit',
+    backgroundColor: 'white',
+    zIndex: 100,
+    padding: 0
   }
-};
+}
