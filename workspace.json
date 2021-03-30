@@ -149,7 +149,6 @@
               "@emotion/react"
             ],
             "babelConfig": "@nrwl/react/plugins/bundle-babel",
-            "rollupConfig": "libs/embedded/rollup.config.js",
             "assets": [{ "glob": "README.md", "input": ".", "output": "." }]
           }
         },
