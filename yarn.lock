@@ -12472,11 +12472,6 @@ react-textarea-autosize@^8.3.2:
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
 
-react-tiny-fab@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/react-tiny-fab/-/react-tiny-fab-4.0.2.tgz#c076e5aa025972aa2d0351a6922c0a3d69a86e06"
-  integrity sha512-ddzI4VwDUNt1FgJEiihQP8Zv3FRpE5+qIx/UjKslzj6RPD8FqAXe5lDPJWeJ3qm78IcjHIS4SqBnZICYA8SrYg==
-
 react-transition-group@^4.4.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
