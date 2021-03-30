@@ -1,13 +1,16 @@
 const commonjs = require('@rollup/plugin-commonjs')
+const resolve = require('@rollup/plugin-node-resolve')
+// const babel = require('@rollup/plugin-babel')
+// process.env.NODE_ENV = 'production'
 
 Object.defineProperty(exports, '__esModule', { value: true })
 function getRollupOptions(options) {
   const extraGlobals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'styled-components': 'styled',
-    '@emotion/react': 'emotionReact',
-    '@emotion/styled': 'emotionStyled'
+    // react: 'React',
+    // 'react-dom': 'ReactDOM',
+    // 'styled-components': 'styled',
+    // '@emotion/react': 'emotionReact',
+    // '@emotion/styled': 'emotionStyled'
   }
   if (Array.isArray(options.output)) {
     options.output.forEach((o) => {
@@ -22,30 +25,14 @@ function getRollupOptions(options) {
     })
   }
 
-  // console.log(options.plugins.find((plg) => plg.name === 'commonjs').transform)
-  options.plugins.push(
-    commonjs({
-      include: 'node_modules/**',
-      // left-hand side can be an absolute path, a path
-      // relative to the current directory, or the name
-      // of a module in node_modules
-      namedExports: {
-        'node_modules/react/index.js': [
-          'cloneElement',
-          'createContext',
-          'Component',
-          'createElement'
-        ],
-        'node_modules/react-dom/index.js': ['render', 'hydrate'],
-        'node_modules/react-is/index.js': [
-          'isElement',
-          'isValidElementType',
-          'ForwardRef'
-        ]
-      }
-    })
-  )
+  options.input = options.input.replace('index.ts', 'build.ts')
+  options.output.name = 'Botui'
+  options.external = []
+  console.log(options.plugins)
+  options.plugins = options.plugins.filter((plugin) => plugin.name !== 'node-resolve')
+  options.plugins.push(resolve({ browser: true }))
 
+  console.log(options)
   return options
 }
 module.exports = getRollupOptions
