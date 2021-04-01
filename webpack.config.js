@@ -4,10 +4,10 @@ module.exports = {
   mode: 'production',
   entry: [path.resolve(__dirname, 'libs/embedded/src/main.ts')],
   output: {
-    library: 'BotuiChat',
+    library: 'Botui',
     libraryTarget: 'umd',
     filename: 'chat.min.js',
-    path: path.resolve(__dirname, 'dist/libs/embedded')
+    path: path.resolve(__dirname, 'apps/chat/public')
   },
   module: {
     rules: [

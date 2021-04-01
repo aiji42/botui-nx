@@ -2,7 +2,6 @@ import path from 'path'
 import fs from 'fs'
 import { NextApiHandler } from 'next'
 
-// 多分本番はパスを変更しないといけない
 const downloadable: NextApiHandler = async (req, res) => {
   if (typeof req.query.filename !== 'string') {
     res.status(400).json({ message: 'Bad request' })
