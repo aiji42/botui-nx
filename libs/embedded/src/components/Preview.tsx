@@ -1,7 +1,7 @@
 import React, { FC, useState, useCallback } from 'react'
 import { Wrapper } from './Wrapper'
+import { ChatController } from './Controller'
 import { Fab } from './Fab'
-import { ChatControllReceiver } from '@botui/hooks'
 
 interface Props {
   url: string
@@ -20,11 +20,11 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
   return (
     <>
       <Wrapper isFull={window.innerWidth < 600} isOpen={open}>
-        <ChatControllReceiver onClose={handleClose} onComplete={handleComplete}>
+        <ChatController onClose={handleClose} onComplete={handleComplete}>
           <iframe src={url} title="botui" width="100%" height="100%" />
-        </ChatControllReceiver>
+        </ChatController>
       </Wrapper>
-      <Fab onClick={toggleOpen} isOpen={open} />
+      <Fab isOpen={open} onClick={toggleOpen} />
     </>
   )
 }

@@ -16,11 +16,15 @@ import {
   LocalHandle,
   RemoteHandle
 } from 'post-me'
-import { methods, initCustomMessageAndChoices } from './common'
+import {
+  methods,
+  initCustomMessageAndChoices,
+  CustomChoice,
+  CustomMessage
+} from '@botui/embedded'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
-import { CustomChoice, CustomMessage } from './customWindow'
 
 const noop = () => {
   // noop
