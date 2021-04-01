@@ -14,10 +14,7 @@ export const Wrapper: FC<WrapperProps> = (props) => {
   const { isFull, isOpen } = props
   if (isFull)
     return (
-      <Modal
-        isOpen={isOpen}
-        style={customStyles}
-      >
+      <Modal isOpen={isOpen} style={customStyles}>
         {props.children}
       </Modal>
     )
@@ -26,7 +23,14 @@ export const Wrapper: FC<WrapperProps> = (props) => {
       {({ css }) => (
         <Modal
           isOpen={isOpen}
-          style={{ content: { inset: 'unset' } }}
+          style={{
+            content: {
+              top: 'auto',
+              bottom: 'auto',
+              left: 'auto',
+              right: 'auto'
+            }
+          }}
           portalClassName={css`
             .ReactModal__Content {
               bottom: 16px !important;
@@ -36,7 +40,9 @@ export const Wrapper: FC<WrapperProps> = (props) => {
               padding: 0px !important;
               background-color: white !important;
               border: none !important;
-              box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+              box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+                0px 2px 2px 0px rgb(0 0 0 / 14%),
+                0px 1px 5px 0px rgb(0 0 0 / 12%);
             }
             .ReactModal__Overlay {
               background-color: transparent !important;
@@ -54,7 +60,10 @@ const customStyles = {
   content: {
     height: '100%',
     width: '100%',
-    inset: 'inherit',
+    top: '0px',
+    bottom: '0px',
+    left: '0px',
+    right: '0px',
     backgroundColor: 'white',
     zIndex: 100,
     padding: 0
