@@ -5,6 +5,7 @@ module.exports = {
     '<rootDir>/libs/hooks',
     '<rootDir>/libs/api',
     '<rootDir>/libs/embedded',
-    '<rootDir>/apps/botui'
+    '<rootDir>/apps/botui',
+    '<rootDir>/libs/chat-controller'
   ]
 }

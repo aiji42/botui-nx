@@ -1,2 +1,2 @@
-import Botui from '@botui/embedded'
+import { Botui } from './Botui'
 export default Botui
