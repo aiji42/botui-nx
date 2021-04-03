@@ -13,8 +13,9 @@ import {
   FormName,
   FormTel
 } from '@botui/components'
-import { useChatController, useMessageContext, useProposal } from '@botui/hooks'
-import { CustomChoice } from '@botui/embedded'
+import { useChatControllerServer } from '@botui/chat-controller'
+import { useMessageContext, useProposal } from '@botui/hooks'
+import { CustomChoice } from '@botui/chat-controller'
 import {
   ContentForm,
   Form as FormType,
@@ -34,7 +35,7 @@ const Form: FC = () => {
   const message = useMessageContext<ContentForm>()
   const [customChoice, setCustomChoice] = useState<CustomChoice>({})
   const [, { handleUpdate }] = useProposal()
-  const { store, values, getCustomChoice } = useChatController()
+  const { store, values, getCustomChoice } = useChatControllerServer()
   const props = { ...message.content.props, values }
   const handleComplete = useCallback(
     (arg: FormType) => {

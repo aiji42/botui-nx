@@ -1,27 +1,22 @@
 import React, {
-  cloneElement,
   createContext,
   FC,
-  ReactElement,
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react'
 import {
   ChildHandshake,
   WindowMessenger,
-  ParentHandshake,
   LocalHandle,
   RemoteHandle
 } from 'post-me'
 import {
   methods,
-  initCustomMessageAndChoices,
   CustomChoice,
   CustomMessage
-} from '@botui/embedded'
+} from '../common'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
@@ -37,7 +32,7 @@ type Store = {
   set: (v: Values) => void
 }
 
-interface ChatContollorContextValue {
+interface ChatContollorServerContextValue {
   close: () => void
   evalFunction: (t: string) => Promise<void>
   getCustomChoice: () => Promise<CustomChoice | undefined>
@@ -52,7 +47,7 @@ interface ChatContollorContextValue {
   progressPercentage: number
 }
 
-export const ChatControllerContext = createContext<ChatContollorContextValue>({
+export const ChatControllerServerContext = createContext<ChatContollorServerContextValue>({
   close: noop,
   evalFunction: () => Promise.resolve(),
   getCustomChoice: () => Promise.resolve({}),
@@ -72,11 +67,11 @@ type Event = {
   onComplete: Record<string, unknown>
 }
 
-interface ChatControllerProviderValue {
+interface ChatControllerServerProviderValue {
   session: Session
 }
 
-export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
+export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue> = ({
   children,
   session
 }) => {
@@ -112,15 +107,15 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
     [values]
   )
 
-  const close = useCallback<ChatContollorContextValue['close']>(() => {
+  const close = useCallback<ChatContollorServerContextValue['close']>(() => {
     localHandle?.emit('onClose', {})
   }, [localHandle])
 
-  const complete = useCallback<ChatContollorContextValue['complete']>(() => {
+  const complete = useCallback<ChatContollorServerContextValue['complete']>(() => {
     localHandle?.emit('onComplete', {})
   }, [localHandle])
 
-  const evalFunction = useCallback<ChatContollorContextValue['evalFunction']>(
+  const evalFunction = useCallback<ChatContollorServerContextValue['evalFunction']>(
     async (functionString) => {
       await remoteHandle?.call('evalFunction', functionString, values)
     },
@@ -128,20 +123,20 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   )
 
   const getCustomChoice = useCallback<
-    ChatContollorContextValue['getCustomChoice']
+    ChatContollorServerContextValue['getCustomChoice']
   >(async () => await remoteHandle?.call('getCustomChoice'), [remoteHandle])
   const getCustomMessage = useCallback<
-    ChatContollorContextValue['getCustomMessage']
+    ChatContollorServerContextValue['getCustomMessage']
   >(async () => await remoteHandle?.call('getCustomMessage'), [remoteHandle])
 
-  const formPush = useCallback<ChatContollorContextValue['formPush']>(
+  const formPush = useCallback<ChatContollorServerContextValue['formPush']>(
     async (job) => {
       await remoteHandle?.call('formPush', job, values)
     },
     [remoteHandle, values]
   )
 
-  const addEntry = useCallback<ChatContollorContextValue['addEntry']>(() => {
+  const addEntry = useCallback<ChatContollorServerContextValue['addEntry']>(() => {
     addEntryOriginal({
       sessionId: session.id,
       owner: session.owner,
@@ -170,7 +165,7 @@ export const ChatControllerProvider: FC<ChatControllerProviderValue> = ({
   }, [pathname, query, replace, session.proposals, complete])
 
   return (
-    <ChatControllerContext.Provider
+    <ChatControllerServerContext.Provider
       children={children}
       value={{
         close,
@@ -202,32 +197,4 @@ const getNextProposal = (
 ): Proposal | null => {
   const index = proposals.findIndex((p) => p.id === id) ?? 0
   return proposals[index + 1 + skipNum] ?? null
-}
-
-export const ChatControllReceiver: FC<{
-  onClose: () => void
-  onComplete: () => void
-  children: ReactElement
-}> = ({ onClose: handleClose, onComplete: handleComplete, children }) => {
-  const ref = useRef<HTMLIFrameElement>()
-
-  useEffect(() => {
-    initCustomMessageAndChoices()
-  }, [])
-
-  useEffect(() => {
-    if (!ref.current?.contentWindow) return
-    const messenger = new WindowMessenger({
-      localWindow: window,
-      remoteWindow: ref.current.contentWindow,
-      remoteOrigin: '*'
-    })
-    ParentHandshake(messenger, methods, 40, 1000).then((connection) => {
-      const remoteHandle = connection.remoteHandle()
-      remoteHandle.addEventListener('onClose', handleClose)
-      remoteHandle.addEventListener('onComplete', handleComplete)
-    })
-  }, [handleClose, handleComplete])
-
-  return cloneElement(children, { ref })
 }

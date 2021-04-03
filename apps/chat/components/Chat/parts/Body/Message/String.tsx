@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
 import {
-  useChatController,
   useMessageContext,
-  useProposal,
-  Values
+  useProposal
 } from '@botui/hooks'
-import { CustomMessage } from '@botui/embedded'
+import { useChatControllerServer, Values } from '@botui/chat-controller'
+import { CustomMessage } from '@botui/chat-controller'
 import Linkify from 'react-linkify'
 import { ContentString } from '@botui/types'
 
@@ -14,7 +13,7 @@ const String: FC = () => {
   const message = useMessageContext<ContentString>()
   const [customMessage, setCustomMessage] = useState<CustomMessage>({})
   const [, { handleUpdate }] = useProposal()
-  const { values, getCustomMessage } = useChatController()
+  const { values, getCustomMessage } = useChatControllerServer()
   const props = message.content.props
   const { children, ...rest } = props
   const mounted = useRef(true)
