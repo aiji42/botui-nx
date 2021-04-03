@@ -4,6 +4,7 @@ module.exports = {
     '<rootDir>/libs/components',
     '<rootDir>/libs/hooks',
     '<rootDir>/libs/api',
-    '<rootDir>/libs/embedded'
+    '<rootDir>/libs/embedded',
+    '<rootDir>/apps/botui'
   ]
 }
