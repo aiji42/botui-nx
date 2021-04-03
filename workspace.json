@@ -222,8 +222,8 @@
           "executor": "@nrwl/web:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "apps/chat/public/scripts/botui",
-            "index": "",
+            "outputPath": "apps/chat/public/dist/botui",
+            "index": "apps/botui/src/index.html",
             "main": "apps/botui/src/index.ts",
             "polyfills": "",
             "tsConfig": "apps/botui/tsconfig.app.json",
@@ -234,12 +234,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
+              "extractCss": false,  
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
