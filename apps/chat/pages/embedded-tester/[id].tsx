@@ -28,7 +28,7 @@ var call = function(src, handler){
     base.parentNode.insertBefore(obj,base);
 };
 
-call("/api/script/chat.min.js", function(){new Botui.default("/?sessionId=${id}", ${open}).start()})
+call("/api/script/botui/chat.min.js", function(){new Botui.default("/?sessionId=${id}", ${open}).start()})
 `
 
 const Tester: FC<TesterProps> = ({ id }) => {
