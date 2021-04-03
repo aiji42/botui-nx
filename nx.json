@@ -21,7 +21,6 @@
     "components": { "tags": [] },
     "hooks": { "tags": [] },
     "api": { "tags": [] },
-    "embedded": { "tags": [] },
     "botui": { "tags": [] },
     "chat-controller": { "tags": [] }
   }

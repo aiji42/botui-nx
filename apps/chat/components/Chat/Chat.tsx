@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { ChatControllerProvider } from '@botui/hooks'
+import { ChatControllerServerProvider } from '@botui/chat-controller'
 import { Session } from '@botui/types'
 import { Header, Body, Footer } from './parts'
 
@@ -9,10 +9,10 @@ interface ChatProps {
 
 export const Chat: FC<ChatProps> = ({ session }) => {
   return (
-    <ChatControllerProvider session={session}>
+    <ChatControllerServerProvider session={session}>
       <Header />
       <Body />
       <Footer />
-    </ChatControllerProvider>
+    </ChatControllerServerProvider>
   )
 }

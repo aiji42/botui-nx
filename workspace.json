@@ -133,46 +133,6 @@
         }
       }
     },
-    "embedded": {
-      "root": "libs/embedded",
-      "sourceRoot": "libs/embedded/src",
-      "projectType": "library",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/libs/embedded",
-            "tsConfig": "libs/embedded/tsconfig.lib.json",
-            "project": "libs/embedded/package.json",
-            "entryFile": "libs/embedded/src/index.ts",
-            "external": [
-              "react",
-              "react-dom",
-              "@emotion/styled",
-              "@emotion/react"
-            ],
-            "babelConfig": "@nrwl/react/plugins/bundle-babel",
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-            "assets": [{ "glob": "README.md", "input": ".", "output": "." }]
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/embedded/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/embedded"],
-          "options": {
-            "jestConfig": "libs/embedded/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "botui": {
       "root": "apps/botui",
       "sourceRoot": "apps/botui/src",
