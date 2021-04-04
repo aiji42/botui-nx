@@ -64,7 +64,8 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/chat/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": ["apps/chat/**/*.{ts,tsx,js,jsx}"],
+            "ignorePath": "apps/chat/.eslintignore"
           }
         }
       }
