@@ -24,9 +24,13 @@ export const getServerSideProps: GetServerSideProps<PreviewProps> = async (
   )
     return { redirect: { permanent: true, destination: '/invalid' } }
 
-  const session = JSON.parse(context.query.jsonedSession)
-
-  return { props: { session } }
+  try {
+    const session = JSON.parse(context.query.jsonedSession)
+    return { props: { session } }
+  } catch (e) {
+    console.error(e)
+    return { redirect: { permanent: true, destination: '/invalid' } }
+  }
 }
 
 export default Preview
