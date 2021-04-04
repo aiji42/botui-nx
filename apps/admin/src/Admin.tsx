@@ -20,12 +20,19 @@ import Amplify from 'aws-amplify'
 import vocabularies from './i18n/amplify/vocabularies'
 import { customizedTheme } from './customizedTheme'
 
-Amplify.I18n.putVocabularies(vocabularies)
-Amplify.I18n.setLanguage('ja')
-
-export const initAmplifyConfig = (awsconfig: Record<string, unknown>): void => {
+const filterHost = (url: string) => new URL(url).host === window.location.host
+console.log(process.env)
+if (process.env.NX_AWS_EXPORTS) {
+  const awsconfig = JSON.parse(process.env.NX_AWS_EXPORTS)
+  awsconfig.oauth.redirectSignIn =
+    awsconfig.oauth.redirectSignIn.split(',').filter(filterHost).shift() ?? ''
+  awsconfig.oauth.redirectSignOut =
+    awsconfig.oauth.redirectSignOut.split(',').filter(filterHost).shift() ?? ''
   Amplify.configure(awsconfig)
 }
+
+Amplify.I18n.putVocabularies(vocabularies)
+Amplify.I18n.setLanguage('ja')
 
 const i18nProvider = polyglotI18nProvider(() => japaneseMessages)
 

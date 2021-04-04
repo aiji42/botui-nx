@@ -36,7 +36,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
           <iframe
-            src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(
+            src={`${process.env.NX_PREVIEW_HOST}/session/preview?jsonedSession=${encodeURIComponent(
               JSON.stringify(session)
             )}`}
             title="プレビュー"

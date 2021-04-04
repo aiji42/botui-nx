@@ -146,7 +146,7 @@ const SessionFormInner: FC = () => {
             <Labeled label="プレビュー">
               <div className={classes.preview}>
                 <iframe
-                  src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(
+                  src={`${process.env.NX_PREVIEW_HOST}/session/preview?jsonedSession=${encodeURIComponent(
                     JSON.stringify({
                       ...(formData as Session),
                       proposals: sampleProposals
