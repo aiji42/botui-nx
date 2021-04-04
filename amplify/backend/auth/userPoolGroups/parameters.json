@@ -1,14 +1,8 @@
 {
   "AuthRoleArn": {
-    "Fn::GetAtt": [
-      "AuthRole",
-      "Arn"
-    ]
+    "Fn::GetAtt": ["AuthRole", "Arn"]
   },
   "UnauthRoleArn": {
-    "Fn::GetAtt": [
-      "UnauthRole",
-      "Arn"
-    ]
+    "Fn::GetAtt": ["UnauthRole", "Arn"]
   }
 }
