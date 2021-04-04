@@ -48,7 +48,7 @@ export const SessionList: FC = (props) => {
         <BooleanField label="アクティブ" source="active" />
         <FunctionField<Session>
           render={(record) =>
-            record ? <PreviewDialog session={record} /> : <></>
+            record ? <PreviewDialog session={record} /> : null
           }
         />
         <EditButton />

@@ -35,7 +35,7 @@ export const EntryShow: FC = (props) => (
         label="inputs"
         fullWidth
         render={(record) => {
-          if (!record) return <></>
+          if (!record) return null
 
           return (
             <TableContainer>
