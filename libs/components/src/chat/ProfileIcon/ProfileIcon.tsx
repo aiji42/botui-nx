@@ -8,6 +8,8 @@ const style = (borderColor?: string) =>
   css({
     maxWidth: '100%',
     height: '100%',
+    minHeight: 40,
+    minWidth: 40,
     borderRadius: '50%',
     objectFit: 'cover',
     border: `solid ${borderColor ?? '#0f84fe'}`,
