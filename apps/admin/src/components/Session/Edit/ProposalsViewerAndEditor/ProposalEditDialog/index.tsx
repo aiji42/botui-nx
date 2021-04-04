@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { Dialog, DialogContent, DialogActions, Button, makeStyles } from '@material-ui/core'
 import { Proposal } from '@botui/types'
 import ProposalForm from './ProposalForm'

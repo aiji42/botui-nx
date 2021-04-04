@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { required } from 'react-admin'
 import { Field, useField } from 'react-final-form'
 import { Grid, FormHelperText } from '@material-ui/core'

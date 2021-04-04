@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 import { ProposalMessage } from '@botui/types'
 import nl2br from 'react-nl2br'
-import { useImageUrl } from '@botui/chat-hooks'
+import { useImageUrl } from '@botui/hooks'
 
 const useStyles = makeStyles((theme) => ({
   paper: {

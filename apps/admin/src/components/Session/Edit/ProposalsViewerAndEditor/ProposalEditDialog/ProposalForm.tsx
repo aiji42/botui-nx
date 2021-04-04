@@ -24,7 +24,7 @@ const ProposalForm: FC<
 > = (props) => {
   const { trySubmit, handleTrySubmit, handleSubmittable, ...rest } = props
   return (
-    <Form
+    <Form<Proposal>
       mutators={{ ...arrayMutators }}
       subscription={{
         submitting: true,
