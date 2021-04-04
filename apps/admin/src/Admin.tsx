@@ -21,7 +21,6 @@ import vocabularies from './i18n/amplify/vocabularies'
 import { customizedTheme } from './customizedTheme'
 
 const filterHost = (url: string) => new URL(url).host === window.location.host
-console.log(process.env)
 if (process.env.NX_AWS_EXPORTS) {
   const awsconfig = JSON.parse(process.env.NX_AWS_EXPORTS)
   awsconfig.oauth.redirectSignIn =

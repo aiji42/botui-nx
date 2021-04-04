@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { AppBar } from 'react-admin'
 import { makeStyles } from '@material-ui/core'
-import logo from './logo.png'
 
 const useStyles = makeStyles({
   title: {
@@ -19,7 +18,7 @@ const CustomizedAppBar: FC = (props) => {
   const classes = useStyles()
   return (
     <AppBar {...props} color="primary">
-      <img src={logo} alt="logo" height={50} />
+      <img src="/assets/logo.png" alt="logo" height={50} />
       <span className={classes.spacer} />
     </AppBar>
   )
