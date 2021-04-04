@@ -1,0 +1,36 @@
+type Session
+  @model
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
+      {allow: public, provider: iam, operations: [read]}
+    ]
+  )
+{
+  id: ID!
+  owner: String
+  title: String!
+  active: Boolean!
+  theme: AWSJSON!
+  proposals: AWSJSON!
+  images: AWSJSON!
+  email: String
+  launcher: AWSJSON!
+}
+
+type Entry
+  @model
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
+      {allow: public, provider: iam, operations: [create]}
+    ]
+  )
+  @key(name: "sessionAndCreatedAtIndex", fields: ["sessionId", "createdAt"], queryField: "entryBySessionAndCreatedAt")
+{
+  id: ID!
+  owner: String!
+  sessionId: ID!
+  inputs: AWSJSON!
+  createdAt: AWSDateTime!
+}

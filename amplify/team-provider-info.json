@@ -1,0 +1,53 @@
+{
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-botui-production-185011-authRole",
+      "UnauthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-production-185011-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-production-185011-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-botui-production-185011-deployment",
+      "UnauthRoleName": "amplify-botui-production-185011-unauthRole",
+      "StackName": "amplify-botui-production-185011",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-production-185011/6597acb0-6265-11eb-bf31-06255f79192a",
+      "AmplifyAppId": "d1n6ynnjubnjrs"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "botui": {
+          "googleClientId": "676309030528-4ch5j57cbje5a3tkcsslh1r6iilts7ul.apps.googleusercontent.com"
+        }
+      },
+      "function": {
+        "notify": {
+          "deploymentBucketName": "amplify-botui-production-185011-deployment",
+          "s3Key": "amplify-builds/notify-2b6669744a434e783850-build.zip"
+        }
+      }
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-botui-dev-143300-authRole",
+      "UnauthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-dev-143300-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::998366166562:role/amplify-botui-dev-143300-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-botui-dev-143300-deployment",
+      "UnauthRoleName": "amplify-botui-dev-143300-unauthRole",
+      "StackName": "amplify-botui-dev-143300",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:998366166562:stack/amplify-botui-dev-143300/7d2f1800-62f5-11eb-a899-0a6a4edc26e4",
+      "AmplifyAppId": "d1n6ynnjubnjrs"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "botui": {
+          "googleClientId": "676309030528-1p971giko85dl3a1k192l3fu7l86fu4v.apps.googleusercontent.com"
+        }
+      },
+      "function": {
+        "notify": {}
+      }
+    }
+  }
+}
