@@ -284,7 +284,8 @@
         "serve": {
           "executor": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "admin:build"
+            "buildTarget": "admin:build",
+            "port": 3001
           },
           "configurations": {
             "production": {
