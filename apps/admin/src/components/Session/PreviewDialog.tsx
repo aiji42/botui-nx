@@ -40,7 +40,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       </Button>
       <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
-          <iframe src={`http://localhost:4200/session/preview?jsonedSession=${JSON.stringify(session)}`} title="プレビュー" width="100%" height="100%" />
+          <iframe src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(JSON.stringify(session))}`} title="プレビュー" width="100%" height="100%" />
         </DialogContent>
       </Dialog>
     </>

@@ -142,7 +142,7 @@ const SessionFormInner: FC = () => {
           {({ formData }) => (
             <Labeled label="プレビュー">
               <div className={classes.preview}>
-                <iframe src={`http://localhost:4200/session/preview?jsonedSession=${JSON.stringify({ ...(formData as Session), proposals: sampleProposals })}`} title="プレビュー" width="100%" height="100%" />
+                <iframe src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(JSON.stringify({ ...(formData as Session), proposals: sampleProposals }))}`} title="プレビュー" width="100%" height="100%" />
               </div>
             </Labeled>
           )}
