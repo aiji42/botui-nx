@@ -251,7 +251,7 @@
             "index": "apps/admin/public/index.html",
             "main": "apps/admin/src/index.tsx",
             "tsConfig": "apps/admin/tsconfig.app.json",
-            "assets": [],
+            "assets": ["apps/admin/src/assets"],
             "styles": [],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"

@@ -6,7 +6,7 @@ import RadioImageCard from './RadioImageCard'
 
 const themeColors = [
   {
-    image: '/theme-color-1.png',
+    image: '/assets/theme-color-1.png',
     style: {
       header: { backgroundColor: '#00B900' },
       footer: { backgroundColor: '#98EA98' },
@@ -16,7 +16,7 @@ const themeColors = [
     }
   },
   {
-    image: '/theme-color-2.png',
+    image: '/assets/theme-color-2.png',
     style: {
       header: { backgroundColor: '#69C9D0' },
       footer: { backgroundColor: '#69C9D0' },
@@ -26,7 +26,7 @@ const themeColors = [
     }
   },
   {
-    image: '/theme-color-3.png',
+    image: '/assets/theme-color-3.png',
     style: {
       header: { backgroundColor: '#FD94D3' },
       footer: { backgroundColor: '#2576EF' },
@@ -36,7 +36,7 @@ const themeColors = [
     }
   },
   {
-    image: '/theme-color-4.png',
+    image: '/assets/theme-color-4.png',
     style: {
       header: { backgroundColor: '#F9A36C' },
       footer: { backgroundColor: '#305E7A' },
