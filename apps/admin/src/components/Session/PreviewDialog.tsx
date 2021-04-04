@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { Session } from '@botui/types'
-import { Preview } from '@botui/chat-controller'
 
 const useStyleDialog = makeStyles(() => ({
   paper: {
@@ -41,15 +40,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       </Button>
       <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
-          <Preview
-            proposals={session.proposals}
-            chatConfig={{
-              ...session,
-              messages: [],
-              percentOfProgress: 0,
-              onClose: () => setTimeout(handleClose, 3000)
-            }}
-          />
+          <iframe src={`http://localhost:4200/session/preview?jsonedSession=${JSON.stringify(session)}`} title="プレビュー" width="100%" height="100%" />
         </DialogContent>
       </Dialog>
     </>

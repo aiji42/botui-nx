@@ -11,7 +11,6 @@ import {
 } from 'react-admin'
 import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
-import { Preview } from '@botui/chat-controller'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
 
@@ -143,15 +142,7 @@ const SessionFormInner: FC = () => {
           {({ formData }) => (
             <Labeled label="プレビュー">
               <div className={classes.preview}>
-                <Preview
-                  proposals={sampleProposals}
-                  chatConfig={{
-                    ...(formData as Session),
-                    messages: sampleProposals.map(({ data }) => data),
-                    percentOfProgress: 0.5
-                  }}
-                  editing
-                />
+                <iframe src={`http://localhost:4200/session/preview?jsonedSession=${JSON.stringify({ ...(formData as Session), proposals: sampleProposals })}`} title="プレビュー" width="100%" height="100%" />
               </div>
             </Labeled>
           )}
