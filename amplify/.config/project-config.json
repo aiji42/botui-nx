@@ -11,7 +11,5 @@
       "StartCommand": "yarn start"
     }
   },
-  "providers": [
-    "awscloudformation"
-  ]
+  "providers": ["awscloudformation"]
 }

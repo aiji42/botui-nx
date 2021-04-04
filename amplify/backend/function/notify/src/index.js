@@ -2,16 +2,17 @@ const sgMail = require('@sendgrid/mail')
 const AWS = require('aws-sdk')
 
 const headers = {
-  "Content-Type": 'application/json',
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-  "Access-Control-Allow-Origin": "*"
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+  'Access-Control-Allow-Origin': '*'
 }
 
 exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') return {
-    statusCode: 401
-  }
+  if (event.httpMethod !== 'POST')
+    return {
+      statusCode: 401
+    }
 
   try {
     const SecretId = `chachat/${process.env.ENV}/SENDGRID_API_KEY`
