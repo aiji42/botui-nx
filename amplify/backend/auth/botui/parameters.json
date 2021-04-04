@@ -71,5 +71,5 @@
     "authProviders": [
         "accounts.google.com"
     ],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"],\"LogoutURLs\":[\"http://localhost:3001/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4201/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\",\"https://botui-admin.vercel.app/\"],\"LogoutURLs\":[\"http://localhost:4201/\",\"https://dev.chachat.survaq.com/admin/\",\"https://www.chachat.survaq.com/admin/\",\"https://botui-admin.vercel.app/\"]}"
 }
