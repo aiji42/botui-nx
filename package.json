@@ -67,6 +67,7 @@
     "react-scroll": "^1.8.1",
     "react-textarea-autosize": "^8.3.2",
     "react-use-kana": "^2.3.0",
+    "regenerator-runtime": "0.13.7",
     "tslib": "^2.0.0",
     "use-postal-jp": "^1.1.4",
     "yup": "^0.32.9"

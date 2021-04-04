@@ -18,7 +18,10 @@
       "@botui/components": ["libs/components/src/index.ts"],
       "@botui/hooks": ["libs/hooks/src/index.ts"],
       "@botui/api": ["libs/api/src/index.ts"],
-      "@botui/embedded": ["libs/embedded/src/index.ts"]
+      "@botui/chat-controller": ["libs/chat-controller/src/index.ts"],
+      "@botui/chat-controller/client": [
+        "libs/chat-controller/src/client/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

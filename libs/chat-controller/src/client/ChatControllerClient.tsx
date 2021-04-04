@@ -1,8 +1,8 @@
 import React, { cloneElement, FC, ReactElement, useEffect, useRef } from 'react'
 import { WindowMessenger, ParentHandshake } from 'post-me'
-import { methods, initCustomMessageAndChoices } from './methods'
+import { methods, initCustomMessageAndChoices } from '../common'
 
-export const ChatController: FC<{
+export const ChatControllerClient: FC<{
   onClose: () => void
   onComplete: () => void
   children: ReactElement

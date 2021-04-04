@@ -3,13 +3,13 @@ import fs from 'fs'
 import { NextApiHandler } from 'next'
 
 const downloadable: NextApiHandler = async (req, res) => {
-  if (typeof req.query.filename !== 'string') {
+  if (!Array.isArray(req.query.filename)) {
     res.status(400).json({ message: 'Bad request' })
     return
   }
 
   try {
-  const file = path.resolve('./apps/chat/public', req.query.filename)
+  const file = path.resolve('./apps/chat/public/dist', ...req.query.filename)
     if (!fs.existsSync(file)) {
       res.status(404).json({ message: `No file: ${req.query.filename}` })
       return

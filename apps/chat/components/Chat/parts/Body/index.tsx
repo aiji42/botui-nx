@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useRef } from 'react'
 import {
   MessageContextProvider,
-  useChatController,
   ProposalContextProvider,
   useProposal
 } from '@botui/hooks'
+import { useChatControllerServer } from '@botui/chat-controller'
 import { css } from '@emotion/react'
 import { MessageWrapper } from './MessageWrapper'
 import { Message } from './Message'
@@ -31,7 +31,7 @@ const style = {
 }
 
 export const Body: FC = () => {
-  const { proposals } = useChatController()
+  const { proposals } = useChatControllerServer()
 
   return (
     <div css={style.root}>
@@ -57,7 +57,7 @@ export const Body: FC = () => {
 }
 
 const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
-  const { formPush, evalFunction } = useChatController()
+  const { formPush, evalFunction } = useChatControllerServer()
   const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
@@ -89,7 +89,7 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     values,
     session,
     complete
-  } = useChatController()
+  } = useChatControllerServer()
   const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
@@ -134,7 +134,7 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
 
 const SkipperComponent: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
   const mounted = useRef(true)
-  const { values } = useChatController()
+  const { values } = useChatControllerServer()
   const [, { handleUpdate }] = useProposal()
   useEffect(() => {
     if (!mounted.current) return

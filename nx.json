@@ -23,31 +23,14 @@
     }
   },
   "projects": {
-    "chat": {
-      "tags": []
-    },
-    "chat-e2e": {
-      "tags": [],
-      "implicitDependencies": ["chat"]
-    },
-    "components": {
-      "tags": []
-    },
-    "hooks": {
-      "tags": []
-    },
-    "api": {
-      "tags": []
-    },
-    "embedded": {
-      "tags": []
-    },
-    "admin": {
-      "tags": []
-    },
-    "admin-e2e": {
-      "tags": [],
-      "implicitDependencies": ["admin"]
-    }
+  "chat": { "tags": [] },
+    "chat-e2e": { "tags": [], "implicitDependencies": ["chat"] },
+    "components": { "tags": [] },
+    "hooks": { "tags": [] },
+    "api": { "tags": [] },
+    "botui": { "tags": [] },
+    "chat-controller": { "tags": [] },
+    "admin": { "tags": [] },
+    "admin-e2e": { "tags": [], "implicitDependencies": ["admin"] }
   }
 }

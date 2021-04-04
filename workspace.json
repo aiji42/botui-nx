@@ -6,18 +6,9 @@
   "defaultProject": "chat",
   "generators": {
     "@nrwl/react": {
-      "application": {
-        "style": "@emotion/styled",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "@emotion/styled"
-      },
-      "library": {
-        "style": "@emotion/styled",
-        "linter": "eslint"
-      }
+      "application": { "style": "none", "linter": "eslint", "babel": true },
+      "component": { "style": "none" },
+      "library": { "style": "none", "linter": "eslint" }
     },
     "@nrwl/next": {
       "application": {
@@ -187,53 +178,81 @@
         }
       }
     },
-    "embedded": {
-      "root": "libs/embedded",
-      "sourceRoot": "libs/embedded/src",
-      "projectType": "library",
+    "botui": {
+      "root": "apps/botui",
+      "sourceRoot": "apps/botui/src",
+      "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nrwl/web:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/libs/embedded",
-            "tsConfig": "libs/embedded/tsconfig.lib.json",
-            "project": "libs/embedded/package.json",
-            "entryFile": "libs/embedded/src/index.ts",
-            "external": [
-              "react",
-              "react-dom",
-              "@emotion/styled",
-              "@emotion/react"
-            ],
-            "babelConfig": "@nrwl/react/plugins/bundle-babel",
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-            "assets": [
-              {
-                "glob": "README.md",
-                "input": ".",
-                "output": "."
-              }
-            ]
+            "outputPath": "apps/chat/public/dist/botui",
+            "index": "apps/botui/src/index.html",
+            "main": "apps/botui/src/index.ts",
+            "polyfills": "",
+            "tsConfig": "apps/botui/tsconfig.app.json",
+            "assets": [],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "apps/botui/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": { "buildTarget": "botui:build" },
+          "configurations": {
+            "production": { "buildTarget": "botui:build:production" }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["apps/botui/**/*.{ts,tsx,js,jsx}"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/botui"],
           "options": {
-            "lintFilePatterns": [
-              "libs/embedded/**/*.{ts,tsx,js,jsx}"
-            ]
+            "jestConfig": "apps/botui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "chat-controller": {
+      "root": "libs/chat-controller",
+      "sourceRoot": "libs/chat-controller/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/chat-controller/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/embedded"
-          ],
+          "outputs": ["coverage/libs/chat-controller"],
           "options": {
-            "jestConfig": "libs/embedded/jest.config.js",
+            "jestConfig": "libs/chat-controller/jest.config.js",
             "passWithNoTests": true
           }
         }
