@@ -88,7 +88,7 @@ const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
         { entryBySessionAndCreatedAt: { sessionId: sessions[0].id } },
         displayedFilters
       )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [choices, sessions])
 
   return (
@@ -106,7 +106,12 @@ const EntryFilter: FC<Partial<EntryFilterProps>> = (props) => {
 
 export const EntryList: FC = (props) => {
   return (
-    <List {...props} bulkActionButtons={false} filters={<EntryFilter />} empty={<Empty />}>
+    <List
+      {...props}
+      bulkActionButtons={false}
+      filters={<EntryFilter />}
+      empty={<Empty />}
+    >
       <Datagrid expand={<EntryShow />} rowClick="expand">
         <TextField source="id" sortable={false} />
         <ReferenceField source="sessionId" reference="sessions">

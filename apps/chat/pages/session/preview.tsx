@@ -15,10 +15,13 @@ const Preview: FC<PreviewProps> = (props) => {
   return <Chat session={props.session} />
 }
 
-export const getServerSideProps: GetServerSideProps<
-  PreviewProps
-  > = async (context) => {
-  if (typeof context.query.jsonedSession !== 'string' || !context.query.jsonedSession)
+export const getServerSideProps: GetServerSideProps<PreviewProps> = async (
+  context
+) => {
+  if (
+    typeof context.query.jsonedSession !== 'string' ||
+    !context.query.jsonedSession
+  )
     return { redirect: { permanent: true, destination: '/invalid' } }
 
   const session = JSON.parse(context.query.jsonedSession)

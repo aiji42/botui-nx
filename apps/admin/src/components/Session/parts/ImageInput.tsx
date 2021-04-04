@@ -37,7 +37,10 @@ const ImageInput: FC<Props> = (props) => {
   const handleOpen = useCallback(() => setOpen(true), [])
   const handleSave = useCallback(
     async ([file]: File[]) => {
-      const res = await storePublic(`${props.sessionId}/${randomizedFileName(file.name)}`, file)
+      const res = await storePublic(
+        `${props.sessionId}/${randomizedFileName(file.name)}`,
+        file
+      )
       change(source, res.key)
       handleClose()
     },

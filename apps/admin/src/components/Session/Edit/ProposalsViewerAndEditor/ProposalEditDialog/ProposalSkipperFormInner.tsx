@@ -10,13 +10,7 @@ import {
   NumberInput,
   FormDataConsumer
 } from 'react-admin'
-import {
-  Menu,
-  MenuItem,
-  Fab,
-  FabProps,
-  makeStyles
-} from '@material-ui/core'
+import { Menu, MenuItem, Fab, FabProps, makeStyles } from '@material-ui/core'
 import { useForm } from 'react-final-form'
 import { Add } from '@material-ui/icons'
 
@@ -52,7 +46,6 @@ const useStyle = makeStyles((theme) => ({
     right: theme.spacing(1)
   }
 }))
-
 
 const ProposalSkipperFormInner: FC = () => {
   const classes = useStyle()

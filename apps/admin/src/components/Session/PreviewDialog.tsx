@@ -1,10 +1,5 @@
 import React, { FC, useCallback, useState } from 'react'
-import {
-  Dialog,
-  DialogContent,
-  makeStyles,
-  Button
-} from '@material-ui/core'
+import { Dialog, DialogContent, makeStyles, Button } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { Session } from '@botui/types'
 
@@ -40,7 +35,14 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       </Button>
       <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
-          <iframe src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(JSON.stringify(session))}`} title="プレビュー" width="100%" height="100%" />
+          <iframe
+            src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(
+              JSON.stringify(session)
+            )}`}
+            title="プレビュー"
+            width="100%"
+            height="100%"
+          />
         </DialogContent>
       </Dialog>
     </>

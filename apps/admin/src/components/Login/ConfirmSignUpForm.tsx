@@ -40,7 +40,7 @@ export const ConfirmSignUpForm: FC = () => {
 }
 
 const Footer: FC = () => {
-  const [,{ resendSignUp }] = useLoginContext()
+  const [, { resendSignUp }] = useLoginContext()
   const handleResendCode = (e: React.SyntheticEvent) => {
     e.preventDefault()
     resendSignUp()

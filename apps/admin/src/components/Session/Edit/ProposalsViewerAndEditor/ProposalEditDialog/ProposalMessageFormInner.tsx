@@ -1,4 +1,11 @@
-import React, { FC, useEffect, useRef, useState, MouseEvent, RefObject } from 'react'
+import React, {
+  FC,
+  useEffect,
+  useRef,
+  useState,
+  MouseEvent,
+  RefObject
+} from 'react'
 import {
   BooleanInput,
   SelectInput,
@@ -9,7 +16,12 @@ import {
   SimpleFormIterator,
   useRecordContext
 } from 'react-admin'
-import { FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect, Session } from '@botui/types'
+import {
+  FormCustomCheckbox,
+  FormCustomRadioGroup,
+  FormCustomSelect,
+  Session
+} from '@botui/types'
 import { ImageInput, DelayNumberSlider } from '../../../parts'
 import { useForm, useFormState, Field } from 'react-final-form'
 import {
@@ -60,7 +72,9 @@ const useStyle = makeStyles((theme) => ({
     position: 'relative'
   },
   fab: {
-    position: 'absolute', bottom: theme.spacing(4), right: theme.spacing(1)
+    position: 'absolute',
+    bottom: theme.spacing(4),
+    right: theme.spacing(1)
   }
 }))
 
@@ -162,9 +176,7 @@ const ProposalMessageFormInner: FC = () => {
 
 export default ProposalMessageFormInner
 
-const makeInsertKey = (ref: RefObject<HTMLInputElement>) => (
-  key: string
-) => {
+const makeInsertKey = (ref: RefObject<HTMLInputElement>) => (key: string) => {
   if (document.activeElement !== ref.current) ref.current?.focus()
   document.execCommand('insertText', false, `{{${key}}}`)
 }
@@ -181,9 +193,7 @@ const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ targetInput, ...res }) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleClickMenu = (
-    e: MouseEvent<HTMLLIElement>
-  ) => {
+  const handleClickMenu = (e: MouseEvent<HTMLLIElement>) => {
     const insertKey = makeInsertKey(targetInput)
     insertKey(e.currentTarget.dataset.value ?? '')
     handleClose()
@@ -208,8 +218,12 @@ const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ targetInput, ...res }) => {
         onClose={handleClose}
         keepMounted
       >
-        <MenuItem onClick={handleClickMenu} data-value="familyName">氏名:姓</MenuItem>
-        <MenuItem onClick={handleClickMenu} data-value="firstName">氏名:名</MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="familyName">
+          氏名:姓
+        </MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="firstName">
+          氏名:名
+        </MenuItem>
         <MenuItem onClick={handleClickMenu} data-value="familyNameKana">
           氏名:姓(よみ)
         </MenuItem>
@@ -222,13 +236,21 @@ const InsertKeyMenu: FC<InsertKeyMenuProps> = ({ targetInput, ...res }) => {
         <MenuItem onClick={handleClickMenu} data-value="prefecture">
           住所:都道府県
         </MenuItem>
-        <MenuItem onClick={handleClickMenu} data-value="city">住所:市区町村</MenuItem>
-        <MenuItem onClick={handleClickMenu} data-value="street">住所:番地</MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="city">
+          住所:市区町村
+        </MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="street">
+          住所:番地
+        </MenuItem>
         <MenuItem onClick={handleClickMenu} data-value="building">
           住所:建物名・部屋番号
         </MenuItem>
-        <MenuItem onClick={handleClickMenu} data-value="tel">電話番号</MenuItem>
-        <MenuItem onClick={handleClickMenu} data-value="email">メールアドレス</MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="tel">
+          電話番号
+        </MenuItem>
+        <MenuItem onClick={handleClickMenu} data-value="email">
+          メールアドレス
+        </MenuItem>
         <MenuItem onClick={handleClickMenu} data-value="birthdayYear">
           生年月日:年
         </MenuItem>
@@ -345,7 +367,10 @@ const FormCustomCheckboxOption: FC = (props) => {
           validate={[required()]}
         />
       </Badge>
-      <BooleanInput source="data.content.props.required" label="入力を必須にする" />
+      <BooleanInput
+        source="data.content.props.required"
+        label="入力を必須にする"
+      />
       <ArrayInput
         {...props}
         source="data.content.props.inputs"
@@ -362,7 +387,9 @@ const FormCustomCheckboxOption: FC = (props) => {
 
 const FormCustomSelectOption: FC = (props) => {
   const { change } = useForm()
-  const { values } = useFormState<{ data: { content: { props: FormCustomSelect } } }>()
+  const { values } = useFormState<{
+    data: { content: { props: FormCustomSelect } }
+  }>()
   useEffect(() => {
     if (!values.data.content.props.selects) return
     values.data.content.props.selects.forEach((select, index) => {

@@ -1,5 +1,13 @@
 import React, { FC, useEffect } from 'react'
-import { SelectInput, required, TextInput, ArrayInput, SimpleFormIterator, FormDataConsumer, BooleanInput } from 'react-admin'
+import {
+  SelectInput,
+  required,
+  TextInput,
+  ArrayInput,
+  SimpleFormIterator,
+  FormDataConsumer,
+  BooleanInput
+} from 'react-admin'
 import { Field, useForm, useFormState } from 'react-final-form'
 import JavascriptEditor from './JavascriptEditor'
 import { Typography, makeStyles } from '@material-ui/core'
@@ -63,11 +71,13 @@ window.location.href = response.url
 
 const ProposalRelayerFormInner: FC = () => {
   const { change } = useForm()
-  const { values } = useFormState<{ data: { job: string; [x: string]: string } }>()
+  const { values } = useFormState<{
+    data: { job: string; [x: string]: string }
+  }>()
   useEffect(() => {
     if (values.data.job === 'script' && !values.data.script)
       change('data.script', scriptInitialValue)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.data.job])
 
   return (
@@ -83,10 +93,7 @@ const ProposalRelayerFormInner: FC = () => {
         {({ formData }) => (
           <>
             {formData.data.job === 'script' && (
-              <Field
-                name="data.script"
-                component={JavascriptEditor}
-              />
+              <Field name="data.script" component={JavascriptEditor} />
             )}
             {formData.data.job === 'webhook' && (
               <TextInput

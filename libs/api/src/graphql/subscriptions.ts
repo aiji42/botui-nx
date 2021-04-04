@@ -13,7 +13,7 @@ export const onCreateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateEntry = /* GraphQL */ `
   subscription OnUpdateEntry($owner: String!) {
     onUpdateEntry(owner: $owner) {
@@ -25,7 +25,7 @@ export const onUpdateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteEntry = /* GraphQL */ `
   subscription OnDeleteEntry($owner: String!) {
     onDeleteEntry(owner: $owner) {
@@ -37,7 +37,7 @@ export const onDeleteEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateSession = /* GraphQL */ `
   subscription OnCreateSession($owner: String) {
     onCreateSession(owner: $owner) {
@@ -54,7 +54,7 @@ export const onCreateSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateSession = /* GraphQL */ `
   subscription OnUpdateSession($owner: String) {
     onUpdateSession(owner: $owner) {
@@ -71,7 +71,7 @@ export const onUpdateSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteSession = /* GraphQL */ `
   subscription OnDeleteSession($owner: String) {
     onDeleteSession(owner: $owner) {
@@ -88,4 +88,4 @@ export const onDeleteSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

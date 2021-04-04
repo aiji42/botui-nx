@@ -7,7 +7,7 @@ import {
   CircularProgress,
   makeStyles
 } from '@material-ui/core'
-import { LockOutlined as LockOutlinedIcon} from '@material-ui/icons'
+import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -46,7 +46,15 @@ interface Props {
   buttonTitle: string
 }
 
-export const FormWrapper: FC<Props> = ({ footerContent, handleSubmit, title, error, loading, buttonTitle, children }) => {
+export const FormWrapper: FC<Props> = ({
+  footerContent,
+  handleSubmit,
+  title,
+  error,
+  loading,
+  buttonTitle,
+  children
+}) => {
   const classes = useStyles()
 
   return (

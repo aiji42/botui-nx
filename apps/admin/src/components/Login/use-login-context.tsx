@@ -1,4 +1,12 @@
-import React, { createContext, useCallback, useContext, useState, Dispatch, SetStateAction, FC } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+  FC
+} from 'react'
 import { Auth, I18n } from 'aws-amplify'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 
@@ -16,7 +24,7 @@ interface Dataset {
   email: string
   password: string
   code: string
-  mode: Modes,
+  mode: Modes
   error: string
   loading: boolean
   authSucceed: boolean
@@ -51,7 +59,11 @@ export const LoginContextProvider: FC = ({ children }) => {
     loading: false,
     authSucceed: false
   })
-  return <LoginContext.Provider value={{ dataset, setDataset }} >{children}</LoginContext.Provider>
+  return (
+    <LoginContext.Provider value={{ dataset, setDataset }}>
+      {children}
+    </LoginContext.Provider>
+  )
 }
 
 interface Helpers {
@@ -110,19 +122,16 @@ export const useLoginContext: UseLogin = () => {
   const signUp = useCallback(() => {
     setLoading(true)
     Auth.signUp(email, password)
-      .then(() =>
-        setMode(Mode.CONFIRM_SIGN_UP)
-      )
+      .then(() => setMode(Mode.CONFIRM_SIGN_UP))
       .catch((err) => setError(I18n.get(err.message)))
       .finally(() => setLoading(false))
   }, [email, password, setError, setLoading, setMode])
 
   const resendSignUp = useCallback(() => {
     setLoading(true)
-    Auth.resendSignUp(email).catch((err) =>
-      setError(I18n.get(err.message))
-    )
-    .finally(() => setLoading(false))
+    Auth.resendSignUp(email)
+      .catch((err) => setError(I18n.get(err.message)))
+      .finally(() => setLoading(false))
   }, [email, setError, setLoading])
 
   const confirmSignUp = useCallback(() => {

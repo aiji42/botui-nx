@@ -30,7 +30,10 @@ const sampleProposals = [
     'こんにちは！こちらではチャットのデザインをお好みに合わせて変更できます。',
     10
   ),
-  stringMessageTemplate('左側のメッセージが「オペレーターメッセージ」です。', 10),
+  stringMessageTemplate(
+    '左側のメッセージが「オペレーターメッセージ」です。',
+    10
+  ),
   stringMessageTemplate(
     'そして、こちら右側が「ユーザメッセージ」です。',
     10,
@@ -142,7 +145,17 @@ const SessionFormInner: FC = () => {
           {({ formData }) => (
             <Labeled label="プレビュー">
               <div className={classes.preview}>
-                <iframe src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(JSON.stringify({ ...(formData as Session), proposals: sampleProposals }))}`} title="プレビュー" width="100%" height="100%" />
+                <iframe
+                  src={`http://localhost:4200/session/preview?jsonedSession=${encodeURIComponent(
+                    JSON.stringify({
+                      ...(formData as Session),
+                      proposals: sampleProposals
+                    })
+                  )}`}
+                  title="プレビュー"
+                  width="100%"
+                  height="100%"
+                />
               </div>
             </Labeled>
           )}

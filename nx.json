@@ -23,7 +23,7 @@
     }
   },
   "projects": {
-  "chat": { "tags": [] },
+    "chat": { "tags": [] },
     "chat-e2e": { "tags": [], "implicitDependencies": ["chat"] },
     "components": { "tags": [] },
     "hooks": { "tags": [] },

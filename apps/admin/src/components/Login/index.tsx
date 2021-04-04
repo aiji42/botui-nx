@@ -9,7 +9,11 @@ import {
 import { customizedTheme } from '../../customizedTheme'
 import { makeStyles } from '@material-ui/core'
 import { EyeCatch } from './EyeCatch'
-import { Mode, useLoginContext, LoginContextProvider } from './use-login-context'
+import {
+  Mode,
+  useLoginContext,
+  LoginContextProvider
+} from './use-login-context'
 import { SignInForm } from './SignInForm'
 import { ForgotPasswordForm } from './ForgotPasswordForm'
 import { SignUpForm } from './SignUpForm'

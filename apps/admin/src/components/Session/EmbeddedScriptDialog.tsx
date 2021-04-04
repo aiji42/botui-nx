@@ -18,10 +18,7 @@ const EmbeddedScriptDialog: FC<EmbeddedScriptDialogProps> = ({ session }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
   return (
     <>
-      <Button
-        startIcon={<Code />}
-        onClick={() => setOpen(true)}
-      >
+      <Button startIcon={<Code />} onClick={() => setOpen(true)}>
         公開用タグ
       </Button>
       <Dialog open={open} onClose={handleClose}>

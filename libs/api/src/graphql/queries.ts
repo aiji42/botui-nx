@@ -13,7 +13,7 @@ export const getEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listEntrys = /* GraphQL */ `
   query ListEntrys(
     $filter: ModelEntryFilterInput
@@ -32,7 +32,7 @@ export const listEntrys = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const entryBySessionAndCreatedAt = /* GraphQL */ `
   query EntryBySessionAndCreatedAt(
     $sessionId: ID
@@ -61,7 +61,7 @@ export const entryBySessionAndCreatedAt = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getSession = /* GraphQL */ `
   query GetSession($id: ID!) {
     getSession(id: $id) {
@@ -78,7 +78,7 @@ export const getSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -102,4 +102,4 @@ export const listSessions = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`

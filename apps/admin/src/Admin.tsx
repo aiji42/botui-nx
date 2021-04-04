@@ -23,7 +23,7 @@ import { customizedTheme } from './customizedTheme'
 Amplify.I18n.putVocabularies(vocabularies)
 Amplify.I18n.setLanguage('ja')
 
-export const initAmplifyConfig = (awsconfig :Record<string, unknown>): void => {
+export const initAmplifyConfig = (awsconfig: Record<string, unknown>): void => {
   Amplify.configure(awsconfig)
 }
 
@@ -58,4 +58,4 @@ const Admin: FC = () => {
   )
 }
 
-export default Admin;
+export default Admin

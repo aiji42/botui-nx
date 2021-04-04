@@ -21,7 +21,7 @@ export const createSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateSession = /* GraphQL */ `
   mutation UpdateSession(
     $input: UpdateSessionInput!
@@ -41,7 +41,7 @@ export const updateSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteSession = /* GraphQL */ `
   mutation DeleteSession(
     $input: DeleteSessionInput!
@@ -61,7 +61,7 @@ export const deleteSession = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateEntry = /* GraphQL */ `
   mutation UpdateEntry(
     $input: UpdateEntryInput!
@@ -76,7 +76,7 @@ export const updateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteEntry = /* GraphQL */ `
   mutation DeleteEntry(
     $input: DeleteEntryInput!
@@ -91,7 +91,7 @@ export const deleteEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createEntry = /* GraphQL */ `
   mutation CreateEntry(
     $input: CreateEntryInput!
@@ -106,4 +106,4 @@ export const createEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

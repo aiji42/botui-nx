@@ -5,7 +5,10 @@ import { Mode, useLoginContext } from './use-login-context'
 import GoogleButton from 'react-google-button'
 
 export const SignUpForm: FC = () => {
-  const [{ loading, error, email }, { signUp, setDataset, signInByGoogle }] = useLoginContext()
+  const [
+    { loading, error, email },
+    { signUp, setDataset, signInByGoogle }
+  ] = useLoginContext()
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -67,7 +70,7 @@ const Footer: FC = () => {
   const [, { setDataset }] = useLoginContext()
   const handleSignIn = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_IN}))
+    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_IN }))
   }
   return (
     <Grid container>

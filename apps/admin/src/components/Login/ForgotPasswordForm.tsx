@@ -4,7 +4,10 @@ import { FormWrapper } from './FormWrapper'
 import { Mode, useLoginContext } from './use-login-context'
 
 export const ForgotPasswordForm: FC = () => {
-  const [{ loading, error, email }, { forgotPassword, setDataset }] = useLoginContext()
+  const [
+    { loading, error, email },
+    { forgotPassword, setDataset }
+  ] = useLoginContext()
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -44,11 +47,11 @@ const Footer: FC = () => {
   const [, { setDataset }] = useLoginContext()
   const handleSignIn = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_IN}))
+    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_IN }))
   }
   const handleSignUp = (e: React.SyntheticEvent) => {
     e.preventDefault()
-    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_UP}))
+    setDataset((prev) => ({ ...prev, mode: Mode.SIGN_UP }))
   }
   return (
     <Grid container>
