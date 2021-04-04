@@ -1,21 +1,6 @@
 import API, { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import { Entry } from '@botui/types'
-
-export const createEntry = /* GraphQL */ `
-  mutation CreateEntry(
-    $input: CreateEntryInput!
-    $condition: ModelEntryConditionInput
-  ) {
-    createEntry(input: $input, condition: $condition) {
-      id
-      owner
-      sessionId
-      inputs
-      createdAt
-      updatedAt
-    }
-  }
-`
+import { createEntry } from '../graphql/mutations'
 
 export type AddEntryInput = Pick<
   Entry<Record<string, unknown>>,

@@ -1,21 +1,6 @@
 import API, { GRAPHQL_AUTH_MODE, GraphQLResult } from '@aws-amplify/api'
 import { Session } from '@botui/types'
-
-const getSession = /* GraphQL */ `
-  query GetSession($id: ID!) {
-    session: getSession(id: $id) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-    }
-  }
-`
+import { getSession } from '../graphql/queries'
 
 export const fetchSession = async (id: string): Promise<Session | null> => {
   const res = (await API.graphql({
