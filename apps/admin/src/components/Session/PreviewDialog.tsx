@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState } from 'react'
 import { Dialog, DialogContent, makeStyles, Button } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { Session } from '@botui/types'
+import { ChatControllerClient } from '@botui/chat-controller'
 
 const useStyleDialog = makeStyles(() => ({
   paper: {
@@ -35,16 +36,18 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       </Button>
       <Dialog open={open} onClose={handleClose} classes={dialogClasses}>
         <DialogContent classes={dialogContentClasses}>
-          <iframe
-            src={`${
-              process.env.NX_PREVIEW_HOST
-            }/?preview=true&jsonedSession=${encodeURIComponent(
-              JSON.stringify(session)
-            )}`}
-            title="プレビュー"
-            width="100%"
-            height="100%"
-          />
+          <ChatControllerClient onClose={handleClose} onComplete={handleClose}>
+            <iframe
+              src={`${
+                process.env.NX_PREVIEW_HOST
+              }/?preview=true&jsonedSession=${encodeURIComponent(
+                JSON.stringify(session)
+              )}`}
+              title="プレビュー"
+              width="100%"
+              height="100%"
+            />
+          </ChatControllerClient>
         </DialogContent>
       </Dialog>
     </>
