@@ -8,17 +8,17 @@ export const fetchSession = async (id: string): Promise<Session | null> => {
     variables: { id },
     authMode: GRAPHQL_AUTH_MODE.AWS_IAM
   })) as GraphQLResult<{
-    session: Session<string, string, string, string>
+    getSession: Session<string, string, string, string>
   }>
 
-  if (!res.data?.session) return null
+  if (!res.data?.getSession) return null
   const {
     proposals: proposalsString,
     images: imageString,
     theme: themeString,
     launcher: launcherString,
     ...restSession
-  } = res.data.session
+  } = res.data.getSession
   const proposals = JSON.parse(proposalsString)
   const images = JSON.parse(imageString)
   const theme = JSON.parse(themeString)
