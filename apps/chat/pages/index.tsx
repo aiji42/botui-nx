@@ -6,13 +6,13 @@ const Index: FC = () => {
   const router = useRouter()
   useEffect(() => {
     if (router.query.preview && router.query.jsonedSession) {
-      router.replace({
+      router.push({
         pathname: '/session/preview',
         query: { jsonedSession: router.query.jsonedSession }
       })
       return
     }
-    router.replace({
+    router.push({
       pathname: '/session/[id]',
       query: { id: router.query.sessionId ?? 'invalid' }
     })
