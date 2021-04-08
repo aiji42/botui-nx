@@ -2524,14 +2524,6 @@
   dependencies:
     ra-language-english "^3.8.4"
 
-"@botui/types@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@botui/types/-/types-2.5.0.tgz#5fdfe9952d575e909171eb1da4375ba0f68d92b8"
-  integrity sha512-BmiDiVbaRwKN78cwdrdB6yJDm4u77eWC/EliQvTyK6f4HYr1JO0OyUYiBYzhzBX5pG74UFJLmnOKshdw/X47kg==
-  dependencies:
-    "@types/react" "17.0.2"
-    "@types/yup" "*"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -4070,11 +4062,6 @@
   integrity sha512-kQ5JNTrbDv3Rp5X2n/iUu37IJBDU2gsZ5R/g1/KHOOEc5IKfUFjXT6DENPGduh08I/pamwtEq4oul7gUqKTQDQ==
   dependencies:
     "@types/yargs-parser" "*"
-
-"@types/yup@*":
-  version "0.29.11"
-  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.11.tgz#d654a112973f5e004bf8438122bd7e56a8e5cd7e"
-  integrity sha512-9cwk3c87qQKZrT251EDoibiYRILjCmxBvvcb4meofCmx1vdnNcR9gyildy5vOHASpOKMsn42CugxUvcwK5eu1g==
 
 "@typescript-eslint/eslint-plugin@^4.16.0":
   version "4.20.0"

@@ -34,30 +34,20 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
   } = useKana({ kanaType: status.kanaType })
   const [, , familyNameKanaHelper] = useField('familyNameKana')
   const [, , firstNameKanaHelper] = useField('firstNameKana')
-  const FamilyNameMounted = useRef(false)
-  const FirstNameMounted = useRef(false)
 
+  const prevFamilyNameKana = useRef(familyNameKana)
   useEffect(() => {
-    if (!FamilyNameMounted.current) {
-      FamilyNameMounted.current = true
-      return
-    }
-    if (!status.kana) return
-    familyNameKanaHelper.setValue(familyNameKana)
-    !!familyNameKana && familyNameKanaHelper.setTouched(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [familyNameKana])
+    if (!status.kana || prevFamilyNameKana.current === familyNameKana) return
+    familyNameKanaHelper.setValue(familyNameKana, true)
+    prevFamilyNameKana.current = familyNameKana
+  }, [familyNameKana, familyNameKanaHelper, status.kana])
 
+  const prevFirstNameKana = useRef(firstNameKana)
   useEffect(() => {
-    if (!FirstNameMounted.current) {
-      FirstNameMounted.current = true
-      return
-    }
-    if (!status.kana) return
-    firstNameKanaHelper.setValue(firstNameKana)
-    !!firstNameKana && firstNameKanaHelper.setTouched(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstNameKana])
+    if (!status.kana || prevFirstNameKana.current === firstNameKana) return
+    firstNameKanaHelper.setValue(firstNameKana, true)
+    prevFirstNameKana.current = firstNameKana
+  }, [firstNameKana, firstNameKanaHelper, status.kana])
 
   return (
     <form onSubmit={handleSubmit}>
