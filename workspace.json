@@ -1,8 +1,6 @@
 {
   "version": 2,
-  "cli": {
-    "defaultCollection": "@nrwl/next"
-  },
+  "cli": { "defaultCollection": "@nrwl/next" },
   "defaultProject": "chat",
   "generators": {
     "@nrwl/react": {
@@ -11,10 +9,7 @@
       "library": { "style": "none", "linter": "eslint" }
     },
     "@nrwl/next": {
-      "application": {
-        "style": "@emotion/styled",
-        "linter": "eslint"
-      }
+      "application": { "style": "@emotion/styled", "linter": "eslint" }
     }
   },
   "projects": {
@@ -26,20 +21,12 @@
         "build": {
           "executor": "@nrwl/next:build",
           "outputs": ["{options.outputPath}"],
-          "options": {
-            "root": "apps/chat",
-            "outputPath": "dist/apps/chat"
-          },
-          "configurations": {
-            "production": {}
-          }
+          "options": { "root": "apps/chat", "outputPath": "dist/apps/chat" },
+          "configurations": { "production": {} }
         },
         "serve": {
           "executor": "@nrwl/next:server",
-          "options": {
-            "buildTarget": "chat:build",
-            "dev": true
-          },
+          "options": { "buildTarget": "chat:build", "dev": true },
           "configurations": {
             "production": {
               "buildTarget": "chat:build:production",
@@ -49,9 +36,7 @@
         },
         "export": {
           "executor": "@nrwl/next:export",
-          "options": {
-            "buildTarget": "chat:build:production"
-          }
+          "options": { "buildTarget": "chat:build:production" }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -83,16 +68,12 @@
             "devServerTarget": "chat:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "chat:serve:production"
-            }
+            "production": { "devServerTarget": "chat:serve:production" }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/chat-e2e/**/*.{js,ts}"]
-          }
+          "options": { "lintFilePatterns": ["apps/chat-e2e/**/*.{js,ts}"] }
         }
       }
     },
@@ -124,9 +105,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/hooks/**/*.{ts,tsx,js,jsx}"]
-          }
+          "options": { "lintFilePatterns": ["libs/hooks/**/*.{ts,tsx,js,jsx}"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -145,9 +124,7 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/api/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["libs/api/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -284,21 +261,14 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "admin:build",
-            "port": 4201
-          },
+          "options": { "buildTarget": "admin:build", "port": 4201 },
           "configurations": {
-            "production": {
-              "buildTarget": "admin:build:production"
-            }
+            "production": { "buildTarget": "admin:build:production" }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/admin/**/*.{ts,tsx,js,jsx}"]
-          }
+          "options": { "lintFilePatterns": ["apps/admin/**/*.{ts,tsx,js,jsx}"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
@@ -323,16 +293,23 @@
             "devServerTarget": "admin:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "admin:serve:production"
-            }
+            "production": { "devServerTarget": "admin:serve:production" }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/admin-e2e/**/*.{js,ts}"]
-          }
+          "options": { "lintFilePatterns": ["apps/admin-e2e/**/*.{js,ts}"] }
+        }
+      }
+    },
+    "types": {
+      "root": "libs/types",
+      "sourceRoot": "libs/types/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["libs/types/**/*.ts"] }
         }
       }
     }
