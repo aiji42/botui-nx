@@ -1,0 +1,38 @@
+diff --git a/node_modules/final-form/dist/final-form.es.js b/node_modules/final-form/dist/final-form.es.js
+index 552dfe2..b226c2c 100644
+--- a/node_modules/final-form/dist/final-form.es.js
++++ b/node_modules/final-form/dist/final-form.es.js
+@@ -582,19 +582,19 @@ function createForm(config) {
+     }, []);
+   };
+ 
+-  var runFieldLevelValidation = function runFieldLevelValidation(name, setError) {
++  var runFieldLevelValidation = function runFieldLevelValidation(field, setError) {
+     var promises = [];
+-    var validators = getValidators(state.fields[name]);
++    var validators = getValidators(field);
+ 
+     if (validators.length) {
+       var error;
+       validators.forEach(function (validator) {
+-        var errorOrPromise = validator(getIn(state.formState.values, name), state.formState.values, validator.length === 0 || validator.length === 3 ? publishFieldState(state.formState, state.fields[name]) : undefined);
++        var errorOrPromise = validator(getIn(state.formState.values, field.name), state.formState.values, validator.length === 0 || validator.length === 3 ? publishFieldState(state.formState, state.fields[field.name]) : undefined);
+ 
+         if (errorOrPromise && isPromise(errorOrPromise)) {
+-          state.fields[name].validating = true;
++          field.validating = true;
+           var promise = errorOrPromise.then(function (error) {
+-            state.fields[name].validating = false;
++            field.validating = false;
+             setError(error);
+           }); // errors must be resolved, not rejected
+ 
+@@ -652,7 +652,7 @@ function createForm(config) {
+     var promises = [].concat(runRecordLevelValidation(function (errors) {
+       recordLevelErrors = errors || {};
+     }), fieldKeys.reduce(function (result, name) {
+-      return result.concat(runFieldLevelValidation(name, function (error) {
++      return result.concat(runFieldLevelValidation(fields[name], function (error) {
+         fieldLevelErrors[name] = error;
+       }));
+     }, []));
