@@ -1,12 +1,8 @@
 import React, { FC } from 'react'
 import { Grid } from '@material-ui/core'
-import { SelectInput, BooleanInput, CheckboxGroupInput } from 'react-admin'
-
-const sizeChoices = [
-  { id: 'auto', name: '自動切り替え' },
-  { id: 'full', name: '全画面' },
-  { id: 'widget', name: 'ウィジェット' }
-]
+import { BooleanInput, CheckboxGroupInput } from 'react-admin'
+import { Tooltip } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
 
 const scripts = [
   { id: 'https://unpkg.com/dayjs/dayjs.min.js', name: 'dayjs' },
@@ -16,20 +12,17 @@ const scripts = [
 const SessionFormInner: FC = () => {
   return (
     <Grid container spacing={1}>
-      <Grid item xs={4}>
-        <SelectInput
-          label="チャット画面の大きさ"
-          source="launcher.size"
-          resource="sessions"
-          choices={sizeChoices}
-          defaultValue="auto"
-          fullWidth
-        />
-      </Grid>
-      <Grid item xs={8} />
       <Grid item xs={6}>
         <BooleanInput
-          label="自動即時起動"
+          label={
+            <>
+              自動即時起動
+              <Tooltip title="対象ページへのアクセスと同時にチャットを立ち上げます。">
+                <HelpOutline fontSize="small" />
+              </Tooltip>
+            </>
+          }
+          helperText="こちらの値を変更した場合には、起動スクリプトの再設定をお願いします。"
           source="launcher.defaultOpen"
           resource="sessions"
           defaultValue={false}
