@@ -12,11 +12,7 @@ import {
   LocalHandle,
   RemoteHandle
 } from 'post-me'
-import {
-  methods,
-  CustomChoice,
-  CustomMessage
-} from '../common'
+import { methods, CustomChoice, CustomMessage } from '../common'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
@@ -47,20 +43,22 @@ interface ChatContollorServerContextValue {
   progressPercentage: number
 }
 
-export const ChatControllerServerContext = createContext<ChatContollorServerContextValue>({
-  close: noop,
-  evalFunction: () => Promise.resolve(),
-  getCustomChoice: () => Promise.resolve({}),
-  getCustomMessage: () => Promise.resolve({}),
-  formPush: () => Promise.resolve(),
-  addEntry: noop,
-  complete: noop,
-  store: {} as Store,
-  values: {},
-  proposals: [],
-  session: {} as Session,
-  progressPercentage: 0
-})
+export const ChatControllerServerContext = createContext<ChatContollorServerContextValue>(
+  {
+    close: noop,
+    evalFunction: () => Promise.resolve(),
+    getCustomChoice: () => Promise.resolve({}),
+    getCustomMessage: () => Promise.resolve({}),
+    formPush: () => Promise.resolve(),
+    addEntry: noop,
+    complete: noop,
+    store: {} as Store,
+    values: {},
+    proposals: [],
+    session: {} as Session,
+    progressPercentage: 0
+  }
+)
 
 type Event = {
   onClose: Record<string, unknown>
@@ -111,11 +109,15 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     localHandle?.emit('onClose', {})
   }, [localHandle])
 
-  const complete = useCallback<ChatContollorServerContextValue['complete']>(() => {
+  const complete = useCallback<
+    ChatContollorServerContextValue['complete']
+  >(() => {
     localHandle?.emit('onComplete', {})
   }, [localHandle])
 
-  const evalFunction = useCallback<ChatContollorServerContextValue['evalFunction']>(
+  const evalFunction = useCallback<
+    ChatContollorServerContextValue['evalFunction']
+  >(
     async (functionString) => {
       await remoteHandle?.call('evalFunction', functionString, values)
     },
@@ -136,7 +138,9 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     [remoteHandle, values]
   )
 
-  const addEntry = useCallback<ChatContollorServerContextValue['addEntry']>(() => {
+  const addEntry = useCallback<
+    ChatContollorServerContextValue['addEntry']
+  >(() => {
     addEntryOriginal({
       sessionId: session.id,
       owner: session.owner,
@@ -163,6 +167,11 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, query, replace, session.proposals, complete])
+
+  useEffect(() => {
+    session.launcher.loadScripts &&
+      remoteHandle?.call('loadScript', session.launcher.loadScripts)
+  }, [remoteHandle, session.launcher.loadScripts])
 
   return (
     <ChatControllerServerContext.Provider
