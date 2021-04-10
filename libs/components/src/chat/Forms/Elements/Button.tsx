@@ -1,4 +1,4 @@
-import React, { FC, ButtonHTMLAttributes } from 'react'
+import { FC, ButtonHTMLAttributes } from 'react'
 import { css } from '@emotion/react'
 
 const style = css`

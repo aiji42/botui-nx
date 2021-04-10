@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { useField } from 'formik'
 import InputWithIcon, { InputWithIconProps } from './InputWithIcon'
 

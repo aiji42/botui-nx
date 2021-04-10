@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { withFormik, Field, FormikProps } from 'formik'
 import ButtonSubmit from './Elements/ButtonSubmit'
 import { css } from '@emotion/react'
