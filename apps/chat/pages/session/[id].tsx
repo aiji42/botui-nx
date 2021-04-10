@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import Amplify from 'aws-amplify'
 import { fetchSession } from '@botui/api'
@@ -25,13 +25,11 @@ export const getServerSideProps: GetServerSideProps<
   ChatMainProps,
   { id: string }
 > = async (context) => {
-  if (!context.params)
-    return { props: { session: null } }
+  if (!context.params) return { props: { session: null } }
   const { id } = context.params
 
   const session = await fetchSession(id)
-  if (!session || !session.active)
-    return { props: { session: null } }
+  if (!session || !session.active) return { props: { session: null } }
 
   return { props: { session } }
 }

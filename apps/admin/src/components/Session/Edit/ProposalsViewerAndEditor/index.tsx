@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useReducer, useState } from 'react'
+import { FC, useCallback, useEffect, useReducer, useState } from 'react'
 import { Proposal, Session } from '@botui/types'
 import { useForm, useFormState, Field } from 'react-final-form'
 import ProposalsTimeLine from './ProposalsTimeLine'

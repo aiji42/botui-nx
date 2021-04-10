@@ -1,4 +1,4 @@
-import React, { FC, SelectHTMLAttributes } from 'react'
+import { FC, SelectHTMLAttributes } from 'react'
 import { css, SerializedStyles } from '@emotion/react'
 import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 import { colors } from '../../styles'

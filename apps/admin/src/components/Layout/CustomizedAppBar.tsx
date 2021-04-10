@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { AppBar } from 'react-admin'
 import { makeStyles } from '@material-ui/core'
 

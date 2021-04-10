@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const EyeCatch = () => (
   <svg viewBox="0 0 500 500">
     <g id="freepik--background-complete--inject-34">

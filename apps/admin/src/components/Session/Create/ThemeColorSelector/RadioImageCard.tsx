@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { useForm, useField } from 'react-final-form'
 import { Card, CardMedia, CardActionArea, makeStyles } from '@material-ui/core'
 

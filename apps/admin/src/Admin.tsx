@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { buildAuthProvider } from 'react-admin-amplify'
 import { Resource, Admin as ReactAdmin } from 'react-admin'
 import japaneseMessages from '@bicstone/ra-language-japanese'

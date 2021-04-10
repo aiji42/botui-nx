@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useEffect } from 'react'
+import { FC, useMemo, useEffect } from 'react'
 import { withFormik, Field, ErrorMessage, FormikProps, useField } from 'formik'
 import * as yup from 'yup'
 import cardValidator from 'card-validator'

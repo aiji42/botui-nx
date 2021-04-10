@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react'
+import { useCallback, FC } from 'react'
 import { Labeled } from 'react-admin'
 import { Slider } from '@material-ui/core'
 import { useForm, useField } from 'react-final-form'

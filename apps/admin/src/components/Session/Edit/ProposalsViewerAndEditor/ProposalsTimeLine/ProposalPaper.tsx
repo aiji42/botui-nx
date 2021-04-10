@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 import { ProposalMessage } from '@botui/types'
 import nl2br from 'react-nl2br'

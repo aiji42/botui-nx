@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { withFormik, Field, ErrorMessage, FormikProps } from 'formik'
 import * as yup from 'yup'
 import InputNumber from './Elements/InputNumber'

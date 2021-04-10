@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { css } from '@emotion/react'
 
 const error = css({

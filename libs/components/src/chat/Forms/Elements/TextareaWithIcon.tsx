@@ -1,4 +1,4 @@
-import React, { useState, FC, useCallback, FocusEvent } from 'react'
+import { useState, FC, useCallback, FocusEvent } from 'react'
 import { css, SerializedStyles } from '@emotion/react'
 import { colors } from '../../styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

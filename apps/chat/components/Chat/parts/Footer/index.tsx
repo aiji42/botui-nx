@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useChatControllerServer } from '@botui/chat-controller'
 import { Footer as ChatFooter } from '@botui/components'
 import { css } from '@emotion/react'

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useImageUrl } from '@botui/hooks'
 import { useChatControllerServer } from '@botui/chat-controller'
 import Close from '@material-ui/icons/Close'

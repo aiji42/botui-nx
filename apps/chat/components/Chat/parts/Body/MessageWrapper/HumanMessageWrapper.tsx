@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { MessageBubble, MessageBubbleProps } from '@botui/components'
 import { css } from '@emotion/react'
 

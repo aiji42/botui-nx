@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useCallback, useState, useRef } from 'react'
+import { FC, useEffect, useCallback, useState, useRef, Fragment } from 'react'
 import { useMessageContext, useImageUrl, useProposal } from '@botui/hooks'
 import { MessageLoading } from '@botui/components'
 import { css } from '@emotion/react'
@@ -40,7 +40,7 @@ const Image: FC = () => {
   }, [setImageLoaded])
 
   return (
-    <>
+    <Fragment>
       {loading && <MessageLoading />}
       <img
         src={url}
@@ -49,7 +49,7 @@ const Image: FC = () => {
         css={style(loading)}
         alt="illustration"
       />
-    </>
+    </Fragment>
   )
 }
 

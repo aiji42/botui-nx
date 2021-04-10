@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react'
+import { FC, useState, useCallback } from 'react'
 import { Wrapper } from './Wrapper'
 import { ChatControllerClient } from '@botui/chat-controller/client'
 import { Fab } from './Fab'

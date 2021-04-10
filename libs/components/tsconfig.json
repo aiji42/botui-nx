@@ -7,7 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "jsxImportSource": "@emotion/react"
   },
-  "files": [],
+  "files": ["@emotion/react/types/css-prop.d.ts"],
   "include": [],
   "references": [
     {

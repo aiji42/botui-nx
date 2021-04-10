@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { useInput, InputProps, TextFieldProps } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import { TextField as TextInputMU, Box } from '@material-ui/core'
