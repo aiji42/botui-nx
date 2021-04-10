@@ -29,4 +29,4 @@ jobs:
       - name: cypress:chat
         run: |
           docker pull cypress/browsers:node14.16.0-chrome89-ff86
-          docker run -it -v $PWD:/app cypress/browsers:node14.16.0-chrome89-ff86 "yarn && yarn nx run chat:build:production && yarn nx run chat-e2e:e2e:production --headless"
+          docker run -v $PWD:/app cypress/browsers:node14.16.0-chrome89-ff86 "yarn && yarn nx run chat:build:production && yarn nx run chat-e2e:e2e:production --headless"
