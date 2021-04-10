@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react'
+import { FC, useState, useCallback } from 'react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { Dialog, DialogContent, Button, Typography } from '@material-ui/core'
 import { FileCopyOutlined } from '@material-ui/icons'

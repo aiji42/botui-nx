@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { Dialog, DialogContent, makeStyles, Button } from '@material-ui/core'
 import { Visibility } from '@material-ui/icons'
 import { Session } from '@botui/types'

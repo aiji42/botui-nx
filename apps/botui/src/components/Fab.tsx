@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from 'react'
+import { FC, MouseEventHandler } from 'react'
 import styled from '@emotion/styled'
 
 const Div = styled.div({

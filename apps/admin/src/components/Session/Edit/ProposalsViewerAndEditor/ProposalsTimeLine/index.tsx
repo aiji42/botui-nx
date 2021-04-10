@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { makeStyles, Zoom, useTheme } from '@material-ui/core'
 import {
   Timeline,

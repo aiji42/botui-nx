@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { SimpleFormProps, FormTab, TabbedForm } from 'react-admin'
 import SessionFormInner from './SessionFormInner'
 import ProposalViewerAndEditor from './ProposalsViewerAndEditor'

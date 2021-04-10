@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { FieldRenderProps } from 'react-final-form'
 import AceEditor from 'react-ace'
 import 'ace-builds/src-noconflict/mode-javascript'

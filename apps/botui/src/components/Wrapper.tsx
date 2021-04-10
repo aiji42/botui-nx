@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import Modal from 'react-modal'
 import { ClassNames } from '@emotion/react'
 
