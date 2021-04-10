@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { GetServerSideProps } from 'next'
 import Amplify from 'aws-amplify'
 import { fetchSession } from '@botui/api'

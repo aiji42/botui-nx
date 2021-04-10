@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 

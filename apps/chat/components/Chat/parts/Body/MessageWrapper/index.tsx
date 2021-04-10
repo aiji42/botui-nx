@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useMessageContext } from '@botui/hooks'
 import { useChatControllerServer } from '@botui/chat-controller'
 import { css, keyframes } from '@emotion/react'
