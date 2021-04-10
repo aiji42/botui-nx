@@ -7,8 +7,8 @@ import { Session } from '@botui/types'
 import copy from 'copy-to-clipboard'
 import { useNotify } from 'react-admin'
 
-const embeddedScript = (sessionId: string) => `
-<script type="text/javascript">var call=function(a,e){var t=document.getElementsByTagName("script")[0],n=document.createElement("script");n.async=!0,n.src=a,n.addEventListener?n.onload=function(){e()}:n.onreadystatechange=function(){"loaded"!=n.readyState&&"complete"!=n.readyState||(n.onreadystatechange=null,e())},t.parentNode.insertBefore(n,t)};call("/api/script/botui/chat.min.js",function(){new Botui.default("${process.env.NX_PREVIEW_HOST}/?sessionId=${sessionId}").start()});</script>
+const embeddedScript = (sessionId: string, defaultOpen: boolean) => `
+<script type="text/javascript">var call=function(a,e){var t=document.getElementsByTagName("script")[0],n=document.createElement("script");n.async=!0,n.src=a,n.addEventListener?n.onload=function(){e()}:n.onreadystatechange=function(){"loaded"!=n.readyState&&"complete"!=n.readyState||(n.onreadystatechange=null,e())},t.parentNode.insertBefore(n,t)};call("/api/script/botui/chat.min.js",function(){Botui.start("${process.env.NX_PREVIEW_HOST}/?sessionId=${sessionId}",${defaultOpen})});</script>
 `
 
 interface EmbeddedScriptDialogProps {
@@ -20,9 +20,9 @@ const EmbeddedScriptDialog: FC<EmbeddedScriptDialogProps> = ({ session }) => {
   const handleClose = useCallback(() => setOpen(false), [setOpen])
   const notify = useNotify()
   const handleCopy = useCallback(() => {
-    copy(embeddedScript(session.id))
+    copy(embeddedScript(session.id, session.launcher.defaultOpen))
     notify('コピーしました。')
-  }, [session.id, notify])
+  }, [session.id, session.launcher.defaultOpen, notify])
   return (
     <>
       <Button startIcon={<Code />} onClick={() => setOpen(true)}>
@@ -34,7 +34,7 @@ const EmbeddedScriptDialog: FC<EmbeddedScriptDialogProps> = ({ session }) => {
             下記のコードをチャットを起動させたいページのHEADタグに埋め込んでください。
           </Typography>
           <SyntaxHighlighter language="text">
-            {embeddedScript(session.id)}
+            {embeddedScript(session.id, session.launcher.defaultOpen)}
           </SyntaxHighlighter>
           <Button onClick={handleCopy}>
             <FileCopyOutlined />

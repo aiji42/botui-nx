@@ -147,7 +147,7 @@
           "options": {
             "outputPath": "apps/chat/public/dist/botui",
             "index": "apps/botui/src/index.html",
-            "main": "apps/botui/src/index.ts",
+            "main": "apps/botui/src/index.tsx",
             "polyfills": "",
             "tsConfig": "apps/botui/tsconfig.app.json",
             "assets": [],

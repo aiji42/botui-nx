@@ -28,7 +28,7 @@ var call = function(src, handler){
     base.parentNode.insertBefore(obj,base);
 };
 
-call("/api/script/botui/chat.min.js", function(){new Botui.default("/?sessionId=${id}", ${open}).start()})
+call("/api/script/botui/chat.min.js", function(){Botui.start("/?sessionId=${id}", ${open})})
 `
 
 const Tester: FC<TesterProps> = ({ id }) => {
@@ -39,9 +39,16 @@ const Tester: FC<TesterProps> = ({ id }) => {
   }, [])
   return (
     <>
-      {mounted && <Head>
-        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: script(id ?? '', Boolean(router.query.open)) }} />
-      </Head>}
+      {mounted && (
+        <Head>
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: script(id ?? '', Boolean(router.query.open))
+            }}
+          />
+        </Head>
+      )}
       <form id="testForm" method="post" action="/api/form-push-test">
         <input type="text" name="familyName" placeholder="familyName" />
         <input type="text" name="firstName" placeholder="firstName" />

@@ -46,6 +46,16 @@ const evalFunction = async (functional: string, values: Values) => {
   await func(values)
 }
 
+const loadScript = async (urls: string | string[]) => {
+  const base = document.getElementsByTagName('script')[0]
+  ;(Array.isArray(urls) ? urls : [urls]).forEach((src) => {
+    const scriptTag = document.createElement('script')
+    scriptTag.async = true
+    scriptTag.src = src
+    base.parentNode?.insertBefore(scriptTag, base)
+  })
+}
+
 const getCustomChoice = () => window.botui?.customChoice ?? {}
 const getCustomMessage = () => window.botui?.customMessage ?? {}
 
@@ -53,5 +63,6 @@ export const methods = {
   evalFunction,
   getCustomChoice,
   getCustomMessage,
-  formPush
+  formPush,
+  loadScript
 }
