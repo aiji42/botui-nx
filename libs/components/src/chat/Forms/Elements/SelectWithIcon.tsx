@@ -1,4 +1,4 @@
-import { FC, SelectHTMLAttributes } from 'react'
+import { FC, Fragment, SelectHTMLAttributes } from 'react'
 import { css, SerializedStyles } from '@emotion/react'
 import { FieldMetaProps, useField, FieldInputProps } from 'formik'
 import { colors } from '../../styles'
@@ -79,7 +79,7 @@ const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
   const [, meta] = useField(props)
   const { error, touched } = meta
   return (
-    <>
+    <Fragment>
       {title && <div css={style.title}>{title}</div>}
       <select {...props} css={styles(meta)} />
       {!error && touched ? (
@@ -91,7 +91,7 @@ const SelectWithIcon: FC<SelectWithIconProps> = ({ title, ...props }) => {
           <FontAwesomeIcon icon={faAngleDown} />
         </div>
       )}
-    </>
+    </Fragment>
   )
 }
 

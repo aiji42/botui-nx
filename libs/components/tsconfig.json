@@ -1,13 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "allowJs": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "jsxImportSource": "@emotion/react"
+    "allowSyntheticDefaultImports": true
   },
-  "files": ["@emotion/react/types/css-prop.d.ts"],
+  "files": ["./index.d.ts"],
   "include": [],
   "references": [
     {

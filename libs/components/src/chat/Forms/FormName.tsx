@@ -1,4 +1,4 @@
-import { useEffect, FC, KeyboardEvent, useRef } from 'react'
+import { useEffect, FC, KeyboardEvent, useRef, Fragment } from 'react'
 import { withFormik, Field, ErrorMessage, useField, FormikProps } from 'formik'
 import * as yup from 'yup'
 import InputName from './Elements/InputName'
@@ -77,7 +77,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
         <ErrorMessage name="firstName" component={SpanErrorMessage} />
       </div>
       {status.kana && (
-        <>
+        <Fragment>
           <div css={[style.formBlockDetailHalf, style.left]}>
             <Field
               as={InputNameKana}
@@ -98,7 +98,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
             />
             <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
           </div>
-        </>
+        </Fragment>
       )}
       <Field as={ButtonSubmit} name="submit" />
     </form>

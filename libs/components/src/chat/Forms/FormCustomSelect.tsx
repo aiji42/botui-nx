@@ -20,14 +20,14 @@ const Form: FC<FormikProps<FormCustomSelectValues> & FormCustomSelectType> = (
       {selects.map(({ options, ...select }, index) => (
         <Fragment key={index}>
           <Field as={SelectWithIcon} {...select}>
-            <>
+            <Fragment>
               <option label="選択してください">選択してください</option>
               {options.map((attributes, index) => (
                 <option key={index} {...attributes}>
                   {attributes.label}
                 </option>
               ))}
-            </>
+            </Fragment>
           </Field>
           <ErrorMessage name={select.name} component={SpanErrorMessage} />
         </Fragment>

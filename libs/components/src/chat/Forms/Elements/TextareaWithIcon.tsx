@@ -1,4 +1,4 @@
-import { useState, FC, useCallback, FocusEvent } from 'react'
+import { useState, FC, useCallback, FocusEvent, Fragment } from 'react'
 import { css, SerializedStyles } from '@emotion/react'
 import { colors } from '../../styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -80,7 +80,7 @@ const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
   )
 
   return (
-    <>
+    <Fragment>
       <div css={style.title}>{title}</div>
       <TextareaAutosize
         {...props}
@@ -94,7 +94,7 @@ const TextareaWithIcon: FC<Props> = ({ title, ...props }) => {
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>
       )}
-    </>
+    </Fragment>
   )
 }
 

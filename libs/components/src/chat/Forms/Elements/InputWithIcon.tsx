@@ -4,7 +4,8 @@ import {
   useRef,
   MutableRefObject,
   InputHTMLAttributes,
-  ReactNode
+  ReactNode,
+  Fragment
 } from 'react'
 import { useField, FieldMetaProps, FieldInputProps } from 'formik'
 import { css, SerializedStyles } from '@emotion/react'
@@ -87,7 +88,7 @@ const InputWithIcon: FC<InputWithIconProps> = ({
   }, [autoFocus, innerRef])
 
   return (
-    <>
+    <Fragment>
       <div css={style.title}>{title}</div>
       <input {...props} ref={innerRef || ref} css={styles(meta)} />
       {!error && touched && (
@@ -95,7 +96,7 @@ const InputWithIcon: FC<InputWithIconProps> = ({
           <FontAwesomeIcon icon={faCheckCircle} />
         </div>
       )}
-    </>
+    </Fragment>
   )
 }
 
