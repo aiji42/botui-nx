@@ -1,8 +1,8 @@
 FROM cypress/browsers:node14.16.0-chrome89-ff86
 
-RUN mkdir /app && cd $_
-COPY ./* /app
-RUN yarn \
+COPY . /app
+RUN cd /app \
+  && yarn \
   && yarn nx run chat:build:production
 
 WORKDIR /app

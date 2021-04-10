@@ -29,4 +29,4 @@ jobs:
       - name: cypress:chat
         run: |
           docker build -t cypress-chat-image .
-          docker run -v $PWD:/app cypress-chat-image
+          docker run cypress-chat-image
