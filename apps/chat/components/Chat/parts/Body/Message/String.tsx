@@ -1,9 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import nl2br from 'react-nl2br'
-import {
-  useMessageContext,
-  useProposal
-} from '@botui/hooks'
+import { useMessageContext, useProposal } from '@botui/hooks'
 import { useChatControllerServer, Values } from '@botui/chat-controller'
 import { CustomMessage } from '@botui/chat-controller'
 import Linkify from 'react-linkify'

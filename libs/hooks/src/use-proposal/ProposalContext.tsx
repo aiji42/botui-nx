@@ -1,10 +1,4 @@
-import {
-  FC,
-  createContext,
-  useState,
-  Dispatch,
-  SetStateAction
-} from 'react'
+import { FC, createContext, useState, Dispatch, SetStateAction } from 'react'
 import { Proposal } from '@botui/types'
 
 const noop = () => {

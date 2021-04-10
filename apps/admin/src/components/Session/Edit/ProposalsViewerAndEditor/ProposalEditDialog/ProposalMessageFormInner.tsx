@@ -1,11 +1,4 @@
-import {
-  FC,
-  useEffect,
-  useRef,
-  useState,
-  MouseEvent,
-  RefObject
-} from 'react'
+import { FC, useEffect, useRef, useState, MouseEvent, RefObject } from 'react'
 import {
   BooleanInput,
   SelectInput,
