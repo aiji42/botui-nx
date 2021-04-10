@@ -7,4 +7,4 @@ RUN cd /app \
 
 WORKDIR /app
 
-CMD yarn nx chat-e2e:e2e:production --headless
+CMD yarn nx run chat-e2e:e2e --configuration=production --headless
