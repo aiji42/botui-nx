@@ -17,6 +17,4 @@ COPY ./tsconfig.base.json /app/tsconfig.base.json
 COPY ./apps /app/apps
 COPY ./libs /app/libs
 
-RUN yarn nx run chat:build:production
-
-CMD yarn nx run chat-e2e:e2e --configuration=production --headless
+CMD yarn nx run chat-e2e:e2e --headless
