@@ -8,6 +8,5 @@
   "video": false,
   "videosFolder": "../../dist/cypress/apps/chat-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/chat-e2e/screenshots",
-  "chromeWebSecurity": false,
-  "defaultCommandTimeout": 30000
+  "chromeWebSecurity": false
 }

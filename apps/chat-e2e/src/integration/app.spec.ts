@@ -1,5 +1,5 @@
 describe('chat', () => {
-  beforeEach(() => cy.visit('/session/2fb047d0-04e0-4bae-948f-2203e56c7d17'))
+  beforeEach(() => cy.visit('/session/bfadcbd8-c4fd-471e-bf9a-418fab1d29c1'))
 
   it('should be able to access', () => {
     cy.contains('いらっしゃいませ！')
