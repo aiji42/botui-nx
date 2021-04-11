@@ -1,5 +1,5 @@
 describe('chat', () => {
-  beforeEach(() => cy.visit('https://botui-nx.vercel.app/session/bfadcbd8-c4fd-471e-bf9a-418fab1d29c1'))
+  beforeEach(() => cy.visit('/session/bfadcbd8-c4fd-471e-bf9a-418fab1d29c1'))
 
   it('should be able to access', () => {
     cy.contains('いらっしゃいませ！')
