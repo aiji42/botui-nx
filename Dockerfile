@@ -1,5 +1,8 @@
 FROM cypress/browsers:node14.16.0-chrome89-ff86
 
+ARG aws_export
+ENV NEXT_PUBLIC_AWS_EXPORTS=$aws_export
+ENV NX_AWS_EXPORTS=$aws_export
 WORKDIR /app
 
 COPY ./package.json /app/package.json
