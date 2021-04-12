@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, Fragment } from 'react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -38,7 +38,7 @@ const Tester: FC<TesterProps> = ({ id }) => {
     setMounted(true)
   }, [])
   return (
-    <>
+    <Fragment>
       {mounted && (
         <Head>
           <script
@@ -55,7 +55,7 @@ const Tester: FC<TesterProps> = ({ id }) => {
         <input type="text" name="familyNameKana" placeholder="familyNameKana" />
         <input type="text" name="firstNameKana" placeholder="firstNameKana" />
       </form>
-    </>
+    </Fragment>
   )
 }
 
