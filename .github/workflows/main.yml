@@ -8,9 +8,11 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
+    env:
+      NEXT_PUBLIC_AWS_EXPORTS: ${{ secrets.AWS_EXPORTS }}
     steps:
       - uses: actions/checkout@v2
       - name: cypress:chat
-        run: |
-          yarn
-          yarn nx run chat-e2e:e2e --headless
+        uses: cypress-io/github-action@v1
+        with:
+          command: yarn nx run chat-e2e:e2e --headless
