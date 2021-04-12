@@ -47,7 +47,7 @@ export const Fab: FC<FabProps> = (props) => {
   const { isOpen, onClick } = props
   if (isOpen) return null
   return (
-    <Div onClick={onClick}>
+    <Div onClick={onClick} data-cy="open-chat-button">
       <Icon />
     </Div>
   )
