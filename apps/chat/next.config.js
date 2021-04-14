@@ -10,5 +10,8 @@ module.exports = withNx({
     }
 
     return config
+  },
+  future: {
+    webpack5: true
   }
 })
