@@ -11,11 +11,10 @@ jobs:
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       NEXT_PUBLIC_AWS_EXPORTS: ${{ secrets.AWS_EXPORTS }}
-      NODE_ENV: production
     steps:
       - uses: actions/checkout@v2
       - name: cypress:chat
         uses: cypress-io/github-action@v1
         with:
-          build: yarn nx run botui:build:production
-          command: yarn nx run chat-e2e:e2e:production --headless
+          build: NODE_ENV=production yarn nx run botui:build:production
+          command: NODE_ENV=production yarn nx run chat-e2e:e2e:production --headless
