@@ -9,7 +9,7 @@ const downloadable: NextApiHandler = async (req, res) => {
   }
 
   try {
-  const file = path.resolve('./apps/chat/public/dist', ...req.query.filename)
+    const file = path.resolve('./apps/chat/public/dist', ...req.query.filename)
     if (!fs.existsSync(file)) {
       res.status(404).json({ message: `No file: ${req.query.filename}` })
       return
@@ -19,7 +19,7 @@ const downloadable: NextApiHandler = async (req, res) => {
     res.setHeader('Content-type', 'text/javascript')
     const filestream = fs.createReadStream(file)
     filestream.pipe(res)
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     res.status(500).json({ message: e.message })
   }
