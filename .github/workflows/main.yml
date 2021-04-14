@@ -9,12 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     container: cypress/browsers:node14.16.0-chrome89-ff86
     env:
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       NEXT_PUBLIC_AWS_EXPORTS: ${{ secrets.AWS_EXPORTS }}
     steps:
       - uses: actions/checkout@v2
       - name: cypress:chat
-        uses: cypress-io/github-action@v1
-        with:
-          build: NODE_ENV=production yarn nx run botui:build:production
-          command: NODE_ENV=production yarn nx run chat-e2e:e2e:production --headless
+        run: |
+          yarn
+          NODE_ENV=production yarn nx run botui:build:production
+          NODE_ENV=production yarn nx run chat-e2e:e2e:production --headless
