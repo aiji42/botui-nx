@@ -13,14 +13,6 @@
     "jsxImportSource": "@emotion/react"
   },
   "files": [],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "**/*.js",
-    "**/*.jsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules"]
 }

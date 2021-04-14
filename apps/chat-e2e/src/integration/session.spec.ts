@@ -1,5 +1,9 @@
 describe('session', () => {
-  beforeEach(() => cy.visit('/session/9040a628-6afa-4874-982c-a6e1a8de877b', { timeout: 40000 }))
+  beforeEach(() =>
+    cy.visit('/session/9040a628-6afa-4874-982c-a6e1a8de877b', {
+      timeout: 40000
+    })
+  )
 
   it('should be able to access main page', () => {
     cy.contains('いらっしゃいませ！')
