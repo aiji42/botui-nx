@@ -1,7 +1,8 @@
 import { Session } from '@botui/types'
-import { FC, useState } from 'react'
+import { AllHTMLAttributes, FC, useState } from 'react'
 import { useFormState } from 'react-final-form'
-import { Grid, Paper, makeStyles } from '@material-ui/core'
+import { Grid, Paper, makeStyles, IconButton } from '@material-ui/core'
+import { ImportExport, Add } from '@material-ui/icons'
 
 const ProposalViewer: FC = () => {
   const {
@@ -9,7 +10,7 @@ const ProposalViewer: FC = () => {
   } = useFormState<Session>()
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={7}>
       <Column side="left">
         this is a pen.this is a pen.this is a pen.this is a pen.this is a
         pen.this is a pen.
@@ -39,8 +40,14 @@ interface ColumnProps {
 }
 
 const useStyle = makeStyles((theme) => ({
-  activeColumn: { backgroundColor: theme.palette.grey[100] },
-  paper: { cursor: 'pointer' }
+  column: { position: 'relative' },
+  activeColumn: {
+    position: 'relative',
+    backgroundColor: theme.palette.grey[100]
+  },
+  paper: { cursor: 'pointer' },
+  toolTop: { position: 'absolute', top: -theme.spacing(1.8) },
+  toolBottom: { position: 'absolute', bottom: -theme.spacing(1.8) }
 }))
 
 const Column: FC<ColumnProps> = ({ side, children }) => {
@@ -52,35 +59,47 @@ const Column: FC<ColumnProps> = ({ side, children }) => {
   const handleMouseOutColumn = () => setActive(false)
   const classes = useStyle()
   return (
-    <>
+    <Grid
+      item
+      container
+      xs={12}
+      md={9}
+      lg={7}
+      direction={side === 'left' ? 'row' : 'row-reverse'}
+      justify="space-around"
+      alignItems="center"
+      onMouseEnter={handleMouseOverColumn}
+      onMouseLeave={handleMouseOutColumn}
+      className={active ? classes.activeColumn : classes.column}
+    >
+      {active && <EdgeTool className={classes.toolTop} />}
       <Grid
-        item
-        container
+        component={Paper}
         xs={12}
-        md={9}
-        lg={6}
-        direction={side === 'left' ? 'row' : 'row-reverse'}
-        justify="space-around"
-        alignItems="center"
-        onMouseOver={handleMouseOverColumn}
-        onMouseOut={handleMouseOutColumn}
-        className={active && classes.activeColumn}
+        sm={7}
+        elevation={elevation}
+        onMouseOver={handleMouseOverPaper}
+        onMouseOut={handleMouseOutPaper}
+        className={classes.paper}
       >
-        <Grid
-          component={Paper}
-          xs={12}
-          sm={7}
-          elevation={elevation}
-          onMouseOver={handleMouseOverPaper}
-          onMouseOut={handleMouseOutPaper}
-          className={classes.paper}
-        >
-          {children}
-        </Grid>
-        <Grid component={Paper} xs={false} sm={5} />
+        {children}
       </Grid>
-      <Grid item container xs={false} md={3} lg={6} />
-    </>
+      <Grid component={Paper} xs={false} sm={5} />
+      {active && <EdgeTool className={classes.toolBottom} />}
+    </Grid>
+  )
+}
+
+const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
+  return (
+    <div {...props}>
+      <IconButton size="small">
+        <Add />
+      </IconButton>
+      <IconButton size="small">
+        <ImportExport />
+      </IconButton>
+    </div>
   )
 }
 
