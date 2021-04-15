@@ -3,6 +3,7 @@ import { SimpleFormProps, FormTab, TabbedForm } from 'react-admin'
 import SessionFormInner from './SessionFormInner'
 import ProposalViewerAndEditor from './ProposalsViewerAndEditor'
 import ChatLauncherFormInner from './ChatLauncherFormInner'
+import ProposalViewer from './ProposalsViewerAndEditor/ProposalViewer'
 
 type Props = Omit<SimpleFormProps, 'children'>
 
@@ -13,7 +14,7 @@ const Edit: FC<Props> = (props) => {
         <SessionFormInner />
       </FormTab>
       <FormTab label="タイムライン">
-        <ProposalViewerAndEditor />
+        <ProposalViewer />
       </FormTab>
       <FormTab label="ランチャー">
         <ChatLauncherFormInner />
