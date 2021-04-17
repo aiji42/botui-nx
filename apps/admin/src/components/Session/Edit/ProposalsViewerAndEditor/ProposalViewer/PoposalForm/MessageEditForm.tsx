@@ -1,8 +1,8 @@
-import {FC, useRef, useState, MouseEvent, RefObject} from 'react';
-import { required, TextInput } from 'react-admin';
-import { DelayNumberSlider} from '../../../../parts';
-import {Menu, MenuItem, Fab, FabProps, makeStyles} from '@material-ui/core';
-import {Add} from '@material-ui/icons';
+import { FC, useRef, useState, MouseEvent, RefObject } from 'react'
+import { required, TextInput } from 'react-admin'
+import { DelayNumberSlider } from '../../../../parts'
+import { Menu, MenuItem, Fab, FabProps, makeStyles } from '@material-ui/core'
+import { Add } from '@material-ui/icons'
 
 const useStyle = makeStyles((theme) => ({
   foundationForFab: {

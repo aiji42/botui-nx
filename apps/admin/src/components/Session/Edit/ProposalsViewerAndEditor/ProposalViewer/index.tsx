@@ -10,15 +10,25 @@ import {
   ListItem,
   ListItemIcon
 } from '@material-ui/core'
-import { ImportExport, AddCircle, DoubleArrow, Code, TextFields, ListAlt } from '@material-ui/icons'
-import { DelayNumberSlider } from '../../../parts'
-import { TextInput } from 'react-admin'
+import {
+  ImportExport,
+  AddCircle,
+  DoubleArrow,
+  Code,
+  TextFields,
+  ListAlt
+} from '@material-ui/icons'
 import { DoubleColumnRow } from './ProposalRow/DoubleColumnRow'
 import { DoubleColumn } from './ProposalRow/DoubleCulmn'
 import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
 import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
-import { MessageForm } from './PoposalForm/MessageForm'
+import { MessageEditForm } from './PoposalForm/MessageEditForm'
+import { ProposalItemSelectList } from './PoposalForm/ProposalItemSelectList'
+import {
+  FormCustomCheckboxEditForm,
+  FormBirthDayEditForm
+} from './PoposalForm/FormEfitForm'
 
 const ProposalViewer: FC = () => {
   const {
@@ -35,19 +45,13 @@ const ProposalViewer: FC = () => {
         <RelayerRow>
           <Code />
         </RelayerRow>
-        <FormRow human>
-          氏名フォーム
-        </FormRow>
+        <FormRow human>氏名フォーム</FormRow>
         <MessageRow>
           this is a pen.this is a pen.this is a pen.this is a pen.this is a
           pen.this is a pen.
         </MessageRow>
-        <FormRow human>
-          住所フォーム
-        </FormRow>
-        <FormRow human>
-          電話番号フォーム
-        </FormRow>
+        <FormRow human>住所フォーム</FormRow>
+        <FormRow human>電話番号フォーム</FormRow>
       </Grid>
       <Grid container item xs={false} lg={4} />
     </Grid>
@@ -82,12 +86,17 @@ const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
           leftTool={human && <LeftTool />}
           rightTool={!human && <RightTool />}
         >
-          <ListItem><ListItemIcon><TextFields /></ListItemIcon><Typography variant="body1">{children}</Typography></ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <TextFields />
+            </ListItemIcon>
+            <Typography variant="body1">{children}</Typography>
+          </ListItem>
         </DoubleColumn>
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <MessageForm />
+          <MessageEditForm />
         </Box>
       </ProposalDrawer>
     </>
@@ -115,12 +124,17 @@ const FormRow: FC<FormRowProps> = ({ human = false, children }) => {
           leftTool={human && <LeftTool />}
           rightTool={!human && <RightTool />}
         >
-          <ListItem><ListItemIcon><ListAlt /></ListItemIcon>{children}</ListItem>
+          <ListItem>
+            <ListItemIcon>
+              <ListAlt />
+            </ListItemIcon>
+            {children}
+          </ListItem>
         </DoubleColumn>
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <MessageForm />
+          <FormBirthDayEditForm />
         </Box>
       </ProposalDrawer>
     </>
@@ -139,7 +153,7 @@ const RelayerRow: FC = ({ children }) => {
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <MessageForm />
+          <MessageEditForm />
         </Box>
       </ProposalDrawer>
     </>
@@ -147,15 +161,21 @@ const RelayerRow: FC = ({ children }) => {
 }
 
 const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
+  const [open, setOpen] = useState(false)
   return (
-    <div {...props}>
-      <IconButton size="small">
-        <AddCircle />
-      </IconButton>
-      <IconButton size="small">
-        <ImportExport />
-      </IconButton>
-    </div>
+    <>
+      <div {...props}>
+        <IconButton size="small" onClick={() => setOpen(true)}>
+          <AddCircle />
+        </IconButton>
+        <IconButton size="small">
+          <ImportExport />
+        </IconButton>
+      </div>
+      <ProposalDrawer open={open} onClose={() => setOpen(false)}>
+        <ProposalItemSelectList />
+      </ProposalDrawer>
+    </>
   )
 }
 

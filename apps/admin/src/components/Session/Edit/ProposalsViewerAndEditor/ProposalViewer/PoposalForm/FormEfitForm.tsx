@@ -1,10 +1,22 @@
-import {FC, useEffect} from 'react';
-import {BooleanInput, SelectInput, required, TextInput, FormDataConsumer, ArrayInput, SimpleFormIterator} from 'react-admin';
-import {FormCustomCheckbox, FormCustomRadioGroup, FormCustomSelect} from '@botui/types';
-import {useForm, useFormState, Field} from 'react-final-form';
-import {Tooltip, Badge, Typography} from '@material-ui/core';
-import {HelpOutline} from '@material-ui/icons';
-import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor';
+import { FC, useEffect } from 'react'
+import {
+  BooleanInput,
+  SelectInput,
+  required,
+  TextInput,
+  FormDataConsumer,
+  ArrayInput,
+  SimpleFormIterator
+} from 'react-admin'
+import {
+  FormCustomCheckbox,
+  FormCustomRadioGroup,
+  FormCustomSelect
+} from '@botui/types'
+import { useForm, useFormState, Field } from 'react-final-form'
+import { Tooltip, Badge, Typography } from '@material-ui/core'
+import { HelpOutline } from '@material-ui/icons'
+import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 
 export const FormNameEditForm: FC = (props) => {
   return (
