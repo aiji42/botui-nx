@@ -1,8 +1,23 @@
 import { Session } from '@botui/types'
 import { AllHTMLAttributes, FC, useState } from 'react'
 import { useFormState } from 'react-final-form'
-import { Grid, Paper, makeStyles, IconButton } from '@material-ui/core'
-import { ImportExport, Add } from '@material-ui/icons'
+import {
+  Grid,
+  makeStyles,
+  IconButton,
+  Typography,
+  Box,
+  ListItem,
+  ListItemIcon
+} from '@material-ui/core'
+import { ImportExport, AddCircle, DoubleArrow, Code, TextFields, ListAlt } from '@material-ui/icons'
+import { DelayNumberSlider } from '../../../parts'
+import { TextInput } from 'react-admin'
+import { DoubleColumnRow } from './ProposalRow/DoubleColumnRow'
+import { DoubleColumn } from './ProposalRow/DoubleCulmn'
+import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
+import { SingleColumn } from './ProposalRow/SingleCulmn'
+import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 
 const ProposalViewer: FC = () => {
   const {
@@ -10,83 +25,156 @@ const ProposalViewer: FC = () => {
   } = useFormState<Session>()
 
   return (
-    <Grid container spacing={7}>
-      <Column side="left">
-        this is a pen.this is a pen.this is a pen.this is a pen.this is a
-        pen.this is a pen.
-      </Column>
-      <Column side="right">
-        this is a pen.this is a pen.this is a pen.this is a pen.this is a
-        pen.this is a pen.
-      </Column>
-      <Column side="left">
-        this is a pen.this is a pen.this is a pen.this is a pen.this is a
-        pen.this is a pen.
-      </Column>
-      <Column side="right">
-        this is a pen.this is a pen.this is a pen.this is a pen.this is a
-        pen.this is a pen.
-      </Column>
-      <Column side="right">
-        this is a pen.this is a pen.this is a pen.this is a pen.this is a
-        pen.this is a pen.
-      </Column>
+    <Grid container>
+      <Grid container item xs={12} lg={8}>
+        <MessageRow>
+          this is a pen.this is a pen.this is a pen.this is a pen.this is a
+          pen.this is a pen.
+        </MessageRow>
+        <RelayerRow>
+          <Code />
+        </RelayerRow>
+        <FormRow human>
+          氏名フォーム
+        </FormRow>
+        <MessageRow>
+          this is a pen.this is a pen.this is a pen.this is a pen.this is a
+          pen.this is a pen.
+        </MessageRow>
+        <FormRow human>
+          住所フォーム
+        </FormRow>
+        <FormRow human>
+          電話番号フォーム
+        </FormRow>
+      </Grid>
+      <Grid container item xs={false} lg={4} />
     </Grid>
   )
 }
 
-interface ColumnProps {
-  side: 'left' | 'right'
-}
-
 const useStyle = makeStyles((theme) => ({
-  column: { position: 'relative' },
-  activeColumn: {
-    position: 'relative',
-    backgroundColor: theme.palette.grey[100]
-  },
-  paper: { cursor: 'pointer' },
-  toolTop: { position: 'absolute', top: -theme.spacing(1.8) },
-  toolBottom: { position: 'absolute', bottom: -theme.spacing(1.8) }
+  sidePanel: {
+    padding: theme.spacing(3),
+    paddingTop: theme.spacing(10)
+  }
 }))
 
-const Column: FC<ColumnProps> = ({ side, children }) => {
-  const [elevation, setElevation] = useState(1)
-  const [active, setActive] = useState(false)
-  const handleMouseOverPaper = () => setElevation(5)
-  const handleMouseOutPaper = () => setElevation(1)
-  const handleMouseOverColumn = () => setActive(true)
-  const handleMouseOutColumn = () => setActive(false)
+interface MessageRowProps {
+  human?: boolean
+}
+
+const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
+  const [editing, setEditing] = useState(false)
+  const handleEditig = () => setEditing(true)
+  const handleCloseEditig = () => setEditing(false)
   const classes = useStyle()
   return (
-    <Grid
-      item
-      container
-      xs={12}
-      md={9}
-      lg={7}
-      direction={side === 'left' ? 'row' : 'row-reverse'}
-      justify="space-around"
-      alignItems="center"
-      onMouseEnter={handleMouseOverColumn}
-      onMouseLeave={handleMouseOutColumn}
-      className={active ? classes.activeColumn : classes.column}
-    >
-      {active && <EdgeTool className={classes.toolTop} />}
-      <Grid
-        component={Paper}
-        xs={12}
-        sm={7}
-        elevation={elevation}
-        onMouseOver={handleMouseOverPaper}
-        onMouseOut={handleMouseOutPaper}
-        className={classes.paper}
+    <>
+      <DoubleColumnRow
+        side={human ? 'right' : 'left'}
+        topTool={<EdgeTool />}
+        bottomTool={<EdgeTool />}
       >
-        {children}
-      </Grid>
-      <Grid component={Paper} xs={false} sm={5} />
-      {active && <EdgeTool className={classes.toolBottom} />}
-    </Grid>
+        <DoubleColumn
+          onClick={handleEditig}
+          leftTool={human && <LeftTool />}
+          rightTool={!human && <RightTool />}
+        >
+          <ListItem><ListItemIcon><TextFields /></ListItemIcon><Typography variant="body1">{children}</Typography></ListItem>
+        </DoubleColumn>
+      </DoubleColumnRow>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
+        <Box className={classes.sidePanel}>
+          <DelayNumberSlider
+            label="ローディング時間"
+            source="data.content.delay"
+            fullWidth
+          />
+          <TextInput
+            source="data.content.props.children"
+            label="メッセージ本文"
+            fullWidth
+            multiline
+            rows={5}
+          />
+        </Box>
+      </ProposalDrawer>
+    </>
+  )
+}
+
+interface FormRowProps {
+  human?: boolean
+}
+
+const FormRow: FC<FormRowProps> = ({ human = false, children }) => {
+  const [editing, setEditing] = useState(false)
+  const handleEditig = () => setEditing(true)
+  const handleCloseEditig = () => setEditing(false)
+  const classes = useStyle()
+  return (
+    <>
+      <DoubleColumnRow
+        side={human ? 'right' : 'left'}
+        topTool={<EdgeTool />}
+        bottomTool={<EdgeTool />}
+      >
+        <DoubleColumn
+          onClick={handleEditig}
+          leftTool={human && <LeftTool />}
+          rightTool={!human && <RightTool />}
+        >
+          <ListItem><ListItemIcon><ListAlt /></ListItemIcon>{children}</ListItem>
+        </DoubleColumn>
+      </DoubleColumnRow>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
+        <Box className={classes.sidePanel}>
+          <DelayNumberSlider
+            label="ローディング時間"
+            source="data.content.delay"
+            fullWidth
+          />
+          <TextInput
+            source="data.content.props.children"
+            label="メッセージ本文"
+            fullWidth
+            multiline
+            rows={5}
+          />
+        </Box>
+      </ProposalDrawer>
+    </>
+  )
+}
+
+const RelayerRow: FC = ({ children }) => {
+  const [editing, setEditing] = useState(false)
+  const handleEditig = () => setEditing(true)
+  const handleCloseEditig = () => setEditing(false)
+  const classes = useStyle()
+  return (
+    <>
+      <SingleColumnRow topTool={<EdgeTool />} bottomTool={<EdgeTool />}>
+        <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
+      </SingleColumnRow>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
+        <Box className={classes.sidePanel}>
+          <DelayNumberSlider
+            label="ローディング時間"
+            source="data.content.delay"
+            fullWidth
+          />
+          <TextInput
+            source="data.content.props.children"
+            label="メッセージ本文"
+            fullWidth
+            multiline
+            rows={5}
+          />
+        </Box>
+      </ProposalDrawer>
+    </>
   )
 }
 
@@ -94,12 +182,28 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
   return (
     <div {...props}>
       <IconButton size="small">
-        <Add />
+        <AddCircle />
       </IconButton>
       <IconButton size="small">
         <ImportExport />
       </IconButton>
     </div>
+  )
+}
+
+const LeftTool: FC = () => {
+  return (
+    <IconButton style={{ transform: 'scale(-1, 1)' }} size="small">
+      <DoubleArrow />
+    </IconButton>
+  )
+}
+
+const RightTool: FC = () => {
+  return (
+    <IconButton size="small">
+      <DoubleArrow />
+    </IconButton>
   )
 }
 
