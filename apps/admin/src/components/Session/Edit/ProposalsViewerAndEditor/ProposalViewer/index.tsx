@@ -18,6 +18,7 @@ import { DoubleColumn } from './ProposalRow/DoubleCulmn'
 import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
 import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
+import { MessageForm } from './PoposalForm/MessageForm'
 
 const ProposalViewer: FC = () => {
   const {
@@ -86,18 +87,7 @@ const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <DelayNumberSlider
-            label="ローディング時間"
-            source="data.content.delay"
-            fullWidth
-          />
-          <TextInput
-            source="data.content.props.children"
-            label="メッセージ本文"
-            fullWidth
-            multiline
-            rows={5}
-          />
+          <MessageForm />
         </Box>
       </ProposalDrawer>
     </>
@@ -130,18 +120,7 @@ const FormRow: FC<FormRowProps> = ({ human = false, children }) => {
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <DelayNumberSlider
-            label="ローディング時間"
-            source="data.content.delay"
-            fullWidth
-          />
-          <TextInput
-            source="data.content.props.children"
-            label="メッセージ本文"
-            fullWidth
-            multiline
-            rows={5}
-          />
+          <MessageForm />
         </Box>
       </ProposalDrawer>
     </>
@@ -160,18 +139,7 @@ const RelayerRow: FC = ({ children }) => {
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
         <Box className={classes.sidePanel}>
-          <DelayNumberSlider
-            label="ローディング時間"
-            source="data.content.delay"
-            fullWidth
-          />
-          <TextInput
-            source="data.content.props.children"
-            label="メッセージ本文"
-            fullWidth
-            multiline
-            rows={5}
-          />
+          <MessageForm />
         </Box>
       </ProposalDrawer>
     </>
