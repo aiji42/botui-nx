@@ -14,9 +14,7 @@ import {
   ImportExport,
   AddCircle,
   DoubleArrow,
-  Code,
-  TextFields,
-  ListAlt
+  TextFields
 } from '@material-ui/icons'
 import { DoubleColumnRow } from './ProposalRow/DoubleColumnRow'
 import { DoubleColumn } from './ProposalRow/DoubleCulmn'
@@ -25,10 +23,7 @@ import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 import { MessageEditForm } from './PoposalForm/MessageEditForm'
 import { ProposalItemSelectList } from './PoposalForm/ProposalItemSelectList'
-import {
-  FormCustomCheckboxEditForm,
-  FormBirthDayEditForm
-} from './PoposalForm/FormEfitForm'
+import { FormRow } from './ProposalRow/FormRow'
 
 const ProposalViewer: FC = () => {
   const {
@@ -38,20 +33,23 @@ const ProposalViewer: FC = () => {
   return (
     <Grid container>
       <Grid container item xs={12} lg={8}>
-        <MessageRow>
-          this is a pen.this is a pen.this is a pen.this is a pen.this is a
-          pen.this is a pen.
-        </MessageRow>
-        <RelayerRow>
-          <Code />
-        </RelayerRow>
-        <FormRow human>氏名フォーム</FormRow>
-        <MessageRow>
-          this is a pen.this is a pen.this is a pen.this is a pen.this is a
-          pen.this is a pen.
-        </MessageRow>
-        <FormRow human>住所フォーム</FormRow>
-        <FormRow human>電話番号フォーム</FormRow>
+        {proposals.map((proposal) => {
+          if (
+            proposal.type === 'message' &&
+            proposal.data.content.type === 'string'
+          )
+            return (
+              <MessageRow human={proposal.data.human} key={proposal.id}>
+                {proposal.data.content.props.children}
+              </MessageRow>
+            )
+          if (
+            proposal.type === 'message' &&
+            proposal.data.content.type === 'form'
+          )
+            return <FormRow proposal={proposal} key={proposal.id} />
+          return <RelayerRow key={proposal.id} />
+        })}
       </Grid>
       <Grid container item xs={false} lg={4} />
     </Grid>
@@ -105,40 +103,6 @@ const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
 
 interface FormRowProps {
   human?: boolean
-}
-
-const FormRow: FC<FormRowProps> = ({ human = false, children }) => {
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = () => setEditing(false)
-  const classes = useStyle()
-  return (
-    <>
-      <DoubleColumnRow
-        side={human ? 'right' : 'left'}
-        topTool={<EdgeTool />}
-        bottomTool={<EdgeTool />}
-      >
-        <DoubleColumn
-          onClick={handleEditig}
-          leftTool={human && <LeftTool />}
-          rightTool={!human && <RightTool />}
-        >
-          <ListItem>
-            <ListItemIcon>
-              <ListAlt />
-            </ListItemIcon>
-            {children}
-          </ListItem>
-        </DoubleColumn>
-      </DoubleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}>
-          <FormBirthDayEditForm />
-        </Box>
-      </ProposalDrawer>
-    </>
-  )
 }
 
 const RelayerRow: FC = ({ children }) => {

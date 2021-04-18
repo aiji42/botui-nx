@@ -18,20 +18,22 @@ import {
   List as ListIcon,
   CallSplit,
   Code,
-  FlashOn
+  FlashOn,
+  ShortText,
+  WrapText
 } from '@material-ui/icons'
 
 export const ProposalItemSelectList = () => {
   return (
     <>
       <List subheader={<ListSubheader>メッセージ</ListSubheader>}>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <TextFields />
           </ListItemIcon>
           <ListItemText primary="テキストメッセージ" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Image />
           </ListItemIcon>
@@ -39,37 +41,37 @@ export const ProposalItemSelectList = () => {
         </ListItem>
       </List>
       <List subheader={<ListSubheader>フォーム</ListSubheader>}>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Person />
           </ListItemIcon>
           <ListItemText primary="氏名" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Home />
           </ListItemIcon>
           <ListItemText primary="住所" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Cake />
           </ListItemIcon>
           <ListItemText primary="生年月日" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Phone />
           </ListItemIcon>
           <ListItemText primary="電話番号" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <AlternateEmail />
           </ListItemIcon>
           <ListItemText primary="メールアドレス" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <RadioButtonChecked />
           </ListItemIcon>
@@ -78,7 +80,7 @@ export const ProposalItemSelectList = () => {
             secondary="選択肢から一つだけ選ばせる"
           />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <LibraryAddCheck />
           </ListItemIcon>
@@ -87,7 +89,7 @@ export const ProposalItemSelectList = () => {
             secondary="選択肢から複数選ばせる"
           />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
@@ -96,21 +98,39 @@ export const ProposalItemSelectList = () => {
             secondary="プルダウン型の選択肢"
           />
         </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <ShortText />
+          </ListItemIcon>
+          <ListItemText
+            primary="カスタムインプット"
+            secondary="自由入力型フォーム"
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <WrapText />
+          </ListItemIcon>
+          <ListItemText
+            primary="カスタムテキストエリア"
+            secondary="改行可能な自由入力型フォーム"
+          />
+        </ListItem>
       </List>
       <List subheader={<ListSubheader>中間処理</ListSubheader>}>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <CallSplit />
           </ListItemIcon>
           <ListItemText primary="分岐" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <Code />
           </ListItemIcon>
           <ListItemText primary="カスタムスクリプト" />
         </ListItem>
-        <ListItem>
+        <ListItem button>
           <ListItemIcon>
             <FlashOn />
           </ListItemIcon>
