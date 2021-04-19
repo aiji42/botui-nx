@@ -1,6 +1,6 @@
-import { Session } from '@botui/types'
-import { AllHTMLAttributes, FC, useState } from 'react'
-import { useFormState } from 'react-final-form'
+import { Proposal, ProposalMessage, Proposals, Session } from '@botui/types'
+import { AllHTMLAttributes, FC, useCallback, useState } from 'react'
+import { useFormState, useForm, useField } from 'react-final-form'
 import {
   Grid,
   makeStyles,
@@ -29,6 +29,20 @@ const ProposalViewer: FC = () => {
   const {
     values: { proposals }
   } = useFormState<Session>()
+  const { change } = useForm<Session>()
+  const makeUpdater = useCallback(
+    (id: Proposal['id']) => {
+      return (newProposal: Proposal) => {
+        change(
+          'proposals',
+          proposals.map((proposal) =>
+            proposal.id === id ? newProposal : proposal
+          )
+        )
+      }
+    },
+    [change, proposals]
+  )
 
   return (
     <Grid container>
@@ -39,15 +53,23 @@ const ProposalViewer: FC = () => {
             proposal.data.content.type === 'string'
           )
             return (
-              <MessageRow human={proposal.data.human} key={proposal.id}>
-                {proposal.data.content.props.children}
-              </MessageRow>
+              <MessageRow
+                proposal={proposal}
+                updateProposal={makeUpdater(proposal.id)}
+                key={proposal.id}
+              />
             )
           if (
             proposal.type === 'message' &&
             proposal.data.content.type === 'form'
           )
-            return <FormRow proposal={proposal} key={proposal.id} />
+            return (
+              <FormRow
+                proposal={proposal}
+                updateProposal={makeUpdater(proposal.id)}
+                key={proposal.id}
+              />
+            )
           return <RelayerRow key={proposal.id} />
         })}
       </Grid>
@@ -64,14 +86,26 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 interface MessageRowProps {
-  human?: boolean
+  proposal: ProposalMessage
+  updateProposal: (arg: ProposalMessage) => void
 }
 
-const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
+const MessageRow: FC<MessageRowProps> = ({ proposal, updateProposal }) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
   const classes = useStyle()
+  const switchSide = useCallback(() => {
+    updateProposal({
+      ...proposal,
+      data: { ...proposal.data, human: !proposal.data.human }
+    })
+  }, [updateProposal, proposal])
+
+  const {
+    data: { human, content }
+  } = proposal
+  if (content.type !== 'string') return null
   return (
     <>
       <DoubleColumnRow
@@ -81,14 +115,14 @@ const MessageRow: FC<MessageRowProps> = ({ human = false, children }) => {
       >
         <DoubleColumn
           onClick={handleEditig}
-          leftTool={human && <LeftTool />}
-          rightTool={!human && <RightTool />}
+          leftTool={human && <LeftTool onClick={switchSide} />}
+          rightTool={!human && <RightTool onClick={switchSide} />}
         >
           <ListItem>
             <ListItemIcon>
               <TextFields />
             </ListItemIcon>
-            <Typography variant="body1">{children}</Typography>
+            <Typography variant="body1">{content.props.children}</Typography>
           </ListItem>
         </DoubleColumn>
       </DoubleColumnRow>
@@ -143,17 +177,17 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
   )
 }
 
-const LeftTool: FC = () => {
+const LeftTool: FC<{ onClick: () => void }> = (props) => {
   return (
-    <IconButton style={{ transform: 'scale(-1, 1)' }} size="small">
+    <IconButton {...props} style={{ transform: 'scale(-1, 1)' }} size="small">
       <DoubleArrow />
     </IconButton>
   )
 }
 
-const RightTool: FC = () => {
+const RightTool: FC<{ onClick: () => void }> = (props) => {
   return (
-    <IconButton size="small">
+    <IconButton {...props} size="small">
       <DoubleArrow />
     </IconButton>
   )

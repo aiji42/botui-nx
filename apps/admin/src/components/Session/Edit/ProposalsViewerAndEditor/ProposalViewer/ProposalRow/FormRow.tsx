@@ -1,4 +1,4 @@
-import { FC, useState, AllHTMLAttributes, ReactNode } from 'react'
+import { FC, useState, AllHTMLAttributes, ReactNode, useCallback } from 'react'
 import {
   Box,
   ListItem,
@@ -43,12 +43,14 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 interface FromRowWrapperProps {
-  human?: boolean
+  proposal: ProposalMessage
+  updateProposal: (arg: ProposalMessage) => void
   editForm: ReactNode
 }
 
 const FromRowWrapper: FC<FromRowWrapperProps> = ({
-  human = false,
+  proposal,
+  updateProposal,
   editForm,
   children
 }) => {
@@ -56,6 +58,18 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
   const classes = useStyle()
+
+  const switchSide = useCallback(() => {
+    updateProposal({
+      ...proposal,
+      data: { ...proposal.data, human: !proposal.data.human }
+    })
+  }, [updateProposal, proposal])
+
+  const {
+    data: { human }
+  } = proposal
+
   return (
     <>
       <DoubleColumnRow
@@ -65,8 +79,8 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
       >
         <DoubleColumn
           onClick={handleEditig}
-          leftTool={human && <LeftTool />}
-          rightTool={!human && <RightTool />}
+          leftTool={human && <LeftTool onClick={switchSide} />}
+          rightTool={!human && <RightTool onClick={switchSide} />}
         >
           {children}
         </DoubleColumn>
@@ -80,14 +94,16 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
 
 interface FormRowProps {
   proposal: ProposalMessage
+  updateProposal: (arg: ProposalMessage) => void
 }
 
-export const FormRow: FC<FormRowProps> = ({ proposal }) => {
+export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
   if (proposal.data.content.type !== 'form') return null
   if (proposal.data.content.props.type === 'FormName')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -101,7 +117,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormAddress')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -115,7 +132,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormBirthDay')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormBirthDayEditForm />}
       >
         <ListItem>
@@ -129,7 +147,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormTel')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -143,7 +162,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormEmail')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -157,7 +177,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormCustomRadioGroup')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormCustomRadioGroupEditForm />}
       >
         <ListItem>
@@ -171,7 +192,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormCustomCheckbox')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormCustomCheckboxEditForm />}
       >
         <ListItem>
@@ -185,7 +207,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormCustomSelect')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormCustomSelectEditForm />}
       >
         <ListItem>
@@ -199,7 +222,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormCustomInput')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormCustomInputEditForm />}
       >
         <ListItem>
@@ -213,7 +237,8 @@ export const FormRow: FC<FormRowProps> = ({ proposal }) => {
   if (proposal.data.content.props.type === 'FormCustomTextarea')
     return (
       <FromRowWrapper
-        human={proposal.data.human}
+        proposal={proposal}
+        updateProposal={updateProposal}
         editForm={<FormCustomTextareaEditForm />}
       >
         <ListItem>
@@ -245,17 +270,17 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
   )
 }
 
-const LeftTool: FC = () => {
+const LeftTool: FC<{ onClick: () => void }> = (props) => {
   return (
-    <IconButton style={{ transform: 'scale(-1, 1)' }} size="small">
+    <IconButton {...props} style={{ transform: 'scale(-1, 1)' }} size="small">
       <DoubleArrow />
     </IconButton>
   )
 }
 
-const RightTool: FC = () => {
+const RightTool: FC<{ onClick: () => void }> = (props) => {
   return (
-    <IconButton size="small">
+    <IconButton {...props} size="small">
       <DoubleArrow />
     </IconButton>
   )
