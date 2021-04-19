@@ -1,29 +1,15 @@
-import { Proposal, ProposalMessage, Proposals, Session } from '@botui/types'
+import { Proposal, Session } from '@botui/types'
 import { AllHTMLAttributes, FC, useCallback, useState } from 'react'
-import { useFormState, useForm, useField } from 'react-final-form'
-import {
-  Grid,
-  makeStyles,
-  IconButton,
-  Typography,
-  Box,
-  ListItem,
-  ListItemIcon
-} from '@material-ui/core'
-import {
-  ImportExport,
-  AddCircle,
-  DoubleArrow,
-  TextFields
-} from '@material-ui/icons'
-import { DoubleColumnRow } from './ProposalRow/DoubleColumnRow'
-import { DoubleColumn } from './ProposalRow/DoubleCulmn'
+import { useFormState, useForm } from 'react-final-form'
+import { Grid, makeStyles, IconButton, Box } from '@material-ui/core'
+import { ImportExport, AddCircle } from '@material-ui/icons'
 import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
 import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 import { MessageEditForm } from './PoposalForm/MessageEditForm'
 import { ProposalItemSelectList } from './PoposalForm/ProposalItemSelectList'
 import { FormRow } from './ProposalRow/FormRow'
+import { MessageRow } from './ProposalRow/MessageRow'
 
 const ProposalViewer: FC = () => {
   const {
@@ -85,60 +71,6 @@ const useStyle = makeStyles((theme) => ({
   }
 }))
 
-interface MessageRowProps {
-  proposal: ProposalMessage
-  updateProposal: (arg: ProposalMessage) => void
-}
-
-const MessageRow: FC<MessageRowProps> = ({ proposal, updateProposal }) => {
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = () => setEditing(false)
-  const classes = useStyle()
-  const switchSide = useCallback(() => {
-    updateProposal({
-      ...proposal,
-      data: { ...proposal.data, human: !proposal.data.human }
-    })
-  }, [updateProposal, proposal])
-
-  const {
-    data: { human, content }
-  } = proposal
-  if (content.type !== 'string') return null
-  return (
-    <>
-      <DoubleColumnRow
-        side={human ? 'right' : 'left'}
-        topTool={<EdgeTool />}
-        bottomTool={<EdgeTool />}
-      >
-        <DoubleColumn
-          onClick={handleEditig}
-          leftTool={human && <LeftTool onClick={switchSide} />}
-          rightTool={!human && <RightTool onClick={switchSide} />}
-        >
-          <ListItem>
-            <ListItemIcon>
-              <TextFields />
-            </ListItemIcon>
-            <Typography variant="body1">{content.props.children}</Typography>
-          </ListItem>
-        </DoubleColumn>
-      </DoubleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}>
-          <MessageEditForm />
-        </Box>
-      </ProposalDrawer>
-    </>
-  )
-}
-
-interface FormRowProps {
-  human?: boolean
-}
-
 const RelayerRow: FC = ({ children }) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
@@ -174,22 +106,6 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
         <ProposalItemSelectList />
       </ProposalDrawer>
     </>
-  )
-}
-
-const LeftTool: FC<{ onClick: () => void }> = (props) => {
-  return (
-    <IconButton {...props} style={{ transform: 'scale(-1, 1)' }} size="small">
-      <DoubleArrow />
-    </IconButton>
-  )
-}
-
-const RightTool: FC<{ onClick: () => void }> = (props) => {
-  return (
-    <IconButton {...props} size="small">
-      <DoubleArrow />
-    </IconButton>
   )
 }
 
