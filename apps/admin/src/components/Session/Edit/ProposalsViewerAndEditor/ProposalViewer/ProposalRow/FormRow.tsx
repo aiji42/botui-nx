@@ -45,12 +45,14 @@ const useStyle = makeStyles((theme) => ({
 interface FromRowWrapperProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
+  overtake: (take: 1 | -1) => void
   editForm: ReactNode
 }
 
 const FromRowWrapper: FC<FromRowWrapperProps> = ({
   proposal,
   updateProposal,
+  overtake,
   editForm,
   children
 }) => {
@@ -74,8 +76,8 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
     <>
       <DoubleColumnRow
         side={human ? 'right' : 'left'}
-        topTool={<EdgeTool />}
-        bottomTool={<EdgeTool />}
+        topTool={<EdgeTool onClickSwitch={() => overtake(-1)} />}
+        bottomTool={<EdgeTool onClickSwitch={() => overtake(1)} />}
       >
         <DoubleColumn
           onClick={handleEditig}
@@ -95,15 +97,21 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
 interface FormRowProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
+  overtake: (take: 1 | -1) => void
 }
 
-export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
+export const FormRow: FC<FormRowProps> = ({
+  proposal,
+  updateProposal,
+  overtake
+}) => {
   if (proposal.data.content.type !== 'form') return null
   if (proposal.data.content.props.type === 'FormName')
     return (
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -119,6 +127,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -134,6 +143,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormBirthDayEditForm />}
       >
         <ListItem>
@@ -149,6 +159,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -164,6 +175,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormNameEditForm />}
       >
         <ListItem>
@@ -179,6 +191,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormCustomRadioGroupEditForm />}
       >
         <ListItem>
@@ -194,6 +207,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormCustomCheckboxEditForm />}
       >
         <ListItem>
@@ -209,6 +223,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormCustomSelectEditForm />}
       >
         <ListItem>
@@ -224,6 +239,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormCustomInputEditForm />}
       >
         <ListItem>
@@ -239,6 +255,7 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        overtake={overtake}
         editForm={<FormCustomTextareaEditForm />}
       >
         <ListItem>
@@ -251,7 +268,9 @@ export const FormRow: FC<FormRowProps> = ({ proposal, updateProposal }) => {
     )
 }
 
-const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
+const EdgeTool: FC<
+  AllHTMLAttributes<HTMLDivElement> & { onClickSwitch: () => void }
+> = ({ onClickSwitch, ...props }) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -259,7 +278,7 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
         <IconButton size="small" onClick={() => setOpen(true)}>
           <AddCircle />
         </IconButton>
-        <IconButton size="small">
+        <IconButton size="small" onClick={onClickSwitch}>
           <ImportExport />
         </IconButton>
       </div>

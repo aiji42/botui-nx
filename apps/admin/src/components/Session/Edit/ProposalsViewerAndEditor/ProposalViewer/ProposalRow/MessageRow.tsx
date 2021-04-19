@@ -30,11 +30,13 @@ const useStyle = makeStyles((theme) => ({
 interface MessageRowProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
+  overtake: (take: 1 | -1) => void
 }
 
 export const MessageRow: FC<MessageRowProps> = ({
   proposal,
-  updateProposal
+  updateProposal,
+  overtake
 }) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
@@ -55,8 +57,8 @@ export const MessageRow: FC<MessageRowProps> = ({
     <>
       <DoubleColumnRow
         side={human ? 'right' : 'left'}
-        topTool={<EdgeTool />}
-        bottomTool={<EdgeTool />}
+        topTool={<EdgeTool onClickSwitch={() => overtake(-1)} />}
+        bottomTool={<EdgeTool onClickSwitch={() => overtake(1)} />}
       >
         <DoubleColumn
           onClick={handleEditig}
@@ -80,7 +82,9 @@ export const MessageRow: FC<MessageRowProps> = ({
   )
 }
 
-const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
+const EdgeTool: FC<
+  AllHTMLAttributes<HTMLDivElement> & { onClickSwitch: () => void }
+> = ({ onClickSwitch, ...props }) => {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -88,7 +92,7 @@ const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
         <IconButton size="small" onClick={() => setOpen(true)}>
           <AddCircle />
         </IconButton>
-        <IconButton size="small">
+        <IconButton size="small" onClick={onClickSwitch}>
           <ImportExport />
         </IconButton>
       </div>
