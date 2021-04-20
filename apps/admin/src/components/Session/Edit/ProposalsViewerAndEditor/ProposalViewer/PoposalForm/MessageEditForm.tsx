@@ -1,9 +1,9 @@
 import { FC, useRef, useState, MouseEvent, RefObject } from 'react'
 import { required, TextInput } from 'react-admin'
 import { DelayNumberSlider } from '../../../../parts'
-import { Menu, MenuItem, Fab, FabProps, makeStyles, TextField } from '@material-ui/core'
+import {Menu, MenuItem, Fab, FabProps, makeStyles, TextField, Slider, Typography, Button} from '@material-ui/core';
 import { Add } from '@material-ui/icons'
-import { useField, useFormState, Form } from 'react-final-form'
+import { useField, useForm, useFormState, Form } from 'react-final-form'
 import { Proposal, ProposalMessage } from '@botui/types'
 
 const useStyle = makeStyles((theme) => ({
@@ -29,23 +29,33 @@ export const MessageEditForm: FC<MessageEditFormProps> = ({ proposal, submitter 
 const FormInner = () => {
 const ref = useRef<HTMLInputElement>(null)
   const classes = useStyle()
-  const field = useField<ProposalMessage>('data.content.props.children')
+  const delayField = useField<number>('data.content.delay')
+  const messageField = useField<string | undefined>('data.content.props.children', { validate: (val) => val ? false : '入力してください。' } )
+  const { submit } = useForm()
+  const { errors } = useFormState()
+  console.log(errors)
   return (
     <>
-      <DelayNumberSlider
-        label="ローディング時間"
-        source="data.content.delay"
-        fullWidth
+      <Typography variant="subtitle2">ローディング時間</Typography>
+      <Slider
+        valueLabelDisplay="auto"
+        valueLabelFormat={(val) => <>{val / 1000}s</>}
+        step={100}
+        marks={marks}
+        min={0}
+        max={3000}
+        defaultValue={delayField.meta.initial}
+        onChange={delayField.input.onChange}
       />
       <div className={classes.foundationForFab}>
         <TextField
           label="メッセージ本文"
           variant="filled"
-          value={field.input.value}
-          error={field.meta.error}
-          helperText={field.meta.error}
-          onChange={field.input.onChange}
-          onBlur={field.input.onBlur}
+          value={messageField.input.value}
+          error={messageField.meta.error}
+          helperText={messageField.meta.error}
+          onChange={messageField.input.onChange}
+          onBlur={messageField.input.onBlur}
           required
           fullWidth
           multiline
@@ -54,9 +64,29 @@ const ref = useRef<HTMLInputElement>(null)
         />
         <InsertKeyMenu targetInput={ref} className={classes.fab} />
       </div>
+      <Button onClick={submit} disabled={errors}>SAVE</Button>
     </>
   )
 }
+
+const marks = [
+  {
+    value: 0,
+    label: '0s'
+  },
+  {
+    value: 1000,
+    label: '1s'
+  },
+  {
+    value: 2000,
+    label: '2s'
+  },
+  {
+    value: 3000,
+    label: '3s'
+  }
+]
 
 const makeInsertKey = (ref: RefObject<HTMLInputElement>) => (key: string) => {
   if (document.activeElement !== ref.current) ref.current?.focus()
