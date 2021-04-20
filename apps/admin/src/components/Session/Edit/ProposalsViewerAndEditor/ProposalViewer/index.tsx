@@ -53,6 +53,15 @@ const ProposalViewer: FC = () => {
     [change, proposals]
   )
 
+  const makeInserter = useCallback((id: Proposal['id']) => {
+    return (newProposal: Proposal, prevNext: -1 | 1) => {
+        const index = proposals.findIndex((proposal) => proposal.id === id)
+      const newProposals = [...proposals]
+      newProposals.splice(index + (prevNext === -1 ? 0 : 1), 0, newProposal)
+      change('proposals', newProposals)
+    }
+  }, [change, proposals])
+
   return (
     <Grid container>
       <Grid container item xs={12} lg={8}>
@@ -107,9 +116,7 @@ const RelayerRow: FC = ({ children }) => {
         <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}>
-          <MessageEditForm />
-        </Box>
+        <Box className={classes.sidePanel}></Box>
       </ProposalDrawer>
     </>
   )

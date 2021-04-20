@@ -22,12 +22,17 @@ import {
   ShortText,
   WrapText
 } from '@material-ui/icons'
+import { useState } from 'react'
+import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
+import { FormBirthDayEditForm, FormCustomCheckboxEditForm, FormCustomInputEditForm, FormCustomRadioGroupEditForm, FormCustomSelectEditForm, FormCustomTextareaEditForm, FormNameEditForm } from './FormEfitForm'
+import { MessageEditForm } from './MessageEditForm'
 
 export const ProposalItemSelectList = () => {
+  const [selected, setSelected] = useState<null | string>(null)
   return (
     <>
       <List subheader={<ListSubheader>メッセージ</ListSubheader>}>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('message')}>
           <ListItemIcon>
             <TextFields />
           </ListItemIcon>
@@ -41,7 +46,7 @@ export const ProposalItemSelectList = () => {
         </ListItem>
       </List>
       <List subheader={<ListSubheader>フォーム</ListSubheader>}>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formName')}>
           <ListItemIcon>
             <Person />
           </ListItemIcon>
@@ -53,7 +58,7 @@ export const ProposalItemSelectList = () => {
           </ListItemIcon>
           <ListItemText primary="住所" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formBirthDay')}>
           <ListItemIcon>
             <Cake />
           </ListItemIcon>
@@ -71,7 +76,7 @@ export const ProposalItemSelectList = () => {
           </ListItemIcon>
           <ListItemText primary="メールアドレス" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formCustomRadioGroup')}>
           <ListItemIcon>
             <RadioButtonChecked />
           </ListItemIcon>
@@ -80,7 +85,7 @@ export const ProposalItemSelectList = () => {
             secondary="選択肢から一つだけ選ばせる"
           />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formCustomCheckbox')}>
           <ListItemIcon>
             <LibraryAddCheck />
           </ListItemIcon>
@@ -89,7 +94,7 @@ export const ProposalItemSelectList = () => {
             secondary="選択肢から複数選ばせる"
           />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formCustomSelect')}>
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
@@ -98,7 +103,7 @@ export const ProposalItemSelectList = () => {
             secondary="プルダウン型の選択肢"
           />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formCustomInput')}>
           <ListItemIcon>
             <ShortText />
           </ListItemIcon>
@@ -107,7 +112,7 @@ export const ProposalItemSelectList = () => {
             secondary="自由入力型フォーム"
           />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formCustomTextarea')}>
           <ListItemIcon>
             <WrapText />
           </ListItemIcon>
@@ -137,6 +142,16 @@ export const ProposalItemSelectList = () => {
           <ListItemText primary="フォームの送信" />
         </ListItem>
       </List>
+      <ProposalDrawer open={!!selected} onClose={() => setSelected(null)} padding>
+        {selected === 'message' && <MessageEditForm submitter={console.log} />}
+        {selected === 'formName' && <FormNameEditForm />}
+        {selected === 'formBirthday' && <FormBirthDayEditForm />}
+        {selected === 'formCustomRadioGroup' && <FormCustomRadioGroupEditForm />}
+        {selected === 'formCustomCheckbox' && <FormCustomCheckboxEditForm />}
+        {selected === 'formCustomSelect' && <FormCustomSelectEditForm />}
+        {selected === 'formCustomInput' && <FormCustomInputEditForm />}
+        {selected === 'formCustomTextarea' && <FormCustomTextareaEditForm />}
+      </ProposalDrawer>
     </>
   )
 }

@@ -1,9 +1,7 @@
 import { FC, useState, AllHTMLAttributes, ReactNode, useCallback } from 'react'
 import {
-  Box,
   ListItem,
   ListItemIcon,
-  makeStyles,
   IconButton
 } from '@material-ui/core'
 import {
@@ -35,13 +33,6 @@ import {
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 import { ProposalMessage } from '@botui/types'
 
-const useStyle = makeStyles((theme) => ({
-  sidePanel: {
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(10)
-  }
-}))
-
 interface FromRowWrapperProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
@@ -59,7 +50,6 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
-  const classes = useStyle()
 
   const switchSide = useCallback(() => {
     updateProposal({
@@ -87,8 +77,8 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
           {children}
         </DoubleColumn>
       </DoubleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}>{editForm}</Box>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
+        {editForm}
       </ProposalDrawer>
     </>
   )

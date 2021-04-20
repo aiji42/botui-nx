@@ -1,4 +1,4 @@
-import { Drawer, makeStyles } from '@material-ui/core'
+import {Drawer, makeStyles, Box} from '@material-ui/core';
 import { FC } from 'react'
 
 const useStyle = makeStyles((theme) => ({
@@ -13,16 +13,22 @@ const useStyle = makeStyles((theme) => ({
     maxWidth: theme.spacing(100),
     width: '70%',
     height: '100%'
+  },
+  inner: {
+    padding: theme.spacing(3),
+    paddingTop: theme.spacing(10)
   }
 }))
 
 interface ProposalDrawerProps {
   open: boolean
   onClose: () => void
+  padding?: boolean
 }
 
 export const ProposalDrawer: FC<ProposalDrawerProps> = ({
   children,
+  padding = false,
   ...props
 }) => {
   const classes = useStyle()
@@ -35,7 +41,7 @@ export const ProposalDrawer: FC<ProposalDrawerProps> = ({
         paper: classes.drawerPaper
       }}
     >
-      {children}
+      <Box className={padding && classes.inner}>{children}</Box>
     </Drawer>
   )
 }

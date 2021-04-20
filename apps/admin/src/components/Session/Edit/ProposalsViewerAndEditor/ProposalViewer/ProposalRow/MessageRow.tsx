@@ -2,11 +2,9 @@ import { ProposalMessage } from '@botui/types'
 import { FC, useCallback, useState, AllHTMLAttributes } from 'react'
 import {
   Typography,
-  Box,
   ListItem,
   ListItemIcon,
-  IconButton,
-  makeStyles
+  IconButton
 } from '@material-ui/core'
 import {
   TextFields,
@@ -19,13 +17,6 @@ import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { MessageEditForm } from '../PoposalForm/MessageEditForm'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
-
-const useStyle = makeStyles((theme) => ({
-  sidePanel: {
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(10)
-  }
-}))
 
 interface MessageRowProps {
   proposal: ProposalMessage
@@ -41,7 +32,6 @@ export const MessageRow: FC<MessageRowProps> = ({
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
-  const classes = useStyle()
   const switchSide = useCallback(() => {
     updateProposal({
       ...proposal,
@@ -73,10 +63,8 @@ export const MessageRow: FC<MessageRowProps> = ({
           </ListItem>
         </DoubleColumn>
       </DoubleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}>
-          <MessageEditForm />
-        </Box>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
+        <MessageEditForm proposal={proposal} submitter={console.log} />
       </ProposalDrawer>
     </>
   )

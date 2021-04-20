@@ -1,8 +1,10 @@
 import { FC, useRef, useState, MouseEvent, RefObject } from 'react'
 import { required, TextInput } from 'react-admin'
 import { DelayNumberSlider } from '../../../../parts'
-import { Menu, MenuItem, Fab, FabProps, makeStyles } from '@material-ui/core'
+import { Menu, MenuItem, Fab, FabProps, makeStyles, TextField } from '@material-ui/core'
 import { Add } from '@material-ui/icons'
+import { useField, useFormState, Form } from 'react-final-form'
+import { Proposal, ProposalMessage } from '@botui/types'
 
 const useStyle = makeStyles((theme) => ({
   foundationForFab: {
@@ -10,14 +12,24 @@ const useStyle = makeStyles((theme) => ({
   },
   fab: {
     position: 'absolute',
-    bottom: theme.spacing(4),
+    bottom: theme.spacing(2),
     right: theme.spacing(1)
   }
 }))
 
-export const MessageEditForm: FC = () => {
-  const ref = useRef<HTMLInputElement>(null)
+interface MessageEditFormProps {
+  proposal?: ProposalMessage
+  submitter: (value: ProposalMessage) => void
+}
+
+export const MessageEditForm: FC<MessageEditFormProps> = ({ proposal, submitter }) => {
+  return <Form<ProposalMessage> initialValues={proposal} onSubmit={submitter} render={() => (<FormInner />)} />
+}
+
+const FormInner = () => {
+const ref = useRef<HTMLInputElement>(null)
   const classes = useStyle()
+  const field = useField<ProposalMessage>('data.content.props.children')
   return (
     <>
       <DelayNumberSlider
@@ -26,10 +38,15 @@ export const MessageEditForm: FC = () => {
         fullWidth
       />
       <div className={classes.foundationForFab}>
-        <TextInput
-          source="data.content.props.children"
+        <TextField
           label="メッセージ本文"
-          validate={[required()]}
+          variant="filled"
+          value={field.input.value}
+          error={field.meta.error}
+          helperText={field.meta.error}
+          onChange={field.input.onChange}
+          onBlur={field.input.onBlur}
+          required
           fullWidth
           multiline
           rows={5}
