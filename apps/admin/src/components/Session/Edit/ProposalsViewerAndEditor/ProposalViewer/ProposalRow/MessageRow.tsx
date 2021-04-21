@@ -31,13 +31,20 @@ export const MessageRow: FC<MessageRowProps> = ({
 }) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
-  const handleCloseEditig = () => setEditing(false)
+  const handleCloseEditig = useCallback(() => setEditing(false), [])
   const switchSide = useCallback(() => {
     updateProposal({
       ...proposal,
       data: { ...proposal.data, human: !proposal.data.human }
     })
   }, [updateProposal, proposal])
+  const submitter = useCallback(
+    (proposal: ProposalMessage) => {
+      updateProposal(proposal)
+      handleCloseEditig()
+    },
+    [handleCloseEditig, updateProposal]
+  )
 
   const {
     data: { human, content }
@@ -64,7 +71,7 @@ export const MessageRow: FC<MessageRowProps> = ({
         </DoubleColumn>
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
-        <MessageEditForm proposal={proposal} submitter={console.log} />
+        <MessageEditForm proposal={proposal} submitter={submitter} />
       </ProposalDrawer>
     </>
   )

@@ -24,7 +24,15 @@ import {
 } from '@material-ui/icons'
 import { useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
-import { FormBirthDayEditForm, FormCustomCheckboxEditForm, FormCustomInputEditForm, FormCustomRadioGroupEditForm, FormCustomSelectEditForm, FormCustomTextareaEditForm, FormNameEditForm } from './FormEfitForm'
+import {
+  FormBirthDayEditForm,
+  FormCustomCheckboxEditForm,
+  FormCustomInputEditForm,
+  FormCustomRadioGroupEditForm,
+  FormCustomSelectEditForm,
+  FormCustomTextareaEditForm,
+  FormNameEditForm
+} from './FormEfitForm'
 import { MessageEditForm } from './MessageEditForm'
 
 export const ProposalItemSelectList = () => {
@@ -142,15 +150,33 @@ export const ProposalItemSelectList = () => {
           <ListItemText primary="フォームの送信" />
         </ListItem>
       </List>
-      <ProposalDrawer open={!!selected} onClose={() => setSelected(null)} padding>
+      <ProposalDrawer
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        padding
+      >
         {selected === 'message' && <MessageEditForm submitter={console.log} />}
-        {selected === 'formName' && <FormNameEditForm />}
-        {selected === 'formBirthday' && <FormBirthDayEditForm />}
-        {selected === 'formCustomRadioGroup' && <FormCustomRadioGroupEditForm />}
-        {selected === 'formCustomCheckbox' && <FormCustomCheckboxEditForm />}
-        {selected === 'formCustomSelect' && <FormCustomSelectEditForm />}
-        {selected === 'formCustomInput' && <FormCustomInputEditForm />}
-        {selected === 'formCustomTextarea' && <FormCustomTextareaEditForm />}
+        {selected === 'formName' && (
+          <FormNameEditForm submitter={console.log} />
+        )}
+        {selected === 'formBirthday' && (
+          <FormBirthDayEditForm submitter={console.log} />
+        )}
+        {selected === 'formCustomRadioGroup' && (
+          <FormCustomRadioGroupEditForm submitter={console.log} />
+        )}
+        {selected === 'formCustomCheckbox' && (
+          <FormCustomCheckboxEditForm submitter={console.log} />
+        )}
+        {selected === 'formCustomSelect' && (
+          <FormCustomSelectEditForm submitter={console.log} />
+        )}
+        {selected === 'formCustomInput' && (
+          <FormCustomInputEditForm submitter={console.log} />
+        )}
+        {selected === 'formCustomTextarea' && (
+          <FormCustomTextareaEditForm submitter={console.log} />
+        )}
       </ProposalDrawer>
     </>
   )

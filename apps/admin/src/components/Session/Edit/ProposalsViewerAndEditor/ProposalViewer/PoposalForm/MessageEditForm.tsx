@@ -1,15 +1,21 @@
 import { FC, useRef, useState, MouseEvent, RefObject } from 'react'
-import { required, TextInput } from 'react-admin'
-import { DelayNumberSlider } from '../../../../parts'
-import {Menu, MenuItem, Fab, FabProps, makeStyles, TextField, Slider, Typography, Button} from '@material-ui/core';
+import {
+  Menu,
+  MenuItem,
+  Fab,
+  FabProps,
+  makeStyles,
+  TextField,
+  Slider,
+  Typography,
+  Button,
+  Box
+} from '@material-ui/core'
 import { Add } from '@material-ui/icons'
 import { useField, useForm, useFormState, Form } from 'react-final-form'
-import { Proposal, ProposalMessage } from '@botui/types'
+import { ProposalMessage } from '@botui/types'
 
 const useStyle = makeStyles((theme) => ({
-  foundationForFab: {
-    position: 'relative'
-  },
   fab: {
     position: 'absolute',
     bottom: theme.spacing(2),
@@ -22,18 +28,30 @@ interface MessageEditFormProps {
   submitter: (value: ProposalMessage) => void
 }
 
-export const MessageEditForm: FC<MessageEditFormProps> = ({ proposal, submitter }) => {
-  return <Form<ProposalMessage> initialValues={proposal} onSubmit={submitter} render={() => (<FormInner />)} />
+export const MessageEditForm: FC<MessageEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
+  return (
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      render={() => <FormInner />}
+    />
+  )
 }
 
 const FormInner = () => {
-const ref = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement>(null)
   const classes = useStyle()
   const delayField = useField<number>('data.content.delay')
-  const messageField = useField<string | undefined>('data.content.props.children', { validate: (val) => val ? false : '入力してください。' } )
+  const messageField = useField<string | undefined>(
+    'data.content.props.children',
+    { validate: (val) => (val ? false : '入力してください。') }
+  )
   const { submit } = useForm()
-  const { errors } = useFormState()
-  console.log(errors)
+  const { hasValidationErrors } = useFormState()
+
   return (
     <>
       <Typography variant="subtitle2">ローディング時間</Typography>
@@ -47,12 +65,12 @@ const ref = useRef<HTMLInputElement>(null)
         defaultValue={delayField.meta.initial}
         onChange={delayField.input.onChange}
       />
-      <div className={classes.foundationForFab}>
+      <Box position="relative" marginTop={3}>
         <TextField
           label="メッセージ本文"
           variant="filled"
           value={messageField.input.value}
-          error={messageField.meta.error}
+          error={!messageField.meta.valid}
           helperText={messageField.meta.error}
           onChange={messageField.input.onChange}
           onBlur={messageField.input.onBlur}
@@ -63,8 +81,17 @@ const ref = useRef<HTMLInputElement>(null)
           inputRef={ref}
         />
         <InsertKeyMenu targetInput={ref} className={classes.fab} />
-      </div>
-      <Button onClick={submit} disabled={errors}>SAVE</Button>
+      </Box>
+      <Box textAlign="right" marginTop={3}>
+        <Button
+          onClick={submit}
+          disabled={hasValidationErrors}
+          variant="contained"
+          color="primary"
+        >
+          SAVE
+        </Button>
+      </Box>
     </>
   )
 }

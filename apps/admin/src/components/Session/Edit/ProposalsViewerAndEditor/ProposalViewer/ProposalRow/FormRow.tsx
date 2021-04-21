@@ -1,9 +1,13 @@
-import { FC, useState, AllHTMLAttributes, ReactNode, useCallback } from 'react'
 import {
-  ListItem,
-  ListItemIcon,
-  IconButton
-} from '@material-ui/core'
+  FC,
+  useState,
+  AllHTMLAttributes,
+  ReactNode,
+  useCallback,
+  isValidElement,
+  cloneElement
+} from 'react'
+import { ListItem, ListItemIcon, IconButton } from '@material-ui/core'
 import {
   ImportExport,
   AddCircle,
@@ -58,6 +62,15 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
     })
   }, [updateProposal, proposal])
 
+  const newEditForm = isValidElement(editForm)
+    ? cloneElement(editForm, {
+        submitter: (proposal: ProposalMessage) => {
+          handleCloseEditig()
+          editForm.props.submitter?.(proposal)
+        }
+      })
+    : editForm
+
   const {
     data: { human }
   } = proposal
@@ -102,7 +115,9 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormNameEditForm />}
+        editForm={
+          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -118,7 +133,9 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormNameEditForm />}
+        editForm={
+          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -134,7 +151,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormBirthDayEditForm />}
+        editForm={
+          <FormBirthDayEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -150,7 +172,9 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormNameEditForm />}
+        editForm={
+          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -166,7 +190,9 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormNameEditForm />}
+        editForm={
+          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -182,7 +208,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormCustomRadioGroupEditForm />}
+        editForm={
+          <FormCustomRadioGroupEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -198,7 +229,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormCustomCheckboxEditForm />}
+        editForm={
+          <FormCustomCheckboxEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -214,7 +250,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormCustomSelectEditForm />}
+        editForm={
+          <FormCustomSelectEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -230,7 +271,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormCustomInputEditForm />}
+        editForm={
+          <FormCustomInputEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>
@@ -246,7 +292,12 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         overtake={overtake}
-        editForm={<FormCustomTextareaEditForm />}
+        editForm={
+          <FormCustomTextareaEditForm
+            proposal={proposal}
+            submitter={updateProposal}
+          />
+        }
       >
         <ListItem>
           <ListItemIcon>

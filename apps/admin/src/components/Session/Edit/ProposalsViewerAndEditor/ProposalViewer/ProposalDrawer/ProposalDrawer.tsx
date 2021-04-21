@@ -1,4 +1,4 @@
-import {Drawer, makeStyles, Box} from '@material-ui/core';
+import { Drawer, makeStyles, Box } from '@material-ui/core'
 import { FC } from 'react'
 
 const useStyle = makeStyles((theme) => ({
@@ -41,7 +41,7 @@ export const ProposalDrawer: FC<ProposalDrawerProps> = ({
         paper: classes.drawerPaper
       }}
     >
-      <Box className={padding && classes.inner}>{children}</Box>
+      <Box className={padding ? classes.inner : ''}>{children}</Box>
     </Drawer>
   )
 }

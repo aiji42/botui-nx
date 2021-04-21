@@ -11,24 +11,67 @@ import {
 import {
   FormCustomCheckbox,
   FormCustomRadioGroup,
-  FormCustomSelect
+  FormCustomSelect,
+  ProposalMessage
 } from '@botui/types'
-import { useForm, useFormState, Field } from 'react-final-form'
-import { Tooltip, Badge, Typography } from '@material-ui/core'
+import { useForm, useFormState, Field, Form, useField } from 'react-final-form'
+import {
+  Tooltip,
+  Badge,
+  Typography,
+  Button,
+  Box,
+  FormControlLabel,
+  Switch,
+  Select,
+  MenuItem
+} from '@material-ui/core'
 import { HelpOutline } from '@material-ui/icons'
 import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 
-export const FormNameEditForm: FC = (props) => {
+interface FormEditFormProps {
+  proposal?: ProposalMessage
+  submitter: (value: ProposalMessage) => void
+}
+
+const FormSubmit: FC = () => {
+  const { submit } = useForm()
+  const { hasValidationErrors } = useFormState()
+  return (
+    <Box textAlign="right" marginTop={3}>
+      <Button
+        onClick={submit}
+        disabled={hasValidationErrors}
+        variant="contained"
+        color="primary"
+      >
+        SAVE
+      </Button>
+    </Box>
+  )
+}
+
+export const FormNameEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
+  return (
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      render={() => <FormNameEditFormInner />}
+    />
+  )
+}
+const FormNameEditFormInner: FC = () => {
   return (
     <>
       <BooleanInput
-        {...props}
         source="data.content.props.status.kana"
         initialValue={true}
         label="ふりがな"
       />
       <SelectInput
-        {...props}
         source="data.content.props.status.kanaType"
         label="ふりがな補正"
         initialValue="katakana"
@@ -37,11 +80,12 @@ export const FormNameEditForm: FC = (props) => {
           { id: 'hiragana', name: 'ひらがな' }
         ]}
       />
+      <FormSubmit />
     </>
   )
 }
 
-export const FormBirthDayEditForm: FC = (props) => {
+export const FormBirthDayEditForm: FC<FormEditFormProps> = (props) => {
   return (
     <BooleanInput
       {...props}
@@ -53,7 +97,7 @@ export const FormBirthDayEditForm: FC = (props) => {
   )
 }
 
-export const FormCustomRadioGroupEditForm: FC = (props) => {
+export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = (props) => {
   const { change } = useForm()
   const { values } = useFormState<{
     data: { content: { props: FormCustomRadioGroup } }
@@ -92,7 +136,7 @@ export const FormCustomRadioGroupEditForm: FC = (props) => {
   )
 }
 
-export const FormCustomCheckboxEditForm: FC = (props) => {
+export const FormCustomCheckboxEditForm: FC<FormEditFormProps> = (props) => {
   const { change } = useForm()
   const { values } = useFormState<{
     data: { content: { props: FormCustomCheckbox } }
@@ -135,7 +179,7 @@ export const FormCustomCheckboxEditForm: FC = (props) => {
   )
 }
 
-export const FormCustomSelectEditForm: FC = (props) => {
+export const FormCustomSelectEditForm: FC<FormEditFormProps> = (props) => {
   const { change } = useForm()
   const { values } = useFormState<{
     data: { content: { props: FormCustomSelect } }
@@ -168,7 +212,7 @@ export const FormCustomSelectEditForm: FC = (props) => {
   )
 }
 
-export const FormCustomInputEditForm: FC = (props) => {
+export const FormCustomInputEditForm: FC<FormEditFormProps> = (props) => {
   return (
     <ArrayInput
       {...props}
@@ -213,7 +257,7 @@ export const FormCustomInputEditForm: FC = (props) => {
   )
 }
 
-export const FormCustomTextareaEditForm: FC = (props) => {
+export const FormCustomTextareaEditForm: FC<FormEditFormProps> = (props) => {
   return (
     <>
       <TextInput

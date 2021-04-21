@@ -53,14 +53,17 @@ const ProposalViewer: FC = () => {
     [change, proposals]
   )
 
-  const makeInserter = useCallback((id: Proposal['id']) => {
-    return (newProposal: Proposal, prevNext: -1 | 1) => {
+  const makeInserter = useCallback(
+    (id: Proposal['id']) => {
+      return (newProposal: Proposal, prevNext: -1 | 1) => {
         const index = proposals.findIndex((proposal) => proposal.id === id)
-      const newProposals = [...proposals]
-      newProposals.splice(index + (prevNext === -1 ? 0 : 1), 0, newProposal)
-      change('proposals', newProposals)
-    }
-  }, [change, proposals])
+        const newProposals = [...proposals]
+        newProposals.splice(index + (prevNext === -1 ? 0 : 1), 0, newProposal)
+        change('proposals', newProposals)
+      }
+    },
+    [change, proposals]
+  )
 
   return (
     <Grid container>
@@ -98,26 +101,16 @@ const ProposalViewer: FC = () => {
   )
 }
 
-const useStyle = makeStyles((theme) => ({
-  sidePanel: {
-    padding: theme.spacing(3),
-    paddingTop: theme.spacing(10)
-  }
-}))
-
 const RelayerRow: FC = ({ children }) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
-  const classes = useStyle()
   return (
     <>
       <SingleColumnRow topTool={<EdgeTool />} bottomTool={<EdgeTool />}>
         <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
       </SingleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig}>
-        <Box className={classes.sidePanel}></Box>
-      </ProposalDrawer>
+      <ProposalDrawer open={editing} onClose={handleCloseEditig} />
     </>
   )
 }
