@@ -28,6 +28,7 @@ import {
 } from '@material-ui/core'
 import { HelpOutline } from '@material-ui/icons'
 import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
+import arrayMutators from 'final-form-arrays'
 
 interface FormEditFormProps {
   proposal?: ProposalMessage
@@ -69,7 +70,7 @@ const FormNameEditFormInner: FC = () => {
       <BooleanInput
         source="data.content.props.status.kana"
         initialValue={true}
-        label="ふりがな"
+        label="ふりがなの有無"
       />
       <SelectInput
         source="data.content.props.status.kanaType"
@@ -85,53 +86,67 @@ const FormNameEditFormInner: FC = () => {
   )
 }
 
-export const FormBirthDayEditForm: FC<FormEditFormProps> = (props) => {
+export const FormBirthDayEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
   return (
-    <BooleanInput
-      {...props}
-      source="data.content.props.status.paddingZero"
-      initialValue={false}
-      label="値をゼロ詰めする"
-      validate={[required()]}
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      render={() => <FormBirthDayEditFormInner />}
     />
   )
 }
-
-export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = (props) => {
-  const { change } = useForm()
-  const { values } = useFormState<{
-    data: { content: { props: FormCustomRadioGroup } }
-  }>()
-  useEffect(() => {
-    if (!values.data.content.props.inputs)
-      change('data.content.props.inputs', [])
-  }, [values.data.content.props.inputs, change])
+export const FormBirthDayEditFormInner: FC = () => {
   return (
     <>
-      <Badge
-        badgeContent={
-          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
-            <HelpOutline />
-          </Tooltip>
-        }
-      >
-        <TextInput
-          {...props}
-          source="data.content.props.name"
-          label="値名"
-          validate={[required()]}
-        />
-      </Badge>
+      <BooleanInput
+        source="data.content.props.status.paddingZero"
+        initialValue={false}
+        label="値をゼロ詰めする"
+        validate={[required()]}
+      />
+      <FormSubmit />
+    </>
+  )
+}
+
+export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
+  return (
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      mutators={{...arrayMutators}}
+      render={() => <FormCustomRadioGroupEditFormInner />}
+    />
+  )
+}
+export const FormCustomRadioGroupEditFormInner: FC = () => {
+  return (
+    <>
+      <Typography variant="subtitle2">
+        カスタムスクリプトで動的な選択肢の挿入が可能です。<br />こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
+      </Typography>
+      <TextInput
+        source="data.content.props.name"
+        label="値名"
+        validate={[required()]}
+      />
       <ArrayInput
-        {...props}
         source="data.content.props.inputs"
         label="ラジオボタン"
+        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="タイトル" validate={[required()]} />
           <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
+      <FormSubmit />
     </>
   )
 }

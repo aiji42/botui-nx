@@ -8,20 +8,7 @@ import {
   cloneElement
 } from 'react'
 import { ListItem, ListItemIcon, IconButton } from '@material-ui/core'
-import {
-  ImportExport,
-  AddCircle,
-  DoubleArrow,
-  Person,
-  Home,
-  Cake,
-  Phone,
-  AlternateEmail,
-  LibraryAddCheck,
-  List as ListIcon,
-  ShortText,
-  WrapText
-} from '@material-ui/icons'
+import {ImportExport, AddCircle, DoubleArrow, Person, Home, Cake, Phone, AlternateEmail, LibraryAddCheck, List as ListIcon, ShortText, WrapText, RadioButtonChecked} from '@material-ui/icons';
 import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -217,7 +204,7 @@ export const FormRow: FC<FormRowProps> = ({
       >
         <ListItem>
           <ListItemIcon>
-            <AlternateEmail />
+            <RadioButtonChecked />
           </ListItemIcon>
           カスタムラジオボタンフォーム
         </ListItem>
