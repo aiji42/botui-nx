@@ -91,7 +91,7 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
         </DoubleColumn>
       </DoubleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
-        {editForm}
+        {newEditForm}
       </ProposalDrawer>
     </>
   )
