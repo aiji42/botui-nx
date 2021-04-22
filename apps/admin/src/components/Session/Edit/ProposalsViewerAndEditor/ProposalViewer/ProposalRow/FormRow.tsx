@@ -1,14 +1,24 @@
 import {
   FC,
   useState,
-  AllHTMLAttributes,
   ReactNode,
   useCallback,
   isValidElement,
   cloneElement
 } from 'react'
-import { ListItem, ListItemIcon, IconButton } from '@material-ui/core'
-import {ImportExport, AddCircle, DoubleArrow, Person, Home, Cake, Phone, AlternateEmail, LibraryAddCheck, List as ListIcon, ShortText, WrapText, RadioButtonChecked} from '@material-ui/icons';
+import { ListItem, ListItemIcon } from '@material-ui/core'
+import {
+  Person,
+  Home,
+  Cake,
+  Phone,
+  AlternateEmail,
+  LibraryAddCheck,
+  List as ListIcon,
+  ShortText,
+  WrapText,
+  RadioButtonChecked
+} from '@material-ui/icons'
 import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -21,12 +31,13 @@ import {
   FormCustomTextareaEditForm,
   FormNameEditForm
 } from '../PoposalForm/FormEfitForm'
-import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
-import { ProposalMessage } from '@botui/types'
+import { ProposalMessage, Proposal } from '@botui/types'
+import { EdgeTool, LeftTool, RightTool } from './Tools'
 
 interface FromRowWrapperProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
+  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
   overtake: (take: 1 | -1) => void
   editForm: ReactNode
 }
@@ -34,6 +45,7 @@ interface FromRowWrapperProps {
 const FromRowWrapper: FC<FromRowWrapperProps> = ({
   proposal,
   updateProposal,
+  insertProposal,
   overtake,
   editForm,
   children
@@ -57,6 +69,12 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
         }
       })
     : editForm
+  const makeInserter = useCallback(
+    (nextPrev: -1 | 1) => {
+      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
+    },
+    [insertProposal]
+  )
 
   const {
     data: { human }
@@ -66,8 +84,18 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
     <>
       <DoubleColumnRow
         side={human ? 'right' : 'left'}
-        topTool={<EdgeTool onClickSwitch={() => overtake(-1)} />}
-        bottomTool={<EdgeTool onClickSwitch={() => overtake(1)} />}
+        topTool={
+          <EdgeTool
+            onClickSwitch={() => overtake(-1)}
+            onInsert={makeInserter(-1)}
+          />
+        }
+        bottomTool={
+          <EdgeTool
+            onClickSwitch={() => overtake(1)}
+            onInsert={makeInserter(1)}
+          />
+        }
       >
         <DoubleColumn
           onClick={handleEditig}
@@ -87,12 +115,14 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
 interface FormRowProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
+  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
   overtake: (take: 1 | -1) => void
 }
 
 export const FormRow: FC<FormRowProps> = ({
   proposal,
   updateProposal,
+  insertProposal,
   overtake
 }) => {
   if (proposal.data.content.type !== 'form') return null
@@ -101,6 +131,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -119,6 +150,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -137,6 +169,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormBirthDayEditForm
@@ -158,6 +191,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -176,6 +210,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -194,6 +229,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormCustomRadioGroupEditForm
@@ -215,6 +251,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormCustomCheckboxEditForm
@@ -236,6 +273,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormCustomSelectEditForm
@@ -257,6 +295,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormCustomInputEditForm
@@ -278,6 +317,7 @@ export const FormRow: FC<FormRowProps> = ({
       <FromRowWrapper
         proposal={proposal}
         updateProposal={updateProposal}
+        insertProposal={insertProposal}
         overtake={overtake}
         editForm={
           <FormCustomTextareaEditForm
@@ -294,41 +334,4 @@ export const FormRow: FC<FormRowProps> = ({
         </ListItem>
       </FromRowWrapper>
     )
-}
-
-const EdgeTool: FC<
-  AllHTMLAttributes<HTMLDivElement> & { onClickSwitch: () => void }
-> = ({ onClickSwitch, ...props }) => {
-  const [open, setOpen] = useState(false)
-  return (
-    <>
-      <div {...props}>
-        <IconButton size="small" onClick={() => setOpen(true)}>
-          <AddCircle />
-        </IconButton>
-        <IconButton size="small" onClick={onClickSwitch}>
-          <ImportExport />
-        </IconButton>
-      </div>
-      <ProposalDrawer open={open} onClose={() => setOpen(false)}>
-        <ProposalItemSelectList />
-      </ProposalDrawer>
-    </>
-  )
-}
-
-const LeftTool: FC<{ onClick: () => void }> = (props) => {
-  return (
-    <IconButton {...props} style={{ transform: 'scale(-1, 1)' }} size="small">
-      <DoubleArrow />
-    </IconButton>
-  )
-}
-
-const RightTool: FC<{ onClick: () => void }> = (props) => {
-  return (
-    <IconButton {...props} size="small">
-      <DoubleArrow />
-    </IconButton>
-  )
 }

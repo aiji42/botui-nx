@@ -1,3 +1,4 @@
+import { Proposal, ProposalMessage } from '@botui/types'
 import {
   List,
   ListItem,
@@ -22,7 +23,7 @@ import {
   ShortText,
   WrapText
 } from '@material-ui/icons'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import {
   FormBirthDayEditForm,
@@ -34,8 +35,15 @@ import {
   FormNameEditForm
 } from './FormEfitForm'
 import { MessageEditForm } from './MessageEditForm'
+import { v4 as uuidv4 } from 'uuid'
 
-export const ProposalItemSelectList = () => {
+interface ProposalItemSelectListProps {
+  onInsert: (proposal: Proposal) => void
+}
+
+export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
+  onInsert
+}) => {
   const [selected, setSelected] = useState<null | string>(null)
   return (
     <>
@@ -155,29 +163,52 @@ export const ProposalItemSelectList = () => {
         onClose={() => setSelected(null)}
         padding
       >
-        {selected === 'message' && <MessageEditForm submitter={console.log} />}
-        {selected === 'formName' && (
-          <FormNameEditForm submitter={console.log} />
+        {selected === 'message' && (
+          <MessageEditForm
+            proposal={newMessageTemplate()}
+            submitter={onInsert}
+          />
         )}
+        {selected === 'formName' && <FormNameEditForm submitter={onInsert} />}
         {selected === 'formBirthday' && (
-          <FormBirthDayEditForm submitter={console.log} />
+          <FormBirthDayEditForm submitter={onInsert} />
         )}
         {selected === 'formCustomRadioGroup' && (
-          <FormCustomRadioGroupEditForm submitter={console.log} />
+          <FormCustomRadioGroupEditForm submitter={onInsert} />
         )}
         {selected === 'formCustomCheckbox' && (
-          <FormCustomCheckboxEditForm submitter={console.log} />
+          <FormCustomCheckboxEditForm submitter={onInsert} />
         )}
         {selected === 'formCustomSelect' && (
-          <FormCustomSelectEditForm submitter={console.log} />
+          <FormCustomSelectEditForm submitter={onInsert} />
         )}
         {selected === 'formCustomInput' && (
-          <FormCustomInputEditForm submitter={console.log} />
+          <FormCustomInputEditForm submitter={onInsert} />
         )}
         {selected === 'formCustomTextarea' && (
-          <FormCustomTextareaEditForm submitter={console.log} />
+          <FormCustomTextareaEditForm submitter={onInsert} />
         )}
       </ProposalDrawer>
     </>
   )
+}
+
+const newMessageTemplate = (): ProposalMessage => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'message',
+    completed: false,
+    data: {
+      id,
+      human: false,
+      content: {
+        type: 'string',
+        props: { children: 'メッセージ本文' },
+        delay: 500
+      },
+      completed: false,
+      updated: false
+    }
+  }
 }

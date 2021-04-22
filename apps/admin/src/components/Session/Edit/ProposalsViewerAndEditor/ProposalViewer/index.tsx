@@ -1,15 +1,13 @@
-import { Proposal, Session } from '@botui/types'
-import { AllHTMLAttributes, FC, useCallback, useState } from 'react'
+import { Proposal, Session, ProposalRelayer } from '@botui/types'
+import { FC, useCallback, useState } from 'react'
 import { useFormState, useForm } from 'react-final-form'
-import { Grid, makeStyles, IconButton, Box } from '@material-ui/core'
-import { ImportExport, AddCircle } from '@material-ui/icons'
+import { Grid } from '@material-ui/core'
 import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
 import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
-import { MessageEditForm } from './PoposalForm/MessageEditForm'
-import { ProposalItemSelectList } from './PoposalForm/ProposalItemSelectList'
 import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
+import { EdgeTool } from './ProposalRow/Tools'
 
 const ProposalViewer: FC = () => {
   const {
@@ -78,6 +76,7 @@ const ProposalViewer: FC = () => {
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
+                insertProposal={makeInserter(proposal.id)}
                 key={proposal.id}
               />
             )
@@ -90,10 +89,21 @@ const ProposalViewer: FC = () => {
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
+                insertProposal={makeInserter(proposal.id)}
                 key={proposal.id}
               />
             )
-          return <RelayerRow key={proposal.id} />
+          if (proposal.type === 'relayer')
+            return (
+              <RelayerRow
+                key={proposal.id}
+                updateProposal={makeUpdater(proposal.id)}
+                proposal={proposal}
+                overtake={makeOvertaker(proposal.id)}
+                insertProposal={makeInserter(proposal.id)}
+              />
+            )
+          return null
         })}
       </Grid>
       <Grid container item xs={false} lg={4} />
@@ -101,35 +111,46 @@ const ProposalViewer: FC = () => {
   )
 }
 
-const RelayerRow: FC = ({ children }) => {
+interface RelayerRowProps {
+  proposal: ProposalRelayer
+  updateProposal: (arg: ProposalRelayer) => void
+  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
+  overtake: (take: 1 | -1) => void
+}
+
+const RelayerRow: FC<RelayerRowProps> = ({
+  insertProposal,
+  overtake,
+  children
+}) => {
   const [editing, setEditing] = useState(false)
   const handleEditig = () => setEditing(true)
   const handleCloseEditig = () => setEditing(false)
+  const makeInserter = useCallback(
+    (nextPrev: -1 | 1) => {
+      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
+    },
+    [insertProposal]
+  )
   return (
     <>
-      <SingleColumnRow topTool={<EdgeTool />} bottomTool={<EdgeTool />}>
+      <SingleColumnRow
+        topTool={
+          <EdgeTool
+            onClickSwitch={() => overtake(-1)}
+            onInsert={makeInserter(-1)}
+          />
+        }
+        bottomTool={
+          <EdgeTool
+            onClickSwitch={() => overtake(-1)}
+            onInsert={makeInserter(-1)}
+          />
+        }
+      >
         <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig} />
-    </>
-  )
-}
-
-const EdgeTool: FC<AllHTMLAttributes<HTMLDivElement>> = (props) => {
-  const [open, setOpen] = useState(false)
-  return (
-    <>
-      <div {...props}>
-        <IconButton size="small" onClick={() => setOpen(true)}>
-          <AddCircle />
-        </IconButton>
-        <IconButton size="small">
-          <ImportExport />
-        </IconButton>
-      </div>
-      <ProposalDrawer open={open} onClose={() => setOpen(false)}>
-        <ProposalItemSelectList />
-      </ProposalDrawer>
     </>
   )
 }

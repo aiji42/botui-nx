@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import {
   BooleanInput,
   SelectInput,
@@ -8,25 +8,9 @@ import {
   ArrayInput,
   SimpleFormIterator
 } from 'react-admin'
-import {
-  FormCustomCheckbox,
-  FormCustomRadioGroup,
-  FormCustomSelect,
-  ProposalMessage
-} from '@botui/types'
-import { useForm, useFormState, Field, Form, useField } from 'react-final-form'
-import {
-  Tooltip,
-  Badge,
-  Typography,
-  Button,
-  Box,
-  FormControlLabel,
-  Switch,
-  Select,
-  MenuItem
-} from '@material-ui/core'
-import { HelpOutline } from '@material-ui/icons'
+import { ProposalMessage } from '@botui/types'
+import { useForm, useFormState, Field, Form } from 'react-final-form'
+import { Typography, Button, Box } from '@material-ui/core'
 import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 import arrayMutators from 'final-form-arrays'
 
@@ -120,7 +104,7 @@ export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = ({
     <Form<ProposalMessage>
       initialValues={proposal}
       onSubmit={submitter}
-      mutators={{...arrayMutators}}
+      mutators={{ ...arrayMutators }}
       render={() => <FormCustomRadioGroupEditFormInner />}
     />
   )
@@ -129,7 +113,9 @@ export const FormCustomRadioGroupEditFormInner: FC = () => {
   return (
     <>
       <Typography variant="subtitle2">
-        カスタムスクリプトで動的な選択肢の挿入が可能です。<br />こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
+        カスタムスクリプトで動的な選択肢の挿入が可能です。
+        <br />
+        こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
       </Typography>
       <TextInput
         source="data.content.props.name"
@@ -151,148 +137,175 @@ export const FormCustomRadioGroupEditFormInner: FC = () => {
   )
 }
 
-export const FormCustomCheckboxEditForm: FC<FormEditFormProps> = (props) => {
-  const { change } = useForm()
-  const { values } = useFormState<{
-    data: { content: { props: FormCustomCheckbox } }
-  }>()
-  useEffect(() => {
-    if (!values.data.content.props.inputs)
-      change('data.content.props.inputs', [])
-  }, [values.data.content.props.inputs, change])
+export const FormCustomCheckboxEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
+  return (
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      mutators={{ ...arrayMutators }}
+      render={() => <FormCustomCheckboxEditFormInner />}
+    />
+  )
+}
+export const FormCustomCheckboxEditFormInner: FC = () => {
   return (
     <>
-      <Badge
-        badgeContent={
-          <Tooltip title="カスタムスクリプトで動的な選択肢の挿入が可能です。こちらで指定した'name'と同じ値のものが適応されます。">
-            <HelpOutline />
-          </Tooltip>
-        }
-      >
-        <TextInput
-          {...props}
-          source="data.content.props.name"
-          label="値名"
-          validate={[required()]}
-        />
-      </Badge>
+      <Typography variant="subtitle2">
+        カスタムスクリプトで動的な選択肢の挿入が可能です。
+        <br />
+        こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
+      </Typography>
+      <TextInput
+        source="data.content.props.name"
+        label="値名"
+        validate={[required()]}
+      />
       <BooleanInput
         source="data.content.props.required"
         label="入力を必須にする"
       />
       <ArrayInput
-        {...props}
         source="data.content.props.inputs"
         label="チェックボックス"
+        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="タイトル" validate={[required()]} />
           <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
+      <FormSubmit />
     </>
   )
 }
 
-export const FormCustomSelectEditForm: FC<FormEditFormProps> = (props) => {
-  const { change } = useForm()
-  const { values } = useFormState<{
-    data: { content: { props: FormCustomSelect } }
-  }>()
-  useEffect(() => {
-    if (!values.data.content.props.selects) return
-    values.data.content.props.selects.forEach((select, index) => {
-      if (select && !select.options)
-        change(`data.content.props.selects.${index}.options`, [])
-    })
-  }, [values.data.content.props.selects, change])
+export const FormCustomSelectEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
   return (
-    <ArrayInput
-      {...props}
-      source="data.content.props.selects"
-      label="セレクトボックス"
-      validate={[required()]}
-    >
-      <SimpleFormIterator>
-        <TextInput source="name" label="値名" validate={[required()]} />
-        <TextInput source="title" label="タイトル" />
-        <ArrayInput source="options" label="選択肢">
-          <SimpleFormIterator>
-            <TextInput source="label" label="ラベル" />
-            <TextInput source="value" label="値" validate={[required()]} />
-          </SimpleFormIterator>
-        </ArrayInput>
-      </SimpleFormIterator>
-    </ArrayInput>
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      mutators={{ ...arrayMutators }}
+      render={() => <FormCustomSelectEditFormInner />}
+    />
+  )
+}
+export const FormCustomSelectEditFormInner: FC = () => {
+  return (
+    <>
+      <ArrayInput
+        source="data.content.props.selects"
+        label="セレクトボックス"
+        validate={[required()]}
+      >
+        <SimpleFormIterator>
+          <TextInput source="name" label="値名" validate={[required()]} />
+          <TextInput source="title" label="タイトル" />
+          <ArrayInput source="options" label="選択肢">
+            <SimpleFormIterator>
+              <TextInput source="label" label="ラベル" />
+              <TextInput source="value" label="値" validate={[required()]} />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </SimpleFormIterator>
+      </ArrayInput>
+      <FormSubmit />
+    </>
   )
 }
 
-export const FormCustomInputEditForm: FC<FormEditFormProps> = (props) => {
+export const FormCustomInputEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
   return (
-    <ArrayInput
-      {...props}
-      source="data.content.props.inputs"
-      label="input"
-      validate={[required()]}
-    >
-      <SimpleFormIterator>
-        <TextInput source="name" label="値名" validate={[required()]} />
-        <SelectInput
-          source="type"
-          validate={[required()]}
-          choices={[
-            { id: 'text', name: 'text' },
-            { id: 'number', name: 'number' },
-            { id: 'tel', name: 'tel' },
-            { id: 'email', name: 'email' },
-            { id: 'password', name: 'password' }
-          ]}
-          label="入力タイプ"
-        />
-        <TextInput source="title" label="タイトル" />
-        <TextInput source="placeholder" label="プレースホルダー" />
-        <BooleanInput source="required" label="入力を必須にする" />
-        <FormDataConsumer>
-          {({ getSource }) => (
-            <>
-              <Typography variant="subtitle2" color="textSecondary">
-                カスタムバリデーション
-              </Typography>
-              <Field
-                label="カスタムバリデーション"
-                name={getSource?.('validation') ?? ''}
-                initialValue={customValidatorInitial}
-                component={JavascriptEditor}
-              />
-            </>
-          )}
-        </FormDataConsumer>
-      </SimpleFormIterator>
-    </ArrayInput>
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      mutators={{ ...arrayMutators }}
+      render={() => <FormCustomInputEditFormInner />}
+    />
+  )
+}
+export const FormCustomInputEditFormInner: FC = () => {
+  return (
+    <>
+      <ArrayInput
+        source="data.content.props.inputs"
+        label="input"
+        validate={[required()]}
+      >
+        <SimpleFormIterator>
+          <TextInput source="name" label="値名" validate={[required()]} />
+          <SelectInput
+            source="type"
+            validate={[required()]}
+            choices={[
+              { id: 'text', name: 'text' },
+              { id: 'number', name: 'number' },
+              { id: 'tel', name: 'tel' },
+              { id: 'email', name: 'email' },
+              { id: 'password', name: 'password' }
+            ]}
+            label="入力タイプ"
+          />
+          <TextInput source="title" label="タイトル" />
+          <TextInput source="placeholder" label="プレースホルダー" />
+          <BooleanInput source="required" label="入力を必須にする" />
+          <FormDataConsumer>
+            {({ getSource }) => (
+              <>
+                <Typography variant="subtitle2" color="textSecondary">
+                  カスタムバリデーション
+                </Typography>
+                <Field
+                  label="カスタムバリデーション"
+                  name={getSource?.('validation') ?? ''}
+                  initialValue={customValidatorInitial}
+                  component={JavascriptEditor}
+                />
+              </>
+            )}
+          </FormDataConsumer>
+        </SimpleFormIterator>
+      </ArrayInput>
+      <FormSubmit />
+    </>
   )
 }
 
-export const FormCustomTextareaEditForm: FC<FormEditFormProps> = (props) => {
+export const FormCustomTextareaEditForm: FC<FormEditFormProps> = ({
+  proposal,
+  submitter
+}) => {
+  return (
+    <Form<ProposalMessage>
+      initialValues={proposal}
+      onSubmit={submitter}
+      mutators={{ ...arrayMutators }}
+      render={() => <FormCustomTextareaEditFormInner />}
+    />
+  )
+}
+export const FormCustomTextareaEditFormInner: FC = () => {
   return (
     <>
       <TextInput
-        {...props}
         source="data.content.props.name"
         label="値名"
         validate={[required()]}
       />
+      <TextInput source="data.content.props.title" label="タイトル" />
       <TextInput
-        {...props}
-        source="data.content.props.title"
-        label="タイトル"
-      />
-      <TextInput
-        {...props}
         source="data.content.props.placeholder"
         label="プレースホルダー"
       />
       <BooleanInput
-        {...props}
         source="data.content.props.required"
         label="入力を必須にする"
       />
@@ -304,6 +317,7 @@ export const FormCustomTextareaEditForm: FC<FormEditFormProps> = (props) => {
         component={JavascriptEditor}
         initialValue={customValidatorInitial}
       />
+      <FormSubmit />
     </>
   )
 }
