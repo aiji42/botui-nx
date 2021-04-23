@@ -7,7 +7,7 @@ import { SingleColumn } from './ProposalRow/SingleCulmn'
 import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
-import { EdgeTool } from './ProposalRow/Tools'
+import { DeleteTool, EdgeTool } from './ProposalRow/Tools'
 
 const ProposalViewer: FC = () => {
   const {
@@ -66,7 +66,10 @@ const ProposalViewer: FC = () => {
   const makeDeleter = useCallback(
     (id: Proposal['id']) => {
       return () => {
-        change('proposals', proposals.filter((proposal) => proposal.id !== id))
+        change(
+          'proposals',
+          proposals.filter((proposal) => proposal.id !== id)
+        )
       }
     },
     [change, proposals]
@@ -112,6 +115,7 @@ const ProposalViewer: FC = () => {
                 proposal={proposal}
                 overtake={makeOvertaker(proposal.id)}
                 insertProposal={makeInserter(proposal.id)}
+                deleteProposal={makeDeleter(proposal.id)}
               />
             )
           return null
@@ -126,11 +130,13 @@ interface RelayerRowProps {
   proposal: ProposalRelayer
   updateProposal: (arg: ProposalRelayer) => void
   insertProposal: (proposal: Proposal, arg: 1 | -1) => void
+  deleteProposal: () => void
   overtake: (take: 1 | -1) => void
 }
 
 const RelayerRow: FC<RelayerRowProps> = ({
   insertProposal,
+  deleteProposal,
   overtake,
   children
 }) => {
@@ -158,6 +164,7 @@ const RelayerRow: FC<RelayerRowProps> = ({
             onInsert={makeInserter(-1)}
           />
         }
+        rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
       </SingleColumnRow>

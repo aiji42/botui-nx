@@ -98,13 +98,12 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
             onInsert={makeInserter(1)}
           />
         }
+        rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         <DoubleColumn
           onClick={handleEditig}
           leftTool={human && <LeftTool onClick={switchSide} />}
           rightTool={!human && <RightTool onClick={switchSide} />}
-          leftTopTool={!human && <DeleteTool onClick={deleteProposal} />}
-          rightTopTool={human && <DeleteTool onClick={deleteProposal} />}
         >
           {children}
         </DoubleColumn>
@@ -120,6 +119,7 @@ interface FormRowProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
   insertProposal: (proposal: Proposal, arg: 1 | -1) => void
+  deleteProposal: () => void
   overtake: (take: 1 | -1) => void
 }
 
@@ -127,6 +127,7 @@ export const FormRow: FC<FormRowProps> = ({
   proposal,
   updateProposal,
   insertProposal,
+  deleteProposal,
   overtake
 }) => {
   if (proposal.data.content.type !== 'form') return null
@@ -136,6 +137,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -155,6 +157,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -174,6 +177,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormBirthDayEditForm
@@ -196,6 +200,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -215,6 +220,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
@@ -234,6 +240,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormCustomRadioGroupEditForm
@@ -256,6 +263,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormCustomCheckboxEditForm
@@ -278,6 +286,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormCustomSelectEditForm
@@ -300,6 +309,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormCustomInputEditForm
@@ -322,6 +332,7 @@ export const FormRow: FC<FormRowProps> = ({
         proposal={proposal}
         updateProposal={updateProposal}
         insertProposal={insertProposal}
+        deleteProposal={deleteProposal}
         overtake={overtake}
         editForm={
           <FormCustomTextareaEditForm

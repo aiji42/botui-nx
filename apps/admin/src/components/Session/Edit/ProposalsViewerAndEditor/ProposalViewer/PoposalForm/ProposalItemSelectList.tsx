@@ -54,14 +54,11 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
       onInsert(formMessageTemplate({ type: 'FormAddress', status: {} }))
       setSelected(null)
     }
-    if (selected === 'formTel')
-    {
+    if (selected === 'formTel') {
       onInsert(formMessageTemplate({ type: 'FormTel', status: {} }))
       setSelected(null)
-
     }
-    if (selected === 'formEmail')
-    {
+    if (selected === 'formEmail') {
       onInsert(formMessageTemplate({ type: 'FormEmail', status: {} }))
       setSelected(null)
     }

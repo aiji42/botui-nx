@@ -1,7 +1,12 @@
 import { Proposal } from '@botui/types'
 import { FC, useCallback, useState, AllHTMLAttributes } from 'react'
 import { IconButton, makeStyles } from '@material-ui/core'
-import { DoubleArrow, ImportExport, AddCircle, Cancel } from '@material-ui/icons'
+import {
+  DoubleArrow,
+  ImportExport,
+  AddCircle,
+  Cancel
+} from '@material-ui/icons'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 
@@ -34,7 +39,11 @@ export const EdgeTool: FC<EdgeToolProps> = ({
   return (
     <>
       <div {...props}>
-        <IconButton className={classes.button} size="small" onClick={() => setOpen(true)}>
+        <IconButton
+          className={classes.button}
+          size="small"
+          onClick={() => setOpen(true)}
+        >
           <AddCircle />
         </IconButton>
         <IconButton size="small" onClick={onClickSwitch}>
@@ -69,5 +78,9 @@ export const RightTool: FC<ToolProps> = (props) => {
 }
 
 export const DeleteTool: FC<ToolProps> = (props) => {
-  return <IconButton {...props} size="small"><Cancel /></IconButton>
+  return (
+    <IconButton {...props} size="small">
+      <Cancel />
+    </IconButton>
+  )
 }

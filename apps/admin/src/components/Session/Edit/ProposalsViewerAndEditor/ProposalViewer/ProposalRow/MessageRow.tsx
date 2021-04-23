@@ -6,7 +6,7 @@ import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { MessageEditForm } from '../PoposalForm/MessageEditForm'
-import {EdgeTool, LeftTool, RightTool, DeleteTool} from './Tools';
+import { EdgeTool, LeftTool, RightTool, DeleteTool } from './Tools'
 
 interface MessageRowProps {
   proposal: ProposalMessage
@@ -66,13 +66,12 @@ export const MessageRow: FC<MessageRowProps> = ({
             onInsert={makeInserter(1)}
           />
         }
+        rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         <DoubleColumn
           onClick={handleEditig}
           leftTool={human && <LeftTool onClick={switchSide} />}
           rightTool={!human && <RightTool onClick={switchSide} />}
-          leftTopTool={!human && <DeleteTool onClick={deleteProposal} />}
-          rightTopTool={human && <DeleteTool onClick={deleteProposal} />}
         >
           <ListItem>
             <ListItemIcon>
