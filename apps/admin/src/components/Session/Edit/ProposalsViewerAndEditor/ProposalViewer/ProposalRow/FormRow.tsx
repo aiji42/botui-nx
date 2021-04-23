@@ -32,12 +32,13 @@ import {
   FormNameEditForm
 } from '../PoposalForm/FormEfitForm'
 import { ProposalMessage, Proposal } from '@botui/types'
-import { EdgeTool, LeftTool, RightTool } from './Tools'
+import { DeleteTool, EdgeTool, LeftTool, RightTool } from './Tools'
 
 interface FromRowWrapperProps {
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
   insertProposal: (proposal: Proposal, arg: 1 | -1) => void
+  deleteProposal: () => void
   overtake: (take: 1 | -1) => void
   editForm: ReactNode
 }
@@ -46,6 +47,7 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   proposal,
   updateProposal,
   insertProposal,
+  deleteProposal,
   overtake,
   editForm,
   children
@@ -101,6 +103,8 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
           onClick={handleEditig}
           leftTool={human && <LeftTool onClick={switchSide} />}
           rightTool={!human && <RightTool onClick={switchSide} />}
+          leftTopTool={!human && <DeleteTool onClick={deleteProposal} />}
+          rightTopTool={human && <DeleteTool onClick={deleteProposal} />}
         >
           {children}
         </DoubleColumn>

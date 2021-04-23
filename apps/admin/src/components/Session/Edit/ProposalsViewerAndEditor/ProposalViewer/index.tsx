@@ -63,6 +63,15 @@ const ProposalViewer: FC = () => {
     [change, proposals]
   )
 
+  const makeDeleter = useCallback(
+    (id: Proposal['id']) => {
+      return () => {
+        change('proposals', proposals.filter((proposal) => proposal.id !== id))
+      }
+    },
+    [change, proposals]
+  )
+
   return (
     <Grid container>
       <Grid container item xs={12} lg={8}>
@@ -77,6 +86,7 @@ const ProposalViewer: FC = () => {
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
                 insertProposal={makeInserter(proposal.id)}
+                deleteProposal={makeDeleter(proposal.id)}
                 key={proposal.id}
               />
             )
@@ -90,6 +100,7 @@ const ProposalViewer: FC = () => {
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
                 insertProposal={makeInserter(proposal.id)}
+                deleteProposal={makeDeleter(proposal.id)}
                 key={proposal.id}
               />
             )

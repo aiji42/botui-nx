@@ -1,9 +1,15 @@
 import { Proposal } from '@botui/types'
 import { FC, useCallback, useState, AllHTMLAttributes } from 'react'
-import { IconButton } from '@material-ui/core'
-import { DoubleArrow, ImportExport, AddCircle } from '@material-ui/icons'
+import { IconButton, makeStyles } from '@material-ui/core'
+import { DoubleArrow, ImportExport, AddCircle, Cancel } from '@material-ui/icons'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    marginRight: theme.spacing(4)
+  }
+}))
 
 interface EdgeToolProps extends AllHTMLAttributes<HTMLDivElement> {
   onClickSwitch: () => void
@@ -23,10 +29,12 @@ export const EdgeTool: FC<EdgeToolProps> = ({
     },
     [onInsert]
   )
+  const classes = useStyles()
+
   return (
     <>
       <div {...props}>
-        <IconButton size="small" onClick={() => setOpen(true)}>
+        <IconButton className={classes.button} size="small" onClick={() => setOpen(true)}>
           <AddCircle />
         </IconButton>
         <IconButton size="small" onClick={onClickSwitch}>
@@ -40,11 +48,11 @@ export const EdgeTool: FC<EdgeToolProps> = ({
   )
 }
 
-interface SideToolProps {
+interface ToolProps {
   onClick: () => void
 }
 
-export const LeftTool: FC<SideToolProps> = (props) => {
+export const LeftTool: FC<ToolProps> = (props) => {
   return (
     <IconButton {...props} style={{ transform: 'scale(-1, 1)' }} size="small">
       <DoubleArrow />
@@ -52,10 +60,14 @@ export const LeftTool: FC<SideToolProps> = (props) => {
   )
 }
 
-export const RightTool: FC<SideToolProps> = (props) => {
+export const RightTool: FC<ToolProps> = (props) => {
   return (
     <IconButton {...props} size="small">
       <DoubleArrow />
     </IconButton>
   )
+}
+
+export const DeleteTool: FC<ToolProps> = (props) => {
+  return <IconButton {...props} size="small"><Cancel /></IconButton>
 }

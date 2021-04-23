@@ -23,7 +23,7 @@ import {
   ShortText,
   WrapText
 } from '@material-ui/icons'
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import {
   FormBirthDayEditForm,
@@ -35,7 +35,10 @@ import {
   FormNameEditForm
 } from './FormEfitForm'
 import { MessageEditForm } from './MessageEditForm'
-import { v4 as uuidv4 } from 'uuid'
+import {
+  formMessageTemplate,
+  stringMessageTemplate
+} from '../../../../Create/proposalTemplates'
 
 interface ProposalItemSelectListProps {
   onInsert: (proposal: Proposal) => void
@@ -45,6 +48,25 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
   onInsert
 }) => {
   const [selected, setSelected] = useState<null | string>(null)
+
+  useEffect(() => {
+    if (selected === 'formAddress') {
+      onInsert(formMessageTemplate({ type: 'FormAddress', status: {} }))
+      setSelected(null)
+    }
+    if (selected === 'formTel')
+    {
+      onInsert(formMessageTemplate({ type: 'FormTel', status: {} }))
+      setSelected(null)
+
+    }
+    if (selected === 'formEmail')
+    {
+      onInsert(formMessageTemplate({ type: 'FormEmail', status: {} }))
+      setSelected(null)
+    }
+  }, [onInsert, selected])
+
   return (
     <>
       <List subheader={<ListSubheader>メッセージ</ListSubheader>}>
@@ -68,7 +90,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           </ListItemIcon>
           <ListItemText primary="氏名" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formAddress')}>
           <ListItemIcon>
             <Home />
           </ListItemIcon>
@@ -80,13 +102,13 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           </ListItemIcon>
           <ListItemText primary="生年月日" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formTel')}>
           <ListItemIcon>
             <Phone />
           </ListItemIcon>
           <ListItemText primary="電話番号" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formEmail')}>
           <ListItemIcon>
             <AlternateEmail />
           </ListItemIcon>
@@ -165,50 +187,101 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
       >
         {selected === 'message' && (
           <MessageEditForm
-            proposal={newMessageTemplate()}
+            proposal={stringMessageTemplate('メッセージ本文')}
             submitter={onInsert}
           />
         )}
-        {selected === 'formName' && <FormNameEditForm submitter={onInsert} />}
-        {selected === 'formBirthday' && (
-          <FormBirthDayEditForm submitter={onInsert} />
+        {selected === 'formName' && (
+          <FormNameEditForm
+            proposal={formMessageTemplate({
+              type: 'FormName',
+              status: { kana: true, kanaType: 'katakana' }
+            })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'formBirthDay' && (
+          <FormBirthDayEditForm
+            proposal={formMessageTemplate({
+              type: 'FormBirthDay',
+              status: { paddingZero: false }
+            })}
+            submitter={onInsert}
+          />
         )}
         {selected === 'formCustomRadioGroup' && (
-          <FormCustomRadioGroupEditForm submitter={onInsert} />
+          <FormCustomRadioGroupEditForm
+            proposal={formMessageTemplate({
+              type: 'FormCustomRadioGroup',
+              status: {},
+              name: 'radioButtonQuestion',
+              inputs: [
+                { title: '選択肢A', value: 'A' },
+                { title: '選択肢B', value: 'B' },
+                { title: '選択肢C', value: 'C' }
+              ]
+            })}
+            submitter={onInsert}
+          />
         )}
         {selected === 'formCustomCheckbox' && (
-          <FormCustomCheckboxEditForm submitter={onInsert} />
+          <FormCustomCheckboxEditForm
+            proposal={formMessageTemplate({
+              type: 'FormCustomCheckbox',
+              status: {},
+              name: 'checkboxQuestion',
+              required: true,
+              inputs: [
+                { title: '選択肢A', value: 'A' },
+                { title: '選択肢B', value: 'B' },
+                { title: '選択肢C', value: 'C' }
+              ]
+            })}
+            submitter={onInsert}
+          />
         )}
         {selected === 'formCustomSelect' && (
-          <FormCustomSelectEditForm submitter={onInsert} />
+          <FormCustomSelectEditForm
+            proposal={formMessageTemplate({
+              type: 'FormCustomSelect',
+              status: {},
+              selects: [
+                {
+                  name: 'selectQuestion',
+                  title: '設問1',
+                  options: [
+                    { label: '選択肢A', value: 'A' },
+                    { label: '選択肢B', value: 'B' },
+                    { label: '選択肢C', value: 'C' }
+                  ]
+                }
+              ]
+            })}
+            submitter={onInsert}
+          />
         )}
         {selected === 'formCustomInput' && (
-          <FormCustomInputEditForm submitter={onInsert} />
+          <FormCustomInputEditForm
+            proposal={formMessageTemplate({
+              type: 'FormCustomInput',
+              status: {},
+              inputs: [{ name: 'customInput', type: 'text', title: '自由入力' }]
+            })}
+            submitter={onInsert}
+          />
         )}
         {selected === 'formCustomTextarea' && (
-          <FormCustomTextareaEditForm submitter={onInsert} />
+          <FormCustomTextareaEditForm
+            proposal={formMessageTemplate({
+              type: 'FormCustomTextarea',
+              status: {},
+              name: 'customTextarea',
+              required: false
+            })}
+            submitter={onInsert}
+          />
         )}
       </ProposalDrawer>
     </>
   )
-}
-
-const newMessageTemplate = (): ProposalMessage => {
-  const id = uuidv4()
-  return {
-    id,
-    type: 'message',
-    completed: false,
-    data: {
-      id,
-      human: false,
-      content: {
-        type: 'string',
-        props: { children: 'メッセージ本文' },
-        delay: 500
-      },
-      completed: false,
-      updated: false
-    }
-  }
 }
