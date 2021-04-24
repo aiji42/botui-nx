@@ -143,7 +143,7 @@ export const FormRow: FC<FormRowProps> = ({
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <Person />
           </ListItemIcon>
@@ -163,7 +163,7 @@ export const FormRow: FC<FormRowProps> = ({
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <Home />
           </ListItemIcon>
@@ -186,7 +186,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <Cake />
           </ListItemIcon>
@@ -206,7 +206,7 @@ export const FormRow: FC<FormRowProps> = ({
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <Phone />
           </ListItemIcon>
@@ -226,7 +226,7 @@ export const FormRow: FC<FormRowProps> = ({
           <FormNameEditForm proposal={proposal} submitter={updateProposal} />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <AlternateEmail />
           </ListItemIcon>
@@ -249,7 +249,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <RadioButtonChecked />
           </ListItemIcon>
@@ -272,7 +272,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <LibraryAddCheck />
           </ListItemIcon>
@@ -295,7 +295,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
@@ -318,7 +318,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <ShortText />
           </ListItemIcon>
@@ -341,7 +341,7 @@ export const FormRow: FC<FormRowProps> = ({
           />
         }
       >
-        <ListItem>
+        <ListItem id={String(proposal.id)}>
           <ListItemIcon>
             <WrapText />
           </ListItemIcon>

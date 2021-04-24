@@ -80,7 +80,7 @@ const ProposalViewer: FC = () => {
   return (
     <Grid container>
       <Grid container item xs={12} lg={8}>
-        {proposals.map((proposal) => {
+        {proposals.map((proposal, index) => {
           if (
             proposal.type === 'message' &&
             proposal.data.content.type === 'string'
@@ -124,6 +124,7 @@ const ProposalViewer: FC = () => {
             return (
               <SkipperRow
                 key={proposal.id}
+                skipTo={proposals[index + proposal.data.skipNumber].id}
                 updateProposal={makeUpdater(proposal.id)}
                 proposal={proposal}
                 overtake={makeOvertaker(proposal.id)}

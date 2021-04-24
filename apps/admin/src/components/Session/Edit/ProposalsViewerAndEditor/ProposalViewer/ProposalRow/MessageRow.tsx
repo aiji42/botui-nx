@@ -73,7 +73,7 @@ export const MessageRow: FC<MessageRowProps> = ({
           leftTool={human && <LeftTool onClick={switchSide} />}
           rightTool={!human && <RightTool onClick={switchSide} />}
         >
-          <ListItem>
+          <ListItem id={String(proposal.id)}>
             <ListItemIcon>
               <TextFields />
             </ListItemIcon>

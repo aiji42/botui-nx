@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, FC, ReactNode, useState } from 'react'
+import { cloneElement, isValidElement, VFC, ReactNode, useState } from 'react'
 import { Grid, makeStyles, Box } from '@material-ui/core'
 
 const useStyle = makeStyles((theme) => ({
@@ -21,9 +21,10 @@ interface SingleColumnRowProps {
   topTool?: ReactNode
   bottomTool?: ReactNode
   rightTopTool?: ReactNode
+  children: ReactNode | ((arg: { active: boolean }) => ReactNode)
 }
 
-export const SingleColumnRow: FC<SingleColumnRowProps> = ({
+export const SingleColumnRow: VFC<SingleColumnRowProps> = ({
   children,
   topTool,
   bottomTool,
@@ -35,6 +36,8 @@ export const SingleColumnRow: FC<SingleColumnRowProps> = ({
   const classes = useStyle()
   const newChildren = isValidElement(children)
     ? cloneElement(children, { active })
+    : typeof children === 'function'
+    ? children({ active })
     : children
 
   return (

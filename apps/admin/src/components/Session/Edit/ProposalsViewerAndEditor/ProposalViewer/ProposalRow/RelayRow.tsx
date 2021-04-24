@@ -14,6 +14,7 @@ interface RelayerRowProps {
 }
 
 export const RelayerRow: FC<RelayerRowProps> = ({
+  proposal,
   insertProposal,
   deleteProposal,
   overtake,
@@ -45,7 +46,10 @@ export const RelayerRow: FC<RelayerRowProps> = ({
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
-        <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
+        <SingleColumn onClick={handleEditig}>
+          <div id={String(proposal.id)} />
+          {children}
+        </SingleColumn>
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig} padding />
     </>
