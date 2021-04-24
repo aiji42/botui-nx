@@ -1,11 +1,12 @@
 import { Proposal, ProposalSkipper, ProposalMessage } from '@botui/types'
-import { FC, useCallback, useState } from 'react'
+import { FC, Fragment, useCallback, useState } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { DeleteTool, EdgeTool } from './Tools'
 import { SkipperEditForm } from '../PoposalForm/SkipperEditForm'
 import { CallSplitTwoTone } from '@material-ui/icons'
+import { Typography, Box, ListItem, ListItemIcon } from '@material-ui/core'
 
 interface SkipperRowProps {
   proposal: ProposalSkipper
@@ -57,7 +58,25 @@ export const SkipperRow: FC<SkipperRowProps> = ({
         rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         <SingleColumn onClick={handleEditig}>
-          <CallSplitTwoTone />
+          <ListItem>
+            <ListItemIcon>
+              <CallSplitTwoTone />
+            </ListItemIcon>
+            <Typography variant="body1">
+              {proposal.data.conditions.map(
+                ({ pattern, key, operator, negative }, index) => (
+                  <Fragment key={index}>
+                    {index > 0 && (
+                      <Box textAlign="center">
+                        {proposal.data.logic.toUpperCase()}
+                      </Box>
+                    )}
+                    {key} {negative ? 'not' : ''} {operator} {pattern}
+                  </Fragment>
+                )
+              )}
+            </Typography>
+          </ListItem>
         </SingleColumn>
       </SingleColumnRow>
       <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
