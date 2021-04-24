@@ -9,31 +9,15 @@ import {
   SimpleFormIterator
 } from 'react-admin'
 import { ProposalMessage } from '@botui/types'
-import { useForm, useFormState, Field, Form } from 'react-final-form'
-import { Typography, Button, Box } from '@material-ui/core'
+import { Field, Form } from 'react-final-form'
+import { Typography } from '@material-ui/core'
 import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 import arrayMutators from 'final-form-arrays'
+import { SaveButton } from './SaveButton'
 
 interface FormEditFormProps {
   proposal?: ProposalMessage
   submitter: (value: ProposalMessage) => void
-}
-
-const FormSubmit: FC = () => {
-  const { submit } = useForm()
-  const { hasValidationErrors } = useFormState()
-  return (
-    <Box textAlign="right" marginTop={3}>
-      <Button
-        onClick={submit}
-        disabled={hasValidationErrors}
-        variant="contained"
-        color="primary"
-      >
-        SAVE
-      </Button>
-    </Box>
-  )
 }
 
 export const FormNameEditForm: FC<FormEditFormProps> = ({
@@ -65,7 +49,7 @@ const FormNameEditFormInner: FC = () => {
           { id: 'hiragana', name: 'ひらがな' }
         ]}
       />
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -91,7 +75,7 @@ export const FormBirthDayEditFormInner: FC = () => {
         label="値をゼロ詰めする"
         validate={[required()]}
       />
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -132,7 +116,7 @@ export const FormCustomRadioGroupEditFormInner: FC = () => {
           <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -177,7 +161,7 @@ export const FormCustomCheckboxEditFormInner: FC = () => {
           <TextInput source="value" label="値" validate={[required()]} />
         </SimpleFormIterator>
       </ArrayInput>
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -214,7 +198,7 @@ export const FormCustomSelectEditFormInner: FC = () => {
           </ArrayInput>
         </SimpleFormIterator>
       </ArrayInput>
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -274,7 +258,7 @@ export const FormCustomInputEditFormInner: FC = () => {
           </FormDataConsumer>
         </SimpleFormIterator>
       </ArrayInput>
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }
@@ -317,7 +301,7 @@ export const FormCustomTextareaEditFormInner: FC = () => {
         component={JavascriptEditor}
         initialValue={customValidatorInitial}
       />
-      <FormSubmit />
+      <SaveButton />
     </>
   )
 }

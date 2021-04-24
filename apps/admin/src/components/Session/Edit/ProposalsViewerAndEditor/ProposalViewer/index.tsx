@@ -8,6 +8,8 @@ import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
 import { DeleteTool, EdgeTool } from './ProposalRow/Tools'
+import { RelayerRow } from './ProposalRow/RelayRow'
+import { SkipperRow } from './ProposalRow/SkipperRow'
 
 const ProposalViewer: FC = () => {
   const {
@@ -118,58 +120,22 @@ const ProposalViewer: FC = () => {
                 deleteProposal={makeDeleter(proposal.id)}
               />
             )
+          if (proposal.type === 'skipper')
+            return (
+              <SkipperRow
+                key={proposal.id}
+                updateProposal={makeUpdater(proposal.id)}
+                proposal={proposal}
+                overtake={makeOvertaker(proposal.id)}
+                insertProposal={makeInserter(proposal.id)}
+                deleteProposal={makeDeleter(proposal.id)}
+              />
+            )
           return null
         })}
       </Grid>
       <Grid container item xs={false} lg={4} />
     </Grid>
-  )
-}
-
-interface RelayerRowProps {
-  proposal: ProposalRelayer
-  updateProposal: (arg: ProposalRelayer) => void
-  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
-  deleteProposal: () => void
-  overtake: (take: 1 | -1) => void
-}
-
-const RelayerRow: FC<RelayerRowProps> = ({
-  insertProposal,
-  deleteProposal,
-  overtake,
-  children
-}) => {
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = () => setEditing(false)
-  const makeInserter = useCallback(
-    (nextPrev: -1 | 1) => {
-      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
-    },
-    [insertProposal]
-  )
-  return (
-    <>
-      <SingleColumnRow
-        topTool={
-          <EdgeTool
-            onClickSwitch={() => overtake(-1)}
-            onInsert={makeInserter(-1)}
-          />
-        }
-        bottomTool={
-          <EdgeTool
-            onClickSwitch={() => overtake(-1)}
-            onInsert={makeInserter(-1)}
-          />
-        }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
-      >
-        <SingleColumn onClick={handleEditig}>{children}</SingleColumn>
-      </SingleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig} />
-    </>
   )
 }
 

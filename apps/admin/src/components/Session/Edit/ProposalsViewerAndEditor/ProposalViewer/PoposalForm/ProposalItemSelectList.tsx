@@ -37,8 +37,11 @@ import {
 import { MessageEditForm } from './MessageEditForm'
 import {
   formMessageTemplate,
+  skipperTemplate,
   stringMessageTemplate
 } from '../../../../Create/proposalTemplates'
+import { SkipperRow } from '../ProposalRow/SkipperRow'
+import { SkipperEditForm } from './SkipperEditForm'
 
 interface ProposalItemSelectListProps {
   onInsert: (proposal: Proposal) => void
@@ -158,7 +161,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
         </ListItem>
       </List>
       <List subheader={<ListSubheader>中間処理</ListSubheader>}>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('skipper')}>
           <ListItemIcon>
             <CallSplit />
           </ListItemIcon>
@@ -274,6 +277,23 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
               status: {},
               name: 'customTextarea',
               required: false
+            })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'skipper' && (
+          <SkipperEditForm
+            proposal={skipperTemplate({
+              skipNumber: 1,
+              logic: 'and',
+              conditions: [
+                {
+                  key: 'someKey',
+                  negative: false,
+                  operator: 'match',
+                  pattern: 'とある値'
+                }
+              ]
             })}
             submitter={onInsert}
           />
