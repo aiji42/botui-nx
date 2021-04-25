@@ -45,7 +45,7 @@ import {
 } from '../../../../Create/proposalTemplates'
 import { SkipperEditForm } from './SkipperEditForm'
 import { CustomScriptEditForm, FormPushEditForm } from './RelayerEditForm'
-import { NoJobOnCloseEditForm } from './CloserEditForm'
+import { CustomScriptOnCloseEditForm, FormPushOnCloseEditForm, NoJobOnCloseEditForm, StoreOnCloseEditForm } from './CloserEditForm'
 
 interface ProposalItemSelectListProps {
   onInsert: (proposal: Proposal) => void
@@ -355,19 +355,19 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           />
         )}
         {selected === 'closeCustomScript' && (
-          <NoJobOnCloseEditForm
+          <CustomScriptOnCloseEditForm
             proposal={closerTemplate({ job: 'script', notify: true } as Closer)}
             submitter={onInsert}
           />
         )}
         {selected === 'closeStore' && (
-          <NoJobOnCloseEditForm
+          <StoreOnCloseEditForm
             proposal={closerTemplate({ job: 'store', notify: true })}
             submitter={onInsert}
           />
         )}
         {selected === 'closeFormPush' && (
-          <NoJobOnCloseEditForm
+          <FormPushOnCloseEditForm
             proposal={closerTemplate({
               job: 'formPush',
               notify: true,

@@ -37,7 +37,7 @@ export const EdgeTool: FC<EdgeToolProps> = ({
             <AddCircle />
           </IconButton>
         )}
-        {onClickSwitch && onInsert && <Box width={24} display="inline-block" />}
+        {onClickSwitch && onInsert && <Box width={32} display="inline-block" />}
         {onClickSwitch && (
           <IconButton size="small" onClick={onClickSwitch}>
             <ImportExport />
