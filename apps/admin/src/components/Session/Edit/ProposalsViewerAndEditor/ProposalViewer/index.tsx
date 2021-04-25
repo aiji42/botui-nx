@@ -8,6 +8,7 @@ import { RelayerRow } from './ProposalRow/RelayRow'
 import { SkipperRow } from './ProposalRow/SkipperRow'
 import { CloserRow } from './ProposalRow/CloserRow'
 import { UseProposalRowArgs } from './ProposalRow/dependencies'
+import { ImageRow } from './ProposalRow/ImageRow'
 
 const ProposalViewer: FC = () => {
   const {
@@ -83,6 +84,22 @@ const ProposalViewer: FC = () => {
           )
             return (
               <MessageRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                proposal={proposal}
+                updateProposal={makeUpdater(proposal.id)}
+                overtake={overtake}
+                insertProposal={makeInserter(proposal.id)}
+                deleteProposal={makeDeleter(proposal.id)}
+                key={proposal.id}
+              />
+            )
+          if (
+            proposal.type === 'message' &&
+            proposal.data.content.type === 'image'
+          )
+            return (
+              <ImageRow
                 isFirst={index === 0}
                 isLast={proposals.length === index + 1}
                 proposal={proposal}

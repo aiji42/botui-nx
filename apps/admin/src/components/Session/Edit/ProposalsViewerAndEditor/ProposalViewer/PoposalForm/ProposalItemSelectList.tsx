@@ -39,6 +39,7 @@ import { MessageEditForm } from './MessageEditForm'
 import {
   closerTemplate,
   formMessageTemplate,
+  imageMessageTemplate,
   relayerTemplate,
   skipperTemplate,
   stringMessageTemplate
@@ -51,6 +52,7 @@ import {
   NoJobOnCloseEditForm,
   StoreOnCloseEditForm
 } from './CloserEditForm'
+import { ImageEditForm } from './ImageEditForm'
 
 interface ProposalItemSelectListProps {
   submitter: (proposal: Proposal) => void
@@ -85,7 +87,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           </ListItemIcon>
           <ListItemText primary="テキストメッセージ" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('image')}>
           <ListItemIcon>
             <Image />
           </ListItemIcon>
@@ -223,6 +225,12 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
         {selected === 'message' && (
           <MessageEditForm
             proposal={stringMessageTemplate('メッセージ本文')}
+            submitter={submitter}
+          />
+        )}
+        {selected === 'image' && (
+          <ImageEditForm
+            proposal={imageMessageTemplate()}
             submitter={submitter}
           />
         )}

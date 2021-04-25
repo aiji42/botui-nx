@@ -1,7 +1,7 @@
-import { useCallback, FC } from 'react'
+import { FC, useCallback } from 'react'
 import { Labeled } from 'react-admin'
 import { Slider } from '@material-ui/core'
-import { useForm, useField } from 'react-final-form'
+import { useField } from 'react-final-form'
 
 const marks = [
   {
@@ -29,15 +29,12 @@ interface Props {
 }
 
 const DelayNumberSlider: FC<Props> = (props) => {
-  const { change } = useForm()
-  const {
-    input: { value }
-  } = useField<number>(props.source)
+  const field = useField<number>(props.source)
   const handleChange = useCallback(
-    (_, val: number | number[]) => {
-      change(props.source, val)
+    (_e: never, val: number) => {
+      field.input.onChange({ target: { value: val } })
     },
-    [props.source, change]
+    [field.input]
   )
 
   return (
@@ -50,7 +47,7 @@ const DelayNumberSlider: FC<Props> = (props) => {
           marks={marks}
           min={0}
           max={3000}
-          value={value || 0}
+          defaultValue={field.meta.initial}
           onChange={handleChange}
         />
       </span>
