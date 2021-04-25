@@ -1,5 +1,4 @@
-import { Proposal } from '@botui/types'
-import { FC, useCallback, useState, AllHTMLAttributes } from 'react'
+import { FC, AllHTMLAttributes } from 'react'
 import { IconButton, Box } from '@material-ui/core'
 import {
   DoubleArrow,
@@ -7,47 +6,33 @@ import {
   AddCircle,
   Cancel
 } from '@material-ui/icons'
-import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
-import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 
 interface EdgeToolProps extends AllHTMLAttributes<HTMLDivElement> {
   onClickSwitch?: () => void
-  onInsert?: (arg: Proposal) => void
+  onClickInsert?: () => void
 }
 
 export const EdgeTool: FC<EdgeToolProps> = ({
   onClickSwitch,
-  onInsert,
+  onClickInsert,
   ...props
 }) => {
-  const [open, setOpen] = useState(false)
-  const handleInsert = useCallback(
-    (proposal: Proposal) => {
-      onInsert?.(proposal)
-      setOpen(false)
-    },
-    [onInsert]
-  )
-
   return (
-    <>
-      <div {...props}>
-        {onInsert && (
-          <IconButton size="small" onClick={() => setOpen(true)}>
-            <AddCircle />
-          </IconButton>
-        )}
-        {onClickSwitch && onInsert && <Box width={32} display="inline-block" />}
-        {onClickSwitch && (
-          <IconButton size="small" onClick={onClickSwitch}>
-            <ImportExport />
-          </IconButton>
-        )}
-      </div>
-      <ProposalDrawer open={open} onClose={() => setOpen(false)}>
-        <ProposalItemSelectList onInsert={handleInsert} />
-      </ProposalDrawer>
-    </>
+    <div {...props}>
+      {onClickInsert && (
+        <IconButton size="small" onClick={onClickInsert}>
+          <AddCircle />
+        </IconButton>
+      )}
+      {onClickSwitch && onClickInsert && (
+        <Box width={32} display="inline-block" />
+      )}
+      {onClickSwitch && (
+        <IconButton size="small" onClick={onClickSwitch}>
+          <ImportExport />
+        </IconButton>
+      )}
+    </div>
   )
 }
 

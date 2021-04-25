@@ -1,16 +1,13 @@
-import { Proposal, Session, ProposalRelayer } from '@botui/types'
-import { FC, useCallback, useState } from 'react'
+import { Proposal, Session } from '@botui/types'
+import { FC, useCallback } from 'react'
 import { useFormState, useForm } from 'react-final-form'
 import { Grid } from '@material-ui/core'
-import { SingleColumnRow } from './ProposalRow/SingleColumnRow'
-import { SingleColumn } from './ProposalRow/SingleCulmn'
-import { ProposalDrawer } from './ProposalDrawer/ProposalDrawer'
 import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
-import { DeleteTool, EdgeTool } from './ProposalRow/Tools'
 import { RelayerRow } from './ProposalRow/RelayRow'
 import { SkipperRow } from './ProposalRow/SkipperRow'
 import { CloserRow } from './ProposalRow/CloserRow'
+import { UseProposalRowArgs } from './ProposalRow/dependencies'
 
 const ProposalViewer: FC = () => {
   const {
@@ -31,25 +28,23 @@ const ProposalViewer: FC = () => {
     [change, proposals]
   )
 
-  const makeOvertaker = useCallback(
-    (id: Proposal['id']) => {
-      return (takeorver: 1 | -1) => {
-        const index = proposals.findIndex((proposal) => proposal.id === id)
-        change(
-          'proposals',
-          takeorver === -1
-            ? [
-                ...proposals.slice(0, index - 1),
-                ...proposals.slice(index - 1, index + 1).reverse(),
-                ...proposals.slice(index + 1)
-              ]
-            : [
-                ...proposals.slice(0, index),
-                ...proposals.slice(index, index + 2).reverse(),
-                ...proposals.slice(index + 2)
-              ]
-        )
-      }
+  const overtake = useCallback<UseProposalRowArgs['overtake']>(
+    (proposal, takeorver) => {
+      const index = proposals.findIndex(({ id }) => proposal.id === id)
+      change(
+        'proposals',
+        takeorver === -1
+          ? [
+              ...proposals.slice(0, index - 1),
+              ...proposals.slice(index - 1, index + 1).reverse(),
+              ...proposals.slice(index + 1)
+            ]
+          : [
+              ...proposals.slice(0, index),
+              ...proposals.slice(index, index + 2).reverse(),
+              ...proposals.slice(index + 2)
+            ]
+      )
     },
     [change, proposals]
   )
@@ -92,7 +87,7 @@ const ProposalViewer: FC = () => {
                 isLast={proposals.length === index + 1}
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
-                overtake={makeOvertaker(proposal.id)}
+                overtake={overtake}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={makeDeleter(proposal.id)}
                 key={proposal.id}
@@ -108,7 +103,7 @@ const ProposalViewer: FC = () => {
                 isLast={proposals.length === index + 1}
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
-                overtake={makeOvertaker(proposal.id)}
+                overtake={overtake}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={makeDeleter(proposal.id)}
                 key={proposal.id}
@@ -122,7 +117,7 @@ const ProposalViewer: FC = () => {
                 key={proposal.id}
                 updateProposal={makeUpdater(proposal.id)}
                 proposal={proposal}
-                overtake={makeOvertaker(proposal.id)}
+                overtake={overtake}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={makeDeleter(proposal.id)}
               />
@@ -136,7 +131,7 @@ const ProposalViewer: FC = () => {
                 skipTo={proposals[index + proposal.data.skipNumber].id}
                 updateProposal={makeUpdater(proposal.id)}
                 proposal={proposal}
-                overtake={makeOvertaker(proposal.id)}
+                overtake={overtake}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={makeDeleter(proposal.id)}
               />
@@ -149,7 +144,7 @@ const ProposalViewer: FC = () => {
                 key={proposal.id}
                 updateProposal={makeUpdater(proposal.id)}
                 proposal={proposal}
-                overtake={makeOvertaker(proposal.id)}
+                overtake={overtake}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={
                   !!proposals

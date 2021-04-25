@@ -1,5 +1,5 @@
-import { Proposal, ProposalRelayer } from '@botui/types'
-import { FC, useCallback, useState } from 'react'
+import { ProposalRelayer } from '@botui/types'
+import { FC } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -10,15 +10,13 @@ import {
   CustomScriptEditForm,
   FormPushEditForm
 } from '../PoposalForm/RelayerEditForm'
+import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
+import { useProposalRow, UseProposalRowArgs } from './dependencies'
 
-interface RelayerRowProps {
+interface RelayerRowProps extends UseProposalRowArgs<ProposalRelayer> {
   isFirst: boolean
   isLast: boolean
-  proposal: ProposalRelayer
-  updateProposal: (arg: ProposalRelayer) => void
-  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
   deleteProposal: () => void
-  overtake: (take: 1 | -1) => void
 }
 
 export const RelayerRow: FC<RelayerRowProps> = ({
@@ -30,40 +28,31 @@ export const RelayerRow: FC<RelayerRowProps> = ({
   deleteProposal,
   overtake
 }) => {
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = useCallback(() => setEditing(false), [])
-  const makeInserter = useCallback(
-    (nextPrev: -1 | 1) => {
-      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
-    },
-    [insertProposal]
-  )
-  const submitter = useCallback(
-    (newProposal: ProposalRelayer) => {
-      updateProposal(newProposal)
-      handleCloseEditig()
-    },
-    [handleCloseEditig, updateProposal]
-  )
+  const [status, helper] = useProposalRow({
+    proposal,
+    updateProposal,
+    insertProposal,
+    overtake
+  })
+
   return (
     <>
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
-            onInsert={makeInserter(-1)}
+            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? () => overtake(1) : undefined}
-            onInsert={makeInserter(1)}
+            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickInsert={helper.startCreateNext}
           />
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
-        <SingleColumn onClick={handleEditig}>
+        <SingleColumn onClick={helper.startEdit}>
           <ListItem id={String(proposal.id)}>
             {proposal.data.job === 'script' && (
               <>
@@ -84,13 +73,22 @@ export const RelayerRow: FC<RelayerRowProps> = ({
           </ListItem>
         </SingleColumn>
       </SingleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
+      <ProposalDrawer open={status.editing} onClose={helper.complete} padding>
         {proposal.data.job === 'script' && (
-          <CustomScriptEditForm proposal={proposal} submitter={submitter} />
+          <CustomScriptEditForm
+            proposal={proposal}
+            submitter={helper.complete}
+          />
         )}
         {proposal.data.job === 'formPush' && (
-          <FormPushEditForm proposal={proposal} submitter={submitter} />
+          <FormPushEditForm proposal={proposal} submitter={helper.complete} />
         )}
+      </ProposalDrawer>
+      <ProposalDrawer
+        open={status.creatingNext || status.creatingPrev}
+        onClose={helper.complete}
+      >
+        <ProposalItemSelectList submitter={helper.complete} />
       </ProposalDrawer>
     </>
   )

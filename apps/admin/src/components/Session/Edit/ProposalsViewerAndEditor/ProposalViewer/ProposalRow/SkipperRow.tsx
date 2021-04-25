@@ -1,5 +1,5 @@
 import { Proposal, ProposalSkipper } from '@botui/types'
-import { FC, Fragment, useCallback, useRef, useState } from 'react'
+import { FC, Fragment } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -14,16 +14,14 @@ import {
   useTheme
 } from '@material-ui/core'
 import Xarrow from 'react-xarrows'
+import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
+import { useProposalRow, UseProposalRowArgs } from './dependencies'
 
-interface SkipperRowProps {
+interface SkipperRowProps extends UseProposalRowArgs<ProposalSkipper> {
   isFirst: boolean
   isLast: boolean
-  proposal: ProposalSkipper
   skipTo: Proposal['id']
-  updateProposal: (arg: ProposalSkipper) => void
-  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
   deleteProposal: () => void
-  overtake: (take: 1 | -1) => void
 }
 
 export const SkipperRow: FC<SkipperRowProps> = ({
@@ -36,42 +34,32 @@ export const SkipperRow: FC<SkipperRowProps> = ({
   deleteProposal,
   overtake
 }) => {
+  const [status, helper] = useProposalRow({
+    proposal,
+    updateProposal,
+    insertProposal,
+    overtake
+  })
   const theme = useTheme()
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = useCallback(() => setEditing(false), [])
-  const submitter = useCallback(
-    (proposal: ProposalSkipper) => {
-      updateProposal(proposal)
-      handleCloseEditig()
-    },
-    [handleCloseEditig, updateProposal]
-  )
-  const makeInserter = useCallback(
-    (nextPrev: -1 | 1) => {
-      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
-    },
-    [insertProposal]
-  )
   return (
     <>
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
-            onInsert={makeInserter(-1)}
+            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? () => overtake(1) : undefined}
-            onInsert={makeInserter(1)}
+            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickInsert={helper.startCreateNext}
           />
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         {({ active }) => (
-          <SingleColumn onClick={handleEditig} active={active}>
+          <SingleColumn onClick={helper.startEdit} active={active}>
             <ListItem id={String(proposal.id)}>
               <ListItemIcon>
                 <CallSplitTwoTone />
@@ -110,8 +98,14 @@ export const SkipperRow: FC<SkipperRowProps> = ({
           </SingleColumn>
         )}
       </SingleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
-        <SkipperEditForm proposal={proposal} submitter={submitter} />
+      <ProposalDrawer open={status.editing} onClose={helper.complete} padding>
+        <SkipperEditForm proposal={proposal} submitter={helper.complete} />
+      </ProposalDrawer>
+      <ProposalDrawer
+        open={status.creatingNext || status.creatingPrev}
+        onClose={helper.complete}
+      >
+        <ProposalItemSelectList submitter={helper.complete} />
       </ProposalDrawer>
     </>
   )

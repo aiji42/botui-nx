@@ -1,11 +1,4 @@
-import {
-  FC,
-  useState,
-  ReactNode,
-  useCallback,
-  isValidElement,
-  cloneElement
-} from 'react'
+import { FC, ReactNode, useCallback, isValidElement, cloneElement } from 'react'
 import { ListItem, ListItemIcon } from '@material-ui/core'
 import {
   Person,
@@ -31,17 +24,12 @@ import {
   FormCustomTextareaEditForm,
   FormNameEditForm
 } from '../PoposalForm/FormEfitForm'
-import { ProposalMessage, Proposal } from '@botui/types'
+import { ProposalMessage } from '@botui/types'
 import { DeleteTool, EdgeTool, LeftTool, RightTool } from './Tools'
+import { UseProposalRowArgs, useProposalRow } from './dependencies'
+import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 
-interface FromRowWrapperProps {
-  isFirst: boolean
-  isLast: boolean
-  proposal: ProposalMessage
-  updateProposal: (arg: ProposalMessage) => void
-  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
-  deleteProposal: () => void
-  overtake: (take: 1 | -1) => void
+interface FromRowWrapperProps extends FormRowProps {
   editForm: ReactNode
 }
 
@@ -56,10 +44,12 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   editForm,
   children
 }) => {
-  const [editing, setEditing] = useState(false)
-  const handleEditig = () => setEditing(true)
-  const handleCloseEditig = () => setEditing(false)
-
+  const [status, helper] = useProposalRow({
+    proposal,
+    updateProposal,
+    insertProposal,
+    overtake
+  })
   const switchSide = useCallback(() => {
     updateProposal({
       ...proposal,
@@ -70,17 +60,11 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   const newEditForm = isValidElement(editForm)
     ? cloneElement(editForm, {
         submitter: (proposal: ProposalMessage) => {
-          handleCloseEditig()
+          helper.complete()
           editForm.props.submitter?.(proposal)
         }
       })
     : editForm
-  const makeInserter = useCallback(
-    (nextPrev: -1 | 1) => {
-      return (newProposal: Proposal) => insertProposal(newProposal, nextPrev)
-    },
-    [insertProposal]
-  )
 
   const {
     data: { human }
@@ -92,41 +76,43 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
         side={human ? 'right' : 'left'}
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
-            onInsert={makeInserter(-1)}
+            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? () => overtake(1) : undefined}
-            onInsert={makeInserter(1)}
+            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickInsert={helper.startCreateNext}
           />
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}
       >
         <DoubleColumn
-          onClick={handleEditig}
+          onClick={helper.startEdit}
           leftTool={human && <LeftTool onClick={switchSide} />}
           rightTool={!human && <RightTool onClick={switchSide} />}
         >
           {children}
         </DoubleColumn>
       </DoubleColumnRow>
-      <ProposalDrawer open={editing} onClose={handleCloseEditig} padding>
+      <ProposalDrawer open={status.editing} onClose={helper.complete} padding>
         {newEditForm}
+      </ProposalDrawer>
+      <ProposalDrawer
+        open={status.creatingNext || status.creatingPrev}
+        onClose={helper.complete}
+      >
+        <ProposalItemSelectList submitter={helper.complete} />
       </ProposalDrawer>
     </>
   )
 }
 
-interface FormRowProps {
+interface FormRowProps extends UseProposalRowArgs<ProposalMessage> {
   isFirst: boolean
   isLast: boolean
-  proposal: ProposalMessage
-  updateProposal: (arg: ProposalMessage) => void
-  insertProposal: (proposal: Proposal, arg: 1 | -1) => void
   deleteProposal: () => void
-  overtake: (take: 1 | -1) => void
 }
 
 export const FormRow: FC<FormRowProps> = (props) => {

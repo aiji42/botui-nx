@@ -45,31 +45,36 @@ import {
 } from '../../../../Create/proposalTemplates'
 import { SkipperEditForm } from './SkipperEditForm'
 import { CustomScriptEditForm, FormPushEditForm } from './RelayerEditForm'
-import { CustomScriptOnCloseEditForm, FormPushOnCloseEditForm, NoJobOnCloseEditForm, StoreOnCloseEditForm } from './CloserEditForm'
+import {
+  CustomScriptOnCloseEditForm,
+  FormPushOnCloseEditForm,
+  NoJobOnCloseEditForm,
+  StoreOnCloseEditForm
+} from './CloserEditForm'
 
 interface ProposalItemSelectListProps {
-  onInsert: (proposal: Proposal) => void
+  submitter: (proposal: Proposal) => void
 }
 
 export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
-  onInsert
+  submitter
 }) => {
   const [selected, setSelected] = useState<null | string>(null)
 
   useEffect(() => {
     if (selected === 'formAddress') {
-      onInsert(formMessageTemplate({ type: 'FormAddress', status: {} }))
+      submitter(formMessageTemplate({ type: 'FormAddress', status: {} }))
       setSelected(null)
     }
     if (selected === 'formTel') {
-      onInsert(formMessageTemplate({ type: 'FormTel', status: {} }))
+      submitter(formMessageTemplate({ type: 'FormTel', status: {} }))
       setSelected(null)
     }
     if (selected === 'formEmail') {
-      onInsert(formMessageTemplate({ type: 'FormEmail', status: {} }))
+      submitter(formMessageTemplate({ type: 'FormEmail', status: {} }))
       setSelected(null)
     }
-  }, [onInsert, selected])
+  }, [submitter, selected])
 
   return (
     <>
@@ -218,7 +223,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
         {selected === 'message' && (
           <MessageEditForm
             proposal={stringMessageTemplate('メッセージ本文')}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formName' && (
@@ -227,7 +232,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
               type: 'FormName',
               status: { kana: true, kanaType: 'katakana' }
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formBirthDay' && (
@@ -236,7 +241,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
               type: 'FormBirthDay',
               status: { paddingZero: false }
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formCustomRadioGroup' && (
@@ -251,7 +256,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 { title: '選択肢C', value: 'C' }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formCustomCheckbox' && (
@@ -267,7 +272,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 { title: '選択肢C', value: 'C' }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formCustomSelect' && (
@@ -287,7 +292,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formCustomInput' && (
@@ -297,7 +302,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
               status: {},
               inputs: [{ name: 'customInput', type: 'text', title: '自由入力' }]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formCustomTextarea' && (
@@ -308,7 +313,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
               name: 'customTextarea',
               required: false
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'skipper' && (
@@ -325,13 +330,13 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'customScript' && (
           <CustomScriptEditForm
             proposal={relayerTemplate({ job: 'script' } as JobScript)}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'formPush' && (
@@ -345,25 +350,25 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 { from: 'firstName', to: 'mei', custom: false }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'closeNone' && (
           <NoJobOnCloseEditForm
             proposal={closerTemplate({ job: 'none', notify: true })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'closeCustomScript' && (
           <CustomScriptOnCloseEditForm
             proposal={closerTemplate({ job: 'script', notify: true } as Closer)}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'closeStore' && (
           <StoreOnCloseEditForm
             proposal={closerTemplate({ job: 'store', notify: true })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
         {selected === 'closeFormPush' && (
@@ -378,7 +383,7 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                 { from: 'firstName', to: 'mei', custom: false }
               ]
             })}
-            submitter={onInsert}
+            submitter={submitter}
           />
         )}
       </ProposalDrawer>
