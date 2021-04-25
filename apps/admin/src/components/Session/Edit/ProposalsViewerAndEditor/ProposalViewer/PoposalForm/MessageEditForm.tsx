@@ -10,7 +10,7 @@ import { DelayNumberSlider } from '../../../../parts'
 const useStyle = makeStyles((theme) => ({
   fab: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(4),
     right: theme.spacing(1)
   }
 }))
@@ -56,8 +56,11 @@ const FormInner = () => {
         />
         <NameKeySelector
           onSelected={makeInsertKey(ref)}
+          variant="extended"
           className={classes.fab}
-        />
+        >
+          ユーザ入力値の挿入
+        </NameKeySelector>
       </Box>
       <SaveButton />
     </>

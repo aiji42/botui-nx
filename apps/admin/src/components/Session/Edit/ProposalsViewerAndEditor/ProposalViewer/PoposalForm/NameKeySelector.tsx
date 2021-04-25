@@ -8,6 +8,7 @@ interface NameKeySelectorProps extends Partial<FabProps> {
 
 export const NameKeySelector: FC<NameKeySelectorProps> = ({
   onSelected,
+  children,
   ...res
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -29,6 +30,7 @@ export const NameKeySelector: FC<NameKeySelectorProps> = ({
     <>
       <Fab {...res} color="primary" onClick={handleClick} size="small">
         <Add fontSize="small" />
+        {children}
       </Fab>
       <Menu
         anchorEl={anchorEl}
