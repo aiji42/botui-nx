@@ -1,4 +1,4 @@
-import { Proposal, ProposalMessage } from '@botui/types'
+import { JobScript, Proposal, ProposalMessage } from '@botui/types'
 import {
   List,
   ListItem,
@@ -23,7 +23,7 @@ import {
   ShortText,
   WrapText
 } from '@material-ui/icons'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import {
   FormBirthDayEditForm,
@@ -37,11 +37,13 @@ import {
 import { MessageEditForm } from './MessageEditForm'
 import {
   formMessageTemplate,
+  relayerTemplate,
   skipperTemplate,
   stringMessageTemplate
 } from '../../../../Create/proposalTemplates'
 import { SkipperRow } from '../ProposalRow/SkipperRow'
 import { SkipperEditForm } from './SkipperEditForm'
+import { CustomScriptEditForm, FormPushEditForm } from './RelayerEditForm'
 
 interface ProposalItemSelectListProps {
   onInsert: (proposal: Proposal) => void
@@ -167,13 +169,13 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           </ListItemIcon>
           <ListItemText primary="分岐" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('customScript')}>
           <ListItemIcon>
             <Code />
           </ListItemIcon>
           <ListItemText primary="カスタムスクリプト" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => setSelected('formPush')}>
           <ListItemIcon>
             <FlashOn />
           </ListItemIcon>
@@ -293,6 +295,26 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
                   operator: 'match',
                   pattern: 'とある値'
                 }
+              ]
+            })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'customScript' && (
+          <CustomScriptEditForm
+            proposal={relayerTemplate({ job: 'script' } as JobScript)}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'formPush' && (
+          <FormPushEditForm
+            proposal={relayerTemplate({
+              job: 'formPush',
+              formSelector: '#form',
+              ajax: false,
+              dataMapper: [
+                { from: 'familyName', to: 'sei', custom: false },
+                { from: 'firstName', to: 'mei', custom: false }
               ]
             })}
             submitter={onInsert}
