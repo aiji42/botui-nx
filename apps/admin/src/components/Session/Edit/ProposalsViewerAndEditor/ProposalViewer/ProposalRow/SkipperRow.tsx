@@ -16,6 +16,8 @@ import {
 import Xarrow from 'react-xarrows'
 
 interface SkipperRowProps {
+  isFirst: boolean
+  isLast: boolean
   proposal: ProposalSkipper
   skipTo: Proposal['id']
   updateProposal: (arg: ProposalSkipper) => void
@@ -25,6 +27,8 @@ interface SkipperRowProps {
 }
 
 export const SkipperRow: FC<SkipperRowProps> = ({
+  isFirst,
+  isLast,
   proposal,
   skipTo,
   updateProposal,
@@ -54,14 +58,14 @@ export const SkipperRow: FC<SkipperRowProps> = ({
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={() => overtake(-1)}
+            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
             onInsert={makeInserter(-1)}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={() => overtake(-1)}
-            onInsert={makeInserter(-1)}
+            onClickSwitch={!isLast ? () => overtake(1) : undefined}
+            onInsert={makeInserter(1)}
           />
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}

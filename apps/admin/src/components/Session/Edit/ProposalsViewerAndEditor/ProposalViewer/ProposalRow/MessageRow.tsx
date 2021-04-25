@@ -9,6 +9,8 @@ import { MessageEditForm } from '../PoposalForm/MessageEditForm'
 import { EdgeTool, LeftTool, RightTool, DeleteTool } from './Tools'
 
 interface MessageRowProps {
+  isFirst: boolean
+  isLast: boolean
   proposal: ProposalMessage
   updateProposal: (arg: ProposalMessage) => void
   insertProposal: (proposal: Proposal, arg: 1 | -1) => void
@@ -17,6 +19,8 @@ interface MessageRowProps {
 }
 
 export const MessageRow: FC<MessageRowProps> = ({
+  isFirst,
+  isLast,
   proposal,
   updateProposal,
   insertProposal,
@@ -56,13 +60,13 @@ export const MessageRow: FC<MessageRowProps> = ({
         side={human ? 'right' : 'left'}
         topTool={
           <EdgeTool
-            onClickSwitch={() => overtake(-1)}
+            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
             onInsert={makeInserter(-1)}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={() => overtake(1)}
+            onClickSwitch={!isLast ? () => overtake(1) : undefined}
             onInsert={makeInserter(1)}
           />
         }

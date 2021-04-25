@@ -12,6 +12,8 @@ import {
 } from '../PoposalForm/RelayerEditForm'
 
 interface RelayerRowProps {
+  isFirst: boolean
+  isLast: boolean
   proposal: ProposalRelayer
   updateProposal: (arg: ProposalRelayer) => void
   insertProposal: (proposal: Proposal, arg: 1 | -1) => void
@@ -20,6 +22,8 @@ interface RelayerRowProps {
 }
 
 export const RelayerRow: FC<RelayerRowProps> = ({
+  isFirst,
+  isLast,
   proposal,
   insertProposal,
   updateProposal,
@@ -47,14 +51,14 @@ export const RelayerRow: FC<RelayerRowProps> = ({
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={() => overtake(-1)}
+            onClickSwitch={!isFirst ? () => overtake(-1) : undefined}
             onInsert={makeInserter(-1)}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={() => overtake(-1)}
-            onInsert={makeInserter(-1)}
+            onClickSwitch={!isLast ? () => overtake(1) : undefined}
+            onInsert={makeInserter(1)}
           />
         }
         rightTopTool={<DeleteTool onClick={deleteProposal} />}

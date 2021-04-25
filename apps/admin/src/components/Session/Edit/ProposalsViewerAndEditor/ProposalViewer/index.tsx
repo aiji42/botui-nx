@@ -10,6 +10,7 @@ import { MessageRow } from './ProposalRow/MessageRow'
 import { DeleteTool, EdgeTool } from './ProposalRow/Tools'
 import { RelayerRow } from './ProposalRow/RelayRow'
 import { SkipperRow } from './ProposalRow/SkipperRow'
+import { CloserRow } from './ProposalRow/CloserRow'
 
 const ProposalViewer: FC = () => {
   const {
@@ -87,6 +88,8 @@ const ProposalViewer: FC = () => {
           )
             return (
               <MessageRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
@@ -101,6 +104,8 @@ const ProposalViewer: FC = () => {
           )
             return (
               <FormRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
                 proposal={proposal}
                 updateProposal={makeUpdater(proposal.id)}
                 overtake={makeOvertaker(proposal.id)}
@@ -112,6 +117,8 @@ const ProposalViewer: FC = () => {
           if (proposal.type === 'relayer')
             return (
               <RelayerRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
                 key={proposal.id}
                 updateProposal={makeUpdater(proposal.id)}
                 proposal={proposal}
@@ -123,6 +130,8 @@ const ProposalViewer: FC = () => {
           if (proposal.type === 'skipper')
             return (
               <SkipperRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
                 key={proposal.id}
                 skipTo={proposals[index + proposal.data.skipNumber].id}
                 updateProposal={makeUpdater(proposal.id)}
@@ -130,6 +139,24 @@ const ProposalViewer: FC = () => {
                 overtake={makeOvertaker(proposal.id)}
                 insertProposal={makeInserter(proposal.id)}
                 deleteProposal={makeDeleter(proposal.id)}
+              />
+            )
+          if (proposal.type === 'closer')
+            return (
+              <CloserRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                key={proposal.id}
+                updateProposal={makeUpdater(proposal.id)}
+                proposal={proposal}
+                overtake={makeOvertaker(proposal.id)}
+                insertProposal={makeInserter(proposal.id)}
+                deleteProposal={
+                  !!proposals
+                    .slice(index + 1)
+                    .find(({ type }) => type === 'closer') &&
+                  makeDeleter(proposal.id)
+                }
               />
             )
           return null

@@ -1,4 +1,4 @@
-import { JobScript, Proposal, ProposalMessage } from '@botui/types'
+import { Closer, JobScript, Proposal } from '@botui/types'
 import {
   List,
   ListItem,
@@ -21,7 +21,8 @@ import {
   Code,
   FlashOn,
   ShortText,
-  WrapText
+  WrapText,
+  CheckCircle
 } from '@material-ui/icons'
 import { FC, useEffect, useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -36,14 +37,15 @@ import {
 } from './FormEfitForm'
 import { MessageEditForm } from './MessageEditForm'
 import {
+  closerTemplate,
   formMessageTemplate,
   relayerTemplate,
   skipperTemplate,
   stringMessageTemplate
 } from '../../../../Create/proposalTemplates'
-import { SkipperRow } from '../ProposalRow/SkipperRow'
 import { SkipperEditForm } from './SkipperEditForm'
 import { CustomScriptEditForm, FormPushEditForm } from './RelayerEditForm'
+import { NoJobOnCloseEditForm } from './CloserEditForm'
 
 interface ProposalItemSelectListProps {
   onInsert: (proposal: Proposal) => void
@@ -182,6 +184,32 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           <ListItemText primary="フォームの送信" />
         </ListItem>
       </List>
+      <List subheader={<ListSubheader>ゴール</ListSubheader>}>
+        <ListItem button onClick={() => setSelected('closeNone')}>
+          <ListItemIcon>
+            <CheckCircle />
+          </ListItemIcon>
+          <ListItemText primary="チャットを終了させる" />
+        </ListItem>
+        <ListItem button onClick={() => setSelected('closeCustomScript')}>
+          <ListItemIcon>
+            <CheckCircle />
+          </ListItemIcon>
+          <ListItemText primary="カスタムスクリプトを実行してから終了" />
+        </ListItem>
+        <ListItem button onClick={() => setSelected('closeStore')}>
+          <ListItemIcon>
+            <CheckCircle />
+          </ListItemIcon>
+          <ListItemText primary="データベースに保存して終了" />
+        </ListItem>
+        <ListItem button onClick={() => setSelected('closeFormPush')}>
+          <ListItemIcon>
+            <CheckCircle />
+          </ListItemIcon>
+          <ListItemText primary="フォームの送信をして終了" />
+        </ListItem>
+      </List>
       <ProposalDrawer
         open={!!selected}
         onClose={() => setSelected(null)}
@@ -310,6 +338,39 @@ export const ProposalItemSelectList: FC<ProposalItemSelectListProps> = ({
           <FormPushEditForm
             proposal={relayerTemplate({
               job: 'formPush',
+              formSelector: '#form',
+              ajax: false,
+              dataMapper: [
+                { from: 'familyName', to: 'sei', custom: false },
+                { from: 'firstName', to: 'mei', custom: false }
+              ]
+            })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'closeNone' && (
+          <NoJobOnCloseEditForm
+            proposal={closerTemplate({ job: 'none', notify: true })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'closeCustomScript' && (
+          <NoJobOnCloseEditForm
+            proposal={closerTemplate({ job: 'script', notify: true } as Closer)}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'closeStore' && (
+          <NoJobOnCloseEditForm
+            proposal={closerTemplate({ job: 'store', notify: true })}
+            submitter={onInsert}
+          />
+        )}
+        {selected === 'closeFormPush' && (
+          <NoJobOnCloseEditForm
+            proposal={closerTemplate({
+              job: 'formPush',
+              notify: true,
               formSelector: '#form',
               ajax: false,
               dataMapper: [
