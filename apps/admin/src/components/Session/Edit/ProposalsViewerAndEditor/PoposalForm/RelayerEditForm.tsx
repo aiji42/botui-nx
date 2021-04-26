@@ -7,67 +7,25 @@ import {
   SimpleFormIterator,
   FormDataConsumer
 } from 'react-admin'
-import { ProposalCloser } from '@botui/types'
+import { ProposalRelayer } from '@botui/types'
 import { Form, Field, useForm } from 'react-final-form'
 import { SaveButton } from './SaveButton'
-import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 import { Typography, makeStyles } from '@material-ui/core'
 import { NameKeySelector } from './NameKeySelector'
 import arrayMutators from 'final-form-arrays'
+import JavascriptEditor from '../../../parts/JavascriptEditor'
 
-interface CloserEditFormProps {
-  proposal?: ProposalCloser
-  submitter: (value: ProposalCloser) => void
+interface RelayerEditFormProps {
+  proposal?: ProposalRelayer
+  submitter: (value: ProposalRelayer) => void
 }
 
-export const NoJobOnCloseEditForm: FC<CloserEditFormProps> = ({
+export const CustomScriptEditForm: FC<RelayerEditFormProps> = ({
   proposal,
   submitter
 }) => {
   return (
-    <Form<ProposalCloser>
-      initialValues={proposal}
-      onSubmit={submitter}
-      render={() => <NoJobEditFormInner />}
-    />
-  )
-}
-const NoJobEditFormInner: FC = () => {
-  return (
-    <>
-      <BooleanInput source="data.notify" label="メールで通知する" />
-      <SaveButton />
-    </>
-  )
-}
-
-export const StoreOnCloseEditForm: FC<CloserEditFormProps> = ({
-  proposal,
-  submitter
-}) => {
-  return (
-    <Form<ProposalCloser>
-      initialValues={proposal}
-      onSubmit={submitter}
-      render={() => <StoreEditFormInner />}
-    />
-  )
-}
-const StoreEditFormInner: FC = () => {
-  return (
-    <>
-      <BooleanInput source="data.notify" label="メールで通知する" />
-      <SaveButton />
-    </>
-  )
-}
-
-export const CustomScriptOnCloseEditForm: FC<CloserEditFormProps> = ({
-  proposal,
-  submitter
-}) => {
-  return (
-    <Form<ProposalCloser>
+    <Form<ProposalRelayer>
       initialValues={proposal}
       onSubmit={submitter}
       render={() => <CustomScriptEditFormInner />}
@@ -77,7 +35,6 @@ export const CustomScriptOnCloseEditForm: FC<CloserEditFormProps> = ({
 const CustomScriptEditFormInner: FC = () => {
   return (
     <>
-      <BooleanInput source="data.notify" label="メールで通知する" />
       <Field
         name="data.script"
         defaultValue={scriptInitialValue}
@@ -117,12 +74,12 @@ window.botui.customChoice['フォームのname'] = [
 */
 `
 
-export const FormPushOnCloseEditForm: FC<CloserEditFormProps> = ({
+export const FormPushEditForm: FC<RelayerEditFormProps> = ({
   proposal,
   submitter
 }) => {
   return (
-    <Form<ProposalCloser>
+    <Form<ProposalRelayer>
       initialValues={proposal}
       mutators={{ ...arrayMutators }}
       onSubmit={submitter}
@@ -144,19 +101,18 @@ const useStyle = makeStyles((theme) => ({
 
 const FormPushEditFormInner: FC = () => {
   const classes = useStyle()
-  const { change } = useForm<ProposalCloser>()
+  const { change } = useForm<ProposalRelayer>()
   const makeInsertKey = useCallback(
     (k: string | undefined) => {
       return (val: string) => {
         if (!k) return
-        change(k as keyof ProposalCloser, val)
+        change(k as keyof ProposalRelayer, val)
       }
     },
     [change]
   )
   return (
     <>
-      <BooleanInput source="data.notify" label="メールで通知する" />
       <TextInput
         source="data.formSelector"
         label="フォームのDOMセレクタ"

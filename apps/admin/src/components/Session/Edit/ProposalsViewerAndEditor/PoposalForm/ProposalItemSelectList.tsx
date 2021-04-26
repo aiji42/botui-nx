@@ -43,7 +43,7 @@ import {
   relayerTemplate,
   skipperTemplate,
   stringMessageTemplate
-} from '../../../../Create/proposalTemplates'
+} from '../../../Create/proposalTemplates'
 import { SkipperEditForm } from './SkipperEditForm'
 import { CustomScriptEditForm, FormPushEditForm } from './RelayerEditForm'
 import {

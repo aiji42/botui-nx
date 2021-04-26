@@ -3,7 +3,7 @@ import { Form } from 'react-final-form'
 import { ProposalMessage, Session } from '@botui/types'
 import { SaveButton } from './SaveButton'
 import { useRecordContext } from 'react-admin'
-import { ImageInput, DelayNumberSlider } from '../../../../parts'
+import { ImageInput, DelayNumberSlider } from '../../../parts'
 
 interface ImageEditFormProps {
   proposal?: ProposalMessage

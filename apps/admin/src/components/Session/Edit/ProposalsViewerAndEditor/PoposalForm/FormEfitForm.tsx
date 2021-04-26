@@ -11,9 +11,9 @@ import {
 import { ProposalMessage } from '@botui/types'
 import { Field, Form } from 'react-final-form'
 import { Typography } from '@material-ui/core'
-import JavascriptEditor from '../../ProposalEditDialog/JavascriptEditor'
 import arrayMutators from 'final-form-arrays'
 import { SaveButton } from './SaveButton'
+import JavascriptEditor from '../../../parts/JavascriptEditor'
 
 interface FormEditFormProps {
   proposal?: ProposalMessage

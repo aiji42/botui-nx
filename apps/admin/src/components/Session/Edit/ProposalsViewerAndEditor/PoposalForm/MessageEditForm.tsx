@@ -5,7 +5,7 @@ import { ProposalMessage } from '@botui/types'
 import { NameKeySelector } from './NameKeySelector'
 import { SaveButton } from './SaveButton'
 import { required, TextInput } from 'react-admin'
-import { DelayNumberSlider } from '../../../../parts'
+import { DelayNumberSlider } from '../../../parts'
 
 const useStyle = makeStyles((theme) => ({
   fab: {
