@@ -26,7 +26,7 @@ import {
 } from '../PoposalForm/FormEfitForm'
 import { ProposalMessage } from '@botui/types'
 import { DeleteTool, EdgeTool, LeftTool, RightTool } from './Tools'
-import { UseProposalRowArgs, useProposalRow } from './dependencies'
+import { useProposalRow } from './dependencies'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 
 interface FromRowWrapperProps extends FormRowProps {
@@ -37,25 +37,16 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   proposal,
   isFirst,
   isLast,
-  updateProposal,
-  insertProposal,
-  deleteProposal,
-  overtake,
   editForm,
   children
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalMessage>(proposal)
   const switchSide = useCallback(() => {
-    updateProposal({
+    helper.update({
       ...proposal,
       data: { ...proposal.data, human: !proposal.data.human }
     })
-  }, [updateProposal, proposal])
+  }, [helper, proposal])
 
   const newEditForm = isValidElement(editForm)
     ? cloneElement(editForm, {
@@ -86,7 +77,7 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
+        rightTopTool={<DeleteTool onClick={helper.remove} />}
       >
         <DoubleColumn
           onClick={helper.startEdit}
@@ -109,21 +100,22 @@ const FromRowWrapper: FC<FromRowWrapperProps> = ({
   )
 }
 
-interface FormRowProps extends UseProposalRowArgs<ProposalMessage> {
+interface FormRowProps {
   isFirst: boolean
   isLast: boolean
-  deleteProposal: () => void
+  proposal: ProposalMessage
 }
 
 export const FormRow: FC<FormRowProps> = (props) => {
-  const { proposal, updateProposal } = props
+  const { proposal } = props
+  const [, helper] = useProposalRow<ProposalMessage>(proposal)
   if (proposal.data.content.type !== 'form') return null
   if (proposal.data.content.props.type === 'FormName')
     return (
       <FromRowWrapper
         {...props}
         editForm={
-          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+          <FormNameEditForm proposal={proposal} submitter={helper.update} />
         }
       >
         <ListItem id={String(proposal.id)}>
@@ -139,7 +131,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
       <FromRowWrapper
         {...props}
         editForm={
-          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+          <FormNameEditForm proposal={proposal} submitter={helper.update} />
         }
       >
         <ListItem id={String(proposal.id)}>
@@ -157,7 +149,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormBirthDayEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >
@@ -174,7 +166,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
       <FromRowWrapper
         {...props}
         editForm={
-          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+          <FormNameEditForm proposal={proposal} submitter={helper.update} />
         }
       >
         <ListItem id={String(proposal.id)}>
@@ -190,7 +182,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
       <FromRowWrapper
         {...props}
         editForm={
-          <FormNameEditForm proposal={proposal} submitter={updateProposal} />
+          <FormNameEditForm proposal={proposal} submitter={helper.update} />
         }
       >
         <ListItem id={String(proposal.id)}>
@@ -208,7 +200,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormCustomRadioGroupEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >
@@ -227,7 +219,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormCustomCheckboxEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >
@@ -246,7 +238,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormCustomSelectEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >
@@ -265,7 +257,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormCustomInputEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >
@@ -284,7 +276,7 @@ export const FormRow: FC<FormRowProps> = (props) => {
         editForm={
           <FormCustomTextareaEditForm
             proposal={proposal}
-            submitter={updateProposal}
+            submitter={helper.update}
           />
         }
       >

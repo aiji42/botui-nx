@@ -15,31 +15,22 @@ import {
 } from '@material-ui/core'
 import Xarrow from 'react-xarrows'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
-import { useProposalRow, UseProposalRowArgs } from './dependencies'
+import { useProposalRow } from './dependencies'
 
-interface SkipperRowProps extends UseProposalRowArgs<ProposalSkipper> {
+interface SkipperRowProps {
   isFirst: boolean
   isLast: boolean
   skipTo: Proposal['id']
-  deleteProposal: () => void
+  proposal: ProposalSkipper
 }
 
 export const SkipperRow: FC<SkipperRowProps> = ({
   isFirst,
   isLast,
   proposal,
-  skipTo,
-  updateProposal,
-  insertProposal,
-  deleteProposal,
-  overtake
+  skipTo // TODO: useProposalEditでもらわなくてすむはず。
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalSkipper>(proposal)
   const theme = useTheme()
   return (
     <>
@@ -56,7 +47,7 @@ export const SkipperRow: FC<SkipperRowProps> = ({
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
+        rightTopTool={<DeleteTool onClick={helper.remove} />}
       >
         {({ active }) => (
           <SingleColumn onClick={helper.startEdit} active={active}>

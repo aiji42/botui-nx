@@ -11,29 +11,20 @@ import {
   FormPushEditForm
 } from '../PoposalForm/RelayerEditForm'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
-import { useProposalRow, UseProposalRowArgs } from './dependencies'
+import { useProposalRow } from './dependencies'
 
-interface RelayerRowProps extends UseProposalRowArgs<ProposalRelayer> {
+interface RelayerRowProps {
   isFirst: boolean
   isLast: boolean
-  deleteProposal: () => void
+  proposal: ProposalRelayer
 }
 
 export const RelayerRow: FC<RelayerRowProps> = ({
   isFirst,
   isLast,
-  proposal,
-  insertProposal,
-  updateProposal,
-  deleteProposal,
-  overtake
+  proposal
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalRelayer>(proposal)
 
   return (
     <>
@@ -50,7 +41,7 @@ export const RelayerRow: FC<RelayerRowProps> = ({
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
+        rightTopTool={<DeleteTool onClick={helper.remove} />}
       >
         <SingleColumn onClick={helper.startEdit}>
           <ListItem id={String(proposal.id)}>

@@ -6,38 +6,29 @@ import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { EdgeTool, LeftTool, RightTool, DeleteTool } from './Tools'
-import { useProposalRow, UseProposalRowArgs } from './dependencies'
+import { useProposalRow } from './dependencies'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 import { useImageUrl } from '@botui/hooks'
 import { ImageEditForm } from '../PoposalForm/ImageEditForm'
 
-interface ImageRowProps extends UseProposalRowArgs<ProposalMessage> {
+interface ImageRowProps {
   isFirst: boolean
   isLast: boolean
-  deleteProposal: () => void
+  proposal: ProposalMessage
 }
 
 export const ImageRow: FC<ImageRowProps> = ({
   isFirst,
   isLast,
-  proposal,
-  updateProposal,
-  insertProposal,
-  deleteProposal,
-  overtake
+  proposal
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalMessage>(proposal)
   const switchSide = useCallback(() => {
-    updateProposal({
+    helper.update({
       ...proposal,
       data: { ...proposal.data, human: !proposal.data.human }
     })
-  }, [updateProposal, proposal])
+  }, [helper, proposal])
 
   if (proposal.data.content.type !== 'image') return null
   return (
@@ -56,7 +47,7 @@ export const ImageRow: FC<ImageRowProps> = ({
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
+        rightTopTool={<DeleteTool onClick={helper.remove} />}
       >
         <DoubleColumn
           onClick={helper.startEdit}

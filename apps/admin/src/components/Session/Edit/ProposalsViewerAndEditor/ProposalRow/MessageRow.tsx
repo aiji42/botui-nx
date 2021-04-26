@@ -7,36 +7,27 @@ import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { MessageEditForm } from '../PoposalForm/MessageEditForm'
 import { EdgeTool, LeftTool, RightTool, DeleteTool } from './Tools'
-import { useProposalRow, UseProposalRowArgs } from './dependencies'
+import { useProposalRow } from './dependencies'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 
-interface MessageRowProps extends UseProposalRowArgs<ProposalMessage> {
+interface MessageRowProps {
   isFirst: boolean
   isLast: boolean
-  deleteProposal: () => void
+  proposal: ProposalMessage
 }
 
 export const MessageRow: FC<MessageRowProps> = ({
   isFirst,
   isLast,
-  proposal,
-  updateProposal,
-  insertProposal,
-  deleteProposal,
-  overtake
+  proposal
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalMessage>(proposal)
   const switchSide = useCallback(() => {
-    updateProposal({
+    helper.update({
       ...proposal,
       data: { ...proposal.data, human: !proposal.data.human }
     })
-  }, [updateProposal, proposal])
+  }, [helper, proposal])
 
   const {
     data: { human, content }
@@ -58,7 +49,7 @@ export const MessageRow: FC<MessageRowProps> = ({
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={<DeleteTool onClick={deleteProposal} />}
+        rightTopTool={<DeleteTool onClick={helper.remove} />}
       >
         <DoubleColumn
           onClick={helper.startEdit}
