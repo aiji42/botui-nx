@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { SimpleFormProps, FormTab, TabbedForm } from 'react-admin'
 import SessionFormInner from './SessionFormInner'
-import ProposalViewerAndEditor from './ProposalsViewerAndEditor'
 import ChatLauncherFormInner from './ChatLauncherFormInner'
 import ProposalViewer from './ProposalsViewerAndEditor/ProposalViewer'
 

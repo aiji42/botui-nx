@@ -1,6 +1,6 @@
 import { Proposal, Session } from '@botui/types'
 import { FC, useCallback } from 'react'
-import { useFormState, useForm } from 'react-final-form'
+import {useFormState, useForm, Field} from 'react-final-form';
 import { Grid } from '@material-ui/core'
 import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
@@ -76,6 +76,8 @@ const ProposalViewer: FC = () => {
 
   return (
     <Grid container>
+      {/* hidden みたいなもの。この行がないと useForm だけでは変更が伝搬しない */}
+      <Field name="proposals">{() => null}</Field>
       <Grid container item xs={12} lg={8}>
         {proposals.map((proposal, index) => {
           if (
