@@ -10,7 +10,7 @@ import {
 } from 'react-admin'
 import { ProposalMessage } from '@botui/types'
 import { Field, Form } from 'react-final-form'
-import { Typography } from '@material-ui/core'
+import {Typography, Box} from '@material-ui/core';
 import arrayMutators from 'final-form-arrays'
 import { SaveButton } from './SaveButton'
 import JavascriptEditor from '../../../parts/JavascriptEditor'
@@ -35,10 +35,15 @@ export const FormNameEditForm: FC<FormEditFormProps> = ({
 const FormNameEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">氏名入力フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">ユーザの姓名の入力を促すフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">ふりがな補正では、ユーザのふりがなをカタカナもしくはひらがなに自動補正します。</Typography>
+      </Box>
       <BooleanInput
         source="data.content.props.status.kana"
         initialValue={true}
-        label="ふりがなの有無"
+        label="ふりがなの入力有無"
       />
       <SelectInput
         source="data.content.props.status.kanaType"
@@ -69,6 +74,11 @@ export const FormBirthDayEditForm: FC<FormEditFormProps> = ({
 export const FormBirthDayEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">生年月日入力フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">ユーザの誕生日の入力を促すフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">ゼロ詰めを選択した場合、一桁の月や日をゼロで埋めて二桁の値に統一できます。(例: 1月 → 01)</Typography>
+      </Box>
       <BooleanInput
         source="data.content.props.status.paddingZero"
         initialValue={false}
@@ -96,11 +106,11 @@ export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = ({
 export const FormCustomRadioGroupEditFormInner: FC = () => {
   return (
     <>
-      <Typography variant="subtitle2">
-        カスタムスクリプトで動的な選択肢の挿入が可能です。
-        <br />
-        こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
-      </Typography>
+      <Typography variant="h5">ラジオボタン型回答フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">選択肢の中から一つだけ回答を得るフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">カスタムスクリプトで事前に動的な選択肢を生成できます。詳しくは中間処理の「カスタムスクリプト」を追加して確認してください。</Typography>
+      </Box>
       <TextInput
         source="data.content.props.name"
         label="値名"
@@ -137,11 +147,11 @@ export const FormCustomCheckboxEditForm: FC<FormEditFormProps> = ({
 export const FormCustomCheckboxEditFormInner: FC = () => {
   return (
     <>
-      <Typography variant="subtitle2">
-        カスタムスクリプトで動的な選択肢の挿入が可能です。
-        <br />
-        こちらで指定した値名と同じキーを持つ選択肢のセットが自動挿入されます。
-      </Typography>
+      <Typography variant="h5">チェックボックス型回答フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">選択肢の中から複数の回答を得るフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">カスタムスクリプトで事前に動的な選択肢を生成できます。詳しくは中間処理の「カスタムスクリプト」を追加して確認してください。</Typography>
+      </Box>
       <TextInput
         source="data.content.props.name"
         label="値名"
@@ -182,6 +192,11 @@ export const FormCustomSelectEditForm: FC<FormEditFormProps> = ({
 export const FormCustomSelectEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">セレクトボックス型回答フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">プルダウンの選択肢の中から回答を得るフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">カスタムスクリプトで事前に動的な選択肢を生成できます。詳しくは中間処理の「カスタムスクリプト」を追加して確認してください。</Typography>
+      </Box>
       <ArrayInput
         source="data.content.props.selects"
         label="セレクトボックス"
@@ -219,6 +234,12 @@ export const FormCustomInputEditForm: FC<FormEditFormProps> = ({
 export const FormCustomInputEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">インプット型回答フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">ユーザに自由入力を促すフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">短い文字列の入力や、数字、パスワードなど入力形式に制限を設ける場合にはこちらのフォームが有効です。</Typography>
+        <Typography variant="body2" color="textSecondary">改行が含まれるような長文での回答を求める場合には、こちらではなくテキストエリアフォームが有効です。</Typography>
+      </Box>
       <ArrayInput
         source="data.content.props.inputs"
         label="input"
@@ -279,6 +300,12 @@ export const FormCustomTextareaEditForm: FC<FormEditFormProps> = ({
 export const FormCustomTextareaEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">テキストエリア型回答フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}><Typography variant="body1">ユーザに長文での自由入力を促すフォームです。</Typography></Box>
+        <Typography variant="body2" color="textSecondary">改行が含まれるような長文での入力を求める場合にこちらのフォームが有効です。</Typography>
+        <Typography variant="body2" color="textSecondary">数字のみやパスワードなど入力形式に制限を設ける場合には、こちらではなくカスタムインプットフォームが有効です。</Typography>
+      </Box>
       <TextInput
         source="data.content.props.name"
         label="値名"
