@@ -1,13 +1,11 @@
 import { FC } from 'react'
-import {Field} from 'react-final-form';
+import { Field } from 'react-final-form'
 import { Grid } from '@material-ui/core'
-import { FormRow } from './ProposalRow/FormRow'
 import { MessageRow } from './ProposalRow/MessageRow'
 import { RelayerRow } from './ProposalRow/RelayRow'
 import { SkipperRow } from './ProposalRow/SkipperRow'
 import { CloserRow } from './ProposalRow/CloserRow'
-import { ImageRow } from './ProposalRow/ImageRow'
-import { useProposalsEditor } from './dependencies';
+import { useProposalsEditor } from './dependencies'
 
 const ProposalsViewerAndEditor: FC = () => {
   const [proposals] = useProposalsEditor()
@@ -17,36 +15,9 @@ const ProposalsViewerAndEditor: FC = () => {
       <Field name="proposals">{() => null}</Field>
       <Grid container item xs={12} lg={8}>
         {proposals.map((proposal, index) => {
-          if (
-            proposal.type === 'message' &&
-            proposal.data.content.type === 'string'
-          )
+          if (proposal.type === 'message')
             return (
               <MessageRow
-                isFirst={index === 0}
-                isLast={proposals.length === index + 1}
-                proposal={proposal}
-                key={proposal.id}
-              />
-            )
-          if (
-            proposal.type === 'message' &&
-            proposal.data.content.type === 'image'
-          )
-            return (
-              <ImageRow
-                isFirst={index === 0}
-                isLast={proposals.length === index + 1}
-                proposal={proposal}
-                key={proposal.id}
-              />
-            )
-          if (
-            proposal.type === 'message' &&
-            proposal.data.content.type === 'form'
-          )
-            return (
-              <FormRow
                 isFirst={index === 0}
                 isLast={proposals.length === index + 1}
                 proposal={proposal}
@@ -68,7 +39,6 @@ const ProposalsViewerAndEditor: FC = () => {
                 isFirst={index === 0}
                 isLast={proposals.length === index + 1}
                 key={proposal.id}
-                skipTo={proposals[index + proposal.data.skipNumber].id}
                 proposal={proposal}
               />
             )

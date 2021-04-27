@@ -13,13 +13,15 @@ interface ProposalRowHelper<T extends Proposal> {
   startCreatePrev: () => void
   startCreateNext: () => void
   complete: (proposal?: Proposal | undefined) => void
-  overtakehWithPrev: () => void
-  overtakehWithNext: () => void
+  overtakeWithPrev: () => void
+  overtakeWithNext: () => void
   update: (newProposa: T) => void
   remove: () => void
 }
 
-export const useProposalRow = <T extends Proposal = Proposal>(proposal: T): [ProposalRowStatus, ProposalRowHelper<T>] => {
+export const useProposalRow = <T extends Proposal = Proposal>(
+  proposal: T
+): [ProposalRowStatus, ProposalRowHelper<T>] => {
   const [, helper] = useProposalsEditor()
   const [editing, setEditing] = useState(false)
   const [creatingPrev, setCreatingPrev] = useState(false)
@@ -31,8 +33,10 @@ export const useProposalRow = <T extends Proposal = Proposal>(proposal: T): [Pro
   const complete = useCallback<ProposalRowHelper<T>['complete']>(
     (newProposal) => {
       if (editing && newProposal?.id) helper.update(proposal, newProposal as T)
-      if (creatingPrev && newProposal?.id) helper.insert(proposal, newProposal, -1)
-      if (creatingNext && newProposal?.id) helper.insert(proposal, newProposal, 1)
+      if (creatingPrev && newProposal?.id)
+        helper.insert(proposal, newProposal, -1)
+      if (creatingNext && newProposal?.id)
+        helper.insert(proposal, newProposal, 1)
 
       setEditing(false)
       setCreatingPrev(false)
@@ -41,12 +45,21 @@ export const useProposalRow = <T extends Proposal = Proposal>(proposal: T): [Pro
     [creatingNext, creatingPrev, editing, helper, proposal]
   )
 
-  const overtakehWithPrev = useCallback(() => helper.overtake(proposal, -1), [helper, proposal])
-  const overtakehWithNext = useCallback(() => helper.overtake(proposal, 1), [helper, proposal])
+  const overtakeWithPrev = useCallback(() => helper.overtake(proposal, -1), [
+    helper,
+    proposal
+  ])
+  const overtakeWithNext = useCallback(() => helper.overtake(proposal, 1), [
+    helper,
+    proposal
+  ])
 
   const remove = useCallback(() => helper.remove(proposal), [helper, proposal])
 
-  const update = useCallback((newProposal: T) => helper.update(proposal, newProposal), [helper, proposal])
+  const update = useCallback(
+    (newProposal: T) => helper.update(proposal, newProposal),
+    [helper, proposal]
+  )
 
   return [
     { editing, creatingPrev, creatingNext },
@@ -55,8 +68,8 @@ export const useProposalRow = <T extends Proposal = Proposal>(proposal: T): [Pro
       startCreatePrev,
       startCreateNext,
       complete,
-      overtakehWithPrev,
-      overtakehWithNext,
+      overtakeWithPrev,
+      overtakeWithNext,
       remove,
       update
     }

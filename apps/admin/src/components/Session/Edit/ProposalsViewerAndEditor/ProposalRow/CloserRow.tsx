@@ -1,4 +1,4 @@
-import { ProposalCloser } from '@botui/types'
+import { ProposalCloser, Proposals } from '@botui/types'
 import { FC } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
@@ -13,45 +13,43 @@ import {
   StoreOnCloseEditForm
 } from '../PoposalForm/CloserEditForm'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
-import { useProposalRow, UseProposalRowArgs } from './dependencies'
+import { useProposalRow } from './dependencies'
+import { useProposalsEditor } from '../dependencies'
 
-interface CloserRowProps extends UseProposalRowArgs<ProposalCloser> {
+interface CloserRowProps {
   isFirst: boolean
   isLast: boolean
-  deleteProposal?: () => void
+  proposal: ProposalCloser
 }
 
 export const CloserRow: FC<CloserRowProps> = ({
   proposal,
   isFirst,
-  isLast,
-  insertProposal,
-  updateProposal,
-  deleteProposal,
-  overtake
+  isLast
 }) => {
-  const [status, helper] = useProposalRow({
-    proposal,
-    updateProposal,
-    insertProposal,
-    overtake
-  })
+  const [status, helper] = useProposalRow<ProposalCloser>(proposal)
+  const [proposals] = useProposalsEditor()
+
   return (
     <>
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickSwitch={!isFirst ? helper.overtakeWithPrev : undefined}
             onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickSwitch={!isLast ? helper.overtakeWithNext : undefined}
             onClickInsert={helper.startCreateNext}
           />
         }
-        rightTopTool={deleteProposal && <DeleteTool onClick={deleteProposal} />}
+        rightTopTool={
+          !isLastCloser(proposal, proposals) && (
+            <DeleteTool onClick={helper.remove} />
+          )
+        }
       >
         <SingleColumn onClick={helper.startEdit}>
           <ListItem id={String(proposal.id)}>
@@ -109,4 +107,9 @@ export const CloserRow: FC<CloserRowProps> = ({
       </ProposalDrawer>
     </>
   )
+}
+
+const isLastCloser = (proposal: ProposalCloser, proposals: Proposals) => {
+  const index = proposals.findIndex(({ id }) => id === proposal.id)
+  return !proposals.slice(index + 1).some(({ type }) => type === 'closer')
 }

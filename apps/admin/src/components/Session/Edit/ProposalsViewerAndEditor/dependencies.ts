@@ -1,6 +1,6 @@
-import {Proposal, Proposals, Session} from '@botui/types'
-import {useCallback} from 'react'
-import {useFormState, useForm} from 'react-final-form'
+import { Proposal, Proposals, Session } from '@botui/types'
+import { useCallback } from 'react'
+import { useFormState, useForm } from 'react-final-form'
 
 interface ProposalsEditHelper {
   update: (proposal: Proposal, newProposal: Proposal) => void
@@ -9,7 +9,7 @@ interface ProposalsEditHelper {
   remove: (proposal: Proposal) => void
 }
 
-export const useProposalsEditor = (): [Proposals, ProposalsEditHelper]  => {
+export const useProposalsEditor = (): [Proposals, ProposalsEditHelper] => {
   const {
     values: { proposals }
   } = useFormState<Session>()
@@ -67,10 +67,13 @@ export const useProposalsEditor = (): [Proposals, ProposalsEditHelper]  => {
     [change, proposals]
   )
 
-  return [proposals, {
-    update,
-    overtake,
-    insert,
-    remove
-  }]
+  return [
+    proposals,
+    {
+      update,
+      overtake,
+      insert,
+      remove
+    }
+  ]
 }

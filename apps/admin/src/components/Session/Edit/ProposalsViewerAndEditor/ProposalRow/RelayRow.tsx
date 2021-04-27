@@ -31,13 +31,13 @@ export const RelayerRow: FC<RelayerRowProps> = ({
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickSwitch={!isFirst ? helper.overtakeWithPrev : undefined}
             onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickSwitch={!isLast ? helper.overtakeWithNext : undefined}
             onClickInsert={helper.startCreateNext}
           />
         }

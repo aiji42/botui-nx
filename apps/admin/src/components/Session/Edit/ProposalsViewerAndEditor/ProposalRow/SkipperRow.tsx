@@ -1,4 +1,4 @@
-import { Proposal, ProposalSkipper } from '@botui/types'
+import { Proposal, Proposals, ProposalSkipper } from '@botui/types'
 import { FC, Fragment } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
@@ -16,34 +16,35 @@ import {
 import Xarrow from 'react-xarrows'
 import { ProposalItemSelectList } from '../PoposalForm/ProposalItemSelectList'
 import { useProposalRow } from './dependencies'
+import { useProposalsEditor } from '../dependencies'
 
 interface SkipperRowProps {
   isFirst: boolean
   isLast: boolean
-  skipTo: Proposal['id']
   proposal: ProposalSkipper
 }
 
 export const SkipperRow: FC<SkipperRowProps> = ({
   isFirst,
   isLast,
-  proposal,
-  skipTo // TODO: useProposalEditでもらわなくてすむはず。
+  proposal
 }) => {
   const [status, helper] = useProposalRow<ProposalSkipper>(proposal)
+  const [proposals] = useProposalsEditor()
+
   const theme = useTheme()
   return (
     <>
       <SingleColumnRow
         topTool={
           <EdgeTool
-            onClickSwitch={!isFirst ? helper.overtakehWithPrev : undefined}
+            onClickSwitch={!isFirst ? helper.overtakeWithPrev : undefined}
             onClickInsert={helper.startCreatePrev}
           />
         }
         bottomTool={
           <EdgeTool
-            onClickSwitch={!isLast ? helper.overtakehWithNext : undefined}
+            onClickSwitch={!isLast ? helper.overtakeWithNext : undefined}
             onClickInsert={helper.startCreateNext}
           />
         }
@@ -80,7 +81,7 @@ export const SkipperRow: FC<SkipperRowProps> = ({
                 startAnchor={['left', 'right']}
                 endAnchor="top"
                 start={String(proposal.id)}
-                end={String(skipTo)}
+                end={String(getSkipTo(proposal, proposals))}
                 path="grid"
                 color={theme.palette.primary.main}
                 SVGcanvasStyle={{ zIndex: 100 }}
@@ -100,4 +101,9 @@ export const SkipperRow: FC<SkipperRowProps> = ({
       </ProposalDrawer>
     </>
   )
+}
+
+const getSkipTo = (proposal: ProposalSkipper, proposals: Proposals) => {
+  const index = proposals.findIndex(({ id }) => id === proposal.id)
+  return proposals[index + proposal.data.skipNumber].id
 }
