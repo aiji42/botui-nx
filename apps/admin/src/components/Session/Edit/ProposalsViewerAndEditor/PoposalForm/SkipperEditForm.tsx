@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 import { Form } from 'react-final-form'
 import { ProposalSkipper } from '@botui/types'
-import {makeStyles, Typography, Box} from '@material-ui/core';
+import { makeStyles, Typography, Box } from '@material-ui/core'
 import {
   BooleanInput,
   SelectInput,
@@ -74,7 +74,8 @@ const FormInner: FC = () => {
           指定した条件に一致すると、スキップ数に応じてメッセージなどの後続の処理をスキップできます。複数のスキップ処理を組み合わせることで複雑なメッセージの出し分けが可能です。
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          各条件の評価を OR にした場合にはいずれかの条件に一致した場合、AND を選択した場合にはすべての条件に一致した場合に、スキップが行われます。
+          各条件の評価を OR にした場合にはいずれかの条件に一致した場合、AND
+          を選択した場合にはすべての条件に一致した場合に、スキップが行われます。
         </Typography>
       </Box>
       <NumberInput

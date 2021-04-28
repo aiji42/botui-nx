@@ -14,6 +14,7 @@ import { Typography, Box } from '@material-ui/core'
 import arrayMutators from 'final-form-arrays'
 import { SaveButton } from './SaveButton'
 import JavascriptEditor from '../../../parts/JavascriptEditor'
+import { CustomValidationHelp } from './CustomScriptHelp'
 
 interface FormEditFormProps {
   proposal?: ProposalMessage
@@ -259,6 +260,7 @@ export const FormCustomInputEditForm: FC<FormEditFormProps> = ({
       onSubmit={submitter}
       mutators={{ ...arrayMutators }}
       render={() => <FormCustomInputEditFormInner />}
+      destroyOnUnregister
     />
   )
 }
@@ -301,20 +303,23 @@ export const FormCustomInputEditFormInner: FC = () => {
           <TextInput source="title" label="タイトル" />
           <TextInput source="placeholder" label="プレースホルダー" />
           <BooleanInput source="required" label="入力を必須にする" />
+          <BooleanInput
+            source="customValidation"
+            label="カスタムバリデーションを使用する"
+            fullWidth
+          />
           <FormDataConsumer>
-            {({ getSource }) => (
-              <>
-                <Typography variant="subtitle2" color="textSecondary">
-                  カスタムバリデーション
-                </Typography>
-                <Field
-                  label="カスタムバリデーション"
-                  name={getSource?.('validation') ?? ''}
-                  initialValue={customValidatorInitial}
-                  component={JavascriptEditor}
-                />
-              </>
-            )}
+            {({ getSource, scopedFormData }) =>
+              scopedFormData.customValidation && (
+                <>
+                  <CustomValidationHelp />
+                  <Field
+                    name={getSource?.('validation') ?? ''}
+                    component={JavascriptEditor}
+                  />
+                </>
+              )
+            }
           </FormDataConsumer>
         </SimpleFormIterator>
       </ArrayInput>
@@ -333,6 +338,7 @@ export const FormCustomTextareaEditForm: FC<FormEditFormProps> = ({
       onSubmit={submitter}
       mutators={{ ...arrayMutators }}
       render={() => <FormCustomTextareaEditFormInner />}
+      destroyOnUnregister
     />
   )
 }
@@ -367,21 +373,25 @@ export const FormCustomTextareaEditFormInner: FC = () => {
         source="data.content.props.required"
         label="入力を必須にする"
       />
-      <Typography variant="subtitle2" color="textSecondary">
-        カスタムバリデーション
-      </Typography>
-      <Field
-        name="data.content.props.validation"
-        component={JavascriptEditor}
-        initialValue={customValidatorInitial}
+      <BooleanInput
+        source="data.content.props.customValidation"
+        label="カスタムバリデーションを使用する"
+        fullWidth
       />
+      <FormDataConsumer>
+        {({ formData }) =>
+          formData.data.content.props.customValidation && (
+            <>
+              <CustomValidationHelp />
+              <Field
+                name="data.content.props.validation"
+                component={JavascriptEditor}
+              />
+            </>
+          )
+        }
+      </FormDataConsumer>
       <SaveButton />
     </>
   )
 }
-
-const customValidatorInitial = `// JavaScript で記載してください。
-// value に入力値が入っています。
-// return で、1文字以上の文字列を返却するとエラーメッセージとしてフォーム下部に表示されます。
-// 文字列以外を返却すると、ユーザが確定ボタンを押下できるようになります。
-`

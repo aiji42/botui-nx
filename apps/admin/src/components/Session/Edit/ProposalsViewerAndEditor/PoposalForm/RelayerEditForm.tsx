@@ -10,10 +10,15 @@ import {
 import { ProposalRelayer } from '@botui/types'
 import { Form, Field, useForm } from 'react-final-form'
 import { SaveButton } from './SaveButton'
-import {Typography, makeStyles, Box} from '@material-ui/core';
+import { Typography, makeStyles, Box } from '@material-ui/core'
 import { NameKeySelector } from './NameKeySelector'
 import arrayMutators from 'final-form-arrays'
 import JavascriptEditor from '../../../parts/JavascriptEditor'
+import {
+  CustomScriptHelp,
+  FormPushCustomValueHelp,
+  FormPushResultHelp
+} from './CustomScriptHelp'
 
 interface RelayerEditFormProps {
   proposal?: ProposalRelayer
@@ -46,44 +51,12 @@ const CustomScriptEditFormInner: FC = () => {
           カスタムチェックボックス・ラジオボタン・セレクトの選択肢を動的に生成したり、サーバとの通信を行うなどのことができます。
         </Typography>
       </Box>
-      <Field
-        name="data.script"
-        defaultValue={scriptInitialValue}
-        component={JavascriptEditor}
-      />
+      <CustomScriptHelp />
+      <Field name="data.script" component={JavascriptEditor} />
       <SaveButton />
     </>
   )
 }
-
-const scriptInitialValue = `// Javascript で記載してください。
-
-// このスクリプト以前にユーザが入力した値は values オブジェクトに格納されています。
-// 例えばユーザの姓は values.familyName でアクセスできます。
-
-console.log(values.familyName, values.firstName)
-
-// Promise を return することで、サーバ通信などの非同期処理を同期的に取り扱えます。
-/**
-const timer = (time) =>
-  new Promise((resolve) => setTimeout(resolve, time))
-
-return timer(3000) // 3秒待つ
-*/
-
-// カスタムチェックボックス・カスタムラジオボタン・カスタムセレクトの選択肢を
-// 動的に選択することが可能です。
-// 例えば、本日から1ヶ月後までの日付のリストや、
-// ユーザが選択した商品で取り扱える支払い方法の選択肢を動的に作り出すなどが可能です。
-// 次のように対象フォームで設定した'name' と一致するように配列をセットしてください。
-/**
-window.botui.customChoice['フォームのname'] = [
-  { label: '選択肢1', value: '1' },
-  { label: '選択肢2', value: '2' },
-  { label: '選択肢3', value: '3' },
-]
-*/
-`
 
 export const FormPushEditForm: FC<RelayerEditFormProps> = ({
   proposal,
@@ -95,6 +68,7 @@ export const FormPushEditForm: FC<RelayerEditFormProps> = ({
       mutators={{ ...arrayMutators }}
       onSubmit={submitter}
       render={() => <FormPushEditFormInner />}
+      destroyOnUnregister
     />
   )
 }
@@ -161,7 +135,7 @@ const FormPushEditFormInner: FC = () => {
           />
           <BooleanInput
             source="custom"
-            label="カスタム値を採用"
+            label="カスタム値を使用"
             defaultValue={false}
           />
           <FormDataConsumer>
@@ -184,10 +158,10 @@ const FormPushEditFormInner: FC = () => {
                   <Typography variant="subtitle2" color="textSecondary">
                     カスタム値
                   </Typography>
+                  <FormPushCustomValueHelp />
                   <Field
                     name={getSource?.('customValueScript') ?? ''}
                     component={JavascriptEditor}
-                    defaultValue={converterInitialValue}
                     maxLines={10}
                     minLines={5}
                   />
@@ -204,10 +178,10 @@ const FormPushEditFormInner: FC = () => {
               <Typography variant="subtitle2" color="textSecondary">
                 フォーム送信後スクリプト
               </Typography>
+              <FormPushResultHelp />
               <Field
                 name="data.onSubmit"
                 component={JavascriptEditor}
-                defaultValue={conditionOfCompleteInitialValue}
                 minLines={10}
               />
             </>
@@ -218,18 +192,3 @@ const FormPushEditFormInner: FC = () => {
     </>
   )
 }
-
-const converterInitialValue = `// JavaScriptで記載してください。
-// values にユーザの入力値が格納されています。
-// 値は return で返却してください
-
-// 誕生日を連結する例
-return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay
-`
-
-const conditionOfCompleteInitialValue = `// JavaScriptで記載してください。
-// response にフォームの送信結果レスポンスが格納されています。
-
-// フォーム送信フォのページに遷移する例
-window.location.href = response.url
-`
