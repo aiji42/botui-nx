@@ -10,7 +10,7 @@ import {
 import { ProposalCloser } from '@botui/types'
 import { Form, Field, useForm } from 'react-final-form'
 import { SaveButton } from './SaveButton'
-import { Typography, makeStyles } from '@material-ui/core'
+import {Typography, makeStyles, Box} from '@material-ui/core';
 import { NameKeySelector } from './NameKeySelector'
 import arrayMutators from 'final-form-arrays'
 import JavascriptEditor from '../../../parts/JavascriptEditor'
@@ -35,6 +35,12 @@ export const NoJobOnCloseEditForm: FC<CloserEditFormProps> = ({
 const NoJobEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">チャットの終了</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Typography variant="body2" color="textSecondary">
+          通知をオンにすると、ユーザの入力情報を通知先のメールアドレスに送信できます。メールアドレスは「概要」から変更可能です。
+        </Typography>
+      </Box>
       <BooleanInput source="data.notify" label="メールで通知する" />
       <SaveButton />
     </>
@@ -56,6 +62,20 @@ export const StoreOnCloseEditForm: FC<CloserEditFormProps> = ({
 const StoreEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">チャットの終了: データベースへ保存</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            ユーザの入力情報をデータベースに保存します。
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="textSecondary">
+          チャットの終了と同時にユーザの入力情報を保存することが可能です。保存されたデータは管理サイトの「エントリー」から確認ができます。
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          通知をオンにすると、ユーザの入力情報を通知先のメールアドレスに送信できます。メールアドレスは「概要」から変更可能です。
+        </Typography>
+      </Box>
       <BooleanInput source="data.notify" label="メールで通知する" />
       <SaveButton />
     </>
@@ -77,6 +97,17 @@ export const CustomScriptOnCloseEditForm: FC<CloserEditFormProps> = ({
 const CustomScriptEditFormInner: FC = () => {
   return (
     <>
+      <Typography variant="h5">チャットの終了: カスタムスクリプト</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            バックグラウンドでJavascriptを実行できます。
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="textSecondary">
+          通知をオンにすると、ユーザの入力情報を通知先のメールアドレスに送信できます。メールアドレスは「概要」から変更可能です。
+        </Typography>
+      </Box>
       <BooleanInput source="data.notify" label="メールで通知する" />
       <Field
         name="data.script"
@@ -156,6 +187,20 @@ const FormPushEditFormInner: FC = () => {
   )
   return (
     <>
+      <Typography variant="h5">チャットの終了: フォーム送信</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            フォームにデータを入力し代理送信することが可能です。
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="textSecondary">
+          ユーザの入力情報を既存のフォームにマッピングして、データを代理送信できます。カスタムスクリプトで事前にデータを加工したり補完できます。ただしフォームが存在しているページでチャットを起動している場合にのみ有効です。
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          通知をオンにすると、ユーザの入力情報を通知先のメールアドレスに送信できます。メールアドレスは「概要」から変更可能です。
+        </Typography>
+      </Box>
       <BooleanInput source="data.notify" label="メールで通知する" />
       <TextInput
         source="data.formSelector"
