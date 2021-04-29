@@ -232,7 +232,7 @@
             "assets": ["apps/admin/src/assets"],
             "styles": [],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
+            "webpackConfig": "apps/admin/webpack.config.js"
           },
           "configurations": {
             "production": {

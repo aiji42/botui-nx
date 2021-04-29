@@ -1,19 +1,17 @@
 import { FC, useCallback } from 'react'
 import { ListItem, ListItemIcon, Typography, Box } from '@material-ui/core'
-import {
-  Person,
-  Home,
-  Cake,
-  Phone,
-  AlternateEmail,
-  LibraryAddCheck,
-  List as ListIcon,
-  ShortText,
-  WrapText,
-  RadioButtonChecked,
-  TextFields,
-  Image as ImageIcon
-} from '@material-ui/icons'
+import TextFields from '@material-ui/icons/TextFields'
+import ImageIcon from '@material-ui/icons/Image'
+import Person from '@material-ui/icons/Person'
+import Home from '@material-ui/icons/Home'
+import Phone from '@material-ui/icons/Phone'
+import Cake from '@material-ui/icons/Cake'
+import AlternateEmail from '@material-ui/icons/AlternateEmail'
+import LibraryAddCheck from '@material-ui/icons/LibraryAddCheck'
+import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked'
+import ListIcon from '@material-ui/icons/List'
+import ShortText from '@material-ui/icons/ShortText'
+import WrapText from '@material-ui/icons/WrapText'
 import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'

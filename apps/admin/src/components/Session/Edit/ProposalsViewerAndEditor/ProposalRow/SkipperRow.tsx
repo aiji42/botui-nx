@@ -1,11 +1,11 @@
-import { Proposal, Proposals, ProposalSkipper } from '@botui/types'
+import { Proposals, ProposalSkipper } from '@botui/types'
 import { FC, Fragment } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { DeleteTool, EdgeTool } from './Tools'
 import { SkipperEditForm } from '../PoposalForm/SkipperEditForm'
-import { CallSplitTwoTone } from '@material-ui/icons'
+import CallSplitTwoTone from '@material-ui/icons/CallSplitTwoTone'
 import {
   Typography,
   Box,

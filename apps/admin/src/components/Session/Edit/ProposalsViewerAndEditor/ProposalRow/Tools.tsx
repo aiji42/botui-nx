@@ -1,11 +1,9 @@
 import { FC, AllHTMLAttributes } from 'react'
 import { IconButton, Box } from '@material-ui/core'
-import {
-  DoubleArrow,
-  ImportExport,
-  AddCircle,
-  Cancel
-} from '@material-ui/icons'
+import DoubleArrow from '@material-ui/icons/DoubleArrow'
+import ImportExport from '@material-ui/icons/ImportExport'
+import AddCircle from '@material-ui/icons/AddCircle'
+import Cancel from '@material-ui/icons/Cancel'
 
 interface EdgeToolProps extends AllHTMLAttributes<HTMLDivElement> {
   onClickSwitch?: () => void

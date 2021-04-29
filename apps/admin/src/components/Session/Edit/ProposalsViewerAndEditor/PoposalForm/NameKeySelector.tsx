@@ -1,6 +1,6 @@
 import { FC, useState, MouseEvent, useCallback } from 'react'
 import { Menu, MenuItem, Fab, FabProps } from '@material-ui/core'
-import { Add } from '@material-ui/icons'
+import Add from '@material-ui/icons/Add'
 
 interface NameKeySelectorProps extends Partial<FabProps> {
   onSelected: (val: string) => void

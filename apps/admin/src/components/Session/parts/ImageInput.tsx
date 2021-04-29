@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { InputProps, TextFieldProps, Labeled, Identifier } from 'react-admin'
 import { Grid, makeStyles, Button, Typography } from '@material-ui/core'
-import { Add as AddIcon } from '@material-ui/icons'
+import AddIcon from '@material-ui/icons/Add'
 import { useForm, useField, Field } from 'react-final-form'
 import { DropzoneDialog } from 'material-ui-dropzone'
 import { v4 as uuidv4 } from 'uuid'

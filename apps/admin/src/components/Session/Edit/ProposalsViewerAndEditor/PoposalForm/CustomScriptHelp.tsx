@@ -5,7 +5,7 @@ import {
   AccordionSummary,
   AccordionDetails
 } from '@material-ui/core'
-import { ExpandMore } from '@material-ui/icons'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 import { FC } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'

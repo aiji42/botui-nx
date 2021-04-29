@@ -4,7 +4,7 @@ import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { DeleteTool, EdgeTool } from './Tools'
-import { CheckCircle } from '@material-ui/icons'
+import CheckCircle from '@material-ui/icons/CheckCircle'
 import { Typography, ListItem, ListItemIcon, Box } from '@material-ui/core'
 import {
   CustomScriptOnCloseEditForm,
