@@ -14,14 +14,7 @@ const SessionFormInner: FC = () => {
     <Grid container spacing={1}>
       <Grid item xs={6}>
         <BooleanInput
-          label={
-            <>
-              自動即時起動
-              <Tooltip title="対象ページへのアクセスと同時にチャットを立ち上げます。">
-                <HelpOutline fontSize="small" />
-              </Tooltip>
-            </>
-          }
+          label="自動即時起動"
           helperText="こちらの値を変更した場合には、起動スクリプトの再設定をお願いします。"
           source="launcher.defaultOpen"
           resource="sessions"

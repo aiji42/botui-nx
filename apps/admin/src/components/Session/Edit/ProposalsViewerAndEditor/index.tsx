@@ -1,108 +1,62 @@
-import { FC, useCallback, useEffect, useReducer, useState } from 'react'
-import { Proposal, Session } from '@botui/types'
-import { useForm, useFormState, Field } from 'react-final-form'
-import ProposalsTimeLine from './ProposalsTimeLine'
-import ProposalEditDialog from './ProposalEditDialog'
-import reducer, { ActionType, EditingProposalAction } from './reducer'
-import {
-  closerTemplate,
-  relayerTemplate,
-  skipperTemplate,
-  stringMessageTemplate
-} from '../../Create/proposalTemplates'
+import { FC } from 'react'
+import { Field } from 'react-final-form'
+import { Grid } from '@material-ui/core'
+import { MessageRow } from './ProposalRow/MessageRow'
+import { RelayerRow } from './ProposalRow/RelayRow'
+import { SkipperRow } from './ProposalRow/SkipperRow'
+import { CloserRow } from './ProposalRow/CloserRow'
+import { useProposalsEditor } from './dependencies'
 
-const initialProposal = (type: Proposal['type']): Proposal => {
-  if (type === 'message') return stringMessageTemplate('')
-  if (type === 'relayer') return relayerTemplate({ job: 'script', script: '' })
-  if (type === 'closer')
-    return closerTemplate({ job: 'script', script: '', notify: true })
-  return skipperTemplate({
-    conditions: [{ key: '', operator: 'eq', pattern: '', negative: false }],
-    skipNumber: 1,
-    logic: 'and'
-  })
-}
-
-const ProposalViewerAndEditor: FC = () => {
-  const {
-    values: { proposals }
-  } = useFormState<Session>()
-  const { change } = useForm()
-  const [newProposals, dispatch] = useReducer(reducer, proposals)
-  const [nextAction, setNextAction] = useState<
-    Omit<EditingProposalAction, 'newProposal'>
-  >({ type: ActionType.ACTION_EDIT, index: -1 })
-  useEffect(() => {
-    change('proposals', newProposals)
-  }, [newProposals, change])
-  const [insertingProposalType, setInsertingProposalType] = useState<
-    Proposal['type']
-  >('message')
-  const [editProposalDialogOpen, setEditProposalDialogOpen] = useState<boolean>(
-    false
-  )
-  const handleDelete = useCallback(
-    (index: number) => {
-      dispatch({
-        type: ActionType.ACTION_DELETE,
-        index,
-        newProposal: initialProposal('message')
-      })
-    },
-    [dispatch]
-  )
-  const handleEdit = useCallback(
-    (index: number) => {
-      setNextAction({ type: ActionType.ACTION_EDIT, index })
-      setEditProposalDialogOpen(true)
-    },
-    [setNextAction, setEditProposalDialogOpen]
-  )
-  const handleInsert = useCallback(
-    (index: number, proposalType: Proposal['type']) => {
-      setNextAction({ type: ActionType.ACTION_INSERT, index })
-      setInsertingProposalType(proposalType)
-      setEditProposalDialogOpen(true)
-    },
-    [setNextAction, setEditProposalDialogOpen]
-  )
-  const handleProposalSave = useCallback(
-    (newProposal: Proposal) => {
-      dispatch({ ...nextAction, newProposal })
-      setEditProposalDialogOpen(false)
-    },
-    [dispatch, nextAction, setEditProposalDialogOpen]
-  )
-
+const ProposalsViewerAndEditor: FC = () => {
+  const [proposals] = useProposalsEditor()
   return (
-    <>
-      <ProposalsTimeLine
-        editing={
-          editProposalDialogOpen && nextAction.type === ActionType.ACTION_EDIT
-        }
-        inserting={
-          editProposalDialogOpen && nextAction.type === ActionType.ACTION_INSERT
-        }
-        editingIndex={nextAction.index}
-        proposals={proposals}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        handleInsert={handleInsert}
-      />
-      {/* ???? */}
+    <Grid container>
+      {/* hidden みたいなもの。この行がないと useForm だけでは変更が伝搬しない */}
       <Field name="proposals">{() => null}</Field>
-      <ProposalEditDialog
-        proposal={
-          nextAction.type === ActionType.ACTION_EDIT
-            ? proposals[nextAction.index]
-            : initialProposal(insertingProposalType)
-        }
-        handleClose={() => setEditProposalDialogOpen(false)}
-        handleSave={handleProposalSave}
-        open={editProposalDialogOpen}
-      />
-    </>
+      <Grid container item xs={12} lg={8}>
+        {proposals.map((proposal, index) => {
+          if (proposal.type === 'message')
+            return (
+              <MessageRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                proposal={proposal}
+                key={proposal.id}
+              />
+            )
+          if (proposal.type === 'relayer')
+            return (
+              <RelayerRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                key={proposal.id}
+                proposal={proposal}
+              />
+            )
+          if (proposal.type === 'skipper')
+            return (
+              <SkipperRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                key={proposal.id}
+                proposal={proposal}
+              />
+            )
+          if (proposal.type === 'closer')
+            return (
+              <CloserRow
+                isFirst={index === 0}
+                isLast={proposals.length === index + 1}
+                key={proposal.id}
+                proposal={proposal}
+              />
+            )
+          return null
+        })}
+      </Grid>
+      <Grid container item xs={false} lg={4} />
+    </Grid>
   )
 }
 
-export default ProposalViewerAndEditor
+export default ProposalsViewerAndEditor

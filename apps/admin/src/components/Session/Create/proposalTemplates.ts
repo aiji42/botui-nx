@@ -78,6 +78,32 @@ export const stringMessageTemplate = (
   }
 }
 
+export const imageMessageTemplate = (
+  imgKey?: string,
+  delay = 500,
+  human = false
+): ProposalMessage => {
+  const id = uuidv4()
+  return {
+    id,
+    type: 'message',
+    completed: false,
+    data: {
+      id,
+      content: {
+        delay,
+        type: 'image',
+        props: {
+          imgKey
+        }
+      },
+      human,
+      completed: false,
+      updated: false
+    }
+  }
+}
+
 const noop = () => {
   // no op
 }
