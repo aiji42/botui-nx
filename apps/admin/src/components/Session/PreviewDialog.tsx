@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react'
 import { Dialog, DialogContent, makeStyles, Button } from '@material-ui/core'
-import { Visibility } from '@material-ui/icons'
+import Visibility from '@material-ui/icons/Visibility'
 import { Session } from '@botui/types'
 import { ChatControllerClient } from '@botui/chat-controller'
 

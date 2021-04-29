@@ -7,7 +7,7 @@ import {
   CircularProgress,
   makeStyles
 } from '@material-ui/core'
-import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 const useStyles = makeStyles((theme) => ({
   form: {

@@ -6,24 +6,22 @@ import {
   ListItemText,
   ListSubheader
 } from '@material-ui/core'
-import {
-  TextFields,
-  Image,
-  Person,
-  Home,
-  Phone,
-  Cake,
-  AlternateEmail,
-  LibraryAddCheck,
-  RadioButtonChecked,
-  List as ListIcon,
-  CallSplit,
-  Code,
-  FlashOn,
-  ShortText,
-  WrapText,
-  CheckCircle
-} from '@material-ui/icons'
+import TextFields from '@material-ui/icons/TextFields'
+import Image from '@material-ui/icons/Image'
+import Person from '@material-ui/icons/Person'
+import Home from '@material-ui/icons/Home'
+import Phone from '@material-ui/icons/Phone'
+import Cake from '@material-ui/icons/Cake'
+import AlternateEmail from '@material-ui/icons/AlternateEmail'
+import LibraryAddCheck from '@material-ui/icons/LibraryAddCheck'
+import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked'
+import ListIcon from '@material-ui/icons/List'
+import CallSplit from '@material-ui/icons/CallSplit'
+import Code from '@material-ui/icons/Code'
+import FlashOn from '@material-ui/icons/FlashOn'
+import ShortText from '@material-ui/icons/ShortText'
+import WrapText from '@material-ui/icons/WrapText'
+import CheckCircle from '@material-ui/icons/CheckCircle'
 import { FC, useEffect, useState } from 'react'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import {

@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { Grid } from '@material-ui/core'
 import { BooleanInput, CheckboxGroupInput } from 'react-admin'
-import { Tooltip } from '@material-ui/core'
-import { HelpOutline } from '@material-ui/icons'
 
 const scripts = [
   { id: 'https://unpkg.com/dayjs/dayjs.min.js', name: 'dayjs' },

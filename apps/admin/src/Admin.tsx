@@ -3,10 +3,8 @@ import { buildAuthProvider } from 'react-admin-amplify'
 import { Resource, Admin as ReactAdmin } from 'react-admin'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
-import {
-  AssignmentOutlined as AssignmentIcon,
-  ChatBubbleOutline as ChatBubbleIcon
-} from '@material-ui/icons'
+import AssignmentIcon from '@material-ui/icons/AssignmentOutlined'
+import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutline'
 import {
   Login,
   SessionList,

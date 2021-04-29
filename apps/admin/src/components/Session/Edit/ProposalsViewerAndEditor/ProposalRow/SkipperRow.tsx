@@ -1,11 +1,11 @@
-import { Proposal, Proposals, ProposalSkipper } from '@botui/types'
+import { Proposals, ProposalSkipper } from '@botui/types'
 import { FC, Fragment } from 'react'
 import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { DeleteTool, EdgeTool } from './Tools'
 import { SkipperEditForm } from '../PoposalForm/SkipperEditForm'
-import { CallSplitTwoTone } from '@material-ui/icons'
+import CallSplitTwoTone from '@material-ui/icons/CallSplitTwoTone'
 import {
   Typography,
   Box,
@@ -24,11 +24,7 @@ interface SkipperRowProps {
   proposal: ProposalSkipper
 }
 
-export const SkipperRow: FC<SkipperRowProps> = ({
-  isFirst,
-  isLast,
-  proposal
-}) => {
+const SkipperRow: FC<SkipperRowProps> = ({ isFirst, isLast, proposal }) => {
   const [status, helper] = useProposalRow<ProposalSkipper>(proposal)
   const [proposals] = useProposalsEditor()
 
@@ -102,6 +98,8 @@ export const SkipperRow: FC<SkipperRowProps> = ({
     </>
   )
 }
+
+export default SkipperRow
 
 const getSkipTo = (proposal: ProposalSkipper, proposals: Proposals) => {
   const index = proposals.findIndex(({ id }) => id === proposal.id)

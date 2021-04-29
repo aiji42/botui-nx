@@ -4,7 +4,7 @@ import { SingleColumnRow } from './SingleColumnRow'
 import { SingleColumn } from './SingleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import { DeleteTool, EdgeTool } from './Tools'
-import { CheckCircle } from '@material-ui/icons'
+import CheckCircle from '@material-ui/icons/CheckCircle'
 import { Typography, ListItem, ListItemIcon, Box } from '@material-ui/core'
 import {
   CustomScriptOnCloseEditForm,
@@ -22,11 +22,7 @@ interface CloserRowProps {
   proposal: ProposalCloser
 }
 
-export const CloserRow: FC<CloserRowProps> = ({
-  proposal,
-  isFirst,
-  isLast
-}) => {
+const CloserRow: FC<CloserRowProps> = ({ proposal, isFirst, isLast }) => {
   const [status, helper] = useProposalRow<ProposalCloser>(proposal)
   const [proposals] = useProposalsEditor()
 
@@ -108,6 +104,8 @@ export const CloserRow: FC<CloserRowProps> = ({
     </>
   )
 }
+
+export default CloserRow
 
 const isLastCloser = (proposal: ProposalCloser, proposals: Proposals) => {
   const index = proposals.findIndex(({ id }) => id === proposal.id)

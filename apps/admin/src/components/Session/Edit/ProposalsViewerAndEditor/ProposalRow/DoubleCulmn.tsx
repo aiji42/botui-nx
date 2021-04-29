@@ -1,5 +1,5 @@
 import { Grid, Paper, Box, IconButton, makeStyles } from '@material-ui/core'
-import { Cancel } from '@material-ui/icons'
+import Cancel from '@material-ui/icons/Cancel'
 import { FC, ReactNode, useState } from 'react'
 
 const useStyle = makeStyles((theme) => ({

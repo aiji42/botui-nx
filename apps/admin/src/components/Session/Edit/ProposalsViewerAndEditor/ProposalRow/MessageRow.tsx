@@ -1,19 +1,17 @@
 import { FC, useCallback } from 'react'
 import { ListItem, ListItemIcon, Typography, Box } from '@material-ui/core'
-import {
-  Person,
-  Home,
-  Cake,
-  Phone,
-  AlternateEmail,
-  LibraryAddCheck,
-  List as ListIcon,
-  ShortText,
-  WrapText,
-  RadioButtonChecked,
-  TextFields,
-  Image as ImageIcon
-} from '@material-ui/icons'
+import TextFields from '@material-ui/icons/TextFields'
+import ImageIcon from '@material-ui/icons/Image'
+import Person from '@material-ui/icons/Person'
+import Home from '@material-ui/icons/Home'
+import Phone from '@material-ui/icons/Phone'
+import Cake from '@material-ui/icons/Cake'
+import AlternateEmail from '@material-ui/icons/AlternateEmail'
+import LibraryAddCheck from '@material-ui/icons/LibraryAddCheck'
+import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked'
+import ListIcon from '@material-ui/icons/List'
+import ShortText from '@material-ui/icons/ShortText'
+import WrapText from '@material-ui/icons/WrapText'
 import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
@@ -37,17 +35,22 @@ import { MessageEditForm } from '../PoposalForm/MessageEditForm'
 import { useImageUrl } from '@botui/hooks'
 import { ImageEditForm } from '../PoposalForm/ImageEditForm'
 
+interface ImageProps {
+  imageKey: string
+}
+
+const Image: FC<ImageProps> = (props) => {
+  const src = useImageUrl(props.imageKey)
+  return <img src={src} alt="illustration" width="100%" height="auto" />
+}
+
 interface MessageRowProps {
   isFirst: boolean
   isLast: boolean
   proposal: ProposalMessage
 }
 
-export const MessageRow: FC<MessageRowProps> = ({
-  isFirst,
-  isLast,
-  proposal
-}) => {
+const MessageRow: FC<MessageRowProps> = ({ isFirst, isLast, proposal }) => {
   const [status, helper] = useProposalRow<ProposalMessage>(proposal)
   const switchSide = useCallback(() => {
     helper.update({
@@ -181,7 +184,10 @@ export const MessageRow: FC<MessageRowProps> = ({
           (proposal.data.content.props.type === 'FormName' ? (
             <FormNameEditForm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormAddress' ? (
-            <FormAddressEditFotm proposal={proposal} submitter={helper.complete} />
+            <FormAddressEditFotm
+              proposal={proposal}
+              submitter={helper.complete}
+            />
           ) : proposal.data.content.props.type === 'FormBirthDay' ? (
             <FormBirthDayEditForm
               proposal={proposal}
@@ -190,7 +196,10 @@ export const MessageRow: FC<MessageRowProps> = ({
           ) : proposal.data.content.props.type === 'FormTel' ? (
             <FormTelEditFotm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormEmail' ? (
-            <FormEmailEditFotm proposal={proposal} submitter={helper.complete} />
+            <FormEmailEditFotm
+              proposal={proposal}
+              submitter={helper.complete}
+            />
           ) : proposal.data.content.props.type === 'FormCustomRadioGroup' ? (
             <FormCustomRadioGroupEditForm
               proposal={proposal}
@@ -231,11 +240,4 @@ export const MessageRow: FC<MessageRowProps> = ({
   )
 }
 
-interface ImageProps {
-  imageKey: string
-}
-
-const Image: FC<ImageProps> = (props) => {
-  const src = useImageUrl(props.imageKey)
-  return <img src={src} alt="illustration" width="100%" height="auto" />
-}
+export default MessageRow

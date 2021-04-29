@@ -1,8 +1,13 @@
 import { FC, useState, useCallback } from 'react'
-import SyntaxHighlighter from 'react-syntax-highlighter'
-import { Dialog, DialogContent, Button, Typography } from '@material-ui/core'
-import { FileCopyOutlined } from '@material-ui/icons'
-import { Code } from '@material-ui/icons'
+import {
+  Dialog,
+  DialogContent,
+  Button,
+  Typography,
+  Box
+} from '@material-ui/core'
+import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined'
+import Code from '@material-ui/icons/Code'
 import { Session } from '@botui/types'
 import copy from 'copy-to-clipboard'
 import { useNotify } from 'react-admin'
@@ -33,9 +38,11 @@ const EmbeddedScriptDialog: FC<EmbeddedScriptDialogProps> = ({ session }) => {
           <Typography color="textSecondary">
             下記のコードをチャットを起動させたいページのHEADタグに埋め込んでください。
           </Typography>
-          <SyntaxHighlighter language="text">
-            {embeddedScript(session.id, session.launcher.defaultOpen)}
-          </SyntaxHighlighter>
+          <Box p={2}>
+            <Typography variant="body2" style={{ wordBreak: 'break-all' }}>
+              {embeddedScript(session.id, session.launcher.defaultOpen)}
+            </Typography>
+          </Box>
           <Button onClick={handleCopy}>
             <FileCopyOutlined />
             クリップボードにコピー
