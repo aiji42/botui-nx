@@ -1,5 +1,11 @@
 import { FC, useState, useCallback } from 'react'
-import { Dialog, DialogContent, Button, Typography, Box } from '@material-ui/core'
+import {
+  Dialog,
+  DialogContent,
+  Button,
+  Typography,
+  Box
+} from '@material-ui/core'
 import FileCopyOutlined from '@material-ui/icons/FileCopyOutlined'
 import Code from '@material-ui/icons/Code'
 import { Session } from '@botui/types'

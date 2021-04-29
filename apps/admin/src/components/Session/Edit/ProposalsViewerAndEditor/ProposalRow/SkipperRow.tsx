@@ -24,11 +24,7 @@ interface SkipperRowProps {
   proposal: ProposalSkipper
 }
 
-export const SkipperRow: FC<SkipperRowProps> = ({
-  isFirst,
-  isLast,
-  proposal
-}) => {
+const SkipperRow: FC<SkipperRowProps> = ({ isFirst, isLast, proposal }) => {
   const [status, helper] = useProposalRow<ProposalSkipper>(proposal)
   const [proposals] = useProposalsEditor()
 
@@ -102,6 +98,8 @@ export const SkipperRow: FC<SkipperRowProps> = ({
     </>
   )
 }
+
+export default SkipperRow
 
 const getSkipTo = (proposal: ProposalSkipper, proposals: Proposals) => {
   const index = proposals.findIndex(({ id }) => id === proposal.id)

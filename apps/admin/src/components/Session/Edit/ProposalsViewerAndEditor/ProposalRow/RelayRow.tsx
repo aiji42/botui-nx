@@ -20,11 +20,7 @@ interface RelayerRowProps {
   proposal: ProposalRelayer
 }
 
-export const RelayerRow: FC<RelayerRowProps> = ({
-  isFirst,
-  isLast,
-  proposal
-}) => {
+const RelayerRow: FC<RelayerRowProps> = ({ isFirst, isLast, proposal }) => {
   const [status, helper] = useProposalRow<ProposalRelayer>(proposal)
 
   return (
@@ -85,3 +81,5 @@ export const RelayerRow: FC<RelayerRowProps> = ({
     </>
   )
 }
+
+export default RelayerRow

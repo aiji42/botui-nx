@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, lazy, Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Paper,
@@ -9,17 +9,10 @@ import {
 import { customizedTheme } from '../../customizedTheme'
 import { makeStyles } from '@material-ui/core'
 import { EyeCatch } from './EyeCatch'
-import {
-  Mode,
-  useLoginContext,
-  LoginContextProvider
-} from './use-login-context'
-import { SignInForm } from './SignInForm'
-import { ForgotPasswordForm } from './ForgotPasswordForm'
-import { SignUpForm } from './SignUpForm'
-import { ConfirmSignUpForm } from './ConfirmSignUpForm'
-import { ResetPasswordForm } from './ResetPasswordForm'
+import { LoginContextProvider } from './use-login-context'
 import { useCheckAuth } from 'react-admin'
+
+const AuthForm = lazy(() => import('./AuthForm'))
 
 const theme = createMuiTheme({
   palette: {
@@ -34,7 +27,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export function Login() {
+export const Login: FC = () => {
   const classes = useStyles()
   const checkAuth = useCheckAuth()
   const history = useHistory()
@@ -48,28 +41,12 @@ export function Login() {
         </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <LoginContextProvider>
-            <AuthForm />
+            <Suspense fallback={null}>
+              <AuthForm />
+            </Suspense>
           </LoginContextProvider>
         </Grid>
       </Grid>
     </MuiThemeProvider>
-  )
-}
-
-const AuthForm: FC = () => {
-  const [{ mode, authSucceed }] = useLoginContext()
-  const history = useHistory()
-  useEffect(() => {
-    authSucceed && history.push('/')
-  }, [authSucceed, history])
-
-  return (
-    <>
-      {mode === Mode.SIGN_IN && <SignInForm />}
-      {mode === Mode.SIGN_UP && <SignUpForm />}
-      {mode === Mode.CONFIRM_SIGN_UP && <ConfirmSignUpForm />}
-      {mode === Mode.FORGOT_PASSWORD && <ForgotPasswordForm />}
-      {mode === Mode.RESET_PASSWORD && <ResetPasswordForm />}
-    </>
   )
 }

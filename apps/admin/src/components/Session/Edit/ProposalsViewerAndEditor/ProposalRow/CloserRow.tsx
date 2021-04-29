@@ -22,11 +22,7 @@ interface CloserRowProps {
   proposal: ProposalCloser
 }
 
-export const CloserRow: FC<CloserRowProps> = ({
-  proposal,
-  isFirst,
-  isLast
-}) => {
+const CloserRow: FC<CloserRowProps> = ({ proposal, isFirst, isLast }) => {
   const [status, helper] = useProposalRow<ProposalCloser>(proposal)
   const [proposals] = useProposalsEditor()
 
@@ -108,6 +104,8 @@ export const CloserRow: FC<CloserRowProps> = ({
     </>
   )
 }
+
+export default CloserRow
 
 const isLastCloser = (proposal: ProposalCloser, proposals: Proposals) => {
   const index = proposals.findIndex(({ id }) => id === proposal.id)
