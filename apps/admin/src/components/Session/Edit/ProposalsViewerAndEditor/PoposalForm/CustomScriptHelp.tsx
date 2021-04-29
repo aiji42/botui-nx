@@ -7,8 +7,11 @@ import {
 } from '@material-ui/core'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import { FC } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light'
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
+import monkai from 'react-syntax-highlighter/dist/esm/styles/hljs/monokai'
+
+SyntaxHighlighter.registerLanguage('javascript', js)
 
 export const CustomScriptHelp: FC = () => {
   return (
@@ -27,7 +30,7 @@ export const CustomScriptHelp: FC = () => {
               <br />
               各フォームの値名をキーとしてアクセスすることで取り出せます。
             </Typography>
-            <SyntaxHighlighter language="javascript" style={dark}>
+            <SyntaxHighlighter language="javascript" style={monkai}>
               {`console.log(values.familyName) // 姓
 console.log(values['自身で設定したカスタムインプットの名前'])`}
             </SyntaxHighlighter>
@@ -46,8 +49,10 @@ console.log(values['自身で設定したカスタムインプットの名前'])
               <code>Promise</code>
               を返却することで、サーバ通信などの非同期処理を同期的に取り扱えます。
             </Typography>
-            <SyntaxHighlighter language="javascript" style={dark}>
-              {`return new Promise((resolve) => setTimeout(resolve, 3000)) // 3秒待つ`}
+            <SyntaxHighlighter language="javascript" style={monkai}>
+              {`// 3秒待つ
+return new Promise((resolve) =>
+  setTimeout(resolve, 3000))`}
             </SyntaxHighlighter>
           </Box>
         </AccordionDetails>
@@ -69,7 +74,7 @@ console.log(values['自身で設定したカスタムインプットの名前'])
               <code>window.botui.customChoice</code>
               に対して、対象のフォーム名と一致する名前で選択肢オブジェクトの配列を代入してください。
             </Typography>
-            <SyntaxHighlighter language="javascript" style={dark}>
+            <SyntaxHighlighter language="javascript" style={monkai}>
               {`window.botui.customChoice['フォームのname'] = [
   { label: 'りんご', value: 'apple' },
   { label: 'オレンジ', value: 'orange' },
@@ -98,7 +103,7 @@ export const CustomValidationHelp: FC = () => {
             <br />
             1文字以上の文字列を返却するとエラーメッセージとしてフォームに表示され、確定ボタンの押下を無効にできます。文字列以外を返却すると、ユーザが確定ボタンを押下できるようになります。
           </Typography>
-          <SyntaxHighlighter language="javascript" style={dark}>
+          <SyntaxHighlighter language="javascript" style={monkai}>
             {`if (typeof value === 'string' && value.length < 10) {
   return '10文字以上で入力してください。'
 }
@@ -128,9 +133,9 @@ export const FormPushCustomValueHelp: FC = () => {
             <br />
             返却された値がカスタム値として使用されます。
           </Typography>
-          <SyntaxHighlighter language="javascript" style={dark}>
-            {`// 生年月日をハイフンで連結する例
-return values.birthdayYear + '-' + values.birthdayMonth + '-' + values.birthdayDay`}
+          <SyntaxHighlighter language="javascript" style={monkai}>
+            {`// 姓名を連結する例
+return values.familyName + values.firstName`}
           </SyntaxHighlighter>
         </Box>
       </AccordionDetails>
@@ -152,7 +157,7 @@ export const FormPushResultHelp: FC = () => {
             <code>response</code>
             にフォームの送信結果レスポンスが格納されています。
           </Typography>
-          <SyntaxHighlighter language="javascript" style={dark}>
+          <SyntaxHighlighter language="javascript" style={monkai}>
             {`// フォーム送信フォのページに遷移する例
 window.location.href = response.url`}
           </SyntaxHighlighter>
