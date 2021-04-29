@@ -1,4 +1,4 @@
-import { Preview } from './components'
+import { Preview } from './components/Preview'
 import { render } from 'react-dom'
 
 export const start = (url: string, defaultOpen = false) => {
