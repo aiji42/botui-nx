@@ -66,6 +66,63 @@ const FormNameEditFormInner: FC = () => {
   )
 }
 
+export const FormAddressEditFotm: FC<FormEditFormProps> = () => {
+  return (
+    <>
+      <Typography variant="h5">住所入力フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            ユーザの住所の入力を促すフォームです。
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="textSecondary">
+          郵便番号から自動的に住所を入力補完します。
+        </Typography>
+        <Typography variant="caption" color="textSecondary">
+          こちらのフォームは現在カスタム可能な項目がありません。
+        </Typography>
+      </Box>
+    </>
+  )
+}
+
+export const FormTelEditFotm: FC<FormEditFormProps> = () => {
+  return (
+    <>
+      <Typography variant="h5">電話番号入力フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            ユーザの電話番号の入力を促すフォームです。
+          </Typography>
+        </Box>
+        <Typography variant="caption" color="textSecondary">
+          こちらのフォームは現在カスタム可能な項目がありません。
+        </Typography>
+      </Box>
+    </>
+  )
+}
+
+export const FormEmailEditFotm: FC<FormEditFormProps> = () => {
+  return (
+    <>
+      <Typography variant="h5">メールアドレス入力フォーム</Typography>
+      <Box marginTop={2} marginBottom={4}>
+        <Box marginBottom={0.5}>
+          <Typography variant="body1">
+            ユーザのメールアドレスの入力を促すフォームです。
+          </Typography>
+        </Box>
+        <Typography variant="caption" color="textSecondary">
+          こちらのフォームは現在カスタム可能な項目がありません。
+        </Typography>
+      </Box>
+    </>
+  )
+}
+
 export const FormBirthDayEditForm: FC<FormEditFormProps> = ({
   proposal,
   submitter

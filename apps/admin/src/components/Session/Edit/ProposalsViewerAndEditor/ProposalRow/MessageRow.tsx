@@ -18,13 +18,16 @@ import { DoubleColumnRow } from './DoubleColumnRow'
 import { DoubleColumn } from './DoubleCulmn'
 import { ProposalDrawer } from '../ProposalDrawer/ProposalDrawer'
 import {
+  FormAddressEditFotm,
   FormBirthDayEditForm,
   FormCustomCheckboxEditForm,
   FormCustomInputEditForm,
   FormCustomRadioGroupEditForm,
   FormCustomSelectEditForm,
   FormCustomTextareaEditForm,
-  FormNameEditForm
+  FormEmailEditFotm,
+  FormNameEditForm,
+  FormTelEditFotm
 } from '../PoposalForm/FormEfitForm'
 import { ProposalMessage } from '@botui/types'
 import { DeleteTool, EdgeTool, LeftTool, RightTool } from './Tools'
@@ -178,16 +181,16 @@ export const MessageRow: FC<MessageRowProps> = ({
           (proposal.data.content.props.type === 'FormName' ? (
             <FormNameEditForm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormAddress' ? (
-            <FormNameEditForm proposal={proposal} submitter={helper.complete} />
+            <FormAddressEditFotm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormBirthDay' ? (
             <FormBirthDayEditForm
               proposal={proposal}
               submitter={helper.complete}
             />
           ) : proposal.data.content.props.type === 'FormTel' ? (
-            <FormNameEditForm proposal={proposal} submitter={helper.complete} />
+            <FormTelEditFotm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormEmail' ? (
-            <FormNameEditForm proposal={proposal} submitter={helper.complete} />
+            <FormEmailEditFotm proposal={proposal} submitter={helper.complete} />
           ) : proposal.data.content.props.type === 'FormCustomRadioGroup' ? (
             <FormCustomRadioGroupEditForm
               proposal={proposal}
