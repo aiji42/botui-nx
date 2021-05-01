@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { Grid, Box, makeStyles } from '@material-ui/core'
+import { FC, memo } from 'react'
+import { Grid, Box } from '@material-ui/core'
 import {
   RadioButtonGroupInput,
   FormDataConsumer,
@@ -13,13 +13,7 @@ import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
-
-const useStyles = makeStyles((theme) => ({
-  preview: {
-    height: theme.spacing(70),
-    width: theme.spacing(40)
-  }
-}))
+import { shallowEqualObjects } from 'shallow-equal'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -42,7 +36,6 @@ const sampleProposals = [
 ]
 
 const SessionFormInner: FC = () => {
-  const classes = useStyles()
   return (
     <Grid container spacing={1}>
       <Grid item xs={6}>
@@ -144,21 +137,7 @@ const SessionFormInner: FC = () => {
         <FormDataConsumer>
           {({ formData }) => (
             <Labeled label="プレビュー">
-              <div className={classes.preview}>
-                <iframe
-                  src={`${
-                    process.env.NX_PREVIEW_HOST
-                  }/session/preview?jsonedSession=${encodeURIComponent(
-                    JSON.stringify({
-                      ...(formData as Session),
-                      proposals: sampleProposals
-                    })
-                  )}`}
-                  title="プレビュー"
-                  width="100%"
-                  height="100%"
-                />
-              </div>
+              <MemolizedPreview session={formData} />
             </Labeled>
           )}
         </FormDataConsumer>
@@ -168,3 +147,35 @@ const SessionFormInner: FC = () => {
 }
 
 export default SessionFormInner
+
+interface PreviewProps {
+  session: Session
+}
+
+const Preview: FC<PreviewProps> = ({ session }) => {
+  console.log(session)
+  return (
+    <Box width={320} height={560}>
+      <iframe
+        src={`${
+          process.env.NX_PREVIEW_HOST
+        }/session/preview?jsonedSession=${encodeURIComponent(
+          JSON.stringify({
+            ...session,
+            proposals: sampleProposals
+          })
+        )}`}
+        title="プレビュー"
+        width="100%"
+        height="100%"
+      />
+    </Box>
+  )
+}
+
+const MemolizedPreview = memo(
+  Preview,
+  (next, prev) =>
+    shallowEqualObjects(next.session.theme, prev.session.theme) &&
+    shallowEqualObjects(next.session.images, prev.session.images)
+)
