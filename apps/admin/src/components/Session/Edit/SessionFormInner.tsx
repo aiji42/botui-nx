@@ -137,7 +137,7 @@ const SessionFormInner: FC = () => {
         <FormDataConsumer>
           {({ formData }) => (
             <Labeled label="プレビュー">
-              <MemolizedPreview session={formData} />
+              <MemorizedPreview session={formData} />
             </Labeled>
           )}
         </FormDataConsumer>
@@ -173,7 +173,7 @@ const Preview: FC<PreviewProps> = ({ session }) => {
   )
 }
 
-const MemolizedPreview = memo(
+const MemorizedPreview = memo(
   Preview,
   (next, prev) =>
     shallowEqualObjects(next.session.theme, prev.session.theme) &&
