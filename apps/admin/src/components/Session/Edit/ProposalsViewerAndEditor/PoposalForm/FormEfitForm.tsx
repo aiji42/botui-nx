@@ -15,6 +15,7 @@ import arrayMutators from 'final-form-arrays'
 import { SaveButton } from './SaveButton'
 import JavascriptEditor from '../../../parts/JavascriptEditor'
 import { CustomValidationHelp } from './CustomScriptHelp'
+import { useProposalValueNameValidator } from './dependencies'
 
 interface FormEditFormProps {
   proposal?: ProposalMessage
@@ -175,6 +176,7 @@ export const FormCustomRadioGroupEditForm: FC<FormEditFormProps> = ({
   )
 }
 export const FormCustomRadioGroupEditFormInner: FC = () => {
+  const nameValidator = useProposalValueNameValidator()
   return (
     <>
       <Typography variant="h5">ラジオボタン型回答フォーム</Typography>
@@ -191,7 +193,7 @@ export const FormCustomRadioGroupEditFormInner: FC = () => {
       <TextInput
         source="data.content.props.name"
         label="値名"
-        validate={[required()]}
+        validate={[required(), nameValidator]}
       />
       <ArrayInput
         source="data.content.props.inputs"
@@ -222,6 +224,8 @@ export const FormCustomCheckboxEditForm: FC<FormEditFormProps> = ({
   )
 }
 export const FormCustomCheckboxEditFormInner: FC = () => {
+  const nameValidator = useProposalValueNameValidator()
+
   return (
     <>
       <Typography variant="h5">チェックボックス型回答フォーム</Typography>
@@ -238,7 +242,7 @@ export const FormCustomCheckboxEditFormInner: FC = () => {
       <TextInput
         source="data.content.props.name"
         label="値名"
-        validate={[required()]}
+        validate={[required(), nameValidator]}
       />
       <BooleanInput
         source="data.content.props.required"
@@ -273,6 +277,8 @@ export const FormCustomSelectEditForm: FC<FormEditFormProps> = ({
   )
 }
 export const FormCustomSelectEditFormInner: FC = () => {
+  const nameValidator = useProposalValueNameValidator()
+
   return (
     <>
       <Typography variant="h5">セレクトボックス型回答フォーム</Typography>
@@ -292,7 +298,11 @@ export const FormCustomSelectEditFormInner: FC = () => {
         validate={[required()]}
       >
         <SimpleFormIterator>
-          <TextInput source="name" label="値名" validate={[required()]} />
+          <TextInput
+            source="name"
+            label="値名"
+            validate={[required(), nameValidator]}
+          />
           <TextInput source="title" label="タイトル" />
           <ArrayInput source="options" label="選択肢">
             <SimpleFormIterator>
@@ -322,6 +332,8 @@ export const FormCustomInputEditForm: FC<FormEditFormProps> = ({
   )
 }
 export const FormCustomInputEditFormInner: FC = () => {
+  const nameValidator = useProposalValueNameValidator()
+
   return (
     <>
       <Typography variant="h5">インプット型回答フォーム</Typography>
@@ -344,7 +356,11 @@ export const FormCustomInputEditFormInner: FC = () => {
         validate={[required()]}
       >
         <SimpleFormIterator>
-          <TextInput source="name" label="値名" validate={[required()]} />
+          <TextInput
+            source="name"
+            label="値名"
+            validate={[required(), nameValidator]}
+          />
           <SelectInput
             source="type"
             validate={[required()]}
@@ -400,6 +416,8 @@ export const FormCustomTextareaEditForm: FC<FormEditFormProps> = ({
   )
 }
 export const FormCustomTextareaEditFormInner: FC = () => {
+  const nameValidator = useProposalValueNameValidator()
+
   return (
     <>
       <Typography variant="h5">テキストエリア型回答フォーム</Typography>
@@ -419,7 +437,7 @@ export const FormCustomTextareaEditFormInner: FC = () => {
       <TextInput
         source="data.content.props.name"
         label="値名"
-        validate={[required()]}
+        validate={[required(), nameValidator]}
       />
       <TextInput source="data.content.props.title" label="タイトル" />
       <TextInput

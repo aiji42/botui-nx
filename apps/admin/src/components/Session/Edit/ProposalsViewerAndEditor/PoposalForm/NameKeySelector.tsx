@@ -18,6 +18,10 @@ import {
 } from '@material-ui/core'
 import Add from '@material-ui/icons/Add'
 import { useProposals } from '../ProposalRow/ProposalsContext'
+import {
+  useProposalCustomFormValueNames,
+  useProposalValueNames
+} from './dependencies'
 
 interface NameKeySelectorProps extends Partial<FabProps> {
   onSelected: (val: string) => void
@@ -87,60 +91,8 @@ const DefaultMenueItems = forwardRef<
   StyledComponentProps['innerRef'],
   DefaultMenueItemsProps
 >(({ onClick }, ref) => {
-  const proposals = useProposals()
-  const keys = useMemo(() => {
-    return proposals.reduce((res, proposal) => {
-      if (proposal.type !== 'message' || proposal.data.content.type !== 'form')
-        return res
-      if (proposal.data.content.props.type === 'FormName')
-        return [
-          ...res,
-          'familyName',
-          'firstName',
-          'familyNameKana',
-          'firstNameKana'
-        ]
-      if (proposal.data.content.props.type === 'FormAddress')
-        return [
-          ...res,
-          'postalCode',
-          'prefecture',
-          'prefectureId',
-          'city',
-          'street',
-          'building'
-        ]
-      if (proposal.data.content.props.type === 'FormTel') return [...res, 'tel']
-      if (proposal.data.content.props.type === 'FormEmail')
-        return [...res, 'email']
-      if (proposal.data.content.props.type === 'FormBirthDay')
-        return [...res, 'birthdayYear', 'birthdayMonth', 'birthdayDay']
-      return res
-    }, [])
-  }, [proposals])
-  const additionalKeys = useMemo(() => {
-    return proposals.reduce((res, proposal) => {
-      if (proposal.type !== 'message' || proposal.data.content.type !== 'form')
-        return res
-      if (proposal.data.content.props.type === 'FormCustomRadioGroup')
-        return [...res, proposal.data.content.props.name]
-      if (proposal.data.content.props.type === 'FormCustomCheckbox')
-        return [...res, proposal.data.content.props.name]
-      if (proposal.data.content.props.type === 'FormCustomSelect')
-        return [
-          ...res,
-          ...proposal.data.content.props.selects.map(({ name }) => name)
-        ]
-      if (proposal.data.content.props.type === 'FormCustomInput')
-        return [
-          ...res,
-          ...proposal.data.content.props.inputs.map(({ name }) => name)
-        ]
-      if (proposal.data.content.props.type === 'FormCustomTextarea')
-        return [...res, proposal.data.content.props.name]
-      return res
-    }, [])
-  }, [proposals])
+  const keys = useProposalValueNames()
+  const additionalKeys = useProposalCustomFormValueNames()
 
   return (
     <>
