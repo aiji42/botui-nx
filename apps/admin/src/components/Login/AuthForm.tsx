@@ -6,13 +6,20 @@ import { ForgotPasswordForm } from './ForgotPasswordForm'
 import { SignUpForm } from './SignUpForm'
 import { ConfirmSignUpForm } from './ConfirmSignUpForm'
 import { ResetPasswordForm } from './ResetPasswordForm'
+import { resetNotification } from 'react-admin'
+import { useDispatch } from 'react-redux'
 
 const AuthForm: FC = () => {
   const [{ mode, authSucceed }] = useLoginContext()
   const history = useHistory()
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    authSucceed && history.push('/')
-  }, [authSucceed, history])
+    if (authSucceed) {
+      dispatch(resetNotification())
+      history.push('/')
+    }
+  }, [authSucceed, dispatch, history])
 
   return (
     <>
