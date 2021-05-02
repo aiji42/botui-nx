@@ -1,7 +1,12 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { useInput, InputProps, TextFieldProps } from 'react-admin'
-import { Color, ColorPicker } from 'material-ui-color'
-import { TextField as TextInputMU, Box } from '@material-ui/core'
+import { ChromePicker, ColorResult } from 'react-color'
+import {
+  TextField as TextInputMU,
+  Box,
+  Paper,
+  ClickAwayListener
+} from '@material-ui/core'
 import { useForm } from 'react-final-form'
 
 const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
@@ -12,22 +17,25 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   } = useInput(props)
   const { change } = useForm()
   const handleChange = useCallback(
-    (color: Color) => {
-      change(name, `#${color.hex}`)
+    (color: ColorResult) => {
+      change(name, color.hex)
     },
     [change, name]
   )
+  const [open, setOpen] = useState(false)
+  const handleOepn = useCallback(() => setOpen(true), [])
+  const handleClose = useCallback(() => setOpen(false), [])
 
   return (
-    <Box display="flex" justifyContent="flex-start">
-      <Box marginRight={1}>
-        <ColorPicker
-          value={value}
-          hideTextfield
-          disableAlpha
-          onChange={handleChange}
-        />
-      </Box>
+    <Box display="flex" justifyContent="flex-start" position="relative">
+      <Box
+        component={Paper}
+        marginRight={1}
+        width={40}
+        height={40}
+        style={{ backgroundColor: value, cursor: 'pointer' }}
+        onClick={handleOepn}
+      />
       <TextInputMU
         name={name}
         label={props.label}
@@ -38,6 +46,13 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
         value={value}
         {...rest}
       />
+      {open && (
+        <Box position="absolute" zIndex={1}>
+          <ClickAwayListener onClickAway={handleClose}>
+            <ChromePicker color={value} onChangeComplete={handleChange} />
+          </ClickAwayListener>
+        </Box>
+      )}
     </Box>
   )
 }
