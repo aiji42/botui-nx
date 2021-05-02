@@ -1,14 +1,22 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { useInput, InputProps, TextFieldProps } from 'react-admin'
-import { Color, ColorPicker } from 'material-ui-color'
-import { TextField as TextInputMU, Box } from '@material-ui/core'
+import { ChromePicker, ColorResult } from 'react-color'
+import {
+  TextField as TextInputMU,
+  Box,
+  Paper,
+  ClickAwayListener
+} from '@material-ui/core'
 import { useForm } from 'react-final-form'
-import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles'
+import {
+  StylesProvider,
+  createGenerateClassName
+} from '@material-ui/core/styles'
 
 // https://github.com/mikbry/material-ui-color/pull/142
 // https://github.com/mikbry/material-ui-color/pull/142/file
 const generateClassName = createGenerateClassName({
-  seed: 'ColorPicker',
+  seed: 'ColorPicker'
 })
 
 const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
@@ -19,35 +27,45 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   } = useInput(props)
   const { change } = useForm()
   const handleChange = useCallback(
-    (color: Color) => {
-      change(name, `#${color.hex}`)
+    (color: ColorResult) => {
+      change(name, color.hex)
     },
     [change, name]
   )
+  const [open, setOpen] = useState(false)
+  const handleOepn = useCallback(() => setOpen(true), [])
+  const handleClose = useCallback(() => setOpen(false), [])
 
   return (
-    <Box display="flex" justifyContent="flex-start">
-      <Box marginRight={1}>
-        <StylesProvider generateClassName={generateClassName}>
-          <ColorPicker
-            value={value}
-            hideTextfield
-            disableAlpha
-            onChange={handleChange}
-          />
-        </StylesProvider>
+    <StylesProvider generateClassName={generateClassName}>
+      <Box display="flex" justifyContent="flex-start" position="relative">
+        <Box
+          component={Paper}
+          marginRight={1}
+          width={40}
+          height={40}
+          style={{ backgroundColor: value, cursor: 'pointer' }}
+          onClick={handleOepn}
+        />
+        <TextInputMU
+          name={name}
+          label={props.label}
+          onChange={onChange}
+          error={!!(touched && error)}
+          helperText={touched && error ? error : ' '}
+          required={isRequired}
+          value={value}
+          {...rest}
+        />
+        {open && (
+          <Box position="absolute" zIndex={1}>
+            <ClickAwayListener onClickAway={handleClose}>
+              <ChromePicker color={value} onChangeComplete={handleChange} />
+            </ClickAwayListener>
+          </Box>
+        )}
       </Box>
-      <TextInputMU
-        name={name}
-        label={props.label}
-        onChange={onChange}
-        error={!!(touched && error)}
-        helperText={touched && error ? error : ' '}
-        required={isRequired}
-        value={value}
-        {...rest}
-      />
-    </Box>
+    </StylesProvider>
   )
 }
 
