@@ -3,6 +3,13 @@ import { useInput, InputProps, TextFieldProps } from 'react-admin'
 import { Color, ColorPicker } from 'material-ui-color'
 import { TextField as TextInputMU, Box } from '@material-ui/core'
 import { useForm } from 'react-final-form'
+import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles'
+
+// https://github.com/mikbry/material-ui-color/pull/142
+// https://github.com/mikbry/material-ui-color/pull/142/file
+const generateClassName = createGenerateClassName({
+  seed: 'ColorPicker',
+})
 
 const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   const {
@@ -21,12 +28,14 @@ const ColorInput: FC<InputProps<TextFieldProps>> = (props) => {
   return (
     <Box display="flex" justifyContent="flex-start">
       <Box marginRight={1}>
-        <ColorPicker
-          value={value}
-          hideTextfield
-          disableAlpha
-          onChange={handleChange}
-        />
+        <StylesProvider generateClassName={generateClassName}>
+          <ColorPicker
+            value={value}
+            hideTextfield
+            disableAlpha
+            onChange={handleChange}
+          />
+        </StylesProvider>
       </Box>
       <TextInputMU
         name={name}
