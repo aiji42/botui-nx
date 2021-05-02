@@ -304,7 +304,7 @@ export const FormCustomSelectEditFormInner: FC = () => {
             validate={[required(), nameValidator]}
           />
           <TextInput source="title" label="タイトル" />
-          <ArrayInput source="options" label="選択肢">
+          <ArrayInput source="options" label="選択肢" validate={[required()]}>
             <SimpleFormIterator>
               <TextInput source="label" label="ラベル" />
               <TextInput source="value" label="値" validate={[required()]} />
