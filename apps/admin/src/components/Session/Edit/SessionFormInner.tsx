@@ -38,7 +38,7 @@ const sampleProposals = [
 const SessionFormInner: FC = () => {
   return (
     <Grid container spacing={1}>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Box p={2}>
           <TextInput
             label="タイトル"
@@ -54,8 +54,8 @@ const SessionFormInner: FC = () => {
           />
         </Box>
       </Grid>
-      <Grid item xs={6} />
-      <Grid item xs={6}>
+      <Grid item xs={false} md={6} />
+      <Grid item xs={12} sm={6}>
         <Box p={2}>
           <ColorInput
             source="theme.header.backgroundColor"
@@ -133,7 +133,7 @@ const SessionFormInner: FC = () => {
           />
         </Box>
       </Grid>
-      <Grid item xs={false}>
+      <Grid item xs={12} sm={6}>
         <FormDataConsumer>
           {({ formData }) => (
             <Labeled label="プレビュー">
