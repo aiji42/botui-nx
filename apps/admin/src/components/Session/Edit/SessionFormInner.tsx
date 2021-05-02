@@ -153,7 +153,6 @@ interface PreviewProps {
 }
 
 const Preview: FC<PreviewProps> = ({ session }) => {
-  console.log(session)
   return (
     <Box width={320} height={560}>
       <iframe
