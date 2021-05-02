@@ -10677,11 +10677,6 @@ material-colors@^1.2.1:
   resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
   integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
-material-ui-color@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/material-ui-color/-/material-ui-color-1.1.0.tgz#e88f9deca2da32bd2fb736b00d6a4ac243bf739b"
-  integrity sha512-kpqz64/4/37hipka6CtFFYD9NkXmmdvKKoK3qz7b+HyIump81ucZ5m7OJaoQ3Y/wxrBG0O4c54g5xnY0IKXsgQ==
-
 material-ui-dropzone@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/material-ui-dropzone/-/material-ui-dropzone-3.5.0.tgz#2d7f36032db96c24ce97b42e4d0053f94e91a9fc"

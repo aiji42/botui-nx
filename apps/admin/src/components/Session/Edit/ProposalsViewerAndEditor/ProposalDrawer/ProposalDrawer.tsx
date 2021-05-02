@@ -1,17 +1,22 @@
-import { Drawer, makeStyles, Box } from '@material-ui/core'
+import {
+  Drawer,
+  makeStyles,
+  Box,
+  IconButton,
+  useTheme,
+  useMediaQuery
+} from '@material-ui/core'
+import Clear from '@material-ui/icons/Clear'
 import { FC } from 'react'
 
 const useStyle = makeStyles((theme) => ({
   drawer: {
-    minWidth: theme.spacing(50),
     maxWidth: theme.spacing(100),
     width: '70%',
     height: '100%'
   },
-  drawerPaper: {
-    minWidth: theme.spacing(50),
-    maxWidth: theme.spacing(100),
-    width: '70%',
+  narrowDrawer: {
+    width: '100%',
     height: '100%'
   },
   inner: {
@@ -31,16 +36,23 @@ export const ProposalDrawer: FC<ProposalDrawerProps> = ({
   ...props
 }) => {
   const classes = useStyle()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <Drawer
       anchor="right"
       {...props}
-      className={classes.drawer}
-      classes={{
-        paper: classes.drawerPaper
-      }}
+      classes={{ paper: matches ? classes.drawer : classes.narrowDrawer }}
     >
-      <Box className={padding ? classes.inner : ''}>{children}</Box>
+      <Box className={padding ? classes.inner : ''} position="relative">
+        <Box position="absolute" top={0} right={0}>
+          <IconButton onClick={props.onClose}>
+            <Clear />
+          </IconButton>
+        </Box>
+        {children}
+      </Box>
     </Drawer>
   )
 }
