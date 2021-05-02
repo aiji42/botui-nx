@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, memo, useEffect, useRef } from 'react'
 import {
   MessageContextProvider,
   ProposalContextProvider,
@@ -11,6 +11,7 @@ import { Message } from './Message'
 import {
   ProposalCloser,
   ProposalRelayer,
+  Proposals,
   ProposalSkipper,
   Skipper,
   SkipperCondition,
@@ -33,6 +34,10 @@ const style = {
 export const Body: FC = () => {
   const { proposals } = useChatControllerServer()
 
+  return <BodyInnerMemorized proposals={proposals} />
+}
+
+const BodyInner: FC<{ proposals: Proposals }> = ({ proposals }) => {
   return (
     <div css={style.root}>
       {proposals.map((proposal) => (
@@ -55,6 +60,8 @@ export const Body: FC = () => {
     </div>
   )
 }
+
+const BodyInnerMemorized = memo(BodyInner)
 
 const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatControllerServer()
