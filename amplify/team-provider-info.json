@@ -17,12 +17,6 @@
         "botui": {
           "googleClientId": "676309030528-4ch5j57cbje5a3tkcsslh1r6iilts7ul.apps.googleusercontent.com"
         }
-      },
-      "function": {
-        "notify": {
-          "deploymentBucketName": "amplify-botui-production-185011-deployment",
-          "s3Key": "amplify-builds/notify-2b6669744a434e783850-build.zip"
-        }
       }
     }
   },
@@ -43,12 +37,6 @@
         "userPoolGroups": {},
         "botui": {
           "googleClientId": "676309030528-1p971giko85dl3a1k192l3fu7l86fu4v.apps.googleusercontent.com"
-        }
-      },
-      "function": {
-        "notify": {
-          "deploymentBucketName": "amplify-botui-dev-143300-deployment",
-          "s3Key": "amplify-builds/notify-2b6669744a434e783850-build.zip"
         }
       }
     }
