@@ -13,7 +13,7 @@ import copy from 'copy-to-clipboard'
 import { useNotify } from 'react-admin'
 
 const embeddedScript = (sessionId: string, defaultOpen: boolean) => `
-<script type="text/javascript">var call=function(a,e){var t=document.getElementsByTagName("script")[0],n=document.createElement("script");n.async=!0,n.src=a,n.addEventListener?n.onload=function(){e()}:n.onreadystatechange=function(){"loaded"!=n.readyState&&"complete"!=n.readyState||(n.onreadystatechange=null,e())},t.parentNode.insertBefore(n,t)};call("/api/script/botui/chat.min.js",function(){Botui.start("${process.env.NX_PREVIEW_HOST}/?sessionId=${sessionId}",${defaultOpen})});</script>
+<script type="text/javascript">var call=function(a,e){var t=document.getElementsByTagName("script")[0],n=document.createElement("script");n.async=!0,n.src=a,n.addEventListener?n.onload=function(){e()}:n.onreadystatechange=function(){"loaded"!=n.readyState&&"complete"!=n.readyState||(n.onreadystatechange=null,e())},t.parentNode.insertBefore(n,t)};call("${process.env.NX_PREVIEW_HOST}/api/script/botui/chat.min.js",function(){Botui.start("${process.env.NX_PREVIEW_HOST}/?sessionId=${sessionId}",${defaultOpen})});</script>
 `
 
 interface EmbeddedScriptDialogProps {
