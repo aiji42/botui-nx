@@ -21,7 +21,13 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
     <>
       <Wrapper isFull={window.innerWidth < 600} isOpen={open}>
         <ChatControllerClient onClose={handleClose} onComplete={handleComplete}>
-          <iframe src={url} title="botui" width="100%" height="100%" />
+          <iframe
+            src={url}
+            title="botui"
+            width="100%"
+            height="100%"
+            style={{ borderWidth: 0 }}
+          />
         </ChatControllerClient>
       </Wrapper>
       <Fab isOpen={open} onClick={toggleOpen} />
