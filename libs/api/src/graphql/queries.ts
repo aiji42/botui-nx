@@ -103,3 +103,35 @@ export const listSessions = /* GraphQL */ `
     }
   }
 `
+export const listSessionsByOwner = /* GraphQL */ `
+  query ListSessionsByOwner(
+    $owner: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelSessionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSessionsByOwner(
+      owner: $owner
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`

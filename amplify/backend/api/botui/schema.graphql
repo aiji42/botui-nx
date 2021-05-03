@@ -2,10 +2,15 @@ type Session
   @model
   @auth(
     rules: [
-      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
-      {allow: public, provider: iam, operations: [read]}
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+      { allow: public, provider: iam, operations: [read] }
     ]
   )
+  @key(name: "ownerIndex", fields: ["owner"], queryField: "listSessionsByOwner")
 {
   id: ID!
   owner: String

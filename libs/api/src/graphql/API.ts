@@ -73,6 +73,21 @@ export type ModelBooleanInput = {
   attributeType?: ModelAttributeTypes | null
 }
 
+export type Session = {
+  __typename: 'Session'
+  id?: string
+  owner?: string | null
+  title?: string
+  active?: boolean
+  theme?: string
+  proposals?: string
+  images?: string
+  email?: string | null
+  launcher?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
 export type UpdateSessionInput = {
   id: string
   owner?: string | null
@@ -122,6 +137,16 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null
 }
 
+export type Entry = {
+  __typename: 'Entry'
+  id?: string
+  owner?: string
+  sessionId?: string
+  inputs?: string
+  createdAt?: string
+  updatedAt?: string
+}
+
 export type DeleteEntryInput = {
   id?: string | null
 }
@@ -143,6 +168,12 @@ export type ModelEntryFilterInput = {
   and?: Array<ModelEntryFilterInput | null> | null
   or?: Array<ModelEntryFilterInput | null> | null
   not?: ModelEntryFilterInput | null
+}
+
+export type ModelEntryConnection = {
+  __typename: 'ModelEntryConnection'
+  items?: Array<Entry | null> | null
+  nextToken?: string | null
 }
 
 export type ModelStringKeyConditionInput = {
@@ -175,22 +206,28 @@ export type ModelSessionFilterInput = {
   not?: ModelSessionFilterInput | null
 }
 
+export type ModelSessionConnection = {
+  __typename: 'ModelSessionConnection'
+  items?: Array<Session | null> | null
+  nextToken?: string | null
+}
+
 export type CreateSessionMutationVariables = {
-  input: CreateSessionInput
+  input?: CreateSessionInput
   condition?: ModelSessionConditionInput | null
 }
 
 export type CreateSessionMutation = {
-  createSession: {
+  createSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -198,21 +235,21 @@ export type CreateSessionMutation = {
 }
 
 export type UpdateSessionMutationVariables = {
-  input: UpdateSessionInput
+  input?: UpdateSessionInput
   condition?: ModelSessionConditionInput | null
 }
 
 export type UpdateSessionMutation = {
-  updateSession: {
+  updateSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -220,21 +257,21 @@ export type UpdateSessionMutation = {
 }
 
 export type DeleteSessionMutationVariables = {
-  input: DeleteSessionInput
+  input?: DeleteSessionInput
   condition?: ModelSessionConditionInput | null
 }
 
 export type DeleteSessionMutation = {
-  deleteSession: {
+  deleteSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -242,12 +279,12 @@ export type DeleteSessionMutation = {
 }
 
 export type UpdateEntryMutationVariables = {
-  input: UpdateEntryInput
+  input?: UpdateEntryInput
   condition?: ModelEntryConditionInput | null
 }
 
 export type UpdateEntryMutation = {
-  updateEntry: {
+  updateEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -259,12 +296,12 @@ export type UpdateEntryMutation = {
 }
 
 export type DeleteEntryMutationVariables = {
-  input: DeleteEntryInput
+  input?: DeleteEntryInput
   condition?: ModelEntryConditionInput | null
 }
 
 export type DeleteEntryMutation = {
-  deleteEntry: {
+  deleteEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -276,12 +313,12 @@ export type DeleteEntryMutation = {
 }
 
 export type CreateEntryMutationVariables = {
-  input: CreateEntryInput
+  input?: CreateEntryInput
   condition?: ModelEntryConditionInput | null
 }
 
 export type CreateEntryMutation = {
-  createEntry: {
+  createEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -293,11 +330,11 @@ export type CreateEntryMutation = {
 }
 
 export type GetEntryQueryVariables = {
-  id: string
+  id?: string
 }
 
 export type GetEntryQuery = {
-  getEntry: {
+  getEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -315,9 +352,9 @@ export type ListEntrysQueryVariables = {
 }
 
 export type ListEntrysQuery = {
-  listEntrys: {
+  listEntrys?: {
     __typename: 'ModelEntryConnection'
-    items: Array<{
+    items?: Array<{
       __typename: 'Entry'
       id: string
       owner: string
@@ -326,7 +363,7 @@ export type ListEntrysQuery = {
       createdAt: string
       updatedAt: string
     } | null> | null
-    nextToken: string | null
+    nextToken?: string | null
   } | null
 }
 
@@ -340,9 +377,9 @@ export type EntryBySessionAndCreatedAtQueryVariables = {
 }
 
 export type EntryBySessionAndCreatedAtQuery = {
-  entryBySessionAndCreatedAt: {
+  entryBySessionAndCreatedAt?: {
     __typename: 'ModelEntryConnection'
-    items: Array<{
+    items?: Array<{
       __typename: 'Entry'
       id: string
       owner: string
@@ -351,25 +388,25 @@ export type EntryBySessionAndCreatedAtQuery = {
       createdAt: string
       updatedAt: string
     } | null> | null
-    nextToken: string | null
+    nextToken?: string | null
   } | null
 }
 
 export type GetSessionQueryVariables = {
-  id: string
+  id?: string
 }
 
 export type GetSessionQuery = {
-  getSession: {
+  getSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -383,32 +420,61 @@ export type ListSessionsQueryVariables = {
 }
 
 export type ListSessionsQuery = {
-  listSessions: {
+  listSessions?: {
     __typename: 'ModelSessionConnection'
-    items: Array<{
+    items?: Array<{
       __typename: 'Session'
       id: string
-      owner: string | null
+      owner?: string | null
       title: string
       active: boolean
       theme: string
       proposals: string
       images: string
-      email: string | null
+      email?: string | null
       launcher: string
       createdAt: string
       updatedAt: string
     } | null> | null
-    nextToken: string | null
+    nextToken?: string | null
+  } | null
+}
+
+export type ListSessionsByOwnerQueryVariables = {
+  owner?: string | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelSessionFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListSessionsByOwnerQuery = {
+  listSessionsByOwner?: {
+    __typename: 'ModelSessionConnection'
+    items?: Array<{
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      createdAt: string
+      updatedAt: string
+    } | null> | null
+    nextToken?: string | null
   } | null
 }
 
 export type OnCreateEntrySubscriptionVariables = {
-  owner: string
+  owner?: string
 }
 
 export type OnCreateEntrySubscription = {
-  onCreateEntry: {
+  onCreateEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -420,11 +486,11 @@ export type OnCreateEntrySubscription = {
 }
 
 export type OnUpdateEntrySubscriptionVariables = {
-  owner: string
+  owner?: string
 }
 
 export type OnUpdateEntrySubscription = {
-  onUpdateEntry: {
+  onUpdateEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -436,11 +502,11 @@ export type OnUpdateEntrySubscription = {
 }
 
 export type OnDeleteEntrySubscriptionVariables = {
-  owner: string
+  owner?: string
 }
 
 export type OnDeleteEntrySubscription = {
-  onDeleteEntry: {
+  onDeleteEntry?: {
     __typename: 'Entry'
     id: string
     owner: string
@@ -456,16 +522,16 @@ export type OnCreateSessionSubscriptionVariables = {
 }
 
 export type OnCreateSessionSubscription = {
-  onCreateSession: {
+  onCreateSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -477,16 +543,16 @@ export type OnUpdateSessionSubscriptionVariables = {
 }
 
 export type OnUpdateSessionSubscription = {
-  onUpdateSession: {
+  onUpdateSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
@@ -498,16 +564,16 @@ export type OnDeleteSessionSubscriptionVariables = {
 }
 
 export type OnDeleteSessionSubscription = {
-  onDeleteSession: {
+  onDeleteSession?: {
     __typename: 'Session'
     id: string
-    owner: string | null
+    owner?: string | null
     title: string
     active: boolean
     theme: string
     proposals: string
     images: string
-    email: string | null
+    email?: string | null
     launcher: string
     createdAt: string
     updatedAt: string
