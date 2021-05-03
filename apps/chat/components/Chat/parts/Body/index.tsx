@@ -160,7 +160,13 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     <>
       <div css={closerStyles.base} />
       <div css={closerStyles.spinner}>
-        <SpinnerCircular size={70} thickness={100} speed={100} color="#36ad47" secondaryColor="rgba(0, 0, 0, 0.44)" />
+        <SpinnerCircular
+          size={70}
+          thickness={100}
+          speed={100}
+          color={session.theme.progressBar?.backgroundColor}
+          secondaryColor="rgba(0, 0, 0, 0.44)"
+        />
       </div>
     </>
   )
