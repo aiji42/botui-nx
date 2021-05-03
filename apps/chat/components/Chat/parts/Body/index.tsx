@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect, useRef, useState } from 'react'
+import { FC, memo, useEffect, useRef } from 'react'
 import {
   MessageContextProvider,
   ProposalContextProvider,
@@ -18,7 +18,6 @@ import {
   SkipperConditionOperator
 } from '@botui/types'
 import { requestNotify } from '../../../../pages/api/notify'
-import PulseLoader from 'react-spinners/PulseLoader'
 
 const style = {
   root: css({
@@ -28,8 +27,7 @@ const style = {
     scrollbarWidth: 'none', // スクロールバーを隠す(Firefox)
     '&::-webkit-scrollbar': {
       display: 'none' // スクロールバーを隠す(Chrome、Safari)
-    },
-    position: 'relative'
+    }
   })
 }
 
@@ -90,24 +88,6 @@ const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   return null
 }
 
-const closerStyles = {
-  spinner: css({
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)'
-  }),
-  base: css({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    opacity: 0.6,
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#f4f4f4'
-  })
-}
-
 const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
   const {
     formPush,
@@ -115,9 +95,9 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     addEntry,
     values,
     session,
-    complete: handleComplete
+    complete
   } = useChatControllerServer()
-  const [complete, setComplete] = useState(false)
+  const [, { handleUpdate }] = useProposal()
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
@@ -126,49 +106,37 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     }
     if (proposal.data.job === 'store') {
       addEntry()
-      setComplete(true)
+      complete()
     }
     if (proposal.data.job === 'script') {
-      evalFunction(proposal.data.script).then(() => setComplete(true))
+      evalFunction(proposal.data.script).then(complete)
     }
     if (proposal.data.job === 'webhook') {
       // TODO:
-      setComplete(true)
+      complete()
     }
 
     if (proposal.data.job === 'formPush') {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
-      formPush(proposal.data).then(() => setComplete(true))
+      formPush(proposal.data).then(complete)
     }
-    if (proposal.data.job === 'none') setComplete(true)
+    if (proposal.data.job === 'none') complete()
 
     return () => {
       mounted.current = false
     }
-  }, [addEntry, evalFunction, formPush, proposal.data, session, values])
+  }, [
+    addEntry,
+    complete,
+    evalFunction,
+    formPush,
+    handleUpdate,
+    proposal.data,
+    session,
+    values
+  ])
 
-  const [loading, setLoading] = useState(false)
-  useEffect(() => {
-    setTimeout(() => setLoading(true), 3000)
-  }, [])
-
-  useEffect(() => {
-    if (complete && loading) handleComplete()
-  }, [complete, handleComplete, loading])
-
-  if (!loading) return null
-  return (
-    <>
-      <div css={closerStyles.base} />
-      <div css={closerStyles.spinner}>
-        <PulseLoader
-          size={15}
-          margin={5}
-          color={session.theme.header?.backgroundColor}
-        />
-      </div>
-    </>
-  )
+  return null
 }
 
 const SkipperComponent: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
