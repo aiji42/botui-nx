@@ -178,14 +178,15 @@ export interface FormCustomTextareaValues {
 
 export interface FormCustomTextarea
   extends FormBase<
-      'FormCustomTextarea',
-      FormCustomTextareaValues,
-      Record<string, never>
-    >,
-    TextareaHTMLAttributes<HTMLTextAreaElement> {
+    'FormCustomTextarea',
+    FormCustomTextareaValues,
+    Record<string, never>
+  > {
   name: string
   title?: string
   validation?: string
+  placeholder?: string
+  required?: boolean
 }
 
 export interface FormConfirmValues {
