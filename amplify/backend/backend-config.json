@@ -58,7 +58,10 @@
         {
           "category": "function",
           "resourceName": "notify",
-          "attributes": ["Name", "Arn"]
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     }
@@ -71,12 +74,16 @@
         {
           "category": "auth",
           "resourceName": "botui",
-          "attributes": ["UserPoolId"]
+          "attributes": [
+            "UserPoolId"
+          ]
         },
         {
           "category": "auth",
           "resourceName": "userPoolGroups",
-          "attributes": ["adminGroupRole"]
+          "attributes": [
+            "adminGroupRole"
+          ]
         }
       ]
     }
