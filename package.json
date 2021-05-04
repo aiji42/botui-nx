@@ -71,7 +71,6 @@
     "react-use-kana": "^2.3.0",
     "react-xarrows": "^1.6.1",
     "regenerator-runtime": "0.13.7",
-    "shallow-equal": "^1.2.1",
     "spinners-react": "^1.0.4",
     "tslib": "^2.0.0",
     "use-postal-jp": "^1.1.4",
