@@ -57,13 +57,11 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
           <ChatControllerClient
             onClose={handleClose}
             onComplete={handleComplete}
+            preview
+            session={session}
           >
             <iframe
-              src={`${
-                process.env.NX_PREVIEW_HOST
-              }/?preview=true&jsonedSession=${encodeURIComponent(
-                JSON.stringify(session)
-              )}`}
+              src={`${process.env.NX_PREVIEW_HOST}/?preview=true`}
               title="プレビュー"
               width="100%"
               height="100%"
