@@ -19,6 +19,7 @@ import {
 } from '@botui/types'
 import { requestNotify } from '../../../../pages/api/notify'
 import { SpinnerCircular } from 'spinners-react/lib/cjs/SpinnerCircular'
+import deepEqual from 'deep-equal'
 
 const style = {
   root: css({
@@ -62,7 +63,7 @@ const BodyInner: FC<{ proposals: Proposals }> = ({ proposals }) => {
   )
 }
 
-const BodyInnerMemorized = memo(BodyInner)
+const BodyInnerMemorized = memo(BodyInner, (prev, next) => deepEqual(prev, next))
 
 const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatControllerServer()
