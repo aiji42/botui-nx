@@ -13,7 +13,7 @@ import { ImageInput, ColorInput } from '../parts'
 import isColor from 'is-color'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
-import { shallowEqualObjects } from 'shallow-equal'
+import deepEqual from 'deep-equal'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -175,6 +175,6 @@ const Preview: FC<PreviewProps> = ({ session }) => {
 const MemorizedPreview = memo(
   Preview,
   (next, prev) =>
-    shallowEqualObjects(next.session.theme, prev.session.theme) &&
-    shallowEqualObjects(next.session.images, prev.session.images)
+    deepEqual(next.session.theme, prev.session.theme) &&
+    deepEqual(next.session.images, prev.session.images)
 )
