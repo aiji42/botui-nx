@@ -203,7 +203,7 @@ const getNextProposal = (
   proposals: Proposals,
   id: string,
   skipNum = 0
-): Proposal | null => {
+): Proposal => {
   const index = proposals.findIndex((p) => p.id === id) ?? 0
-  return proposals[index + 1 + skipNum] ?? null
+  return proposals[index + 1 + skipNum] ?? proposals.slice(-1)[0]
 }
