@@ -103,5 +103,7 @@ export default SkipperRow
 
 const getSkipTo = (proposal: ProposalSkipper, proposals: Proposals) => {
   const index = proposals.findIndex(({ id }) => id === proposal.id)
-  return (proposals[index + proposal.data.skipNumber + 1] ?? proposals.slice(-1)[0]).id
+  return (
+    proposals[index + proposal.data.skipNumber + 1] ?? proposals.slice(-1)[0]
+  ).id
 }

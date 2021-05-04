@@ -1,5 +1,12 @@
 import { FC, useCallback, useState } from 'react'
-import {Dialog, DialogContent, makeStyles, Button, useTheme, useMediaQuery} from '@material-ui/core';
+import {
+  Dialog,
+  DialogContent,
+  makeStyles,
+  Button,
+  useTheme,
+  useMediaQuery
+} from '@material-ui/core'
 import Visibility from '@material-ui/icons/Visibility'
 import { Session } from '@botui/types'
 import { ChatControllerClient } from '@botui/chat-controller'
@@ -40,9 +47,17 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       <Button startIcon={<Visibility />} onClick={handleOpen}>
         プレビュー
       </Button>
-      <Dialog open={open} onClose={handleClose} classes={matches ? dialogClasses : {}} fullScreen={!matches}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        classes={matches ? dialogClasses : {}}
+        fullScreen={!matches}
+      >
         <DialogContent classes={dialogContentClasses}>
-          <ChatControllerClient onClose={handleClose} onComplete={handleComplete}>
+          <ChatControllerClient
+            onClose={handleClose}
+            onComplete={handleComplete}
+          >
             <iframe
               src={`${
                 process.env.NX_PREVIEW_HOST

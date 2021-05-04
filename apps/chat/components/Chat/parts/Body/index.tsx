@@ -64,7 +64,9 @@ const BodyInner: FC<{ proposals: Proposals }> = ({ proposals }) => {
   )
 }
 
-const BodyInnerMemorized = memo(BodyInner, (prev, next) => deepEqual(prev, next))
+const BodyInnerMemorized = memo(BodyInner, (prev, next) =>
+  deepEqual(prev, next)
+)
 
 const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const { formPush, evalFunction } = useChatControllerServer()
