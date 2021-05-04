@@ -5,10 +5,9 @@ import { useRouter } from 'next/router'
 const Index: FC = () => {
   const router = useRouter()
   useEffect(() => {
-    if (router.query.preview && router.query.jsonedSession) {
+    if (router.query.preview) {
       router.push({
-        pathname: '/session/preview',
-        query: { jsonedSession: router.query.jsonedSession }
+        pathname: '/session/preview'
       })
       return
     }

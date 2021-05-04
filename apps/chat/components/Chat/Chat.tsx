@@ -4,12 +4,13 @@ import { Session } from '@botui/types'
 import { Header, Body, Footer } from './parts'
 
 interface ChatProps {
-  session: Session
+  session?: Session
+  preview?: boolean
 }
 
-export const Chat: FC<ChatProps> = ({ session }) => {
+export const Chat: FC<ChatProps> = ({ session, preview }) => {
   return (
-    <ChatControllerServerProvider session={session}>
+    <ChatControllerServerProvider session={session} preview={preview}>
       <Header />
       <Body />
       <Footer />
