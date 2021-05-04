@@ -166,7 +166,7 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, query, replace, session.proposals, complete])
+  }, [pathname, query, session.proposals])
 
   useEffect(() => {
     session.launcher.loadScripts &&
