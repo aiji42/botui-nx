@@ -66,13 +66,16 @@ type Event = {
 }
 
 interface ChatControllerServerProviderValue {
-  session: Session
+  session?: Session
+  preview?: boolean
 }
 
 export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue> = ({
   children,
-  session
+  session: originSession,
+  preview
 }) => {
+  const [session, setSession] = useState<Session | undefined>(originSession)
   const [proposals, setProposals] = useState<Proposals>([])
   const [progressPercentage, setProgressPercentage] = useState<number>(0)
   const { query, replace, pathname, asPath } = useRouter()
@@ -92,10 +95,15 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
       remoteOrigin: '*'
     })
     ChildHandshake(messenger).then((conn) => {
+      preview &&
+        conn
+          .remoteHandle()
+          .call('preview')
+          .then((res: Session) => setSession(res))
       setLocalHandle(conn.localHandle())
       setRemoteHandle(conn.remoteHandle())
     })
-  }, [])
+  }, [preview])
 
   const store = useMemo<Store>(
     () => ({
@@ -141,6 +149,7 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
   const addEntry = useCallback<
     ChatContollorServerContextValue['addEntry']
   >(() => {
+    if (!session) return
     addEntryOriginal({
       sessionId: session.id,
       owner: session.owner,
@@ -149,6 +158,7 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
   }, [session, values])
 
   useEffect(() => {
+    if (!session) return
     const id = query['currentId']
     const skipNum = query['skipNum']
     const nextProposal = getNextProposal(
@@ -165,13 +175,15 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, query, session.proposals])
+  }, [pathname, query, session])
 
   useEffect(() => {
+    if (!session) return
     session.launcher.loadScripts &&
       remoteHandle?.call('loadScript', session.launcher.loadScripts)
-  }, [remoteHandle, session.launcher.loadScripts])
+  }, [remoteHandle, session])
 
+  if (!session) return null
   return (
     <ChatControllerServerContext.Provider
       children={children}
