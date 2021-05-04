@@ -28,6 +28,9 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = useCallback(() => setOpen(true), [])
   const handleClose = useCallback(() => setOpen(false), [])
+  const handleComplete = useCallback(() => {
+    setTimeout(() => setOpen(false), 3000)
+  }, [])
   const dialogClasses = useStyleDialog()
   const dialogContentClasses = useStyleDialogContent()
   const theme = useTheme()
@@ -39,7 +42,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ session }) => {
       </Button>
       <Dialog open={open} onClose={handleClose} classes={matches ? dialogClasses : {}} fullScreen={!matches}>
         <DialogContent classes={dialogContentClasses}>
-          <ChatControllerClient onClose={handleClose} onComplete={handleClose}>
+          <ChatControllerClient onClose={handleClose} onComplete={handleComplete}>
             <iframe
               src={`${
                 process.env.NX_PREVIEW_HOST
