@@ -23,6 +23,7 @@ import deepEqual from 'deep-equal'
 
 const style = {
   root: css({
+    position: 'relative',
     padding: '5px 15px 150px 15px',
     overflowY: 'scroll',
     msOverflowStyle: 'none', // スクロールバーを隠す(IE、Edge)
@@ -71,19 +72,13 @@ const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
+    mounted.current = false
     if (proposal.data.job === 'script') {
       evalFunction(proposal.data.script).then(() => handleUpdate())
-    }
-    if (proposal.data.job === 'webhook') {
-      // FIXME:
-      handleUpdate()
     }
     if (proposal.data.job === 'formPush') {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
       formPush(proposal.data).then(() => handleUpdate())
-    }
-    return () => {
-      mounted.current = false
     }
   }, [evalFunction, formPush, handleUpdate, proposal.data])
 
@@ -92,7 +87,7 @@ const RelayerComponent: FC<{ proposal: ProposalRelayer }> = ({ proposal }) => {
 
 const closerStyles = {
   spinner: css({
-    position: 'absolute',
+    position: 'fixed',
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)'
@@ -121,6 +116,7 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
   const mounted = useRef(true)
   useEffect(() => {
     if (!mounted.current) return
+    mounted.current = false
     if (proposal.data.notify) {
       requestNotify(values, session)
     }
@@ -131,20 +127,11 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
     if (proposal.data.job === 'script') {
       evalFunction(proposal.data.script).then(() => setComplete(true))
     }
-    if (proposal.data.job === 'webhook') {
-      // TODO:
-      setComplete(true)
-    }
-
     if (proposal.data.job === 'formPush') {
       // NOTE: ページ遷移により強制的にチャット終了の可能性がある
       formPush(proposal.data).then(() => setComplete(true))
     }
     if (proposal.data.job === 'none') setComplete(true)
-
-    return () => {
-      mounted.current = false
-    }
   }, [addEntry, evalFunction, formPush, proposal.data, session, values])
 
   const [loading, setLoading] = useState(false)
@@ -153,6 +140,7 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
   }, [])
 
   useEffect(() => {
+    console.log(complete, loading)
     if (complete && loading) handleComplete()
   }, [complete, handleComplete, loading])
 
@@ -179,11 +167,9 @@ const SkipperComponent: FC<{ proposal: ProposalSkipper }> = ({ proposal }) => {
   const [, { handleUpdate }] = useProposal()
   useEffect(() => {
     if (!mounted.current) return
+    mounted.current = false
     const skipNum = skipperEvaluate(proposal.data, values)
     handleUpdate(skipNum)
-    return () => {
-      mounted.current = false
-    }
   }, [handleUpdate, proposal.data, values])
 
   return null
