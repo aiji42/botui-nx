@@ -156,7 +156,6 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
       typeof id === 'string' ? id : 'start',
       typeof skipNum === 'string' ? Number(skipNum) : 0
     )
-    if (!nextProposal) return
     setProgressPercentage(getPercentage(session.proposals, nextProposal.id))
     const index = proposals.findIndex(({ id }) => id === nextProposal.id)
     if (index < 0) setProposals((prev) => [...prev, nextProposal])
@@ -203,7 +202,7 @@ const getNextProposal = (
   proposals: Proposals,
   id: string,
   skipNum = 0
-): Proposal | null => {
+): Proposal => {
   const index = proposals.findIndex((p) => p.id === id) ?? 0
-  return proposals[index + 1 + skipNum] ?? null
+  return proposals[index + 1 + skipNum] ?? proposals.slice(-1)[0]
 }
