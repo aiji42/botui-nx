@@ -112,7 +112,7 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
         type="text"
         placeholder="コーポABC102号室"
         name="building"
-        title="建物名・部屋番号"
+        title="建物名・部屋番号(任意)"
       />
       <ErrorMessage name="building" component={SpanErrorMessage} />
 
