@@ -383,7 +383,7 @@ export const FormCustomInputEditFormInner: FC = () => {
           />
           <FormDataConsumer>
             {({ getSource, scopedFormData }) =>
-              scopedFormData.customValidation && (
+              scopedFormData?.customValidation && (
                 <>
                   <CustomValidationHelp />
                   <Field
