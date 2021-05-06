@@ -4,7 +4,10 @@ import { css } from '@emotion/react'
 
 const style = {
   wrapper: css({
-    maxWidth: '85%',
+    '@media (max-width:500px)': {
+      maxWidth: '85%',
+    },
+    maxWidth: 425,
     textAlign: 'right',
     margin: '8px 0px 8px auto'
   })

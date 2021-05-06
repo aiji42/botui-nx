@@ -11,15 +11,14 @@ import { customHandleSubmit } from './modules'
 import { FormNameValues, FormName as FormNameType } from '@botui/types'
 
 const style = {
-  formBlockDetailHalf: css`
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: 3px;
-    width: 49%;
-  `,
-  left: css`
-    margin-right: 3px;
-  `
+  row: css({
+    display: 'flex',
+    justifyContent: 'space-between'
+  }),
+  formBlockDetailHalf: css({
+    marginBottom: 3,
+    width: '49.5%'
+  })
 }
 
 const Form: FC<FormikProps<FormNameValues>> = (props) => {
@@ -51,34 +50,36 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div css={[style.formBlockDetailHalf, style.left]}>
-        <Field
-          as={InputName}
-          name="familyName"
-          placeholder="山田"
-          title="姓"
-          autoFocus
-          onInput={(e: KeyboardEvent<HTMLInputElement>) =>
-            setFamilyNameKanaSource(e.currentTarget.value)
-          }
-        />
-        <ErrorMessage name="familyName" component={SpanErrorMessage} />
-      </div>
-      <div css={style.formBlockDetailHalf}>
-        <Field
-          as={InputName}
-          name="firstName"
-          placeholder="太郎"
-          title="名"
-          onInput={(e: KeyboardEvent<HTMLInputElement>) =>
-            setFirstNameKanaSource(e.currentTarget.value)
-          }
-        />
-        <ErrorMessage name="firstName" component={SpanErrorMessage} />
+      <div css={style.row}>
+        <div css={style.formBlockDetailHalf}>
+          <Field
+            as={InputName}
+            name="familyName"
+            placeholder="山田"
+            title="姓"
+            autoFocus
+            onInput={(e: KeyboardEvent<HTMLInputElement>) =>
+              setFamilyNameKanaSource(e.currentTarget.value)
+            }
+          />
+          <ErrorMessage name="familyName" component={SpanErrorMessage} />
+        </div>
+        <div css={style.formBlockDetailHalf}>
+          <Field
+            as={InputName}
+            name="firstName"
+            placeholder="太郎"
+            title="名"
+            onInput={(e: KeyboardEvent<HTMLInputElement>) =>
+              setFirstNameKanaSource(e.currentTarget.value)
+            }
+          />
+          <ErrorMessage name="firstName" component={SpanErrorMessage} />
+        </div>
       </div>
       {status.kana && (
-        <Fragment>
-          <div css={[style.formBlockDetailHalf, style.left]}>
+        <div css={style.row}>
+          <div css={style.formBlockDetailHalf}>
             <Field
               as={InputNameKana}
               name="familyNameKana"
@@ -98,7 +99,7 @@ const Form: FC<FormikProps<FormNameValues>> = (props) => {
             />
             <ErrorMessage name="firstNameKana" component={SpanErrorMessage} />
           </div>
-        </Fragment>
+        </div>
       )}
       <Field as={ButtonSubmit} name="submit" />
     </form>
