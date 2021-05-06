@@ -13,15 +13,14 @@ import {
 import fillRange from 'fill-range'
 
 const style = {
-  formBlockDetailHalfField: css`
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: 2px;
-    width: 49%;
-  `,
-  left: css`
-    margin-right: 3px;
-  `
+  row: css({
+    display: 'flex',
+    justifyContent: 'space-between'
+  }),
+  formBlockDetailHalf: css({
+    marginBottom: 3,
+    width: '49.5%'
+  })
 }
 
 const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
@@ -52,28 +51,29 @@ const Form: FC<FormikProps<FormBirthDayValues>> = (props) => {
         ))}
       </Field>
       <ErrorMessage name="birthdayYear" component={SpanErrorMessage} />
-
-      <div css={[style.formBlockDetailHalfField, style.left]}>
-        <Field as={SelectWithIcon} name="birthdayMonth" title="月">
-          <option value=""></option>
-          {months.map((month) => (
-            <option key={month} value={month}>
-              {Number(month)}月
-            </option>
-          ))}
-        </Field>
-        <ErrorMessage name="birthdayMonth" component={SpanErrorMessage} />
-      </div>
-      <div css={style.formBlockDetailHalfField}>
-        <Field as={SelectWithIcon} name="birthdayDay" title="日">
-          <option value=""></option>
-          {days.map((day) => (
-            <option key={day} value={day}>
-              {Number(day)}日
-            </option>
-          ))}
-        </Field>
-        <ErrorMessage name="birthdayDay" component={SpanErrorMessage} />
+      <div css={style.row}>
+        <div css={style.formBlockDetailHalf}>
+          <Field as={SelectWithIcon} name="birthdayMonth" title="月">
+            <option value=""></option>
+            {months.map((month) => (
+              <option key={month} value={month}>
+                {Number(month)}月
+              </option>
+            ))}
+          </Field>
+          <ErrorMessage name="birthdayMonth" component={SpanErrorMessage} />
+        </div>
+        <div css={style.formBlockDetailHalf}>
+          <Field as={SelectWithIcon} name="birthdayDay" title="日">
+            <option value=""></option>
+            {days.map((day) => (
+              <option key={day} value={day}>
+                {Number(day)}日
+              </option>
+            ))}
+          </Field>
+          <ErrorMessage name="birthdayDay" component={SpanErrorMessage} />
+        </div>
       </div>
       <Field as={ButtonSubmit} name="submit" />
     </form>
