@@ -4,7 +4,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from 'react'
 import {
@@ -17,8 +16,6 @@ import { methods, CustomChoice, CustomMessage } from '../common'
 import { JobFormPush, Proposal, Proposals, Session } from '@botui/types'
 import { useRouter } from 'next/router'
 import { addEntry as addEntryOriginal } from '@botui/api'
-import objectHash from 'object-hash'
-import { get as getLs, set as setLs } from 'local-storage'
 
 const noop = () => {
   // noop
@@ -108,13 +105,6 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     })
   }, [preview])
 
-  const digest = useRef<string | null>(null)
-  useEffect(() => {
-    if (preview || !session) return
-    if (!digest.current) digest.current = objectHash(session)
-    proposals.length > 0 && setLs(digest.current, proposals)
-  }, [digest, preview, proposals, session])
-
   const store = useMemo<Store>(
     () => ({
       get: (k: string) => values[k],
@@ -178,10 +168,7 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
     )
     setProgressPercentage(getPercentage(session.proposals, nextProposal.id))
     const index = proposals.findIndex(({ id }) => id === nextProposal.id)
-    if (index < 0) {
-      if (proposals.length === 0 && digest.current && getLs<Proposals>(digest.current)) setProposals(getLs<Proposals>(digest.current))
-      else setProposals((prev) => [...prev, nextProposal])
-    }
+    if (index < 0) setProposals((prev) => [...prev, nextProposal])
     else {
       setProposals([...proposals.slice(0, index)])
       replace({ pathname, query }, asPath, { shallow: true })
