@@ -11,7 +11,7 @@ const Index: FC = () => {
       })
       return
     }
-    router.push({
+    router.replace({
       pathname: '/session/[id]',
       query: { id: router.query.sessionId ?? 'invalid' }
     })
