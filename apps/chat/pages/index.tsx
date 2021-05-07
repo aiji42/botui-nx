@@ -6,7 +6,7 @@ const Index: FC = () => {
   const router = useRouter()
   useEffect(() => {
     if (router.query.preview) {
-      router.push({
+      router.replace({
         pathname: '/session/preview'
       })
       return
