@@ -8,5 +8,6 @@ export interface CustomWindow extends Window {
   botui?: {
     customChoice?: CustomChoice
     customMessage?: CustomMessage
+    openChat?: () => void
   }
 }

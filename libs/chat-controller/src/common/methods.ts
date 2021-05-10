@@ -8,6 +8,7 @@ type Values = Record<string, unknown>
 
 export const initCustomMessageAndChoices = () => {
   window.botui = {
+    ...(window.botui ?? {}),
     customChoice: {},
     customMessage: {}
   }

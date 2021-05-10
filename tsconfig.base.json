@@ -22,6 +22,9 @@
       "@botui/chat-controller/client": [
         "libs/chat-controller/src/client/index.ts"
       ],
+      "@botui/chat-controller/common": [
+        "libs/chat-controller/src/common/index.ts"
+      ],
       "@botui/types": ["libs/types/src/index.d.ts"]
     }
   },
