@@ -198,7 +198,6 @@ export const FormCustomRadioGroupEditFormInner: FC = () => {
       <ArrayInput
         source="data.content.props.inputs"
         label="ラジオボタン"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="タイトル" validate={[required()]} />
@@ -251,7 +250,6 @@ export const FormCustomCheckboxEditFormInner: FC = () => {
       <ArrayInput
         source="data.content.props.inputs"
         label="チェックボックス"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput source="title" label="タイトル" validate={[required()]} />
@@ -295,7 +293,6 @@ export const FormCustomSelectEditFormInner: FC = () => {
       <ArrayInput
         source="data.content.props.selects"
         label="セレクトボックス"
-        validate={[required()]}
       >
         <SimpleFormIterator>
           <TextInput

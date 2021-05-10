@@ -1,7 +1,10 @@
-import { FC, useState, useCallback } from 'react'
+import { FC, useState, useCallback, useEffect } from 'react'
 import { Wrapper } from './Wrapper'
 import { ChatControllerClient } from '@botui/chat-controller/client'
 import { Fab } from './Fab'
+import { CustomWindow } from '@botui/chat-controller/common'
+
+declare const window: CustomWindow
 
 interface Props {
   url: string
@@ -16,6 +19,11 @@ export const Preview: FC<Props> = ({ url, defaultOpen = false }) => {
     [setOpen]
   )
   const toggleOpen = useCallback(() => setOpen((prev) => !prev), [setOpen])
+
+  useEffect(() => {
+    if (window)
+      window.botui = { ...(window.botui ?? {}), openChat: () => setOpen(true) }
+  }, [])
 
   return (
     <>

@@ -71,15 +71,44 @@ return new Promise((resolve) =>
               一つの選択肢は次のオブジェクトで構成されます。
               <code>{`{ label: '選択肢名', value: '値名' }`}</code>
               <br />
-              <code>window.botui.customChoice</code>
-              に対して、対象のフォーム名と一致する名前で選択肢オブジェクトの配列を代入してください。
+              <code>window.botui.setCustomChoice()</code>を使って選択肢をセットします。
+              <br />
+              第1引数にフォームの値名、第2引数に選択肢オブジェクトの配列を指定してください。
             </Typography>
             <SyntaxHighlighter language="javascript" style={monkai}>
-              {`window.botui.customChoice['フォームのname'] = [
+              {`window.botui.setCustomChoice('fruits', [
   { label: 'りんご', value: 'apple' },
   { label: 'オレンジ', value: 'orange' },
   { label: 'レモン', value: 'lemon' },
-]`}
+])`}
+            </SyntaxHighlighter>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography variant="subtitle1" color="textSecondary">
+            メッセージの生成
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box>
+            <Typography variant="body2" color="textSecondary">
+              <code>window.botui.setCustomMessage()</code>
+              を使うことで、動的なメッセージを生成できます。
+              <br />
+              第1引数に呼び出しに使用するキー、第2引数にメッセージを指定してください。
+              <br />
+              テキストメッセージの本文で<code>{`{{指定したキー}}`}</code>
+              のように記載することで、設定したカスタムメッセージを出すことができます。
+              キーはフォームの値名と重複しないように気をつけてください。
+              <br />
+              TIPS:
+              ランチャー設定から外部スクリプトを設定することで、dayjsなどの使用が可能になります。
+            </Typography>
+            <SyntaxHighlighter language="javascript" style={monkai}>
+              {`window.botui.setCustomMessage('today', dayjs().format('YYYY年MM月DD日'))
+// テキストメッセージで {{today}} と書くと、本日の日付に置換される。`}
             </SyntaxHighlighter>
           </Box>
         </AccordionDetails>
