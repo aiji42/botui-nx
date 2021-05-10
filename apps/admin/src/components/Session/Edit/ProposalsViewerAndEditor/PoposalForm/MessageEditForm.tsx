@@ -51,6 +51,9 @@ const FormInner = () => {
           {`{{フォームの値名}}`}{' '}
           のように二重波括弧でフォームの値名を記入すると、ユーザの入力値に変換されます。
         </Typography>
+        <Typography variant="body2" color="textSecondary">
+          カスタムスクリプトを使用して動的なメッセージを生成することも可能です。
+        </Typography>
       </Box>
       <DelayNumberSlider
         label="入力時間"
