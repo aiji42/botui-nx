@@ -14,6 +14,7 @@ import isColor from 'is-color'
 import { Session } from '@botui/types'
 import { stringMessageTemplate } from '../Create/proposalTemplates'
 import deepEqual from 'deep-equal'
+import { ChatControllerClient } from '@botui/chat-controller'
 
 const colorValidator = (color: string) => {
   return isColor(color) ? null : '入力内容が間違っています'
@@ -148,6 +149,10 @@ const SessionFormInner: FC = () => {
 
 export default SessionFormInner
 
+const noop = () => {
+  // no-op
+}
+
 interface PreviewProps {
   session: Session
 }
@@ -155,19 +160,22 @@ interface PreviewProps {
 const Preview: FC<PreviewProps> = ({ session }) => {
   return (
     <Box width={320} height={560}>
-      <iframe
-        src={`${
-          process.env.NX_PREVIEW_HOST
-        }/session/preview?jsonedSession=${encodeURIComponent(
-          JSON.stringify({
-            ...session,
-            proposals: sampleProposals
-          })
-        )}`}
-        title="プレビュー"
-        width="100%"
-        height="100%"
-      />
+      <ChatControllerClient
+        onClose={noop}
+        onComplete={noop}
+        preview
+        session={{
+          ...session,
+          proposals: sampleProposals
+        }}
+      >
+        <iframe
+          src={`${process.env.NX_PREVIEW_HOST}/session/preview`}
+          title="プレビュー"
+          width="100%"
+          height="100%"
+        />
+      </ChatControllerClient>
     </Box>
   )
 }
