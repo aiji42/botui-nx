@@ -7,10 +7,21 @@ declare const window: CustomWindow
 type Values = Record<string, unknown>
 
 export const initCustomMessageAndChoices = () => {
-  window.botui = {
-    ...(window.botui ?? {}),
+  window._botui = {
+    ...(window._botui ?? {}),
     customChoice: {},
     customMessage: {}
+  }
+  window.botui = {
+    ...(window.botui ?? {}),
+    setCustomChoice: (key, data) => {
+      window._botui = window._botui ?? {}
+      window._botui.customChoice = { ...(window._botui.customChoice ?? {}), [key]: data }
+    },
+    setCustomMessage: (key, data) => {
+      window._botui = window._botui ?? {}
+      window._botui.customMessage = { ...(window._botui.customMessage ?? {}), [key]: data }
+    }
   }
 }
 
@@ -57,8 +68,8 @@ const loadScript = async (urls: string | string[]) => {
   })
 }
 
-const getCustomChoice = () => window.botui?.customChoice ?? {}
-const getCustomMessage = () => window.botui?.customMessage ?? {}
+const getCustomChoice = () => window._botui?.customChoice ?? {}
+const getCustomMessage = () => window._botui?.customMessage ?? {}
 
 export const methods = {
   evalFunction,
