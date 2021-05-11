@@ -1,7 +1,20 @@
-import { cloneElement, FC, ReactElement, useEffect, useRef } from 'react'
-import { WindowMessenger, ParentHandshake } from 'post-me'
+import {
+  cloneElement,
+  FC,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
+import { WindowMessenger, ParentHandshake, LocalHandle } from 'post-me'
 import { methods, initCustomMessageAndChoices } from '../common/methods'
 import { Session } from '@botui/types'
+
+type Event = {
+  refresh: Session
+}
+
+type LocalHandleMethods = typeof methods
 
 export const ChatControllerClient: FC<{
   onClose: () => void
@@ -17,6 +30,9 @@ export const ChatControllerClient: FC<{
   children
 }) => {
   const ref = useRef<HTMLIFrameElement>()
+  const [localHandle, setLocalHandle] = useState<
+    LocalHandle<LocalHandleMethods, Event>
+  >()
 
   useEffect(() => {
     initCustomMessageAndChoices()
@@ -24,19 +40,21 @@ export const ChatControllerClient: FC<{
 
   useEffect(() => {
     if (!ref.current?.contentWindow) return
+    if (localHandle) {
+      preview && session && localHandle.emit('refresh', session)
+      return
+    }
     const messenger = new WindowMessenger({
       localWindow: window,
       remoteWindow: ref.current.contentWindow,
       remoteOrigin: '*'
     })
-    const newMethods =
-      preview && session ? { ...methods, preview: () => session } : methods
-    ParentHandshake(messenger, newMethods, 40, 1000).then((connection) => {
-      const remoteHandle = connection.remoteHandle()
-      remoteHandle.addEventListener('onClose', handleClose)
-      remoteHandle.addEventListener('onComplete', handleComplete)
+    ParentHandshake(messenger, methods, 40, 1000).then((conn) => {
+      setLocalHandle(conn.localHandle())
+      conn.remoteHandle().addEventListener('onClose', handleClose)
+      conn.remoteHandle().addEventListener('onComplete', handleComplete)
     })
-  }, [handleClose, handleComplete, preview, session])
+  }, [handleClose, handleComplete, preview, session, localHandle])
 
   return cloneElement(children, { ref })
 }
