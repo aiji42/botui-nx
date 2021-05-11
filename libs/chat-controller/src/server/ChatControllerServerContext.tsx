@@ -60,9 +60,13 @@ export const ChatControllerServerContext = createContext<ChatContollorServerCont
   }
 )
 
-type Event = {
+type LocalEvent = {
   onClose: Record<string, unknown>
   onComplete: Record<string, unknown>
+}
+
+type RemoteEvent = {
+  refresh: Session
 }
 
 interface ChatControllerServerProviderValue {
@@ -81,10 +85,10 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
   const { query, replace, pathname, asPath } = useRouter()
 
   const [localHandle, setLocalHandle] = useState<
-    LocalHandle<typeof methods, Event>
+    LocalHandle<typeof methods, LocalEvent>
   >()
   const [remoteHandle, setRemoteHandle] = useState<
-    RemoteHandle<typeof methods, Event>
+    RemoteHandle<typeof methods, RemoteEvent>
   >()
   const [values, setValues] = useState<Values>({})
 
@@ -95,15 +99,17 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
       remoteOrigin: '*'
     })
     ChildHandshake(messenger).then((conn) => {
-      preview &&
-        conn
-          .remoteHandle()
-          .call('preview')
-          .then((res: Session) => setSession(res))
       setLocalHandle(conn.localHandle())
       setRemoteHandle(conn.remoteHandle())
     })
   }, [preview])
+
+  useEffect(() => {
+    remoteHandle &&
+      remoteHandle.addEventListener('refresh', (newSession) => {
+        preview && setSession(newSession)
+      })
+  }, [preview, remoteHandle])
 
   const store = useMemo<Store>(
     () => ({
@@ -166,6 +172,7 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
       typeof id === 'string' ? id : 'start',
       typeof skipNum === 'string' ? Number(skipNum) : 0
     )
+    if (nextProposal === null) return
     setProgressPercentage(getPercentage(session.proposals, nextProposal.id))
     const index = proposals.findIndex(({ id }) => id === nextProposal.id)
     if (index < 0) setProposals((prev) => [...prev, nextProposal])
@@ -214,7 +221,8 @@ const getNextProposal = (
   proposals: Proposals,
   id: string,
   skipNum = 0
-): Proposal => {
+): Proposal | null => {
   const index = proposals.findIndex((p) => p.id === id) ?? 0
+  if (index === proposals.length - 1) return null
   return proposals[index + 1 + skipNum] ?? proposals.slice(-1)[0]
 }
