@@ -183,6 +183,7 @@ const Preview: FC<PreviewProps> = ({ session }) => {
 const MemorizedPreview = memo(
   Preview,
   (next, prev) =>
+    next.session.title === prev.session.title &&
     deepEqual(next.session.theme, prev.session.theme) &&
     deepEqual(next.session.images, prev.session.images)
 )
