@@ -15,6 +15,6 @@ jobs:
       - name: cypress:chat
         run: |
           yarn
-          NODE_ENV=production yarn nx run botui:build:production
-          NODE_ENV=production yarn nx run chat:build:production
-          NODE_ENV=production yarn nx run chat-e2e:e2e:production --headless
+          yarn nx run botui:build:production
+          yarn nx run chat:build:production
+          yarn nx run chat-e2e:e2e:production --headless
