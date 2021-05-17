@@ -1,6 +1,14 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 import { InputProps, TextFieldProps, Labeled, Identifier } from 'react-admin'
-import { Grid, makeStyles, Button, Typography } from '@material-ui/core'
+import {
+  Grid,
+  Box,
+  makeStyles,
+  Button,
+  IconButton,
+  Typography
+} from '@material-ui/core'
+import Close from '@material-ui/icons/Close'
 import AddIcon from '@material-ui/icons/Add'
 import { useForm, useField, Field } from 'react-final-form'
 import { DropzoneDialog } from 'material-ui-dropzone'
@@ -46,6 +54,10 @@ const ImageInput: FC<Props> = (props) => {
     },
     [change, handleClose, props.sessionId, source]
   )
+  const handleRemove = useCallback(() => {
+    setSrc('')
+    change(source, '')
+  }, [change, source])
   const validate = useCallback(
     (value: string) => (required && !value ? '必須' : ''),
     [required]
@@ -61,16 +73,25 @@ const ImageInput: FC<Props> = (props) => {
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
       <>
         <Grid item xs={5}>
-          <Button onClick={handleOpen}>
-            {src ? (
-              <img src={src} className={classes.image} alt="logo" />
-            ) : (
-              <>
-                <AddIcon />
-                追加
-              </>
+          <Box position="relative">
+            <Button onClick={handleOpen}>
+              {src ? (
+                <img src={src} className={classes.image} alt="logo" />
+              ) : (
+                <>
+                  <AddIcon />
+                  追加
+                </>
+              )}
+            </Button>
+            {src && (
+              <Box position="absolute" top={-16} right={16}>
+                <IconButton onClick={handleRemove}>
+                  <Close />
+                </IconButton>
+              </Box>
             )}
-          </Button>
+          </Box>
           <DropzoneDialog
             acceptedFiles={['image/*']}
             cancelButtonText="cancel"
@@ -81,7 +102,8 @@ const ImageInput: FC<Props> = (props) => {
             onSave={handleSave}
             filesLimit={1}
             previewGridProps={{
-              container: { justify: 'center' }
+              container: { spacing: 5, justify: 'center' },
+              item: { xs: 6 }
             }}
             showAlerts={['error']}
             dialogTitle={label}
