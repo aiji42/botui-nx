@@ -1,13 +1,11 @@
 import { FC, FormEvent, ReactNode } from 'react'
 import {
-  Avatar,
   Button,
   Typography,
   Box,
   CircularProgress,
   makeStyles
 } from '@material-ui/core'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -59,9 +57,7 @@ export const FormWrapper: FC<Props> = ({
 
   return (
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
+      <img src="/assets/logo.png" alt="logo" height={100} />
       <Typography component="h1" variant="h5">
         {title}
       </Typography>
