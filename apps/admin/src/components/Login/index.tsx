@@ -21,9 +21,12 @@ const theme = createMuiTheme({
   }
 })
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh'
+  },
+  paper: {
+    backgroundColor: theme.palette.grey[50]
   }
 }))
 
@@ -39,7 +42,16 @@ export const Login: FC = () => {
         <Grid item xs={false} sm={4} md={7}>
           <EyeCatch />
         </Grid>
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+          className={classes.paper}
+        >
           <LoginContextProvider>
             <Suspense fallback={null}>
               <AuthForm />
