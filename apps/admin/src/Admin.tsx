@@ -46,7 +46,7 @@ const Admin: FC = () => {
     >
       <Resource
         name="sessions"
-        options={{ label: 'セッション' }}
+        options={{ label: 'シナリオ' }}
         list={SessionList}
         edit={SessionEdit}
         create={SessionCreate}
