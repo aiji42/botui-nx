@@ -21,6 +21,19 @@ type Session
   images: AWSJSON!
   email: String
   launcher: AWSJSON!
+  invitations: [Invitation!]
+  collaborators: [Collaborator!]
+}
+
+type Invitation {
+  token: String!
+  expireOn: String!
+  email: String!
+}
+
+type Collaborator {
+  userId: String!
+  email: String!
 }
 
 type Entry

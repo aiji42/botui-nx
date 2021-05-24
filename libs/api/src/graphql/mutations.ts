@@ -17,11 +17,20 @@ export const createSession = /* GraphQL */ `
       images
       email
       launcher
+      invitations {
+        token
+        expireOn
+        email
+      }
+      collaborators {
+        userId
+        email
+      }
       createdAt
       updatedAt
     }
   }
-`
+`;
 export const updateSession = /* GraphQL */ `
   mutation UpdateSession(
     $input: UpdateSessionInput!
@@ -37,11 +46,20 @@ export const updateSession = /* GraphQL */ `
       images
       email
       launcher
+      invitations {
+        token
+        expireOn
+        email
+      }
+      collaborators {
+        userId
+        email
+      }
       createdAt
       updatedAt
     }
   }
-`
+`;
 export const deleteSession = /* GraphQL */ `
   mutation DeleteSession(
     $input: DeleteSessionInput!
@@ -57,11 +75,20 @@ export const deleteSession = /* GraphQL */ `
       images
       email
       launcher
+      invitations {
+        token
+        expireOn
+        email
+      }
+      collaborators {
+        userId
+        email
+      }
       createdAt
       updatedAt
     }
   }
-`
+`;
 export const updateEntry = /* GraphQL */ `
   mutation UpdateEntry(
     $input: UpdateEntryInput!
@@ -76,7 +103,7 @@ export const updateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
 export const deleteEntry = /* GraphQL */ `
   mutation DeleteEntry(
     $input: DeleteEntryInput!
@@ -91,7 +118,7 @@ export const deleteEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
 export const createEntry = /* GraphQL */ `
   mutation CreateEntry(
     $input: CreateEntryInput!
@@ -106,4 +133,4 @@ export const createEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
