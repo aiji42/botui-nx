@@ -14,7 +14,12 @@ import {
   Toolbar,
   SaveButton,
   DeleteButton,
-  ToolbarProps
+  ToolbarProps,
+  Show,
+  TabbedShowLayout,
+  Tab,
+  ShowProps,
+  ArrayField
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
@@ -80,5 +85,25 @@ export const SessionEdit: FC = (props) => {
     >
       <EditForm warnWhenUnsavedChanges toolbar={<EditToolbar />} />
     </Edit>
+  )
+}
+
+export const SessionShow: FC<ShowProps> = (props) => {
+  return (
+    <Show {...props}>
+      <TabbedShowLayout>
+        <Tab label="コラボレーター">
+          <TextField label="Id" source="id" />
+          <TextField source="title" />
+          <ArrayField source="invitations">
+            <Datagrid>
+              <TextField source="email" />
+              <TextField source="expireOn" />
+              <DeleteButton />
+            </Datagrid>
+          </ArrayField>
+        </Tab>
+      </TabbedShowLayout>
+    </Show>
   )
 }

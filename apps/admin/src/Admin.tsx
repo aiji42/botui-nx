@@ -11,7 +11,8 @@ import {
   SessionCreate,
   SessionEdit,
   EntryList,
-  CustomizedLayout
+  CustomizedLayout,
+  SessionShow
 } from './components'
 import { useDataProvider } from './hooks'
 import Amplify from 'aws-amplify'
@@ -49,6 +50,7 @@ const Admin: FC = () => {
         options={{ label: 'シナリオ' }}
         list={SessionList}
         edit={SessionEdit}
+        show={SessionShow}
         create={SessionCreate}
         icon={ChatBubbleIcon}
       />
