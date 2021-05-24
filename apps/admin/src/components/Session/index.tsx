@@ -19,7 +19,9 @@ import {
   TabbedShowLayout,
   Tab,
   ShowProps,
-  ArrayField
+  ArrayField,
+  SingleFieldList,
+  ChipField
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
@@ -92,15 +94,16 @@ export const SessionShow: FC<ShowProps> = (props) => {
   return (
     <Show {...props}>
       <TabbedShowLayout>
-        <Tab label="コラボレーター">
-          <TextField label="Id" source="id" />
-          <TextField source="title" />
-          <ArrayField source="invitations">
-            <Datagrid>
-              <TextField source="email" />
-              <TextField source="expireOn" />
-              <DeleteButton />
-            </Datagrid>
+        <Tab label="メンバー">
+          <ArrayField source="collaborators" label="メンバー">
+            <SingleFieldList>
+              <ChipField source="email" />
+            </SingleFieldList>
+          </ArrayField>
+          <ArrayField source="invitations" label="招待中">
+            <SingleFieldList>
+              <ChipField source="email" />
+            </SingleFieldList>
           </ArrayField>
         </Tab>
       </TabbedShowLayout>
