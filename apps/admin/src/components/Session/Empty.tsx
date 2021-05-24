@@ -8,10 +8,10 @@ const Empty = () => {
     <Box textAlign="center" m={1}>
       <Image />
       <Typography variant="h6" paragraph>
-        セッションがまだありません
+        シナリオがまだありません
       </Typography>
       <Typography variant="body1" color="textSecondary" paragraph>
-        さっそく、新しいセッションを登録してみましょう
+        さっそく、新しいシナリオを登録してみましょう
       </Typography>
       <CreateButton basePath={basePath} size="large" variant="contained" />
     </Box>
