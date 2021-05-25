@@ -31,9 +31,13 @@ import {
   Chip,
   makeStyles,
   Dialog,
-  TextField as TextFieldInput
+  TextField as TextFieldInput,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button
 } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
 
 const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
   const { values: session } = useFormState<Session>()
@@ -155,17 +159,31 @@ const InviteDialogWithChipButton: FC = () => {
 
   return (
     <>
-      <Chip
-        label="招待する"
-        onDelete={handleClickOpen}
-        deleteIcon={<AddIcon />}
-      />
+      <Chip label="招待する" clickable onClick={handleClickOpen} />
       <Dialog
         onClose={handleClose}
         aria-labelledby="simple-dialog-title"
         open={open}
       >
-        <TextFieldInput id="standard-basic" label="メールアドレス" />
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            入力したメールアドレスに招待リンク付きのメールが送信されます。招待リンクをクリックすると共同編集者に登録されます。
+          </DialogContentText>
+          <TextFieldInput
+            autoFocus
+            margin="dense"
+            id="name"
+            label="メールアドレス"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            招待する
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   )
