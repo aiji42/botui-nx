@@ -31,10 +31,18 @@ type Session
 type Collaborator
   @model
   @key(name: "bySession", fields: ["sessionId", "userId"])
-  @key(name: "byUser", fields: ["userId", "sessionId"])
-  @key(name: "byToken", fields: ["token", "email"]) {
+  @key(
+    name: "byUser"
+    fields: ["userId", "sessionId"]
+    queryField: "listCoraboratorsByUser"
+  )
+  @key(
+    name: "byToken"
+    fields: ["token", "email"]
+    queryField: "listCoraboratorsByTokenAndEmail"
+  ) {
   id: ID!
-  userId: String!
+  userId: String
   token: String!
   email: String!
   sessionId: ID!
