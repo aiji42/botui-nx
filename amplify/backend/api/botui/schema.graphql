@@ -10,8 +10,11 @@ type Session
       { allow: public, provider: iam, operations: [read] }
     ]
   )
-  @key(name: "ownerIndex", fields: ["owner"], queryField: "listSessionsByOwner")
-{
+  @key(
+    name: "ownerIndex"
+    fields: ["owner"]
+    queryField: "listSessionsByOwner"
+  ) {
   id: ID!
   owner: String
   title: String!
@@ -21,31 +24,42 @@ type Session
   images: AWSJSON!
   email: String
   launcher: AWSJSON!
-  invitations: [Invitation!]
-  collaborators: [Collaborator!]
+  collaborators: [Collaborator]
+    @connection(keyName: "bySession", fields: ["id"])
 }
 
-type Invitation {
-  token: String!
-  expireOn: String!
-  email: String!
-}
-
-type Collaborator {
+type Collaborator
+  @model
+  @key(name: "bySession", fields: ["sessionId", "userId"])
+  @key(name: "byUser", fields: ["userId", "sessionId"])
+  @key(name: "byToken", fields: ["token", "email"]) {
+  id: ID!
   userId: String!
+  token: String!
   email: String!
+  sessionId: ID!
+  session: Session @connection(fields: ["sessionId"])
+  valid: Boolean!
+  invitationExpireOn: String!
 }
 
 type Entry
   @model
   @auth(
     rules: [
-      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
-      {allow: public, provider: iam, operations: [create]}
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+      { allow: public, provider: iam, operations: [create] }
     ]
   )
-  @key(name: "sessionAndCreatedAtIndex", fields: ["sessionId", "createdAt"], queryField: "entryBySessionAndCreatedAt")
-{
+  @key(
+    name: "sessionAndCreatedAtIndex"
+    fields: ["sessionId", "createdAt"]
+    queryField: "entryBySessionAndCreatedAt"
+  ) {
   id: ID!
   owner: String!
   sessionId: ID!
