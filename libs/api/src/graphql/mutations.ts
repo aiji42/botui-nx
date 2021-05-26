@@ -17,14 +17,8 @@ export const createSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
@@ -46,14 +40,8 @@ export const updateSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
@@ -75,17 +63,104 @@ export const deleteSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createCollaborator = /* GraphQL */ `
+  mutation CreateCollaborator(
+    $input: CreateCollaboratorInput!
+    $condition: ModelCollaboratorConditionInput
+  ) {
+    createCollaborator(input: $input, condition: $condition) {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const updateCollaborator = /* GraphQL */ `
+  mutation UpdateCollaborator(
+    $input: UpdateCollaboratorInput!
+    $condition: ModelCollaboratorConditionInput
+  ) {
+    updateCollaborator(input: $input, condition: $condition) {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const deleteCollaborator = /* GraphQL */ `
+  mutation DeleteCollaborator(
+    $input: DeleteCollaboratorInput!
+    $condition: ModelCollaboratorConditionInput
+  ) {
+    deleteCollaborator(input: $input, condition: $condition) {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

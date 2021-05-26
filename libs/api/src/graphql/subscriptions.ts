@@ -2,6 +2,90 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCollaborator = /* GraphQL */ `
+  subscription OnCreateCollaborator {
+    onCreateCollaborator {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onUpdateCollaborator = /* GraphQL */ `
+  subscription OnUpdateCollaborator {
+    onUpdateCollaborator {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onDeleteCollaborator = /* GraphQL */ `
+  subscription OnDeleteCollaborator {
+    onDeleteCollaborator {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 export const onCreateEntry = /* GraphQL */ `
   subscription OnCreateEntry($owner: String!) {
     onCreateEntry(owner: $owner) {
@@ -50,14 +134,8 @@ export const onCreateSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
@@ -76,14 +154,8 @@ export const onUpdateSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
@@ -102,14 +174,8 @@ export const onDeleteSession = /* GraphQL */ `
       images
       email
       launcher
-      invitations {
-        token
-        expireOn
-        email
-      }
       collaborators {
-        userId
-        email
+        nextToken
       }
       createdAt
       updatedAt
