@@ -214,12 +214,22 @@ export const getSession = /* GraphQL */ `
       launcher
       collaborators {
         nextToken
+        items {
+          id
+          userId
+          token
+          email
+          valid
+          invitationExpireOn
+          createdAt
+          updatedAt
+        }
       }
       createdAt
       updatedAt
     }
   }
-`;
+`
 export const listSessionsByOwner = /* GraphQL */ `
   query ListSessionsByOwner(
     $owner: String
