@@ -119,21 +119,12 @@ export const SessionShow: FC<ShowProps> = (props) => {
             source="collaborators"
             render={(record) => (
               <div className={classes.root}>
-                {record?.collaborators?.map(({ email, userId }) => (
+                {record?.collaborators?.items?.map(({ email, userId }) => (
                   <Chip
                     key={userId}
                     label={email}
                     onDelete={console.log}
                     color="primary"
-                  />
-                ))}
-                {record?.invitations?.map(({ email, token }) => (
-                  <Chip
-                    key={token}
-                    label={`招待中: ${email}`}
-                    onDelete={console.log}
-                    color="secondary"
-                    variant="outlined"
                   />
                 ))}
                 <InviteDialogWithChipButton />
@@ -162,10 +153,9 @@ const InviteDialogWithChipButton: FC = () => {
       <Chip label="招待する" clickable onClick={handleClickOpen} />
       <Dialog
         onClose={handleClose}
-        aria-labelledby="simple-dialog-title"
         open={open}
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle>共同編集者を招待</DialogTitle>
         <DialogContent>
           <DialogContentText>
             入力したメールアドレスに招待リンク付きのメールが送信されます。招待リンクをクリックすると共同編集者に登録されます。
