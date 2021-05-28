@@ -17,6 +17,8 @@ const invite: NextApiHandler = async (req, res) => {
     res.status(400).json({ message: 'Bad Request' })
     return
   }
+  // TODO: メールアドレスのバリデート
+  // TODO: すでにあったらアップデート
 
   const result = await API.graphql({
     query: mutations.createCollaborator,
