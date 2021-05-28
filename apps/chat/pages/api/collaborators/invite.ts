@@ -1,9 +1,9 @@
 import { mutations } from '@botui/api'
 import { NextApiHandler } from 'next'
-import API from '@aws-amplify/api'
+import API, { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
-import Amplify from 'aws-amplify';
+import Amplify from 'aws-amplify'
 
 if (process.env.NEXT_PUBLIC_AWS_EXPORTS)
   Amplify.configure(JSON.parse(process.env.NEXT_PUBLIC_AWS_EXPORTS))
@@ -23,18 +23,23 @@ const invite: NextApiHandler = async (req, res) => {
   const result = await API.graphql({
     query: mutations.createCollaborator,
     variables: {
-      token: uuidv4(),
-      email: req.body.email,
-      sessionId: req.body.sessionId,
-      valid: false,
-      invitationExpireOn: dayjs().add(7, 'day').toDate()
-    }
+      input: {
+        token: uuidv4(),
+        email: req.body.email,
+        sessionId: req.body.sessionId,
+        valid: false,
+        invitationExpireOn: dayjs().add(7, 'day').toDate()
+      }
+    },
+    authMode: GRAPHQL_AUTH_MODE.AWS_IAM
   })
 
   if ('error' in result) {
     console.log(result)
     res.status(500).json({ message: `Error` })
   }
+
+  // TODO: メール送信
 
   res.status(200).json({ message: 'succeed' })
 }
