@@ -17,11 +17,11 @@ export const createSession = /* GraphQL */ `
       images
       email
       launcher
+      createdAt
+      updatedAt
       collaborators {
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -40,11 +40,11 @@ export const updateSession = /* GraphQL */ `
       images
       email
       launcher
+      createdAt
+      updatedAt
       collaborators {
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -63,9 +63,39 @@ export const deleteSession = /* GraphQL */ `
       images
       email
       launcher
+      createdAt
+      updatedAt
       collaborators {
         nextToken
       }
+    }
+  }
+`;
+export const updateEntry = /* GraphQL */ `
+  mutation UpdateEntry(
+    $input: UpdateEntryInput!
+    $condition: ModelEntryConditionInput
+  ) {
+    updateEntry(input: $input, condition: $condition) {
+      id
+      owner
+      sessionId
+      inputs
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEntry = /* GraphQL */ `
+  mutation DeleteEntry(
+    $input: DeleteEntryInput!
+    $condition: ModelEntryConditionInput
+  ) {
+    deleteEntry(input: $input, condition: $condition) {
+      id
+      owner
+      sessionId
+      inputs
       createdAt
       updatedAt
     }
@@ -161,36 +191,6 @@ export const deleteCollaborator = /* GraphQL */ `
         createdAt
         updatedAt
       }
-    }
-  }
-`;
-export const updateEntry = /* GraphQL */ `
-  mutation UpdateEntry(
-    $input: UpdateEntryInput!
-    $condition: ModelEntryConditionInput
-  ) {
-    updateEntry(input: $input, condition: $condition) {
-      id
-      owner
-      sessionId
-      inputs
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteEntry = /* GraphQL */ `
-  mutation DeleteEntry(
-    $input: DeleteEntryInput!
-    $condition: ModelEntryConditionInput
-  ) {
-    deleteEntry(input: $input, condition: $condition) {
-      id
-      owner
-      sessionId
-      inputs
-      createdAt
-      updatedAt
     }
   }
 `;

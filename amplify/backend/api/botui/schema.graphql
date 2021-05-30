@@ -30,7 +30,11 @@ type Session
 
 type Collaborator
   @model
-  @key(name: "bySession", fields: ["sessionId", "userId"])
+  @key(
+    name: "bySession"
+    fields: ["sessionId", "email"]
+    queryField: "listCoraboratorsBySession"
+  )
   @key(
     name: "byUser"
     fields: ["userId", "sessionId"]

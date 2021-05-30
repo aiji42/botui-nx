@@ -2,56 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getCollaborator = /* GraphQL */ `
-  query GetCollaborator($id: ID!) {
-    getCollaborator(id: $id) {
-      id
-      userId
-      token
-      email
-      sessionId
-      valid
-      invitationExpireOn
-      createdAt
-      updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
-export const listCollaborators = /* GraphQL */ `
-  query ListCollaborators(
-    $filter: ModelCollaboratorFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCollaborators(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userId
-        token
-        email
-        sessionId
-        valid
-        invitationExpireOn
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getEntry = /* GraphQL */ `
   query GetEntry($id: ID!) {
     getEntry(id: $id) {
@@ -76,70 +26,6 @@ export const listEntrys = /* GraphQL */ `
         owner
         sessionId
         inputs
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listCoraboratorsByUser = /* GraphQL */ `
-  query ListCoraboratorsByUser(
-    $userId: String
-    $sessionId: ModelIDKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCoraboratorsByUser(
-      userId: $userId
-      sessionId: $sessionId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        token
-        email
-        sessionId
-        valid
-        invitationExpireOn
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listCoraboratorsByTokenAndEmail = /* GraphQL */ `
-  query ListCoraboratorsByTokenAndEmail(
-    $token: String
-    $email: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCoraboratorsByTokenAndEmail(
-      token: $token
-      email: $email
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        token
-        email
-        sessionId
-        valid
-        invitationExpireOn
         createdAt
         updatedAt
       }
@@ -212,24 +98,14 @@ export const getSession = /* GraphQL */ `
       images
       email
       launcher
-      collaborators {
-        nextToken
-        items {
-          id
-          userId
-          token
-          email
-          valid
-          invitationExpireOn
-          createdAt
-          updatedAt
-        }
-      }
       createdAt
       updatedAt
+      collaborators {
+        nextToken
+      }
     }
   }
-`
+`;
 export const listSessionsByOwner = /* GraphQL */ `
   query ListSessionsByOwner(
     $owner: String
@@ -255,6 +131,152 @@ export const listSessionsByOwner = /* GraphQL */ `
         images
         email
         launcher
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCollaborator = /* GraphQL */ `
+  query GetCollaborator($id: ID!) {
+    getCollaborator(id: $id) {
+      id
+      userId
+      token
+      email
+      sessionId
+      valid
+      invitationExpireOn
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listCollaborators = /* GraphQL */ `
+  query ListCollaborators(
+    $filter: ModelCollaboratorFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCollaborators(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        token
+        email
+        sessionId
+        valid
+        invitationExpireOn
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listCoraboratorsBySession = /* GraphQL */ `
+  query ListCoraboratorsBySession(
+    $sessionId: ID
+    $email: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCoraboratorsBySession(
+      sessionId: $sessionId
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        token
+        email
+        sessionId
+        valid
+        invitationExpireOn
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listCoraboratorsByUser = /* GraphQL */ `
+  query ListCoraboratorsByUser(
+    $userId: String
+    $sessionId: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCoraboratorsByUser(
+      userId: $userId
+      sessionId: $sessionId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        token
+        email
+        sessionId
+        valid
+        invitationExpireOn
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listCoraboratorsByTokenAndEmail = /* GraphQL */ `
+  query ListCoraboratorsByTokenAndEmail(
+    $token: String
+    $email: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCoraboratorsByTokenAndEmail(
+      token: $token
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        token
+        email
+        sessionId
+        valid
+        invitationExpireOn
         createdAt
         updatedAt
       }
