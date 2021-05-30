@@ -9,3 +9,17 @@ export class InviteInputDTO {
   @IsString()
   sessionId: string
 }
+
+export class ChallangeInputDTO {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string
+
+  @IsNotEmpty()
+  @IsString()
+  token: string
+
+  @IsNotEmpty()
+  @IsString()
+  userId: string
+}
