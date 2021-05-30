@@ -1,15 +1,29 @@
 {
   "version": 2,
-  "cli": { "defaultCollection": "@nrwl/next" },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
   "defaultProject": "chat",
   "generators": {
     "@nrwl/react": {
-      "application": { "style": "none", "linter": "eslint", "babel": true },
-      "component": { "style": "none" },
-      "library": { "style": "none", "linter": "eslint" }
+      "application": {
+        "style": "none",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "none"
+      },
+      "library": {
+        "style": "none",
+        "linter": "eslint"
+      }
     },
     "@nrwl/next": {
-      "application": { "style": "@emotion/styled", "linter": "eslint" }
+      "application": {
+        "style": "@emotion/styled",
+        "linter": "eslint"
+      }
     }
   },
   "projects": {
@@ -20,13 +34,23 @@
       "targets": {
         "build": {
           "executor": "@nrwl/next:build",
-          "outputs": ["{options.outputPath}"],
-          "options": { "root": "apps/chat", "outputPath": "dist/apps/chat" },
-          "configurations": { "production": {} }
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "root": "apps/chat",
+            "outputPath": "dist/apps/chat"
+          },
+          "configurations": {
+            "production": {}
+          }
         },
         "serve": {
           "executor": "@nrwl/next:server",
-          "options": { "buildTarget": "chat:build", "dev": true },
+          "options": {
+            "buildTarget": "chat:build",
+            "dev": true
+          },
           "configurations": {
             "production": {
               "buildTarget": "chat:build:production",
@@ -36,11 +60,15 @@
         },
         "export": {
           "executor": "@nrwl/next:export",
-          "options": { "buildTarget": "chat:build:production" }
+          "options": {
+            "buildTarget": "chat:build:production"
+          }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/chat"],
+          "outputs": [
+            "coverage/apps/chat"
+          ],
           "options": {
             "jestConfig": "apps/chat/jest.config.js",
             "passWithNoTests": true
@@ -49,7 +77,9 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/chat/**/*.{ts,tsx,js,jsx}"],
+            "lintFilePatterns": [
+              "apps/chat/**/*.{ts,tsx,js,jsx}"
+            ],
             "ignorePath": "apps/chat/.eslintignore"
           }
         }
@@ -68,12 +98,18 @@
             "devServerTarget": "chat:serve"
           },
           "configurations": {
-            "production": { "devServerTarget": "chat:serve:production" }
+            "production": {
+              "devServerTarget": "chat:serve:production"
+            }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["apps/chat-e2e/**/*.{js,ts}"] }
+          "options": {
+            "lintFilePatterns": [
+              "apps/chat-e2e/**/*.{js,ts}"
+            ]
+          }
         }
       }
     },
@@ -85,12 +121,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/components/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "libs/components/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/components"],
+          "outputs": [
+            "coverage/libs/components"
+          ],
           "options": {
             "jestConfig": "libs/components/jest.config.js",
             "passWithNoTests": true
@@ -105,11 +145,17 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["libs/hooks/**/*.{ts,tsx,js,jsx}"] }
+          "options": {
+            "lintFilePatterns": [
+              "libs/hooks/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/hooks"],
+          "outputs": [
+            "coverage/libs/hooks"
+          ],
           "options": {
             "jestConfig": "libs/hooks/jest.config.js",
             "passWithNoTests": true
@@ -124,11 +170,17 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["libs/api/**/*.ts"] }
+          "options": {
+            "lintFilePatterns": [
+              "libs/api/**/*.ts"
+            ]
+          }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api"],
+          "outputs": [
+            "coverage/libs/api"
+          ],
           "options": {
             "jestConfig": "libs/api/jest.config.js",
             "passWithNoTests": true
@@ -143,7 +195,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "apps/chat/public/dist/botui",
             "index": "apps/botui/src/index.html",
@@ -176,18 +230,28 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": { "buildTarget": "botui:build" },
+          "options": {
+            "buildTarget": "botui:build"
+          },
           "configurations": {
-            "production": { "buildTarget": "botui:build:production" }
+            "production": {
+              "buildTarget": "botui:build:production"
+            }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["apps/botui/**/*.{ts,tsx,js,jsx}"] }
+          "options": {
+            "lintFilePatterns": [
+              "apps/botui/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/botui"],
+          "outputs": [
+            "coverage/apps/botui"
+          ],
           "options": {
             "jestConfig": "apps/botui/jest.config.js",
             "passWithNoTests": true
@@ -203,12 +267,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/chat-controller/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "libs/chat-controller/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/chat-controller"],
+          "outputs": [
+            "coverage/libs/chat-controller"
+          ],
           "options": {
             "jestConfig": "libs/chat-controller/jest.config.js",
             "passWithNoTests": true
@@ -223,13 +291,17 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/admin",
             "index": "apps/admin/public/index.html",
             "main": "apps/admin/src/index.tsx",
             "tsConfig": "apps/admin/tsconfig.app.json",
-            "assets": ["apps/admin/src/assets"],
+            "assets": [
+              "apps/admin/src/assets"
+            ],
             "styles": [],
             "scripts": [],
             "webpackConfig": "apps/admin/webpack.config.js"
@@ -261,18 +333,29 @@
         },
         "serve": {
           "executor": "@nrwl/web:dev-server",
-          "options": { "buildTarget": "admin:build", "port": 4201 },
+          "options": {
+            "buildTarget": "admin:build",
+            "port": 4201
+          },
           "configurations": {
-            "production": { "buildTarget": "admin:build:production" }
+            "production": {
+              "buildTarget": "admin:build:production"
+            }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["apps/admin/**/*.{ts,tsx,js,jsx}"] }
+          "options": {
+            "lintFilePatterns": [
+              "apps/admin/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/admin"],
+          "outputs": [
+            "coverage/apps/admin"
+          ],
           "options": {
             "jestConfig": "apps/admin/jest.config.js",
             "passWithNoTests": true
@@ -293,12 +376,18 @@
             "devServerTarget": "admin:serve"
           },
           "configurations": {
-            "production": { "devServerTarget": "admin:serve:production" }
+            "production": {
+              "devServerTarget": "admin:serve:production"
+            }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["apps/admin-e2e/**/*.{js,ts}"] }
+          "options": {
+            "lintFilePatterns": [
+              "apps/admin-e2e/**/*.{js,ts}"
+            ]
+          }
         }
       }
     },
@@ -309,7 +398,69 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": { "lintFilePatterns": ["libs/types/**/*.ts"] }
+          "options": {
+            "lintFilePatterns": [
+              "libs/types/**/*.ts"
+            ]
+          }
+        }
+      }
+    },
+    "backend": {
+      "root": "apps/backend",
+      "sourceRoot": "apps/backend/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/backend",
+            "main": "apps/backend/src/main.ts",
+            "tsConfig": "apps/backend/tsconfig.app.json",
+            "assets": [
+              "apps/backend/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/backend/src/environments/environment.ts",
+                  "with": "apps/backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "backend:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/backend/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/backend"
+          ],
+          "options": {
+            "jestConfig": "apps/backend/jest.config.js",
+            "passWithNoTests": true
+          }
         }
       }
     }
