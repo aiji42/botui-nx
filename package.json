@@ -44,6 +44,8 @@
     "@sendgrid/mail": "^7.4.2",
     "aws-amplify": "^3.3.27",
     "card-validator": "^8.1.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.10.5",
