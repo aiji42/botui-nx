@@ -7,9 +7,13 @@ import { v4 as uuidv4 } from 'uuid'
 import Amplify from 'aws-amplify'
 import dayjs = require('dayjs')
 import { Collaborator } from '@botui/types'
+import sgMail = require('@sendgrid/mail')
 
+sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
 if (process.env.AWS_EXPORTS)
   Amplify.configure(JSON.parse(process.env.AWS_EXPORTS))
+
+const EXPIRE_DAY = 7
 
 @Injectable()
 export class CollaboratorService {
@@ -33,7 +37,7 @@ export class CollaboratorService {
           input: {
             id: listCoraborators.data.listCoraboratorsBySession.items[0].id,
             token,
-            invitationExpireOn: dayjs().add(7, 'day').toDate()
+            invitationExpireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
           }
         },
         authMode: GRAPHQL_AUTH_MODE.AWS_IAM
@@ -47,14 +51,23 @@ export class CollaboratorService {
             email: input.email,
             sessionId: input.sessionId,
             valid: false,
-            invitationExpireOn: dayjs().add(7, 'day').toDate()
+            invitationExpireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
           }
         },
         authMode: GRAPHQL_AUTH_MODE.AWS_IAM
       })
     }
 
-    
+    await sgMail.send({
+      to: input.email,
+      from: 'no-reply@survaq.com',
+      templateId: 'd-9899e84b861d46a881628503dadc0bf9',
+      dynamicTemplateData: {
+        token,
+        session_title: input.sessionTitle,
+        expire_day: EXPIRE_DAY
+      }
+    })
 
     return { message: `create/updated collaborator by token: ${token}` }
   }

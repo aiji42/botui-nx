@@ -8,6 +8,10 @@ export class InviteInputDTO {
   @IsNotEmpty()
   @IsString()
   sessionId: string
+
+  @IsNotEmpty()
+  @IsString()
+  sessionTitle: string
 }
 
 export class ChallangeInputDTO {
