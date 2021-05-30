@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common'
-import { InviteInputDTO } from './collaborator.dto'
+import { Injectable, HttpStatus } from '@nestjs/common'
+import { Response } from 'express'
+import { ChallangeInputDTO, InviteInputDTO } from './collaborator.dto'
 import { mutations, queries } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
@@ -70,5 +71,40 @@ export class CollaboratorService {
     })
 
     return { message: `create/updated collaborator by token: ${token}` }
+  }
+
+  async challenge(input: ChallangeInputDTO, responce: Response): Promise<void> {
+    const listCoraborators = (await API.graphql({
+      query: queries.listCoraboratorsByTokenAndEmail,
+      variables: {
+        token: input.token,
+        email: { eq: input.email },
+        filter: {
+          invitationExpireOn: { gt: dayjs().toDate() }
+        }
+      },
+      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
+    })) as GraphQLResult<{
+      listCoraboratorsByTokenAndEmail: { items: Array<Collaborator> }
+    }>
+
+    const id =
+      listCoraborators.data.listCoraboratorsByTokenAndEmail.items[0]?.id
+    if (!id) {
+      responce
+        .status(HttpStatus.NOT_FOUND)
+        .send({ message: 'Not found session. Please request for re-invite.' })
+      return
+    }
+
+    await API.graphql({
+      query: mutations.updateCollaborator,
+      variables: {
+        input: { id, valid: true, userId: input.userId }
+      },
+      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
+    })
+
+    responce.status(HttpStatus.OK).send({ message: 'Success!' })
   }
 }
