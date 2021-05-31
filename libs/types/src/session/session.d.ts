@@ -62,7 +62,7 @@ export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   images: V
   email?: string
   launcher: W
-  collaborators?: { items:  Array<Collaborator> }
+  collaborators?: { items:  Array<Collaborator> } | null
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {

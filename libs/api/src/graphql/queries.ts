@@ -101,11 +101,21 @@ export const getSession = /* GraphQL */ `
       createdAt
       updatedAt
       collaborators {
+        items {
+          userId
+          token
+          email
+          sessionId
+          valid
+          invitationExpireOn
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
   }
-`;
+`
 export const listSessionsByOwner = /* GraphQL */ `
   query ListSessionsByOwner(
     $owner: String

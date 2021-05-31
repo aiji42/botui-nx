@@ -119,9 +119,9 @@ export const SessionShow: FC<ShowProps> = (props) => {
             source="collaborators"
             render={(record) => (
               <div className={classes.root}>
-                {record?.collaborators?.items?.map(({ email, userId }) => (
+                {record?.collaborators?.items?.map(({ email, token }) => (
                   <Chip
-                    key={userId}
+                    key={token}
                     label={email}
                     onDelete={console.log}
                     color="primary"
@@ -139,6 +139,7 @@ export const SessionShow: FC<ShowProps> = (props) => {
 
 const InviteDialogWithChipButton: FC = () => {
   const [open, setOpen] = useState(false)
+  
 
   const handleClickOpen = () => {
     setOpen(true)
