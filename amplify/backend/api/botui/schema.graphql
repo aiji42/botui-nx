@@ -45,7 +45,9 @@ type Collaborator
     fields: ["token", "email"]
     queryField: "listCoraboratorsByTokenAndEmail"
   )
-  @auth(rules: [{ allow: public, provider: iam }]) {
+  @auth(
+    rules: [{ allow: public, provider: iam }, { allow: private }]
+  ) {
   id: ID!
   userId: String
   token: String!
