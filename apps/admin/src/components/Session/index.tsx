@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import {
   Datagrid,
   List,
@@ -18,7 +18,8 @@ import {
   Show,
   TabbedShowLayout,
   Tab,
-  ShowProps
+  ShowProps,
+  useShowContext
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
@@ -119,14 +120,17 @@ export const SessionShow: FC<ShowProps> = (props) => {
             source="collaborators"
             render={(record) => (
               <div className={classes.root}>
-                {record?.collaborators?.items?.map(({ email, token }) => (
-                  <Chip
-                    key={token}
-                    label={email}
-                    onDelete={console.log}
-                    color="primary"
-                  />
-                ))}
+                {record?.collaborators?.items?.map(
+                  ({ email, valid, token }) => (
+                    <Chip
+                      key={token}
+                      label={`${!valid && '招待中: '}${email}`}
+                      onDelete={console.log}
+                      variant={valid ? 'default' : 'outlined'}
+                      color="primary"
+                    />
+                  )
+                )}
                 <InviteDialogWithChipButton />
               </div>
             )}
@@ -137,17 +141,34 @@ export const SessionShow: FC<ShowProps> = (props) => {
   )
 }
 
-const InviteDialogWithChipButton: FC = () => {
+const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
   const [open, setOpen] = useState(false)
-  
-
+  const [email, setEmail] = useState('')
+  const session = useShowContext<Session>(props)
+  const refresh = useRefresh()
   const handleClickOpen = () => {
     setOpen(true)
   }
-
   const handleClose = () => {
     setOpen(false)
   }
+  const invite = useCallback(() => {
+    fetch('http://localhost:3333/api/collaborator/invite', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        sessionTitle: session.record?.title,
+        sessionId: session.record?.id,
+        email
+      })
+    }).then(() => {
+      handleClose()
+      refresh()
+    })
+  }, [email, refresh, session.record?.id, session.record?.title])
 
   return (
     <>
@@ -168,10 +189,13 @@ const InviteDialogWithChipButton: FC = () => {
             label="メールアドレス"
             type="email"
             fullWidth
+            onChange={(e) => setEmail(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={() => {
+            invite()
+          }} color="primary">
             招待する
           </Button>
         </DialogActions>
