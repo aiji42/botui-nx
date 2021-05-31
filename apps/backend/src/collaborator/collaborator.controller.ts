@@ -1,7 +1,11 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res } from '@nestjs/common'
 import { Response } from 'express'
-import { ChallangeInputDTO, InviteInputDTO } from './collaborator.dto';
-import { CollaboratorService } from './collaborator.service';
+import {
+  ChallangeInputDTO,
+  EjectInputDTO,
+  InviteInputDTO
+} from './collaborator.dto'
+import { CollaboratorService } from './collaborator.service'
 
 @Controller('collaborator')
 export class CollaboratorController {
@@ -18,5 +22,10 @@ export class CollaboratorController {
     @Res() response: Response
   ) {
     return this.collaboratorService.challenge(challengeInput, response)
+  }
+
+  @Post('eject')
+  eject(@Body() ejectInput: EjectInputDTO) {
+    return this.collaboratorService.eject(ejectInput)
   }
 }

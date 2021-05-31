@@ -1,6 +1,6 @@
 import { Injectable, HttpStatus } from '@nestjs/common'
 import { Response } from 'express'
-import { ChallangeInputDTO, InviteInputDTO } from './collaborator.dto'
+import { ChallangeInputDTO, EjectInputDTO, InviteInputDTO } from './collaborator.dto'
 import { mutations, queries } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
@@ -106,5 +106,17 @@ export class CollaboratorService {
     })
 
     responce.status(HttpStatus.OK).send({ message: 'Success!' })
+  }
+
+  async eject(input: EjectInputDTO): Promise<{ message: string }> {
+    await API.graphql({
+      query: mutations.deleteCollaborator,
+      variables: {
+        input: { id: input.id }
+      },
+      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
+    })
+
+    return { message: 'Success!' }
   }
 }

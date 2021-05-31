@@ -27,3 +27,9 @@ export class ChallangeInputDTO {
   @IsString()
   userId: string
 }
+
+export class EjectInputDTO {
+  @IsNotEmpty()
+  @IsString()
+  id: string
+}
