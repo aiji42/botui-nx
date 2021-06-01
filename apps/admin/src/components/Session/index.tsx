@@ -22,7 +22,12 @@ import {
   useShowContext,
   TextInput,
   required,
-  email
+  email,
+  TopToolbar,
+  CreateButton,
+  ListActionsProps,
+  sanitizeListRestProps,
+  Button as RaButton
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
@@ -41,6 +46,8 @@ import {
   DialogActions,
   Button
 } from '@material-ui/core'
+import PersonAdd from '@material-ui/icons/PersonAdd'
+import { Auth } from 'aws-amplify'
 
 const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
   const { values: session } = useFormState<Session>()
@@ -53,12 +60,95 @@ const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
   )
 }
 
+const ListActions: FC<ListActionsProps> = (props) => {
+  return (
+    <TopToolbar {...sanitizeListRestProps(props)}>
+      <CollaboratorChallengeDialogWithButton />
+      <CreateButton label="シナリオを作る" />
+    </TopToolbar>
+  )
+}
+
+const CollaboratorChallengeDialogWithButton: FC = () => {
+  const [open, setOpen] = useState(false)
+  const refresh = useRefresh()
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const challenge = useCallback(
+    ({ token }: { token: string }) => {
+      Auth.currentUserInfo().then((user) => {
+        console.log(user)
+        fetch('http://localhost:3333/api/collaborator/challenge', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: user.attributes.email,
+            token,
+            userId: user.username
+          })
+        }).then(() => {
+          handleClose()
+          refresh()
+        })
+      })
+    },
+    [refresh]
+  )
+
+  return (
+    <>
+      <RaButton
+        onClick={handleClickOpen}
+        startIcon={<PersonAdd />}
+        label="招待コードを入力"
+      />
+      <Dialog onClose={handleClose} open={open}>
+        <Form
+          onSubmit={challenge}
+          render={({ invalid, submitting, handleSubmit }) => (
+            <>
+              <DialogTitle>招待コードを入力</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  招待コードを受け取っている場合には、コードを入力することで共同編集が可能です。
+                </DialogContentText>
+                <TextInput
+                  source="token"
+                  label="招待コード"
+                  validate={[required()]}
+                  fullWidth
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  disabled={invalid || submitting}
+                  onClick={handleSubmit}
+                  color="primary"
+                >
+                  確定
+                </Button>
+              </DialogActions>
+            </>
+          )}
+        ></Form>
+      </Dialog>
+    </>
+  )
+}
+
 export const SessionList: FC = (props) => {
   return (
     <List
       {...props}
       bulkActionButtons={false}
-      exporter={false}
+      actions={<ListActions />}
       empty={<Empty />}
     >
       <Datagrid>
