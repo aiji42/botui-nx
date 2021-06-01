@@ -102,6 +102,7 @@ export const getSession = /* GraphQL */ `
       updatedAt
       collaborators {
         items {
+          id
           userId
           token
           email
