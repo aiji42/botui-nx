@@ -21,14 +21,14 @@ export class ChallangeInputDTO {
 
   @IsNotEmpty()
   @IsString()
-  token: string
+  code: string
 
   @IsNotEmpty()
   @IsString()
   userId: string
 }
 
-export class EjectInputDTO {
+export class RemoveInputDTO {
   @IsNotEmpty()
   @IsString()
   id: string

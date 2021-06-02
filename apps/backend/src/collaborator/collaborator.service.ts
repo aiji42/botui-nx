@@ -1,13 +1,13 @@
 import { Injectable, HttpStatus } from '@nestjs/common'
 import { Response } from 'express'
-import { ChallangeInputDTO, EjectInputDTO, InviteInputDTO } from './collaborator.dto'
+import { ChallangeInputDTO, RemoveInputDTO, InviteInputDTO } from './collaborator.dto'
 import { mutations, queries } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import { v4 as uuidv4 } from 'uuid'
 import Amplify from 'aws-amplify'
 import dayjs = require('dayjs')
-import { Collaborator } from '@botui/types'
+import { CollaboratorInvitation } from '@botui/types'
 import sgMail = require('@sendgrid/mail')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
@@ -15,48 +15,61 @@ if (process.env.AWS_EXPORTS)
   Amplify.configure(JSON.parse(process.env.AWS_EXPORTS))
 
 const EXPIRE_DAY = 7
+const additionalHeaders = {
+  'x-api-key': process.env.GRAPHQL_API_KEY
+}
 
 @Injectable()
 export class CollaboratorService {
   async invite(input: InviteInputDTO): Promise<{ message: string }> {
-    const listCoraborators = (await API.graphql({
-      query: queries.listCoraboratorsBySession,
-      variables: {
-        sessionId: input.sessionId,
-        email: { eq: input.email }
+    const { data } = (await API.graphql(
+      {
+        query: queries.listCollaboratorInvitationsBySession,
+        variables: {
+          sessionId: input.sessionId,
+          email: { eq: input.email }
+        },
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
       },
-      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-    })) as GraphQLResult<{
-      listCoraboratorsBySession: { items: Array<Collaborator> }
+      additionalHeaders
+    )) as GraphQLResult<{
+      listCollaboratorInvitationsBySession: {
+        items: Array<CollaboratorInvitation>
+      }
     }>
 
-    const token = uuidv4()
-    if (listCoraborators.data.listCoraboratorsBySession.items[0]) {
-      await API.graphql({
-        query: mutations.updateCollaborator,
-        variables: {
-          input: {
-            id: listCoraborators.data.listCoraboratorsBySession.items[0].id,
-            token,
-            invitationExpireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
-          }
+    const code = uuidv4()
+    if (data.listCollaboratorInvitationsBySession.items[0]) {
+      await API.graphql(
+        {
+          query: mutations.updateCollaboratorInvitation,
+          variables: {
+            input: {
+              id: data.listCollaboratorInvitationsBySession.items[0].id,
+              code,
+              expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.API_KEY
         },
-        authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-      })
+        additionalHeaders
+      )
     } else {
-      await API.graphql({
-        query: mutations.createCollaborator,
-        variables: {
-          input: {
-            token,
-            email: input.email,
-            sessionId: input.sessionId,
-            valid: false,
-            invitationExpireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
-          }
+      await API.graphql(
+        {
+          query: mutations.createCollaboratorInvitation,
+          variables: {
+            input: {
+              code,
+              email: input.email,
+              sessionId: input.sessionId,
+              expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.API_KEY
         },
-        authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-      })
+        additionalHeaders
+      )
     }
 
     await sgMail.send({
@@ -64,32 +77,32 @@ export class CollaboratorService {
       from: 'no-reply@survaq.com',
       templateId: 'd-9899e84b861d46a881628503dadc0bf9',
       dynamicTemplateData: {
-        token,
+        code,
         session_title: input.sessionTitle,
         expire_day: EXPIRE_DAY
       }
     })
 
-    return { message: `create/updated collaborator by token: ${token}` }
+    return { message: `create/updated collaborator by code: ${code}` }
   }
 
   async challenge(input: ChallangeInputDTO, responce: Response): Promise<void> {
-    const listCoraborators = (await API.graphql({
-      query: queries.listCoraboratorsByTokenAndEmail,
+    const { data } = (await API.graphql({
+      query: queries.listCoraboratorsByCodeAndEmail,
       variables: {
-        token: input.token,
+        code: input.code,
         email: { eq: input.email },
         filter: {
           invitationExpireOn: { gt: dayjs().toDate() }
         }
       },
-      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-    })) as GraphQLResult<{
-      listCoraboratorsByTokenAndEmail: { items: Array<Collaborator> }
+      authMode: GRAPHQL_AUTH_MODE.API_KEY
+    }, additionalHeaders)) as GraphQLResult<{
+      listCoraboratorsByTokenAndEmail: { items: Array<CollaboratorInvitation> }
     }>
 
     const id =
-      listCoraborators.data.listCoraboratorsByTokenAndEmail.items[0]?.id
+      data.listCoraboratorsByTokenAndEmail.items[0]?.id
     if (!id) {
       responce
         .status(HttpStatus.NOT_FOUND)
@@ -97,25 +110,29 @@ export class CollaboratorService {
       return
     }
 
-    await API.graphql({
-      query: mutations.updateCollaborator,
-      variables: {
-        input: { id, valid: true, userId: input.userId }
+    await API.graphql(
+      {
+        query: mutations.deleteCollaboratorInvitation,
+        variables: {
+          input: { id }
+        },
+        authMode: GRAPHQL_AUTH_MODE.API_KEY
       },
-      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-    })
+      additionalHeaders
+    )
+    // TODO: session update
 
     responce.status(HttpStatus.OK).send({ message: 'Success!' })
   }
 
-  async eject(input: EjectInputDTO): Promise<{ message: string }> {
+  async remove(input: RemoveInputDTO): Promise<{ message: string }> {
     await API.graphql({
-      query: mutations.deleteCollaborator,
+      query: mutations.deleteCollaboratorInvitation,
       variables: {
         input: { id: input.id }
       },
-      authMode: GRAPHQL_AUTH_MODE.AWS_IAM
-    })
+      authMode: GRAPHQL_AUTH_MODE.API_KEY
+    }, additionalHeaders)
 
     return { message: 'Success!' }
   }
