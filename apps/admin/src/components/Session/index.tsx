@@ -234,7 +234,7 @@ export const SessionShow: FC<ShowProps> = (props) => {
                   ({ email, valid, token, id }) => (
                     <Chip
                       key={token}
-                      label={`${!valid && '招待中: '}${email}`}
+                      label={`${!valid ? '招待中: ' : ''}${email}`}
                       onDelete={() => eject(id)}
                       variant={valid ? 'default' : 'outlined'}
                       color="primary"
