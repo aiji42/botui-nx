@@ -8,6 +8,7 @@ type Session
         operations: [create, update, delete, read]
       }
       { allow: public, provider: iam, operations: [read] }
+      { allow: public, provider: apiKey, operations: [read, update] }
     ]
   )
   @key(
@@ -24,37 +25,32 @@ type Session
   images: AWSJSON!
   email: String
   launcher: AWSJSON!
-  collaborators: [Collaborator]
+  collaboratorInvitations: [CollaboratorInvitation]
     @connection(keyName: "bySession", fields: ["id"])
 }
 
-type Collaborator
+type CollaboratorInvitation
   @model
   @key(
     name: "bySession"
     fields: ["sessionId", "email"]
-    queryField: "listCoraboratorsBySession"
+    queryField: "listCollaboratorInvitationsBySession"
   )
   @key(
-    name: "byUser"
-    fields: ["userId", "sessionId"]
-    queryField: "listCoraboratorsByUser"
-  )
-  @key(
-    name: "byToken"
-    fields: ["token", "email"]
-    queryField: "listCoraboratorsByTokenAndEmail"
+    name: "byCode"
+    fields: ["code", "email"]
+    queryField: "listCoraboratorsByCodeAndEmail"
   )
   @auth(
-    rules: [{ allow: public, provider: iam }, { allow: private }]
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, operations: [read] }
+    ]
   ) {
   id: ID!
-  userId: String
-  token: String!
+  code: String!
   email: String!
   sessionId: ID!
-  session: Session @connection(fields: ["sessionId"])
-  valid: Boolean!
   invitationExpireOn: String!
 }
 
