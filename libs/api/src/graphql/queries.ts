@@ -62,6 +62,31 @@ export const entryBySessionAndCreatedAt = /* GraphQL */ `
     }
   }
 `;
+export const getSession = /* GraphQL */ `
+  query GetSession($id: ID!) {
+    getSession(id: $id) {
+      id
+      owner
+      title
+      active
+      theme
+      proposals
+      images
+      email
+      launcher
+      createdAt
+      updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          email
+          expireOn
+        }
+        nextToken
+      }
+    }
+  }
+`
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -86,37 +111,6 @@ export const listSessions = /* GraphQL */ `
     }
   }
 `;
-export const getSession = /* GraphQL */ `
-  query GetSession($id: ID!) {
-    getSession(id: $id) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-      createdAt
-      updatedAt
-      collaborators {
-        items {
-          id
-          userId
-          token
-          email
-          sessionId
-          valid
-          invitationExpireOn
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-`
 export const listSessionsByOwner = /* GraphQL */ `
   query ListSessionsByOwner(
     $owner: String
@@ -149,49 +143,36 @@ export const listSessionsByOwner = /* GraphQL */ `
     }
   }
 `;
-export const getCollaborator = /* GraphQL */ `
-  query GetCollaborator($id: ID!) {
-    getCollaborator(id: $id) {
+export const getCollaboratorInvitation = /* GraphQL */ `
+  query GetCollaboratorInvitation($id: ID!) {
+    getCollaboratorInvitation(id: $id) {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
-export const listCollaborators = /* GraphQL */ `
-  query ListCollaborators(
-    $filter: ModelCollaboratorFilterInput
+export const listCollaboratorInvitations = /* GraphQL */ `
+  query ListCollaboratorInvitations(
+    $filter: ModelCollaboratorInvitationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCollaborators(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listCollaboratorInvitations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        userId
-        token
+        code
         email
         sessionId
-        valid
-        invitationExpireOn
+        expireOn
         createdAt
         updatedAt
       }
@@ -199,16 +180,16 @@ export const listCollaborators = /* GraphQL */ `
     }
   }
 `;
-export const listCoraboratorsBySession = /* GraphQL */ `
-  query ListCoraboratorsBySession(
+export const listCollaboratorInvitationsBySession = /* GraphQL */ `
+  query ListCollaboratorInvitationsBySession(
     $sessionId: ID
     $email: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorFilterInput
+    $filter: ModelCollaboratorInvitationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorsBySession(
+    listCollaboratorInvitationsBySession(
       sessionId: $sessionId
       email: $email
       sortDirection: $sortDirection
@@ -218,12 +199,10 @@ export const listCoraboratorsBySession = /* GraphQL */ `
     ) {
       items {
         id
-        userId
-        token
+        code
         email
         sessionId
-        valid
-        invitationExpireOn
+        expireOn
         createdAt
         updatedAt
       }
@@ -231,49 +210,17 @@ export const listCoraboratorsBySession = /* GraphQL */ `
     }
   }
 `;
-export const listCoraboratorsByUser = /* GraphQL */ `
-  query ListCoraboratorsByUser(
-    $userId: String
-    $sessionId: ModelIDKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCoraboratorsByUser(
-      userId: $userId
-      sessionId: $sessionId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        token
-        email
-        sessionId
-        valid
-        invitationExpireOn
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listCoraboratorsByTokenAndEmail = /* GraphQL */ `
-  query ListCoraboratorsByTokenAndEmail(
-    $token: String
+export const listCoraboratorsByCodeAndEmail = /* GraphQL */ `
+  query ListCoraboratorsByCodeAndEmail(
+    $code: String
     $email: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorFilterInput
+    $filter: ModelCollaboratorInvitationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorsByTokenAndEmail(
-      token: $token
+    listCoraboratorsByCodeAndEmail(
+      code: $code
       email: $email
       sortDirection: $sortDirection
       filter: $filter
@@ -282,12 +229,10 @@ export const listCoraboratorsByTokenAndEmail = /* GraphQL */ `
     ) {
       items {
         id
-        userId
-        token
+        code
         email
         sessionId
-        valid
-        invitationExpireOn
+        expireOn
         createdAt
         updatedAt
       }

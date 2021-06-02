@@ -51,7 +51,7 @@ type CollaboratorInvitation
   code: String!
   email: String!
   sessionId: ID!
-  invitationExpireOn: String!
+  expireOn: String!
 }
 
 type Entry

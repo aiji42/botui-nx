@@ -19,30 +19,7 @@ export const createSession = /* GraphQL */ `
       launcher
       createdAt
       updatedAt
-      collaborators {
-        nextToken
-      }
-    }
-  }
-`;
-export const updateSession = /* GraphQL */ `
-  mutation UpdateSession(
-    $input: UpdateSessionInput!
-    $condition: ModelSessionConditionInput
-  ) {
-    updateSession(input: $input, condition: $condition) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-      createdAt
-      updatedAt
-      collaborators {
+      collaboratorInvitations {
         nextToken
       }
     }
@@ -65,7 +42,7 @@ export const deleteSession = /* GraphQL */ `
       launcher
       createdAt
       updatedAt
-      collaborators {
+      collaboratorInvitations {
         nextToken
       }
     }
@@ -101,96 +78,74 @@ export const deleteEntry = /* GraphQL */ `
     }
   }
 `;
-export const createCollaborator = /* GraphQL */ `
-  mutation CreateCollaborator(
-    $input: CreateCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
+export const updateSession = /* GraphQL */ `
+  mutation UpdateSession(
+    $input: UpdateSessionInput!
+    $condition: ModelSessionConditionInput
   ) {
-    createCollaborator(input: $input, condition: $condition) {
+    updateSession(input: $input, condition: $condition) {
       id
-      userId
-      token
+      owner
+      title
+      active
+      theme
+      proposals
+      images
       email
-      sessionId
-      valid
-      invitationExpireOn
+      launcher
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
+      collaboratorInvitations {
+        nextToken
       }
     }
   }
 `;
-export const updateCollaborator = /* GraphQL */ `
-  mutation UpdateCollaborator(
-    $input: UpdateCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
+export const createCollaboratorInvitation = /* GraphQL */ `
+  mutation CreateCollaboratorInvitation(
+    $input: CreateCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
   ) {
-    updateCollaborator(input: $input, condition: $condition) {
+    createCollaboratorInvitation(input: $input, condition: $condition) {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
-export const deleteCollaborator = /* GraphQL */ `
-  mutation DeleteCollaborator(
-    $input: DeleteCollaboratorInput!
-    $condition: ModelCollaboratorConditionInput
+export const updateCollaboratorInvitation = /* GraphQL */ `
+  mutation UpdateCollaboratorInvitation(
+    $input: UpdateCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
   ) {
-    deleteCollaborator(input: $input, condition: $condition) {
+    updateCollaboratorInvitation(input: $input, condition: $condition) {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
+    }
+  }
+`;
+export const deleteCollaboratorInvitation = /* GraphQL */ `
+  mutation DeleteCollaboratorInvitation(
+    $input: DeleteCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
+  ) {
+    deleteCollaboratorInvitation(input: $input, condition: $condition) {
+      id
+      code
+      email
+      sessionId
+      expireOn
+      createdAt
+      updatedAt
     }
   }
 `;

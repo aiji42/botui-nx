@@ -52,7 +52,7 @@ export const onCreateSession = /* GraphQL */ `
       launcher
       createdAt
       updatedAt
-      collaborators {
+      collaboratorInvitations {
         nextToken
       }
     }
@@ -72,7 +72,7 @@ export const onUpdateSession = /* GraphQL */ `
       launcher
       createdAt
       updatedAt
-      collaborators {
+      collaboratorInvitations {
         nextToken
       }
     }
@@ -92,93 +92,48 @@ export const onDeleteSession = /* GraphQL */ `
       launcher
       createdAt
       updatedAt
-      collaborators {
+      collaboratorInvitations {
         nextToken
       }
     }
   }
 `;
-export const onCreateCollaborator = /* GraphQL */ `
-  subscription OnCreateCollaborator {
-    onCreateCollaborator {
+export const onCreateCollaboratorInvitation = /* GraphQL */ `
+  subscription OnCreateCollaboratorInvitation {
+    onCreateCollaboratorInvitation {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
-export const onUpdateCollaborator = /* GraphQL */ `
-  subscription OnUpdateCollaborator {
-    onUpdateCollaborator {
+export const onUpdateCollaboratorInvitation = /* GraphQL */ `
+  subscription OnUpdateCollaboratorInvitation {
+    onUpdateCollaboratorInvitation {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
-export const onDeleteCollaborator = /* GraphQL */ `
-  subscription OnDeleteCollaborator {
-    onDeleteCollaborator {
+export const onDeleteCollaboratorInvitation = /* GraphQL */ `
+  subscription OnDeleteCollaboratorInvitation {
+    onDeleteCollaboratorInvitation {
       id
-      userId
-      token
+      code
       email
       sessionId
-      valid
-      invitationExpireOn
+      expireOn
       createdAt
       updatedAt
-      session {
-        id
-        owner
-        title
-        active
-        theme
-        proposals
-        images
-        email
-        launcher
-        createdAt
-        updatedAt
-      }
     }
   }
 `;
