@@ -1,23 +1,27 @@
 import { Injectable, HttpStatus } from '@nestjs/common'
 import { Response } from 'express'
-import { ChallangeInputDTO, RemoveInputDTO, InviteInputDTO } from './collaborator.dto'
+import {
+  ChallangeInputDTO,
+  RemoveInputDTO,
+  InviteInputDTO
+} from './collaborator.dto'
 import { mutations, queries } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api'
 import { v4 as uuidv4 } from 'uuid'
 import Amplify from 'aws-amplify'
 import dayjs = require('dayjs')
-import { CollaboratorInvitation } from '@botui/types'
+import { CollaboratorInvitation, Session } from '@botui/types'
 import sgMail = require('@sendgrid/mail')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
 if (process.env.AWS_EXPORTS)
-  Amplify.configure(JSON.parse(process.env.AWS_EXPORTS))
+  Amplify.configure({
+    ...JSON.parse(process.env.AWS_EXPORTS),
+    aws_appsync_apiKey: process.env.GRAPHQL_API_KEY,
+    aws_appsync_authenticationType: 'API_KEY'
+  })
 
 const EXPIRE_DAY = 7
-const additionalHeaders = {
-  'x-api-key': process.env.GRAPHQL_API_KEY
-}
 
 @Injectable()
 export class CollaboratorService {
@@ -28,10 +32,8 @@ export class CollaboratorService {
         variables: {
           sessionId: input.sessionId,
           email: { eq: input.email }
-        },
-        authMode: GRAPHQL_AUTH_MODE.API_KEY
-      },
-      additionalHeaders
+        }
+      }
     )) as GraphQLResult<{
       listCollaboratorInvitationsBySession: {
         items: Array<CollaboratorInvitation>
@@ -49,10 +51,8 @@ export class CollaboratorService {
               code,
               expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
             }
-          },
-          authMode: GRAPHQL_AUTH_MODE.API_KEY
-        },
-        additionalHeaders
+          }
+        }
       )
     } else {
       await API.graphql(
@@ -65,10 +65,8 @@ export class CollaboratorService {
               sessionId: input.sessionId,
               expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
             }
-          },
-          authMode: GRAPHQL_AUTH_MODE.API_KEY
-        },
-        additionalHeaders
+          }
+        }
       )
     }
 
@@ -77,7 +75,7 @@ export class CollaboratorService {
       from: 'no-reply@survaq.com',
       templateId: 'd-9899e84b861d46a881628503dadc0bf9',
       dynamicTemplateData: {
-        code,
+        token: code,
         session_title: input.sessionTitle,
         expire_day: EXPIRE_DAY
       }
@@ -87,52 +85,76 @@ export class CollaboratorService {
   }
 
   async challenge(input: ChallangeInputDTO, responce: Response): Promise<void> {
-    const { data } = (await API.graphql({
-      query: queries.listCoraboratorsByCodeAndEmail,
-      variables: {
-        code: input.code,
-        email: { eq: input.email },
-        filter: {
-          invitationExpireOn: { gt: dayjs().toDate() }
+    const {
+      data: { listCoraboratorsByCodeAndEmail: collaborators }
+    } = (await API.graphql(
+      {
+        query: queries.listCoraboratorsByCodeAndEmail,
+        variables: {
+          code: input.code,
+          email: { eq: input.email },
+          filter: {
+            expireOn: { gt: dayjs().toDate() }
+          }
         }
-      },
-      authMode: GRAPHQL_AUTH_MODE.API_KEY
-    }, additionalHeaders)) as GraphQLResult<{
-      listCoraboratorsByTokenAndEmail: { items: Array<CollaboratorInvitation> }
+      }
+    )) as GraphQLResult<{
+      listCoraboratorsByCodeAndEmail: { items: Array<CollaboratorInvitation> }
     }>
 
-    const id =
-      data.listCoraboratorsByTokenAndEmail.items[0]?.id
-    if (!id) {
+    const [collaborator] = collaborators.items
+    if (!collaborator) {
       responce
         .status(HttpStatus.NOT_FOUND)
         .send({ message: 'Not found session. Please request for re-invite.' })
       return
     }
 
+    const {
+      data: { getSession: session }
+    } = (await API.graphql(
+      {
+        query: queries.getSession,
+        variables: {
+          id: collaborator.sessionId
+        }
+      }
+    )) as GraphQLResult<{
+      getSession: Session
+    }>
+    await API.graphql(
+      {
+        query: mutations.updateSession,
+        variables: {
+          input: {
+            id: session.id,
+            collaborators: [...(session.collaborators ?? []), collaborator.email]
+          }
+        }
+      }
+    )
+
     await API.graphql(
       {
         query: mutations.deleteCollaboratorInvitation,
         variables: {
-          input: { id }
-        },
-        authMode: GRAPHQL_AUTH_MODE.API_KEY
-      },
-      additionalHeaders
+          input: { id: collaborator.id }
+        }
+      }
     )
-    // TODO: session update
 
     responce.status(HttpStatus.OK).send({ message: 'Success!' })
   }
 
   async remove(input: RemoveInputDTO): Promise<{ message: string }> {
-    await API.graphql({
-      query: mutations.deleteCollaboratorInvitation,
-      variables: {
-        input: { id: input.id }
-      },
-      authMode: GRAPHQL_AUTH_MODE.API_KEY
-    }, additionalHeaders)
+    await API.graphql(
+      {
+        query: mutations.deleteCollaboratorInvitation,
+        variables: {
+          input: { id: input.id }
+        }
+      }
+    )
 
     return { message: 'Success!' }
   }
