@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Box, Typography } from '@material-ui/core'
 import { CreateButton, useListContext } from 'react-admin'
+import { CollaboratorChallengeDialogWithButton } from '.'
 
 const Empty = () => {
   const { basePath } = useListContext()
@@ -14,6 +15,7 @@ const Empty = () => {
         さっそく、新しいシナリオを登録してみましょう
       </Typography>
       <CreateButton basePath={basePath} size="large" variant="contained" />
+      <CollaboratorChallengeDialogWithButton />
     </Box>
   )
 }
