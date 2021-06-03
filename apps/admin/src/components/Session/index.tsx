@@ -69,7 +69,7 @@ const ListActions: FC<ListActionsProps> = (props) => {
   )
 }
 
-const CollaboratorChallengeDialogWithButton: FC = () => {
+export const CollaboratorChallengeDialogWithButton: FC = () => {
   const [open, setOpen] = useState(false)
   const refresh = useRefresh()
   const handleClickOpen = () => {
@@ -79,7 +79,7 @@ const CollaboratorChallengeDialogWithButton: FC = () => {
     setOpen(false)
   }
   const challenge = useCallback(
-    ({ token }: { token: string }) => {
+    ({ code }: { code: string }) => {
       Auth.currentUserInfo().then((user) => {
         console.log(user)
         fetch('http://localhost:3333/api/collaborator/challenge', {
@@ -90,7 +90,7 @@ const CollaboratorChallengeDialogWithButton: FC = () => {
           },
           body: JSON.stringify({
             email: user.attributes.email,
-            token,
+            code,
             userId: user.username
           })
         }).then(() => {
@@ -120,7 +120,7 @@ const CollaboratorChallengeDialogWithButton: FC = () => {
                   招待コードを受け取っている場合には、コードを入力することで共同編集が可能です。
                 </DialogContentText>
                 <TextInput
-                  source="token"
+                  source="code"
                   label="招待コード"
                   validate={[required()]}
                   fullWidth
@@ -205,10 +205,10 @@ const useStyles = makeStyles((theme) => ({
 export const SessionShow: FC<ShowProps> = (props) => {
   const classes = useStyles()
   const refresh = useRefresh()
-  const eject = useCallback(
+  const remove = useCallback(
     (id) => {
       if (!window.confirm('共同編集者から外しますか？')) return
-      fetch('http://localhost:3333/api/collaborator/eject', {
+      fetch('http://localhost:3333/api/collaborator/remove', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -230,13 +230,19 @@ export const SessionShow: FC<ShowProps> = (props) => {
             source="collaborators"
             render={(record) => (
               <div className={classes.root}>
-                {record?.collaborators?.items?.map(
-                  ({ email, valid, token, id }) => (
+                {!!record?.collaborators?.length && (
+                  <Chip
+                    label={`${record.collaborators.length}人の共同編集者`}
+                    color="primary"
+                  />
+                )}
+                {record?.collaboratorInvitations?.items?.map(
+                  ({ email, id }) => (
                     <Chip
-                      key={token}
-                      label={`${!valid ? '招待中: ' : ''}${email}`}
-                      onDelete={() => eject(id)}
-                      variant={valid ? 'default' : 'outlined'}
+                      key={id}
+                      label={`招待中: ${email}`}
+                      onDelete={() => remove(id)}
+                      variant="outlined"
                       color="primary"
                     />
                   )
