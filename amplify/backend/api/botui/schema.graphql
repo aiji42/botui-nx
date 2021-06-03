@@ -7,6 +7,12 @@ type Session
         ownerField: "owner"
         operations: [create, update, delete, read]
       }
+      {
+        allow: owner
+        ownerField: "collaborators"
+        identityClaim: "email"
+        operations: [update, delete, read]
+      }
       { allow: public, provider: iam, operations: [read] }
       { allow: public, provider: apiKey, operations: [read, update] }
     ]
@@ -25,6 +31,7 @@ type Session
   images: AWSJSON!
   email: String
   launcher: AWSJSON!
+  collaborators: [String]
   collaboratorInvitations: [CollaboratorInvitation]
     @connection(keyName: "bySession", fields: ["id"])
 }

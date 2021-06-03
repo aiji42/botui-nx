@@ -17,9 +17,19 @@ export const createSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
       collaboratorInvitations {
+        items {
+          id
+          code
+          email
+          sessionId
+          expireOn
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -40,9 +50,19 @@ export const deleteSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
       collaboratorInvitations {
+        items {
+          id
+          code
+          email
+          sessionId
+          expireOn
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -93,9 +113,19 @@ export const updateSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
       collaboratorInvitations {
+        items {
+          id
+          code
+          email
+          sessionId
+          expireOn
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }

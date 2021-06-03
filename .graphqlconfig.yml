@@ -1,0 +1,18 @@
+projects:
+  botui-dev:
+    schemaPath: libs/api/src/graphql/schema.json
+    includes:
+      - libs/api/src/graphql/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: libs/api/src/graphql/API.ts
+        docsFilePath: libs/api/src/graphql
+        region: ap-northeast-1
+        apiId: qoolw646mncvxh3nmbmwqeyeju
+        maxDepth: 3
+extensions:
+  amplify:
+    version: 3

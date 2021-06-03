@@ -74,19 +74,24 @@ export const getSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
       collaboratorInvitations {
         items {
           id
+          code
           email
+          sessionId
           expireOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
     }
   }
-`
+`;
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -104,8 +109,12 @@ export const listSessions = /* GraphQL */ `
         images
         email
         launcher
+        collaborators
         createdAt
         updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
       }
       nextToken
     }
@@ -136,8 +145,12 @@ export const listSessionsByOwner = /* GraphQL */ `
         images
         email
         launcher
+        collaborators
         createdAt
         updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
       }
       nextToken
     }

@@ -45,9 +45,9 @@ export interface Invitation {
 
 export interface CollaboratorInvitation {
   id: string
-  code: string
   email: string
   expireOn: string
+  sessionId: string
 }
 
 export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
@@ -61,6 +61,7 @@ export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   email?: string
   launcher: W
   collaboratorInvitations?: { items: Array<CollaboratorInvitation> } | null
+  collaborators: string[] | null
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
