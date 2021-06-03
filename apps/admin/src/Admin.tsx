@@ -15,7 +15,7 @@ import {
   SessionShow
 } from './components'
 import { useDataProvider } from './hooks'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import vocabularies from './i18n/amplify/vocabularies'
 import { customizedTheme } from './customizedTheme'
 
@@ -26,7 +26,18 @@ if (process.env.NX_AWS_EXPORTS) {
     awsconfig.oauth.redirectSignIn.split(',').filter(filterHost).shift() ?? ''
   awsconfig.oauth.redirectSignOut =
     awsconfig.oauth.redirectSignOut.split(',').filter(filterHost).shift() ?? ''
-  Amplify.configure(awsconfig)
+  Amplify.configure({
+    ...awsconfig,
+    graphql_headers: async () => {
+      try {
+        const token = (await Auth.currentSession()).getIdToken().getJwtToken()
+        return { Authorization: token }
+      } catch (e) {
+        console.error(e)
+        return {}
+      }
+    }
+  })
 }
 
 Amplify.I18n.putVocabularies(vocabularies)
