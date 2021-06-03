@@ -46,7 +46,12 @@ type CollaboratorInvitation
   @key(
     name: "byCode"
     fields: ["code", "email"]
-    queryField: "listCoraboratorsByCodeAndEmail"
+    queryField: "listCoraboratorsInvitationsByCodeAndEmail"
+  )
+  @key(
+    name: "byEmailAndStatus"
+    fields: ["email", "status"]
+    queryField: "listCoraboratorsInvitationsByEmailAndStatus"
   )
   @auth(
     rules: [
@@ -57,7 +62,9 @@ type CollaboratorInvitation
   id: ID!
   code: String!
   email: String!
+  status: String!
   sessionId: ID!
+  session: Session @connection(fields: ["sessionId"])
   expireOn: String!
 }
 

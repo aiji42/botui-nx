@@ -25,6 +25,7 @@ export const createSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -58,6 +59,7 @@ export const deleteSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -121,6 +123,7 @@ export const updateSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -140,10 +143,28 @@ export const createCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -156,10 +177,28 @@ export const updateCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -172,10 +211,28 @@ export const deleteCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;

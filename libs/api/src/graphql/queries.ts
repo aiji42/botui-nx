@@ -62,36 +62,6 @@ export const entryBySessionAndCreatedAt = /* GraphQL */ `
     }
   }
 `;
-export const getSession = /* GraphQL */ `
-  query GetSession($id: ID!) {
-    getSession(id: $id) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-      collaborators
-      createdAt
-      updatedAt
-      collaboratorInvitations {
-        items {
-          id
-          code
-          email
-          sessionId
-          expireOn
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-`;
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -117,6 +87,37 @@ export const listSessions = /* GraphQL */ `
         }
       }
       nextToken
+    }
+  }
+`;
+export const getSession = /* GraphQL */ `
+  query GetSession($id: ID!) {
+    getSession(id: $id) {
+      id
+      owner
+      title
+      active
+      theme
+      proposals
+      images
+      email
+      launcher
+      collaborators
+      createdAt
+      updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          code
+          email
+          status
+          sessionId
+          expireOn
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -162,10 +163,28 @@ export const getCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -184,10 +203,25 @@ export const listCollaboratorInvitations = /* GraphQL */ `
         id
         code
         email
+        status
         sessionId
         expireOn
         createdAt
         updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -214,17 +248,32 @@ export const listCollaboratorInvitationsBySession = /* GraphQL */ `
         id
         code
         email
+        status
         sessionId
         expireOn
         createdAt
         updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
   }
 `;
-export const listCoraboratorsByCodeAndEmail = /* GraphQL */ `
-  query ListCoraboratorsByCodeAndEmail(
+export const listCoraboratorsInvitationsByCodeAndEmail = /* GraphQL */ `
+  query ListCoraboratorsInvitationsByCodeAndEmail(
     $code: String
     $email: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -232,7 +281,7 @@ export const listCoraboratorsByCodeAndEmail = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorsByCodeAndEmail(
+    listCoraboratorsInvitationsByCodeAndEmail(
       code: $code
       email: $email
       sortDirection: $sortDirection
@@ -244,10 +293,70 @@ export const listCoraboratorsByCodeAndEmail = /* GraphQL */ `
         id
         code
         email
+        status
         sessionId
         expireOn
         createdAt
         updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listCoraboratorsInvitationsByEmailAndStatus = /* GraphQL */ `
+  query ListCoraboratorsInvitationsByEmailAndStatus(
+    $email: String
+    $status: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorInvitationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCoraboratorsInvitationsByEmailAndStatus(
+      email: $email
+      status: $status
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        code
+        email
+        status
+        sessionId
+        expireOn
+        createdAt
+        updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }

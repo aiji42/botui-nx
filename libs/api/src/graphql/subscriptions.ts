@@ -39,8 +39,8 @@ export const onDeleteEntry = /* GraphQL */ `
   }
 `;
 export const onCreateSession = /* GraphQL */ `
-  subscription OnCreateSession($owner: String) {
-    onCreateSession(owner: $owner) {
+  subscription OnCreateSession($owner: String, $collaborators: String) {
+    onCreateSession(owner: $owner, collaborators: $collaborators) {
       id
       owner
       title
@@ -58,6 +58,7 @@ export const onCreateSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -69,8 +70,8 @@ export const onCreateSession = /* GraphQL */ `
   }
 `;
 export const onUpdateSession = /* GraphQL */ `
-  subscription OnUpdateSession($owner: String) {
-    onUpdateSession(owner: $owner) {
+  subscription OnUpdateSession($owner: String, $collaborators: String) {
+    onUpdateSession(owner: $owner, collaborators: $collaborators) {
       id
       owner
       title
@@ -88,6 +89,7 @@ export const onUpdateSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -99,8 +101,8 @@ export const onUpdateSession = /* GraphQL */ `
   }
 `;
 export const onDeleteSession = /* GraphQL */ `
-  subscription OnDeleteSession($owner: String) {
-    onDeleteSession(owner: $owner) {
+  subscription OnDeleteSession($owner: String, $collaborators: String) {
+    onDeleteSession(owner: $owner, collaborators: $collaborators) {
       id
       owner
       title
@@ -118,6 +120,7 @@ export const onDeleteSession = /* GraphQL */ `
           id
           code
           email
+          status
           sessionId
           expireOn
           createdAt
@@ -134,10 +137,28 @@ export const onCreateCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -147,10 +168,28 @@ export const onUpdateCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -160,10 +199,28 @@ export const onDeleteCollaboratorInvitation = /* GraphQL */ `
       id
       code
       email
+      status
       sessionId
       expireOn
       createdAt
       updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `;

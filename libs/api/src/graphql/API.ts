@@ -23,7 +23,6 @@ export type ModelSessionConditionInput = {
   images?: ModelStringInput | null,
   email?: ModelStringInput | null,
   launcher?: ModelStringInput | null,
-  collaborators?: ModelStringInput | null,
   and?: Array< ModelSessionConditionInput | null > | null,
   or?: Array< ModelSessionConditionInput | null > | null,
   not?: ModelSessionConditionInput | null,
@@ -104,10 +103,12 @@ export type CollaboratorInvitation = {
   id?: string,
   code?: string,
   email?: string,
+  status?: string,
   sessionId?: string,
   expireOn?: string,
   createdAt?: string,
   updatedAt?: string,
+  session?: Session,
 };
 
 export type DeleteSessionInput = {
@@ -178,6 +179,7 @@ export type CreateCollaboratorInvitationInput = {
   id?: string | null,
   code: string,
   email: string,
+  status: string,
   sessionId: string,
   expireOn: string,
 };
@@ -185,6 +187,7 @@ export type CreateCollaboratorInvitationInput = {
 export type ModelCollaboratorInvitationConditionInput = {
   code?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  status?: ModelStringInput | null,
   sessionId?: ModelIDInput | null,
   expireOn?: ModelStringInput | null,
   and?: Array< ModelCollaboratorInvitationConditionInput | null > | null,
@@ -196,6 +199,7 @@ export type UpdateCollaboratorInvitationInput = {
   id: string,
   code?: string | null,
   email?: string | null,
+  status?: string | null,
   sessionId?: string | null,
   expireOn?: string | null,
 };
@@ -271,6 +275,7 @@ export type ModelCollaboratorInvitationFilterInput = {
   id?: ModelIDInput | null,
   code?: ModelStringInput | null,
   email?: ModelStringInput | null,
+  status?: ModelStringInput | null,
   sessionId?: ModelIDInput | null,
   expireOn?: ModelStringInput | null,
   and?: Array< ModelCollaboratorInvitationFilterInput | null > | null,
@@ -305,6 +310,7 @@ export type CreateSessionMutation = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -342,6 +348,7 @@ export type DeleteSessionMutation = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -413,6 +420,7 @@ export type UpdateSessionMutation = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -434,10 +442,30 @@ export type CreateCollaboratorInvitationMutation = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -452,10 +480,30 @@ export type UpdateCollaboratorInvitationMutation = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -470,10 +518,30 @@ export type DeleteCollaboratorInvitationMutation = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -557,42 +625,6 @@ export type EntryBySessionAndCreatedAtQuery = {
   } | null,
 };
 
-export type GetSessionQueryVariables = {
-  id?: string,
-};
-
-export type GetSessionQuery = {
-  getSession?:  {
-    __typename: "Session",
-    id: string,
-    owner?: string | null,
-    title: string,
-    active: boolean,
-    theme: string,
-    proposals: string,
-    images: string,
-    email?: string | null,
-    launcher: string,
-    collaborators?: Array< string | null > | null,
-    createdAt: string,
-    updatedAt: string,
-    collaboratorInvitations?:  {
-      __typename: "ModelCollaboratorInvitationConnection",
-      items?:  Array< {
-        __typename: "CollaboratorInvitation",
-        id: string,
-        code: string,
-        email: string,
-        sessionId: string,
-        expireOn: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
-  } | null,
-};
-
 export type ListSessionsQueryVariables = {
   filter?: ModelSessionFilterInput | null,
   limit?: number | null,
@@ -622,6 +654,43 @@ export type ListSessionsQuery = {
       } | null,
     } | null > | null,
     nextToken?: string | null,
+  } | null,
+};
+
+export type GetSessionQueryVariables = {
+  id?: string,
+};
+
+export type GetSessionQuery = {
+  getSession?:  {
+    __typename: "Session",
+    id: string,
+    owner?: string | null,
+    title: string,
+    active: boolean,
+    theme: string,
+    proposals: string,
+    images: string,
+    email?: string | null,
+    launcher: string,
+    collaborators?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    collaboratorInvitations?:  {
+      __typename: "ModelCollaboratorInvitationConnection",
+      items?:  Array< {
+        __typename: "CollaboratorInvitation",
+        id: string,
+        code: string,
+        email: string,
+        status: string,
+        sessionId: string,
+        expireOn: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
   } | null,
 };
 
@@ -669,10 +738,30 @@ export type GetCollaboratorInvitationQuery = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -690,10 +779,26 @@ export type ListCollaboratorInvitationsQuery = {
       id: string,
       code: string,
       email: string,
+      status: string,
       sessionId: string,
       expireOn: string,
       createdAt: string,
       updatedAt: string,
+      session?:  {
+        __typename: "Session",
+        id: string,
+        owner?: string | null,
+        title: string,
+        active: boolean,
+        theme: string,
+        proposals: string,
+        images: string,
+        email?: string | null,
+        launcher: string,
+        collaborators?: Array< string | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
     } | null > | null,
     nextToken?: string | null,
   } | null,
@@ -716,16 +821,32 @@ export type ListCollaboratorInvitationsBySessionQuery = {
       id: string,
       code: string,
       email: string,
+      status: string,
       sessionId: string,
       expireOn: string,
       createdAt: string,
       updatedAt: string,
+      session?:  {
+        __typename: "Session",
+        id: string,
+        owner?: string | null,
+        title: string,
+        active: boolean,
+        theme: string,
+        proposals: string,
+        images: string,
+        email?: string | null,
+        launcher: string,
+        collaborators?: Array< string | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
     } | null > | null,
     nextToken?: string | null,
   } | null,
 };
 
-export type ListCoraboratorsByCodeAndEmailQueryVariables = {
+export type ListCoraboratorsInvitationsByCodeAndEmailQueryVariables = {
   code?: string | null,
   email?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -734,18 +855,76 @@ export type ListCoraboratorsByCodeAndEmailQueryVariables = {
   nextToken?: string | null,
 };
 
-export type ListCoraboratorsByCodeAndEmailQuery = {
-  listCoraboratorsByCodeAndEmail?:  {
+export type ListCoraboratorsInvitationsByCodeAndEmailQuery = {
+  listCoraboratorsInvitationsByCodeAndEmail?:  {
     __typename: "ModelCollaboratorInvitationConnection",
     items?:  Array< {
       __typename: "CollaboratorInvitation",
       id: string,
       code: string,
       email: string,
+      status: string,
       sessionId: string,
       expireOn: string,
       createdAt: string,
       updatedAt: string,
+      session?:  {
+        __typename: "Session",
+        id: string,
+        owner?: string | null,
+        title: string,
+        active: boolean,
+        theme: string,
+        proposals: string,
+        images: string,
+        email?: string | null,
+        launcher: string,
+        collaborators?: Array< string | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListCoraboratorsInvitationsByEmailAndStatusQueryVariables = {
+  email?: string | null,
+  status?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCollaboratorInvitationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCoraboratorsInvitationsByEmailAndStatusQuery = {
+  listCoraboratorsInvitationsByEmailAndStatus?:  {
+    __typename: "ModelCollaboratorInvitationConnection",
+    items?:  Array< {
+      __typename: "CollaboratorInvitation",
+      id: string,
+      code: string,
+      email: string,
+      status: string,
+      sessionId: string,
+      expireOn: string,
+      createdAt: string,
+      updatedAt: string,
+      session?:  {
+        __typename: "Session",
+        id: string,
+        owner?: string | null,
+        title: string,
+        active: boolean,
+        theme: string,
+        proposals: string,
+        images: string,
+        email?: string | null,
+        launcher: string,
+        collaborators?: Array< string | null > | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
     } | null > | null,
     nextToken?: string | null,
   } | null,
@@ -801,6 +980,7 @@ export type OnDeleteEntrySubscription = {
 
 export type OnCreateSessionSubscriptionVariables = {
   owner?: string | null,
+  collaborators?: string | null,
 };
 
 export type OnCreateSessionSubscription = {
@@ -825,6 +1005,7 @@ export type OnCreateSessionSubscription = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -837,6 +1018,7 @@ export type OnCreateSessionSubscription = {
 
 export type OnUpdateSessionSubscriptionVariables = {
   owner?: string | null,
+  collaborators?: string | null,
 };
 
 export type OnUpdateSessionSubscription = {
@@ -861,6 +1043,7 @@ export type OnUpdateSessionSubscription = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -873,6 +1056,7 @@ export type OnUpdateSessionSubscription = {
 
 export type OnDeleteSessionSubscriptionVariables = {
   owner?: string | null,
+  collaborators?: string | null,
 };
 
 export type OnDeleteSessionSubscription = {
@@ -897,6 +1081,7 @@ export type OnDeleteSessionSubscription = {
         id: string,
         code: string,
         email: string,
+        status: string,
         sessionId: string,
         expireOn: string,
         createdAt: string,
@@ -913,10 +1098,30 @@ export type OnCreateCollaboratorInvitationSubscription = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -926,10 +1131,30 @@ export type OnUpdateCollaboratorInvitationSubscription = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
 
@@ -939,9 +1164,29 @@ export type OnDeleteCollaboratorInvitationSubscription = {
     id: string,
     code: string,
     email: string,
+    status: string,
     sessionId: string,
     expireOn: string,
     createdAt: string,
     updatedAt: string,
+    session?:  {
+      __typename: "Session",
+      id: string,
+      owner?: string | null,
+      title: string,
+      active: boolean,
+      theme: string,
+      proposals: string,
+      images: string,
+      email?: string | null,
+      launcher: string,
+      collaborators?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      collaboratorInvitations?:  {
+        __typename: "ModelCollaboratorInvitationConnection",
+        nextToken?: string | null,
+      } | null,
+    } | null,
   } | null,
 };
