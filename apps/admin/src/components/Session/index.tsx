@@ -231,12 +231,14 @@ export const SessionShow: FC<ShowProps> = (props) => {
             source="collaborators"
             render={(record) => (
               <div className={classes.root}>
-                {!!record?.collaborators?.length && (
+                {record?.collaborators?.map((email) => (
                   <Chip
-                    label={`${record.collaborators.length}人の共同編集者`}
+                    key={email}
+                    label={email}
+                    onDelete={() => remove(record.id, email)}
                     color="primary"
                   />
-                )}
+                ))}
                 {record?.collaboratorInvitations?.items
                   ?.filter(({ status }) => status === 'inviting')
                   .map(({ email, id, sessionId }) => (
