@@ -48,6 +48,8 @@ export interface CollaboratorInvitation {
   email: string
   expireOn: string
   sessionId: string
+  session: Session | null
+  status: 'inviting' | 'active' | 'invalid'
 }
 
 export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {

@@ -272,8 +272,8 @@ export const listCollaboratorInvitationsBySession = /* GraphQL */ `
     }
   }
 `;
-export const listCoraboratorsInvitationsByCodeAndEmail = /* GraphQL */ `
-  query ListCoraboratorsInvitationsByCodeAndEmail(
+export const listCoraboratorInvitationsByCodeAndEmail = /* GraphQL */ `
+  query ListCoraboratorInvitationsByCodeAndEmail(
     $code: String
     $email: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -281,7 +281,7 @@ export const listCoraboratorsInvitationsByCodeAndEmail = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorsInvitationsByCodeAndEmail(
+    listCoraboratorInvitationsByCodeAndEmail(
       code: $code
       email: $email
       sortDirection: $sortDirection
@@ -317,8 +317,8 @@ export const listCoraboratorsInvitationsByCodeAndEmail = /* GraphQL */ `
     }
   }
 `;
-export const listCoraboratorsInvitationsByEmailAndStatus = /* GraphQL */ `
-  query ListCoraboratorsInvitationsByEmailAndStatus(
+export const listCoraboratorInvitationsByEmailAndStatus = /* GraphQL */ `
+  query ListCoraboratorInvitationsByEmailAndStatus(
     $email: String
     $status: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -326,7 +326,7 @@ export const listCoraboratorsInvitationsByEmailAndStatus = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorsInvitationsByEmailAndStatus(
+    listCoraboratorInvitationsByEmailAndStatus(
       email: $email
       status: $status
       sortDirection: $sortDirection

@@ -846,7 +846,7 @@ export type ListCollaboratorInvitationsBySessionQuery = {
   } | null,
 };
 
-export type ListCoraboratorsInvitationsByCodeAndEmailQueryVariables = {
+export type ListCoraboratorInvitationsByCodeAndEmailQueryVariables = {
   code?: string | null,
   email?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -855,8 +855,8 @@ export type ListCoraboratorsInvitationsByCodeAndEmailQueryVariables = {
   nextToken?: string | null,
 };
 
-export type ListCoraboratorsInvitationsByCodeAndEmailQuery = {
-  listCoraboratorsInvitationsByCodeAndEmail?:  {
+export type ListCoraboratorInvitationsByCodeAndEmailQuery = {
+  listCoraboratorInvitationsByCodeAndEmail?:  {
     __typename: "ModelCollaboratorInvitationConnection",
     items?:  Array< {
       __typename: "CollaboratorInvitation",
@@ -888,7 +888,7 @@ export type ListCoraboratorsInvitationsByCodeAndEmailQuery = {
   } | null,
 };
 
-export type ListCoraboratorsInvitationsByEmailAndStatusQueryVariables = {
+export type ListCoraboratorInvitationsByEmailAndStatusQueryVariables = {
   email?: string | null,
   status?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -897,8 +897,8 @@ export type ListCoraboratorsInvitationsByEmailAndStatusQueryVariables = {
   nextToken?: string | null,
 };
 
-export type ListCoraboratorsInvitationsByEmailAndStatusQuery = {
-  listCoraboratorsInvitationsByEmailAndStatus?:  {
+export type ListCoraboratorInvitationsByEmailAndStatusQuery = {
+  listCoraboratorInvitationsByEmailAndStatus?:  {
     __typename: "ModelCollaboratorInvitationConnection",
     items?:  Array< {
       __typename: "CollaboratorInvitation",
