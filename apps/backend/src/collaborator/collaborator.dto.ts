@@ -31,5 +31,6 @@ export class ChallangeInputDTO {
 export class RemoveInputDTO {
   @IsNotEmpty()
   @IsString()
-  id: string
+  sessionId: string
+  email: string
 }

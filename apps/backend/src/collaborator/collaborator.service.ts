@@ -41,33 +41,33 @@ export class CollaboratorService {
     }>
 
     const code = uuidv4()
-    if (data.listCollaboratorInvitationsBySession.items[0]) {
-      await API.graphql(
-        {
-          query: mutations.updateCollaboratorInvitation,
-          variables: {
-            input: {
-              id: data.listCollaboratorInvitationsBySession.items[0].id,
-              code,
-              expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
-            }
+    const [invitation] = data.listCollaboratorInvitationsBySession.items
+    if (invitation && invitation.status === 'invalid') {
+      await API.graphql({
+        query: mutations.updateCollaboratorInvitation,
+        variables: {
+          input: {
+            id: invitation.id,
+            code,
+            expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
           }
         }
-      )
+      })
+    } else if (invitation) {
+      return { message: 'no need to invite' }
     } else {
-      await API.graphql(
-        {
-          query: mutations.createCollaboratorInvitation,
-          variables: {
-            input: {
-              code,
-              email: input.email,
-              sessionId: input.sessionId,
-              expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
-            }
+      await API.graphql({
+        query: mutations.createCollaboratorInvitation,
+        variables: {
+          input: {
+            code,
+            email: input.email,
+            status: 'inviting',
+            sessionId: input.sessionId,
+            expireOn: dayjs().add(EXPIRE_DAY, 'day').toDate()
           }
         }
-      )
+      })
     }
 
     await sgMail.send({
@@ -85,60 +85,47 @@ export class CollaboratorService {
   }
 
   async challenge(input: ChallangeInputDTO, responce: Response): Promise<void> {
-    const {
-      data: { listCoraboratorsByCodeAndEmail: collaborators }
-    } = (await API.graphql(
-      {
-        query: queries.listCoraboratorsByCodeAndEmail,
-        variables: {
-          code: input.code,
-          email: { eq: input.email },
-          filter: {
-            expireOn: { gt: dayjs().toDate() }
-          }
+    const { data } = (await API.graphql({
+      query: queries.listCoraboratorInvitationsByCodeAndEmail,
+      variables: {
+        code: input.code,
+        email: { eq: input.email },
+        filter: {
+          expireOn: { gt: dayjs().toDate() }
         }
       }
-    )) as GraphQLResult<{
-      listCoraboratorsByCodeAndEmail: { items: Array<CollaboratorInvitation> }
+    })) as GraphQLResult<{
+      listCoraboratorInvitationsByCodeAndEmail: {
+        items: Array<CollaboratorInvitation>
+      }
     }>
 
-    const [collaborator] = collaborators.items
-    if (!collaborator) {
+    const [invitation] = data.listCoraboratorInvitationsByCodeAndEmail.items
+    if (!invitation) {
       responce
         .status(HttpStatus.NOT_FOUND)
-        .send({ message: 'Not found session. Please request for re-invite.' })
+        .send({ message: 'Not found invitation. Please request for re-invite.' })
       return
     }
 
-    const {
-      data: { getSession: session }
-    } = (await API.graphql(
-      {
-        query: queries.getSession,
-        variables: {
-          id: collaborator.sessionId
+    await API.graphql({
+      query: mutations.updateSession,
+      variables: {
+        input: {
+          id: invitation.sessionId,
+          collaborators: [
+            ...(invitation.session.collaborators ?? []),
+            invitation.email
+          ]
         }
       }
-    )) as GraphQLResult<{
-      getSession: Session
-    }>
-    await API.graphql(
-      {
-        query: mutations.updateSession,
-        variables: {
-          input: {
-            id: session.id,
-            collaborators: [...(session.collaborators ?? []), collaborator.email]
-          }
-        }
-      }
-    )
+    })
 
     await API.graphql(
       {
-        query: mutations.deleteCollaboratorInvitation,
+        query: mutations.updateCollaboratorInvitation,
         variables: {
-          input: { id: collaborator.id }
+          input: { id: invitation.id, status: 'active' }
         }
       }
     )
@@ -147,14 +134,46 @@ export class CollaboratorService {
   }
 
   async remove(input: RemoveInputDTO): Promise<{ message: string }> {
-    await API.graphql(
-      {
-        query: mutations.deleteCollaboratorInvitation,
-        variables: {
-          input: { id: input.id }
+    const { data: { getSession: session } } = await API.graphql({
+      query: queries.getSession,
+      variables: {
+        id: input.sessionId
+      }
+    }) as GraphQLResult<{
+      getSession: Session
+    }>
+    await API.graphql({
+      query: mutations.updateSession,
+      variables: {
+        input: {
+          id: input.sessionId,
+          collaborators: session.collaborators.filter((email) => email !== input.email)
         }
       }
-    )
+    })
+
+    const { data } = (await API.graphql({
+      query: queries.listCollaboratorInvitationsBySession,
+      variables: {
+        sessionId: input.sessionId,
+        email: { eq: input.email }
+      }
+    })) as GraphQLResult<{
+      listCollaboratorInvitationsBySession: {
+        items: Array<CollaboratorInvitation>
+      }
+    }>
+
+    const [invitation] = data.listCollaboratorInvitationsBySession.items
+    if (invitation) {
+      await API.graphql({
+        query: mutations.deleteCollaboratorInvitation,
+        variables: {
+          input: { id: invitation.id }
+        }
+      })
+    }
+
 
     return { message: 'Success!' }
   }
