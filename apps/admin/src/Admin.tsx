@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { buildAuthProvider } from 'react-admin-amplify'
-import { Resource, Admin as ReactAdmin } from 'react-admin'
+import { Resource, Admin as ReactAdmin, ListGuesser } from 'react-admin'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined'
@@ -63,6 +63,12 @@ const Admin: FC = () => {
         edit={SessionEdit}
         show={SessionShow}
         create={SessionCreate}
+        icon={ChatBubbleIcon}
+      />
+      <Resource
+        name="collaboratorInvitations"
+        options={{ label: 'コラボレーション' }}
+        list={ListGuesser}
         icon={ChatBubbleIcon}
       />
       <Resource
