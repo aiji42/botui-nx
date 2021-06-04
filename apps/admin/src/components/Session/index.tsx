@@ -206,7 +206,7 @@ export const SessionShow: FC<ShowProps> = (props) => {
   const classes = useStyles()
   const refresh = useRefresh()
   const remove = useCallback(
-    (id) => {
+    (sessionId: string, email: string) => {
       if (!window.confirm('共同編集者から外しますか？')) return
       fetch('http://localhost:3333/api/collaborator/remove', {
         method: 'POST',
@@ -215,7 +215,8 @@ export const SessionShow: FC<ShowProps> = (props) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          id
+          sessionId,
+          email
         })
       }).then(() => refresh())
     },
@@ -236,17 +237,17 @@ export const SessionShow: FC<ShowProps> = (props) => {
                     color="primary"
                   />
                 )}
-                {record?.collaboratorInvitations?.items?.map(
-                  ({ email, id }) => (
+                {record?.collaboratorInvitations?.items
+                  ?.filter(({ status }) => status === 'inviting')
+                  .map(({ email, id, sessionId }) => (
                     <Chip
                       key={id}
                       label={`招待中: ${email}`}
-                      onDelete={() => remove(id)}
+                      onDelete={() => remove(sessionId, email)}
                       variant="outlined"
                       color="primary"
                     />
-                  )
-                )}
+                  ))}
                 <InviteDialogWithChipButton />
               </div>
             )}
