@@ -4,11 +4,12 @@ import {
   Paper,
   Grid,
   MuiThemeProvider,
-  createMuiTheme
+  createMuiTheme,
+  Box,
+  Hidden
 } from '@material-ui/core'
 import { customizedTheme } from '../../customizedTheme'
 import { makeStyles } from '@material-ui/core'
-import { EyeCatch } from './EyeCatch'
 import { LoginContextProvider } from './use-login-context'
 import { useCheckAuth } from 'react-admin'
 
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.grey[50]
+  },
+  img: {
+    width: '100%',
+    maxWidth: 800
   }
 }))
 
@@ -39,13 +44,20 @@ export const Login: FC = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <Grid container component="main" className={classes.root}>
-        <Grid item xs={false} sm={4} md={7}>
-          <EyeCatch />
-        </Grid>
+        <Hidden smDown>
+          <Grid item md={7}>
+            <Box textAlign="center" m={1}>
+              <img
+                src="/assets/entry-form.png"
+                alt="eye catch"
+                className={classes.img}
+              />
+            </Box>
+          </Grid>
+        </Hidden>
         <Grid
           item
           xs={12}
-          sm={8}
           md={5}
           component={Paper}
           elevation={6}
