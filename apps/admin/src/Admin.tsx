@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { buildAuthProvider } from 'react-admin-amplify'
-import { Resource, Admin as ReactAdmin, ListGuesser } from 'react-admin'
+import { Resource, Admin as ReactAdmin } from 'react-admin'
 import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutline'
+import GroupWorkIcon from '@material-ui/icons/GroupWorkOutlined'
 import {
   Login,
   SessionList,
@@ -18,6 +19,7 @@ import { useDataProvider } from './hooks'
 import Amplify, { Auth } from 'aws-amplify'
 import vocabularies from './i18n/amplify/vocabularies'
 import { customizedTheme } from './customizedTheme'
+import { CollaboratorinvitationList } from './components/CollaboratorInvitation'
 
 const filterHost = (url: string) => new URL(url).host === window.location.host
 if (process.env.NX_AWS_EXPORTS) {
@@ -68,8 +70,8 @@ const Admin: FC = () => {
       <Resource
         name="collaboratorInvitations"
         options={{ label: 'コラボレーション' }}
-        list={ListGuesser}
-        icon={ChatBubbleIcon}
+        list={CollaboratorinvitationList}
+        icon={GroupWorkIcon}
       />
       <Resource
         name="entrys"
