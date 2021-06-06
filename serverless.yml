@@ -7,6 +7,8 @@ custom:
   prune:
     automatic: true
     number: 2
+  dotenv:
+    path: ./apps/backend/.env
 
 provider:
   name: aws
@@ -15,6 +17,7 @@ provider:
   lambdaHashingVersion: 20201221
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-prune-plugin
   - serverless-layers
 
@@ -28,6 +31,10 @@ package:
 functions:
   backend:
     handler: dist/apps/backend/main.handler
+    environment:
+      AWS_EXPORTS: ${env:AWS_EXPORTS}
+      SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
+      GRAPHQL_API_KEY: ${env:GRAPHQL_API_KEY}
     events:
     - http:
         cors: true
