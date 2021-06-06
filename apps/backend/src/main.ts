@@ -5,8 +5,6 @@
 
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { ServerlessNestjsApplicationFactory } from 'serverless-lambda-nestjs'
-import { APIGatewayProxyHandler } from 'aws-lambda'
 import { AppModule } from './app/app.module'
 
 async function bootstrap() {
@@ -24,22 +22,4 @@ async function bootstrap() {
   })
 }
 
-if (process.env.NX_CLI_SET) {
-  bootstrap()
-}
-
-// Run Nestjs application in AWS Lambda
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  const app = new ServerlessNestjsApplicationFactory<AppModule>(AppModule, {
-    // NestFactory.create's option object
-    cors: true
-  }, (app) => {
-    app.enableCors({
-      origin: '*',
-      allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-    })
-    return app
-  })
-  const result = await app.run(event, context)
-  return result
-}
+bootstrap()

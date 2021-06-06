@@ -425,6 +425,9 @@
             ]
           },
           "configurations": {
+            "lambda": {
+              "main": "apps/backend/src/lambda.ts"
+            },
             "production": {
               "optimization": true,
               "extractLicenses": true,
