@@ -1,0 +1,39 @@
+service: botui-serverless
+
+custom:
+  serverless-layers:
+    layersDeploymentBucket: botui-lambda-layer
+    dependenciesPath: ./apps/backend/package.json
+  prune:
+    automatic: true
+    number: 2
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-1
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-layers
+
+package:
+ individually: true
+ include:
+   - dist/apps/backend/**
+ exclude:
+   - "**"
+
+functions:
+  backend:
+    handler: dist/apps/backend/main.handler
+    events:
+    - http:
+        cors: true
+        path: '/'
+        method: any
+    - http:
+        cors: true
+        path: '{proxy+}'
+        method: any

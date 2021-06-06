@@ -1,0 +1,18 @@
+{
+  "name": "botui-backend",
+  "version": "0.0.1",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@aws-amplify/api": "^3.2.30",
+    "@aws-amplify/storage": "^3.4.0",
+    "@nestjs/common": "^7.0.0",
+    "@nestjs/core": "^7.0.0",
+    "@sendgrid/mail": "^7.4.2",
+    "aws-amplify": "^3.3.27",
+    "class-validator": "^0.13.1",
+    "dayjs": "^1.10.5",
+    "rxjs": "~6.6.3",
+    "serverless-lambda-nestjs": "^0.0.2",
+    "tslib": "^2.0.0"
+  }
+}
