@@ -23,11 +23,8 @@ export const createSession = /* GraphQL */ `
       collaboratorInvitations {
         items {
           id
-          code
           email
-          status
           sessionId
-          expireOn
           createdAt
           updatedAt
         }
@@ -57,11 +54,8 @@ export const deleteSession = /* GraphQL */ `
       collaboratorInvitations {
         items {
           id
-          code
           email
-          status
           sessionId
-          expireOn
           createdAt
           updatedAt
         }
@@ -121,11 +115,8 @@ export const updateSession = /* GraphQL */ `
       collaboratorInvitations {
         items {
           id
-          code
           email
-          status
           sessionId
-          expireOn
           createdAt
           updatedAt
         }
@@ -141,11 +132,8 @@ export const createCollaboratorInvitation = /* GraphQL */ `
   ) {
     createCollaboratorInvitation(input: $input, condition: $condition) {
       id
-      code
       email
-      status
       sessionId
-      expireOn
       createdAt
       updatedAt
       session {
@@ -175,11 +163,8 @@ export const updateCollaboratorInvitation = /* GraphQL */ `
   ) {
     updateCollaboratorInvitation(input: $input, condition: $condition) {
       id
-      code
       email
-      status
       sessionId
-      expireOn
       createdAt
       updatedAt
       session {
@@ -209,11 +194,8 @@ export const deleteCollaboratorInvitation = /* GraphQL */ `
   ) {
     deleteCollaboratorInvitation(input: $input, condition: $condition) {
       id
-      code
       email
-      status
       sessionId
-      expireOn
       createdAt
       updatedAt
       session {

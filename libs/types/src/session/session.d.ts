@@ -37,19 +37,11 @@ export interface Launcher {
   loadScripts?: Array<string>
 }
 
-export interface Invitation {
-  token: string
-  email: string
-  expireOn: string
-}
-
 export interface CollaboratorInvitation {
   id: string
   email: string
-  expireOn: string
   sessionId: string
   session: Session | null
-  status: 'inviting' | 'active' | 'invalid'
 }
 
 export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {

@@ -108,11 +108,8 @@ export const getSession = /* GraphQL */ `
       collaboratorInvitations {
         items {
           id
-          code
           email
-          status
           sessionId
-          expireOn
           createdAt
           updatedAt
         }
@@ -161,11 +158,8 @@ export const getCollaboratorInvitation = /* GraphQL */ `
   query GetCollaboratorInvitation($id: ID!) {
     getCollaboratorInvitation(id: $id) {
       id
-      code
       email
-      status
       sessionId
-      expireOn
       createdAt
       updatedAt
       session {
@@ -201,11 +195,8 @@ export const listCollaboratorInvitations = /* GraphQL */ `
     ) {
       items {
         id
-        code
         email
-        status
         sessionId
-        expireOn
         createdAt
         updatedAt
         session {
@@ -246,11 +237,8 @@ export const listCollaboratorInvitationsBySession = /* GraphQL */ `
     ) {
       items {
         id
-        code
         email
-        status
         sessionId
-        expireOn
         createdAt
         updatedAt
         session {
@@ -272,63 +260,16 @@ export const listCollaboratorInvitationsBySession = /* GraphQL */ `
     }
   }
 `;
-export const listCoraboratorInvitationsByCodeAndEmail = /* GraphQL */ `
-  query ListCoraboratorInvitationsByCodeAndEmail(
-    $code: String
-    $email: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelCollaboratorInvitationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCoraboratorInvitationsByCodeAndEmail(
-      code: $code
-      email: $email
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        code
-        email
-        status
-        sessionId
-        expireOn
-        createdAt
-        updatedAt
-        session {
-          id
-          owner
-          title
-          active
-          theme
-          proposals
-          images
-          email
-          launcher
-          collaborators
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listCoraboratorInvitationsByEmailAndStatus = /* GraphQL */ `
-  query ListCoraboratorInvitationsByEmailAndStatus(
+export const listCoraboratorInvitationsByEmail = /* GraphQL */ `
+  query ListCoraboratorInvitationsByEmail(
     $email: String
-    $status: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelCollaboratorInvitationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCoraboratorInvitationsByEmailAndStatus(
+    listCoraboratorInvitationsByEmail(
       email: $email
-      status: $status
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -336,11 +277,8 @@ export const listCoraboratorInvitationsByEmailAndStatus = /* GraphQL */ `
     ) {
       items {
         id
-        code
         email
-        status
         sessionId
-        expireOn
         createdAt
         updatedAt
         session {
