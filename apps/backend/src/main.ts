@@ -32,10 +32,13 @@ if (process.env.NX_CLI_SET) {
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   const app = new ServerlessNestjsApplicationFactory<AppModule>(AppModule, {
     // NestFactory.create's option object
-    cors: {
+    cors: true
+  }, (app) => {
+    app.enableCors({
       origin: '*',
       allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-    }
+    })
+    return app
   })
   const result = await app.run(event, context)
   return result
