@@ -40,7 +40,7 @@ export const ShowInner: FC = () => {
   const remove = useCallback(
     (sessionId: string, email: string) => {
       if (!window.confirm('共同編集者から外しますか？')) return
-      fetch('http://localhost:3333/api/collaborator/remove', {
+      fetch(`${process.env.NX_API_HOST}/collaborator/remove`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -70,17 +70,6 @@ export const ShowInner: FC = () => {
                   color="primary"
                 />
               ))}
-              {record?.collaboratorInvitations?.items
-                ?.filter(({ status }) => status === 'inviting')
-                .map(({ email, id, sessionId }) => (
-                  <Chip
-                    key={id}
-                    label={`招待中: ${email}`}
-                    onDelete={() => remove(sessionId, email)}
-                    variant="outlined"
-                    color="primary"
-                  />
-                ))}
               <InviteDialogWithChipButton />
             </div>
           )}
@@ -102,14 +91,14 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
   }
   const invite = useCallback(
     ({ email }: { email: string }) => {
-      fetch('http://localhost:3333/api/collaborator/invite', {
+      fetch(`${process.env.NX_API_HOST}/collaborator/invite`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
+        mode: 'cors',
         body: JSON.stringify({
-          sessionTitle: session.record?.title,
           sessionId: session.record?.id,
           email
         })
@@ -118,26 +107,28 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
         refresh()
       })
     },
-    [refresh, session.record?.id, session.record?.title]
+    [refresh, session.record?.id]
   )
 
   return (
     <>
-      <Chip label="招待する" clickable onClick={handleClickOpen} />
+      <Chip label="追加する" clickable onClick={handleClickOpen} />
       <Dialog onClose={handleClose} open={open}>
         <Form
           onSubmit={invite}
           render={({ invalid, submitting, handleSubmit }) => (
             <>
-              <DialogTitle>共同編集者を招待</DialogTitle>
+              <DialogTitle>共同編集者を追加</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  入力したメールアドレスに招待リンク付きのメールが送信されます。招待リンクをクリックすると共同編集者に登録されます。
+                  追加したいユーザのメールアドレスを入力してください。
+                  <br />
+                  対象ユーザがチャチャットに未登録でも問題ありません。(メンバー登録用の案内がメールで送信されます)
                 </DialogContentText>
                 <TextInput
                   source="email"
                   type="email"
-                  label="通知用メールアドレス"
+                  label="メールアドレス"
                   validate={[required(), email()]}
                   fullWidth
                 />
@@ -145,10 +136,11 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
               <DialogActions>
                 <Button
                   disabled={invalid || submitting}
+                  type="submit"
                   onClick={handleSubmit}
                   color="primary"
                 >
-                  招待する
+                  追加する
                 </Button>
               </DialogActions>
             </>

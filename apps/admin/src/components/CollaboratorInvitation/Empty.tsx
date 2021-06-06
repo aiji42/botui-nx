@@ -1,6 +1,5 @@
 import {Box, Typography, makeStyles} from '@material-ui/core';
 import { FC } from 'react'
-import { CollaboratorChallengeDialogWithButton } from '.'
 
 const useStyles = makeStyles(() => ({
   img: {
@@ -17,9 +16,8 @@ const Empty: FC = () => {
         コラボレーション中のシナリオがまだありません
       </Typography>
       <Typography variant="body1" color="textSecondary" paragraph>
-        招待を受けている場合は、招待コードを入力してください。
+        お知り合いのチャチャットの利用者に、コラボレーションをリクエストしてみてください。
       </Typography>
-      <CollaboratorChallengeDialogWithButton />
     </Box>
   )
 }
