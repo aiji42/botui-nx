@@ -1,11 +1,10 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useState } from 'react'
 import {
   useRefresh,
   FunctionField,
   TabbedShowLayout,
   Tab,
   ShowProps,
-  useShowContext,
   TextInput,
   required,
   email
@@ -23,6 +22,7 @@ import {
   Button
 } from '@material-ui/core'
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
+import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,26 +35,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export const ShowInner: FC = () => {
+export const ShowInner: FC<ShowProps> = (props) => {
   const classes = useStyles()
   const refresh = useRefresh()
-  const remove = useCallback(
-    (sessionId: string, email: string) => {
-      if (!window.confirm('共同編集者から外しますか？')) return
-      fetch(`${process.env.NX_API_HOST}/collaborator/remove`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          sessionId,
-          email
-        })
-      }).then(() => refresh())
-    },
-    [refresh]
-  )
+  const remove = useCollaboratorRemove(props, refresh)
 
   return (
     <TabbedShowLayout>
@@ -67,7 +51,7 @@ export const ShowInner: FC = () => {
                 <Chip
                   key={email}
                   label={email}
-                  onDelete={() => remove(record.id, email)}
+                  onDelete={() => remove(email)}
                   color="primary"
                 />
               ))}
@@ -102,7 +86,6 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
           onSubmit={invite}
           render={({ invalid, submitting, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(submitting, invalid)}
               <DialogTitle>共同編集者を追加</DialogTitle>
               <DialogContent>
                 <DialogContentText>

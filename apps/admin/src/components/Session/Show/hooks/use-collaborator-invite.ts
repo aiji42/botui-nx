@@ -9,8 +9,8 @@ export const useCollaboratorInvite = (
   const session = useShowContext<Session>(props)
 
   const invite = useCallback(
-    ({ email }: { email: string }) => {
-      fetch(`${process.env.NX_API_HOST}/collaborator/invite`, {
+    async ({ email }: { email: string }) => {
+      return fetch(`${process.env.NX_API_HOST}/collaborator/invite`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
