@@ -1,9 +1,13 @@
-import {useCallback} from 'react';
-import {ShowProps, useShowContext} from 'react-admin';
-import {Session} from '@botui/types';
+import { useCallback } from 'react'
+import { ShowProps, useShowContext, useNotify } from 'react-admin'
+import { Session } from '@botui/types'
 
-export const useCollaboratorRemove = (props: ShowProps, callback?: () => void) => {
+export const useCollaboratorRemove = (
+  props: ShowProps,
+  callback?: () => void
+) => {
   const session = useShowContext<Session>(props)
+  const notify = useNotify()
 
   const remove = useCallback(
     async (email: string) => {
@@ -18,11 +22,12 @@ export const useCollaboratorRemove = (props: ShowProps, callback?: () => void) =
           sessionId: session.record?.id,
           email
         })
-      }).then(() => {
+      }).then((res) => {
+        res.json().then(({ message }) => notify(message))
         callback?.()
       })
     },
-    [session.record?.id, callback]
+    [session.record?.id, callback, notify]
   )
 
   return remove

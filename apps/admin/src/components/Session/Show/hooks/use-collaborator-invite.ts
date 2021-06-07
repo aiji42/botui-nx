@@ -1,4 +1,4 @@
-import { useShowContext, ShowProps } from 'react-admin'
+import { useShowContext, ShowProps, useNotify } from 'react-admin'
 import { Session } from '@botui/types'
 import { useCallback } from 'react'
 
@@ -7,6 +7,7 @@ export const useCollaboratorInvite = (
   callback?: () => void
 ) => {
   const session = useShowContext<Session>(props)
+  const notify = useNotify()
 
   const invite = useCallback(
     async ({ email }: { email: string }) => {
@@ -20,11 +21,12 @@ export const useCollaboratorInvite = (
           sessionId: session.record?.id,
           email
         })
-      }).then(() => {
+      }).then((res) => {
+        res.json().then(({ message }) => notify(message))
         callback?.()
       })
     },
-    [session.record?.id, callback]
+    [session.record?.id, callback, notify]
   )
 
   return invite
