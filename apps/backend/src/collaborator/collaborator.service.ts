@@ -31,7 +31,7 @@ export class CollaboratorService {
 
     const [invitation] = data.listCollaboratorInvitationsBySession.items
     if (invitation) {
-      return { message: 'No need to invite' }
+      return { message: '対象のコラボレータはすでに参加しています。' }
     } else {
       await API.graphql({
         query: mutations.createCollaboratorInvitation,
@@ -79,7 +79,7 @@ export class CollaboratorService {
       }
     })
 
-    return { message: 'Success' }
+    return { message: 'コラポレーターを追加しました。' }
   }
 
   async remove(input: RemoveInputDTO): Promise<{ message: string }> {
@@ -127,6 +127,6 @@ export class CollaboratorService {
       })
     }
 
-    return { message: 'Success!' }
+    return { message: 'コラポレーターを削除しました。' }
   }
 }

@@ -42,7 +42,7 @@ export const ShowInner: FC<ShowProps> = (props) => {
 
   return (
     <TabbedShowLayout>
-      <Tab label="共同編集者">
+      <Tab label="コラポレーター">
         <FunctionField<Session>
           source="collaborators"
           render={(record) => (
@@ -86,12 +86,12 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
           onSubmit={invite}
           render={({ invalid, submitting, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <DialogTitle>共同編集者を追加</DialogTitle>
+              <DialogTitle>コラポレーターを追加</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  追加したいユーザのメールアドレスを入力してください。
+                  コラボレーションしたいユーザのメールアドレスを入力してください。
                   <br />
-                  対象ユーザがチャチャットに未登録でも問題ありません。(メンバー登録用の案内がメールで送信されます)
+                  対象ユーザがチャチャットに未登録でも問題ありません。(登録用の案内がメールで送信されます)
                 </DialogContentText>
                 <TextInput
                   source="email"
