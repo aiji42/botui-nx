@@ -22,6 +22,7 @@ import {
   DialogActions,
   Button
 } from '@material-ui/core'
+import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,6 @@ export const ShowInner: FC = () => {
 
 const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
   const [open, setOpen] = useState(false)
-  const session = useShowContext<Session>(props)
   const refresh = useRefresh()
   const handleClickOpen = () => {
     setOpen(true)
@@ -89,26 +89,10 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
   const handleClose = () => {
     setOpen(false)
   }
-  const invite = useCallback(
-    ({ email }: { email: string }) => {
-      fetch(`${process.env.NX_API_HOST}/collaborator/invite`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: JSON.stringify({
-          sessionId: session.record?.id,
-          email
-        })
-      }).then(() => {
-        handleClose()
-        refresh()
-      })
-    },
-    [refresh, session.record?.id]
-  )
+  const invite = useCollaboratorInvite(props, () => {
+    refresh()
+    handleClose()
+  })
 
   return (
     <>
@@ -117,7 +101,8 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
         <Form
           onSubmit={invite}
           render={({ invalid, submitting, handleSubmit }) => (
-            <>
+            <form onSubmit={handleSubmit}>
+              {console.log(submitting, invalid)}
               <DialogTitle>共同編集者を追加</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -137,13 +122,12 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
                 <Button
                   disabled={invalid || submitting}
                   type="submit"
-                  onClick={handleSubmit}
                   color="primary"
                 >
                   追加する
                 </Button>
               </DialogActions>
-            </>
+            </form>
           )}
         ></Form>
       </Dialog>

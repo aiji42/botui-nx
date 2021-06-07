@@ -53,7 +53,7 @@ const dataProvider = {
       return await defaultDataProvider.getList(resource, {
         ...params,
         filter: {
-          listCoraboratorInvitationsByEmailAndStatus: {
+          listCoraboratorInvitationsByEmail: {
             email: info.attributes.email,
             status: { eq: 'active' }
           }
