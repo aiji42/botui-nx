@@ -7,22 +7,16 @@ import {
   ShowProps,
   TextInput,
   required,
-  email
+  email,
+  useShowContext
 } from 'react-admin'
 import { Session } from '@botui/types'
 import { Form } from 'react-final-form'
-import {
-  Chip,
-  makeStyles,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button
-} from '@material-ui/core'
+import {Chip, makeStyles, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Box, Typography} from '@material-ui/core';
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
+import {ChatControllerClient} from '@botui/chat-controller';
+import {Auth} from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(0.5)
     }
+  },
+  img: {
+    width: '100%',
+    maxWidth: 600
   }
 }))
 
@@ -42,6 +40,47 @@ export const ShowInner: FC<ShowProps> = (props) => {
 
   return (
     <TabbedShowLayout>
+      <Tab label="プレビュー">
+        <FunctionField<Session>
+          source="id"
+          label=""
+          render={(record) => (
+            <Box width={320} height={560} mb={4}>
+              <ChatControllerClient
+                onClose={noop}
+                onComplete={noop}
+                preview
+                session={record}
+              >
+                <iframe
+                  src={`${process.env.NX_PREVIEW_HOST}/session/preview`}
+                  title="プレビュー"
+                  width="100%"
+                  height="100%"
+                />
+              </ChatControllerClient>
+            </Box>
+          )}
+        />
+      </Tab>
+      <Tab label="アナリティクス">
+        <FunctionField<Session>
+          source="id"
+          label=""
+          render={() => (
+            <Box textAlign="center" m={1}>
+              <Typography variant="h5" color="secondary">
+                COMING SOON...
+              </Typography>
+              <img
+                src="/assets/analytics.png"
+                alt="eye catch"
+                className={classes.img}
+              />
+            </Box>
+          )}
+        />
+      </Tab>
       <Tab label="コラポレーター">
         <FunctionField<Session>
           source="collaborators"
@@ -64,6 +103,17 @@ export const ShowInner: FC<ShowProps> = (props) => {
   )
 }
 
+const noop = () => {
+  // noop
+}
+
+const customValidation = (values: Session | undefined) => async (value: string) => {
+  const myEmail = (await Auth.currentUserInfo()).attributes.email
+  if (myEmail === value) return '自分のメールアドレスは追加できません。'
+  if (values.collaborators?.includes(value))
+    return 'すでに追加されているメールアドレスです。'
+}
+
 const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
   const [open, setOpen] = useState(false)
   const refresh = useRefresh()
@@ -77,6 +127,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
     refresh()
     handleClose()
   })
+  const session = useShowContext<Session>(props)
 
   return (
     <>
@@ -97,7 +148,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
                   source="email"
                   type="email"
                   label="メールアドレス"
-                  validate={[required(), email()]}
+                  validate={[required(), email(), customValidation(session?.record)]}
                   fullWidth
                 />
               </DialogContent>

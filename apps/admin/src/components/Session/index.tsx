@@ -9,11 +9,8 @@ import {
   CreateProps,
   Edit,
   Create,
-  FunctionField,
-  EditButton,
   Toolbar,
   SaveButton,
-  DeleteButton,
   ToolbarProps,
   Show,
   ShowProps
@@ -43,18 +40,12 @@ export const SessionList: FC = (props) => {
     <List
       {...props}
       bulkActionButtons={false}
+      exporter={false}
       empty={<Empty />}
     >
-      <Datagrid>
+      <Datagrid rowClick="show">
         <TextField label="タイトル" source="title" sortable={false} />
         <BooleanField label="アクティブ" source="active" />
-        <FunctionField<Session>
-          render={(record) =>
-            record ? <PreviewDialog session={record} /> : null
-          }
-        />
-        <EditButton />
-        <DeleteButton />
       </Datagrid>
     </List>
   )
@@ -87,7 +78,7 @@ export const SessionEdit: FC = (props) => {
 
 export const SessionShow: FC<ShowProps> = (props) => {
   return (
-    <Show {...props}>
+    <Show {...props} >
       <ShowInner />
     </Show>
   )
