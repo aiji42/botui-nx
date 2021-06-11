@@ -11,7 +11,7 @@ export const useCollaboratorInvite = (
 
   const invite = useCallback(
     async ({ email }: { email: string }) => {
-      return fetch(`${process.env.NX_API_HOST}/collaborator/invite`, {
+      return fetch(`${process.env.NX_API_ENDPOINT}/collaborator/invite`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

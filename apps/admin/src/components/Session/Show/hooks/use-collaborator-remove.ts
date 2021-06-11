@@ -12,7 +12,7 @@ export const useCollaboratorRemove = (
   const remove = useCallback(
     async (email: string) => {
       if (!window.confirm(`${email} を共同編集者から外しますか？`)) return
-      return fetch(`${process.env.NX_API_HOST}/collaborator/remove`, {
+      return fetch(`${process.env.NX_API_ENDPOINT}/collaborator/remove`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
