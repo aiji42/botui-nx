@@ -17,7 +17,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: yarn install
-    - run: npx nx run backend:build:lambda
+    - run: yarn nx run backend:build:lambda
     - uses: serverless/github-action@master
       with:
         args: deploy --stage=production
