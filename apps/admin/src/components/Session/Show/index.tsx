@@ -13,7 +13,7 @@ export const ShowInner: VFC<ShowProps> = (props) => {
       <Tab label="アナリティクス">
         <AnalyticsTabInner />
       </Tab>
-      <Tab label="コラポレーター">
+      <Tab label="コラボレーター">
         <CollaboratorTabInner {...props} />
       </Tab>
     </TabbedShowLayout>

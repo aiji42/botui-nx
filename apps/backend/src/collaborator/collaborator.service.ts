@@ -66,7 +66,7 @@ export class CollaboratorService {
         }
       })
 
-    return { message: 'コラポレーターを追加しました。' }
+    return { message: 'コラボレーターを追加しました。' }
   }
 
   async remove(
@@ -94,6 +94,6 @@ export class CollaboratorService {
       }
     })
 
-    return { message: 'コラポレーターを削除しました。' }
+    return { message: 'コラボレーターを削除しました。' }
   }
 }
