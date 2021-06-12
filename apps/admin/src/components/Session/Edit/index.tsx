@@ -12,7 +12,7 @@ const Edit: FC<Props> = (props) => {
       <FormTab label="概要">
         <SessionFormInner />
       </FormTab>
-      <FormTab label="タイムライン">
+      <FormTab label="ストーリー">
         <ProposalsViewerAndEditor />
       </FormTab>
       <FormTab label="ランチャー">
