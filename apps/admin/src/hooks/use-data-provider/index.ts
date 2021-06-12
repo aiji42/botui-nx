@@ -90,11 +90,14 @@ const dataProvider = {
     if (resource !== 'sessions')
       return defaultDataProvider.update(resource, params)
 
+    const { collaboratorInvitations, collaborators, ...data } = sessionFormat(
+      params.data
+    )
     const result = await defaultDataProvider.update<
       Session<string, string, string, string>
     >(resource, {
       ...params,
-      data: sessionFormat(params.data)
+      data
     })
     return {
       ...result,
