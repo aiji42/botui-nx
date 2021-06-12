@@ -7,11 +7,21 @@ type Session
         ownerField: "owner"
         operations: [create, update, delete, read]
       }
+      {
+        allow: owner
+        ownerField: "collaborators"
+        identityClaim: "email"
+        operations: [update, delete, read]
+      }
       { allow: public, provider: iam, operations: [read] }
+      { allow: public, provider: apiKey, operations: [read, update] }
     ]
   )
-  @key(name: "ownerIndex", fields: ["owner"], queryField: "listSessionsByOwner")
-{
+  @key(
+    name: "ownerIndex"
+    fields: ["owner"]
+    queryField: "listSessionsByOwner"
+  ) {
   id: ID!
   owner: String
   title: String!
@@ -21,18 +31,52 @@ type Session
   images: AWSJSON!
   email: String
   launcher: AWSJSON!
+  collaborators: [String]
+  collaboratorInvitations: [CollaboratorInvitation]
+    @connection(keyName: "bySession", fields: ["id"])
+}
+
+type CollaboratorInvitation
+  @model
+  @key(
+    name: "bySession"
+    fields: ["sessionId", "email"]
+    queryField: "listCollaboratorInvitationsBySession"
+  )
+  @key(
+    name: "byEmail"
+    fields: ["email"]
+    queryField: "listCoraboratorInvitationsByEmail"
+  )
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  email: String!
+  sessionId: ID!
+  session: Session @connection(fields: ["sessionId"])
 }
 
 type Entry
   @model
   @auth(
     rules: [
-      {allow: owner, ownerField: "owner", operations: [create, update, delete, read]},
-      {allow: public, provider: iam, operations: [create]}
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+      { allow: public, provider: iam, operations: [create] }
     ]
   )
-  @key(name: "sessionAndCreatedAtIndex", fields: ["sessionId", "createdAt"], queryField: "entryBySessionAndCreatedAt")
-{
+  @key(
+    name: "sessionAndCreatedAtIndex"
+    fields: ["sessionId", "createdAt"]
+    queryField: "entryBySessionAndCreatedAt"
+  ) {
   id: ID!
   owner: String!
   sessionId: ID!

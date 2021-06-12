@@ -12,6 +12,7 @@ export type CreateSessionInput = {
   images: string
   email?: string | null
   launcher: string
+  collaborators?: Array<string | null> | null
 }
 
 export type ModelSessionConditionInput = {
@@ -84,20 +85,26 @@ export type Session = {
   images?: string
   email?: string | null
   launcher?: string
+  collaborators?: Array<string | null> | null
   createdAt?: string
   updatedAt?: string
+  collaboratorInvitations?: ModelCollaboratorInvitationConnection
 }
 
-export type UpdateSessionInput = {
-  id: string
-  owner?: string | null
-  title?: string | null
-  active?: boolean | null
-  theme?: string | null
-  proposals?: string | null
-  images?: string | null
-  email?: string | null
-  launcher?: string | null
+export type ModelCollaboratorInvitationConnection = {
+  __typename: 'ModelCollaboratorInvitationConnection'
+  items?: Array<CollaboratorInvitation | null> | null
+  nextToken?: string | null
+}
+
+export type CollaboratorInvitation = {
+  __typename: 'CollaboratorInvitation'
+  id?: string
+  email?: string
+  sessionId?: string
+  createdAt?: string
+  updatedAt?: string
+  session?: Session
 }
 
 export type DeleteSessionInput = {
@@ -151,6 +158,43 @@ export type DeleteEntryInput = {
   id?: string | null
 }
 
+export type UpdateSessionInput = {
+  id: string
+  owner?: string | null
+  title?: string | null
+  active?: boolean | null
+  theme?: string | null
+  proposals?: string | null
+  images?: string | null
+  email?: string | null
+  launcher?: string | null
+  collaborators?: Array<string | null> | null
+}
+
+export type CreateCollaboratorInvitationInput = {
+  id?: string | null
+  email: string
+  sessionId: string
+}
+
+export type ModelCollaboratorInvitationConditionInput = {
+  email?: ModelStringInput | null
+  sessionId?: ModelIDInput | null
+  and?: Array<ModelCollaboratorInvitationConditionInput | null> | null
+  or?: Array<ModelCollaboratorInvitationConditionInput | null> | null
+  not?: ModelCollaboratorInvitationConditionInput | null
+}
+
+export type UpdateCollaboratorInvitationInput = {
+  id: string
+  email?: string | null
+  sessionId?: string | null
+}
+
+export type DeleteCollaboratorInvitationInput = {
+  id?: string | null
+}
+
 export type CreateEntryInput = {
   id?: string | null
   owner: string
@@ -201,6 +245,7 @@ export type ModelSessionFilterInput = {
   images?: ModelStringInput | null
   email?: ModelStringInput | null
   launcher?: ModelStringInput | null
+  collaborators?: ModelStringInput | null
   and?: Array<ModelSessionFilterInput | null> | null
   or?: Array<ModelSessionFilterInput | null> | null
   not?: ModelSessionFilterInput | null
@@ -210,6 +255,15 @@ export type ModelSessionConnection = {
   __typename: 'ModelSessionConnection'
   items?: Array<Session | null> | null
   nextToken?: string | null
+}
+
+export type ModelCollaboratorInvitationFilterInput = {
+  id?: ModelIDInput | null
+  email?: ModelStringInput | null
+  sessionId?: ModelIDInput | null
+  and?: Array<ModelCollaboratorInvitationFilterInput | null> | null
+  or?: Array<ModelCollaboratorInvitationFilterInput | null> | null
+  not?: ModelCollaboratorInvitationFilterInput | null
 }
 
 export type CreateSessionMutationVariables = {
@@ -229,30 +283,21 @@ export type CreateSessionMutation = {
     images: string
     email?: string | null
     launcher: string
+    collaborators?: Array<string | null> | null
     createdAt: string
     updatedAt: string
-  } | null
-}
-
-export type UpdateSessionMutationVariables = {
-  input?: UpdateSessionInput
-  condition?: ModelSessionConditionInput | null
-}
-
-export type UpdateSessionMutation = {
-  updateSession?: {
-    __typename: 'Session'
-    id: string
-    owner?: string | null
-    title: string
-    active: boolean
-    theme: string
-    proposals: string
-    images: string
-    email?: string | null
-    launcher: string
-    createdAt: string
-    updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
   } | null
 }
 
@@ -273,8 +318,21 @@ export type DeleteSessionMutation = {
     images: string
     email?: string | null
     launcher: string
+    collaborators?: Array<string | null> | null
     createdAt: string
     updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
   } | null
 }
 
@@ -309,6 +367,146 @@ export type DeleteEntryMutation = {
     inputs: string
     createdAt: string
     updatedAt: string
+  } | null
+}
+
+export type UpdateSessionMutationVariables = {
+  input?: UpdateSessionInput
+  condition?: ModelSessionConditionInput | null
+}
+
+export type UpdateSessionMutation = {
+  updateSession?: {
+    __typename: 'Session'
+    id: string
+    owner?: string | null
+    title: string
+    active: boolean
+    theme: string
+    proposals: string
+    images: string
+    email?: string | null
+    launcher: string
+    collaborators?: Array<string | null> | null
+    createdAt: string
+    updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
+  } | null
+}
+
+export type CreateCollaboratorInvitationMutationVariables = {
+  input?: CreateCollaboratorInvitationInput
+  condition?: ModelCollaboratorInvitationConditionInput | null
+}
+
+export type CreateCollaboratorInvitationMutation = {
+  createCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
+  } | null
+}
+
+export type UpdateCollaboratorInvitationMutationVariables = {
+  input?: UpdateCollaboratorInvitationInput
+  condition?: ModelCollaboratorInvitationConditionInput | null
+}
+
+export type UpdateCollaboratorInvitationMutation = {
+  updateCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
+  } | null
+}
+
+export type DeleteCollaboratorInvitationMutationVariables = {
+  input?: DeleteCollaboratorInvitationInput
+  condition?: ModelCollaboratorInvitationConditionInput | null
+}
+
+export type DeleteCollaboratorInvitationMutation = {
+  deleteCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
   } | null
 }
 
@@ -392,27 +590,6 @@ export type EntryBySessionAndCreatedAtQuery = {
   } | null
 }
 
-export type GetSessionQueryVariables = {
-  id?: string
-}
-
-export type GetSessionQuery = {
-  getSession?: {
-    __typename: 'Session'
-    id: string
-    owner?: string | null
-    title: string
-    active: boolean
-    theme: string
-    proposals: string
-    images: string
-    email?: string | null
-    launcher: string
-    createdAt: string
-    updatedAt: string
-  } | null
-}
-
 export type ListSessionsQueryVariables = {
   filter?: ModelSessionFilterInput | null
   limit?: number | null
@@ -433,10 +610,49 @@ export type ListSessionsQuery = {
       images: string
       email?: string | null
       launcher: string
+      collaborators?: Array<string | null> | null
       createdAt: string
       updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
     } | null> | null
     nextToken?: string | null
+  } | null
+}
+
+export type GetSessionQueryVariables = {
+  id?: string
+}
+
+export type GetSessionQuery = {
+  getSession?: {
+    __typename: 'Session'
+    id: string
+    owner?: string | null
+    title: string
+    active: boolean
+    theme: string
+    proposals: string
+    images: string
+    email?: string | null
+    launcher: string
+    collaborators?: Array<string | null> | null
+    createdAt: string
+    updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
   } | null
 }
 
@@ -462,8 +678,160 @@ export type ListSessionsByOwnerQuery = {
       images: string
       email?: string | null
       launcher: string
+      collaborators?: Array<string | null> | null
       createdAt: string
       updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null> | null
+    nextToken?: string | null
+  } | null
+}
+
+export type GetCollaboratorInvitationQueryVariables = {
+  id?: string
+}
+
+export type GetCollaboratorInvitationQuery = {
+  getCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
+  } | null
+}
+
+export type ListCollaboratorInvitationsQueryVariables = {
+  filter?: ModelCollaboratorInvitationFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListCollaboratorInvitationsQuery = {
+  listCollaboratorInvitations?: {
+    __typename: 'ModelCollaboratorInvitationConnection'
+    items?: Array<{
+      __typename: 'CollaboratorInvitation'
+      id: string
+      email: string
+      sessionId: string
+      createdAt: string
+      updatedAt: string
+      session?: {
+        __typename: 'Session'
+        id: string
+        owner?: string | null
+        title: string
+        active: boolean
+        theme: string
+        proposals: string
+        images: string
+        email?: string | null
+        launcher: string
+        collaborators?: Array<string | null> | null
+        createdAt: string
+        updatedAt: string
+      } | null
+    } | null> | null
+    nextToken?: string | null
+  } | null
+}
+
+export type ListCollaboratorInvitationsBySessionQueryVariables = {
+  sessionId?: string | null
+  email?: ModelStringKeyConditionInput | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelCollaboratorInvitationFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListCollaboratorInvitationsBySessionQuery = {
+  listCollaboratorInvitationsBySession?: {
+    __typename: 'ModelCollaboratorInvitationConnection'
+    items?: Array<{
+      __typename: 'CollaboratorInvitation'
+      id: string
+      email: string
+      sessionId: string
+      createdAt: string
+      updatedAt: string
+      session?: {
+        __typename: 'Session'
+        id: string
+        owner?: string | null
+        title: string
+        active: boolean
+        theme: string
+        proposals: string
+        images: string
+        email?: string | null
+        launcher: string
+        collaborators?: Array<string | null> | null
+        createdAt: string
+        updatedAt: string
+      } | null
+    } | null> | null
+    nextToken?: string | null
+  } | null
+}
+
+export type ListCoraboratorInvitationsByEmailQueryVariables = {
+  email?: string | null
+  sortDirection?: ModelSortDirection | null
+  filter?: ModelCollaboratorInvitationFilterInput | null
+  limit?: number | null
+  nextToken?: string | null
+}
+
+export type ListCoraboratorInvitationsByEmailQuery = {
+  listCoraboratorInvitationsByEmail?: {
+    __typename: 'ModelCollaboratorInvitationConnection'
+    items?: Array<{
+      __typename: 'CollaboratorInvitation'
+      id: string
+      email: string
+      sessionId: string
+      createdAt: string
+      updatedAt: string
+      session?: {
+        __typename: 'Session'
+        id: string
+        owner?: string | null
+        title: string
+        active: boolean
+        theme: string
+        proposals: string
+        images: string
+        email?: string | null
+        launcher: string
+        collaborators?: Array<string | null> | null
+        createdAt: string
+        updatedAt: string
+      } | null
     } | null> | null
     nextToken?: string | null
   } | null
@@ -519,6 +887,7 @@ export type OnDeleteEntrySubscription = {
 
 export type OnCreateSessionSubscriptionVariables = {
   owner?: string | null
+  collaborators?: string | null
 }
 
 export type OnCreateSessionSubscription = {
@@ -533,13 +902,27 @@ export type OnCreateSessionSubscription = {
     images: string
     email?: string | null
     launcher: string
+    collaborators?: Array<string | null> | null
     createdAt: string
     updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
   } | null
 }
 
 export type OnUpdateSessionSubscriptionVariables = {
   owner?: string | null
+  collaborators?: string | null
 }
 
 export type OnUpdateSessionSubscription = {
@@ -554,13 +937,27 @@ export type OnUpdateSessionSubscription = {
     images: string
     email?: string | null
     launcher: string
+    collaborators?: Array<string | null> | null
     createdAt: string
     updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
   } | null
 }
 
 export type OnDeleteSessionSubscriptionVariables = {
   owner?: string | null
+  collaborators?: string | null
 }
 
 export type OnDeleteSessionSubscription = {
@@ -575,7 +972,110 @@ export type OnDeleteSessionSubscription = {
     images: string
     email?: string | null
     launcher: string
+    collaborators?: Array<string | null> | null
     createdAt: string
     updatedAt: string
+    collaboratorInvitations?: {
+      __typename: 'ModelCollaboratorInvitationConnection'
+      items?: Array<{
+        __typename: 'CollaboratorInvitation'
+        id: string
+        email: string
+        sessionId: string
+        createdAt: string
+        updatedAt: string
+      } | null> | null
+      nextToken?: string | null
+    } | null
+  } | null
+}
+
+export type OnCreateCollaboratorInvitationSubscription = {
+  onCreateCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
+  } | null
+}
+
+export type OnUpdateCollaboratorInvitationSubscription = {
+  onUpdateCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
+  } | null
+}
+
+export type OnDeleteCollaboratorInvitationSubscription = {
+  onDeleteCollaboratorInvitation?: {
+    __typename: 'CollaboratorInvitation'
+    id: string
+    email: string
+    sessionId: string
+    createdAt: string
+    updatedAt: string
+    session?: {
+      __typename: 'Session'
+      id: string
+      owner?: string | null
+      title: string
+      active: boolean
+      theme: string
+      proposals: string
+      images: string
+      email?: string | null
+      launcher: string
+      collaborators?: Array<string | null> | null
+      createdAt: string
+      updatedAt: string
+      collaboratorInvitations?: {
+        __typename: 'ModelCollaboratorInvitationConnection'
+        nextToken?: string | null
+      } | null
+    } | null
   } | null
 }

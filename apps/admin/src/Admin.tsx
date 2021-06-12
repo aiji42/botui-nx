@@ -5,18 +5,21 @@ import japaneseMessages from '@bicstone/ra-language-japanese'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import AssignmentIcon from '@material-ui/icons/AssignmentOutlined'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutline'
+import GroupWorkIcon from '@material-ui/icons/GroupWorkOutlined'
 import {
   Login,
   SessionList,
   SessionCreate,
   SessionEdit,
   EntryList,
-  CustomizedLayout
+  CustomizedLayout,
+  SessionShow
 } from './components'
 import { useDataProvider } from './hooks'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import vocabularies from './i18n/amplify/vocabularies'
 import { customizedTheme } from './customizedTheme'
+import { CollaboratorinvitationList } from './components/CollaboratorInvitation'
 
 const filterHost = (url: string) => new URL(url).host === window.location.host
 if (process.env.NX_AWS_EXPORTS) {
@@ -25,7 +28,18 @@ if (process.env.NX_AWS_EXPORTS) {
     awsconfig.oauth.redirectSignIn.split(',').filter(filterHost).shift() ?? ''
   awsconfig.oauth.redirectSignOut =
     awsconfig.oauth.redirectSignOut.split(',').filter(filterHost).shift() ?? ''
-  Amplify.configure(awsconfig)
+  Amplify.configure({
+    ...awsconfig,
+    graphql_headers: async () => {
+      try {
+        const token = (await Auth.currentSession()).getIdToken().getJwtToken()
+        return { Authorization: token }
+      } catch (e) {
+        console.error(e)
+        return {}
+      }
+    }
+  })
 }
 
 Amplify.I18n.putVocabularies(vocabularies)
@@ -49,8 +63,15 @@ const Admin: FC = () => {
         options={{ label: 'シナリオ' }}
         list={SessionList}
         edit={SessionEdit}
+        show={SessionShow}
         create={SessionCreate}
         icon={ChatBubbleIcon}
+      />
+      <Resource
+        name="collaboratorInvitations"
+        options={{ label: 'コラボレーション' }}
+        list={CollaboratorinvitationList}
+        icon={GroupWorkIcon}
       />
       <Resource
         name="entrys"

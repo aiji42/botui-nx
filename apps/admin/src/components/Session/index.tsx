@@ -9,12 +9,11 @@ import {
   CreateProps,
   Edit,
   Create,
-  FunctionField,
-  EditButton,
   Toolbar,
   SaveButton,
-  DeleteButton,
-  ToolbarProps
+  ToolbarProps,
+  Show,
+  ShowProps
 } from 'react-admin'
 import EditForm from './Edit'
 import CreateForm from './Create'
@@ -23,6 +22,7 @@ import { Session } from '@botui/types'
 import PreviewDialog from './PreviewDialog'
 import { useFormState } from 'react-final-form'
 import Empty from './Empty'
+import { ShowInner } from './Show'
 
 const EditToolbar: FC<Omit<ToolbarProps, 'width'>> = (props) => {
   const { values: session } = useFormState<Session>()
@@ -43,16 +43,9 @@ export const SessionList: FC = (props) => {
       exporter={false}
       empty={<Empty />}
     >
-      <Datagrid>
+      <Datagrid rowClick="show">
         <TextField label="タイトル" source="title" sortable={false} />
         <BooleanField label="アクティブ" source="active" />
-        <FunctionField<Session>
-          render={(record) =>
-            record ? <PreviewDialog session={record} /> : null
-          }
-        />
-        <EditButton />
-        <DeleteButton />
       </Datagrid>
     </List>
   )
@@ -80,5 +73,13 @@ export const SessionEdit: FC = (props) => {
     >
       <EditForm warnWhenUnsavedChanges toolbar={<EditToolbar />} />
     </Edit>
+  )
+}
+
+export const SessionShow: FC<ShowProps> = (props) => {
+  return (
+    <Show {...props}>
+      <ShowInner />
+    </Show>
   )
 }

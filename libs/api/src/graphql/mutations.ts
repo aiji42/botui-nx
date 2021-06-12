@@ -17,28 +17,19 @@ export const createSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
-    }
-  }
-`
-export const updateSession = /* GraphQL */ `
-  mutation UpdateSession(
-    $input: UpdateSessionInput!
-    $condition: ModelSessionConditionInput
-  ) {
-    updateSession(input: $input, condition: $condition) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-      createdAt
-      updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          email
+          sessionId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `
@@ -57,8 +48,19 @@ export const deleteSession = /* GraphQL */ `
       images
       email
       launcher
+      collaborators
       createdAt
       updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          email
+          sessionId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `
@@ -89,6 +91,130 @@ export const deleteEntry = /* GraphQL */ `
       inputs
       createdAt
       updatedAt
+    }
+  }
+`
+export const updateSession = /* GraphQL */ `
+  mutation UpdateSession(
+    $input: UpdateSessionInput!
+    $condition: ModelSessionConditionInput
+  ) {
+    updateSession(input: $input, condition: $condition) {
+      id
+      owner
+      title
+      active
+      theme
+      proposals
+      images
+      email
+      launcher
+      collaborators
+      createdAt
+      updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          email
+          sessionId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`
+export const createCollaboratorInvitation = /* GraphQL */ `
+  mutation CreateCollaboratorInvitation(
+    $input: CreateCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
+  ) {
+    createCollaboratorInvitation(input: $input, condition: $condition) {
+      id
+      email
+      sessionId
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
+    }
+  }
+`
+export const updateCollaboratorInvitation = /* GraphQL */ `
+  mutation UpdateCollaboratorInvitation(
+    $input: UpdateCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
+  ) {
+    updateCollaboratorInvitation(input: $input, condition: $condition) {
+      id
+      email
+      sessionId
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
+    }
+  }
+`
+export const deleteCollaboratorInvitation = /* GraphQL */ `
+  mutation DeleteCollaboratorInvitation(
+    $input: DeleteCollaboratorInvitationInput!
+    $condition: ModelCollaboratorInvitationConditionInput
+  ) {
+    deleteCollaboratorInvitation(input: $input, condition: $condition) {
+      id
+      email
+      sessionId
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
     }
   }
 `

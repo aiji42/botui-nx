@@ -1,0 +1,46 @@
+service: botui-serverless
+
+custom:
+  serverless-layers:
+    layersDeploymentBucket: botui-lambda-layer
+    dependenciesPath: ./apps/backend/package.json
+  prune:
+    automatic: true
+    number: 2
+  dotenv:
+    path: ./apps/backend/.env
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-1
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-prune-plugin
+  - serverless-layers
+
+package:
+ individually: true
+ include:
+   - dist/apps/backend/**
+ exclude:
+   - "**"
+
+functions:
+  backend:
+    handler: dist/apps/backend/main.handler
+    environment:
+      AWS_EXPORTS: ${env:AWS_EXPORTS}
+      SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
+      GRAPHQL_API_KEY: ${env:GRAPHQL_API_KEY}
+    events:
+    - http:
+        cors: true
+        path: '/'
+        method: any
+    - http:
+        cors: true
+        path: '{proxy+}'
+        method: any

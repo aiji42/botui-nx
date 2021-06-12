@@ -37,6 +37,13 @@ export interface Launcher {
   loadScripts?: Array<string>
 }
 
+export interface CollaboratorInvitation {
+  id: string
+  email: string
+  sessionId: string
+  session: Session | null
+}
+
 export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   id: string
   title: string
@@ -47,6 +54,8 @@ export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   images: V
   email?: string
   launcher: W
+  collaboratorInvitations?: { items: Array<CollaboratorInvitation> } | null
+  collaborators: string[] | null
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {

@@ -35,20 +35,32 @@ const defaultDataProvider = buildDataProvider({ queries, mutations })
 const dataProvider = {
   ...defaultDataProvider,
   getList: async (resource: string, params: GetListParams) => {
-    if (resource !== 'sessions')
-      return await defaultDataProvider.getList(resource, params)
-
-    const info = await Auth.currentUserInfo()
-    const result = await defaultDataProvider.getList<
-      Session<string, string, string, string>
-    >(resource, {
-      ...params,
-      filter: { listSessionsByOwner: { owner: info.username } }
-    })
-    return {
-      ...result,
-      data: result.data.map(sessionParse)
+    if (resource === 'sessions') {
+      const info = await Auth.currentUserInfo()
+      const result = await defaultDataProvider.getList<
+        Session<string, string, string, string>
+      >(resource, {
+        ...params,
+        filter: { listSessionsByOwner: { owner: info.username } }
+      })
+      return {
+        ...result,
+        data: result.data.map(sessionParse)
+      }
     }
+    if (resource === 'collaboratorInvitations') {
+      const info = await Auth.currentUserInfo()
+      return await defaultDataProvider.getList(resource, {
+        ...params,
+        filter: {
+          listCoraboratorInvitationsByEmail: {
+            email: info.attributes.email,
+            status: { eq: 'active' }
+          }
+        }
+      })
+    }
+    return await defaultDataProvider.getList(resource, params)
   },
   getOne: async (resource: string, params: GetOneParams) => {
     if (resource !== 'sessions')

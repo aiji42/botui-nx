@@ -62,23 +62,6 @@ export const entryBySessionAndCreatedAt = /* GraphQL */ `
     }
   }
 `
-export const getSession = /* GraphQL */ `
-  query GetSession($id: ID!) {
-    getSession(id: $id) {
-      id
-      owner
-      title
-      active
-      theme
-      proposals
-      images
-      email
-      launcher
-      createdAt
-      updatedAt
-    }
-  }
-`
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -96,10 +79,42 @@ export const listSessions = /* GraphQL */ `
         images
         email
         launcher
+        collaborators
         createdAt
         updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
       }
       nextToken
+    }
+  }
+`
+export const getSession = /* GraphQL */ `
+  query GetSession($id: ID!) {
+    getSession(id: $id) {
+      id
+      owner
+      title
+      active
+      theme
+      proposals
+      images
+      email
+      launcher
+      collaborators
+      createdAt
+      updatedAt
+      collaboratorInvitations {
+        items {
+          id
+          email
+          sessionId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `
@@ -128,8 +143,158 @@ export const listSessionsByOwner = /* GraphQL */ `
         images
         email
         launcher
+        collaborators
         createdAt
         updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`
+export const getCollaboratorInvitation = /* GraphQL */ `
+  query GetCollaboratorInvitation($id: ID!) {
+    getCollaboratorInvitation(id: $id) {
+      id
+      email
+      sessionId
+      createdAt
+      updatedAt
+      session {
+        id
+        owner
+        title
+        active
+        theme
+        proposals
+        images
+        email
+        launcher
+        collaborators
+        createdAt
+        updatedAt
+        collaboratorInvitations {
+          nextToken
+        }
+      }
+    }
+  }
+`
+export const listCollaboratorInvitations = /* GraphQL */ `
+  query ListCollaboratorInvitations(
+    $filter: ModelCollaboratorInvitationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCollaboratorInvitations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        email
+        sessionId
+        createdAt
+        updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
+export const listCollaboratorInvitationsBySession = /* GraphQL */ `
+  query ListCollaboratorInvitationsBySession(
+    $sessionId: ID
+    $email: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorInvitationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCollaboratorInvitationsBySession(
+      sessionId: $sessionId
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        email
+        sessionId
+        createdAt
+        updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
+export const listCoraboratorInvitationsByEmail = /* GraphQL */ `
+  query ListCoraboratorInvitationsByEmail(
+    $email: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelCollaboratorInvitationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCoraboratorInvitationsByEmail(
+      email: $email
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        email
+        sessionId
+        createdAt
+        updatedAt
+        session {
+          id
+          owner
+          title
+          active
+          theme
+          proposals
+          images
+          email
+          launcher
+          collaborators
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
