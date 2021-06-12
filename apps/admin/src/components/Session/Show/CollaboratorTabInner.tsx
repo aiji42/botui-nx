@@ -1,4 +1,4 @@
-import { VFC, FC, useEffect, useState } from 'react'
+import { VFC, FC, useState } from 'react'
 import {
   useRefresh,
   FunctionField,
@@ -22,7 +22,7 @@ import {
 } from '@material-ui/core'
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
-import { Auth } from 'aws-amplify'
+import { useOwnEmail } from '../../../hooks/use-own-email'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,12 +36,7 @@ export const CollaboratorTabInner: VFC<ShowProps> = (props) => {
   const classes = useStyles()
   const refresh = useRefresh()
   const remove = useCollaboratorRemove(props, refresh)
-  const [myEmail, setMyEmail] = useState<string | null>(null)
-  useEffect(() => {
-    Auth.currentUserInfo().then(({ attributes }) =>
-      setMyEmail(attributes.email)
-    )
-  }, [])
+  const myEmail = useOwnEmail()
 
   return (
     <FunctionField<Session>
@@ -65,10 +60,10 @@ export const CollaboratorTabInner: VFC<ShowProps> = (props) => {
   )
 }
 
-const customValidation = (values: Session | undefined) => async (
-  value: string
-) => {
-  const myEmail = (await Auth.currentUserInfo()).attributes.email
+const customValidation = (
+  values: Session | undefined,
+  myEmail: string | null
+) => async (value: string) => {
   if (myEmail === value) return '自分のメールアドレスは追加できません。'
   if (values.collaborators?.includes(value))
     return 'すでに追加されているメールアドレスです。'
@@ -88,6 +83,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
     handleClose()
   })
   const session = useShowContext<Session>(props)
+  const myEmail = useOwnEmail()
 
   return (
     <>
@@ -111,7 +107,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
                   validate={[
                     required(),
                     email(),
-                    customValidation(session?.record)
+                    customValidation(session?.record, myEmail)
                   ]}
                   fullWidth
                 />
