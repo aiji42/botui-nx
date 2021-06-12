@@ -105,7 +105,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
           onSubmit={invite}
           render={({ invalid, submitting, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <DialogTitle>コラポレーターを追加</DialogTitle>
+              <DialogTitle>コラボレーターを追加</DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   コラボレーションしたいユーザのメールアドレスを入力してください。
