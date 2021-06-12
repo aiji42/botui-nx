@@ -18,11 +18,14 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Avatar,
   makeStyles
 } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
 import { useOwnEmail } from '../../../hooks/use-own-email'
+import { useOwnUserInfo } from 'apps/admin/src/hooks/use-own-user-info'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,20 +40,29 @@ export const CollaboratorTabInner: VFC<ShowProps> = (props) => {
   const refresh = useRefresh()
   const remove = useCollaboratorRemove(props, refresh)
   const myEmail = useOwnEmail()
+  const myInfo = useOwnUserInfo()
 
   return (
     <FunctionField<Session>
       source="collaborators"
       render={(record) => (
         <div className={classes.root}>
+          <Chip
+            icon={<AccountCircle />}
+            label="オーナー"
+            color="primary"
+            variant={record.owner === myInfo?.username ? 'default' : 'outlined'}
+          />
           {record?.collaborators?.map((email) => (
             <Chip
               key={email}
+              avatar={<Avatar>{email[0]}</Avatar>}
               label={email}
               {...(myEmail && email !== myEmail
                 ? { onDelete: () => remove(email) }
                 : {})}
               color="primary"
+              variant={email === myEmail ? 'default' : 'outlined'}
             />
           ))}
           <InviteDialogWithChipButton />

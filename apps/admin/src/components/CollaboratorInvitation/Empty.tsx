@@ -13,10 +13,11 @@ const Empty: FC = () => {
     <Box textAlign="center" m={1}>
       <img src="/assets/invite.png" alt="no invite" className={classes.img} />
       <Typography variant="h6" paragraph>
-        あなたが参加しているコラボレーション中のシナリオがまだありません
+        あなたがコラボレーターとして参加しているシナリオはありません
       </Typography>
       <Typography variant="body1" color="textSecondary" paragraph>
-        お知り合いのチャチャットの利用者に、コラボレーションをリクエストしてみてください。
+        お知り合いのチャチャットの利用者に、コラボレーションをリクエストしてみてください。<br />
+        シナリオの共同編集が可能になります。
       </Typography>
     </Box>
   )

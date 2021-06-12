@@ -1,11 +1,6 @@
-import { useEffect, useState } from 'react'
-import { Auth } from 'aws-amplify'
+import { useOwnUserInfo } from '../use-own-user-info'
 
 export const useOwnEmail = () => {
-  const [email, setEmail] = useState<string | null>(null)
-  useEffect(() => {
-    Auth.currentUserInfo().then(({ attributes }) => setEmail(attributes.email))
-  }, [])
-
-  return email
+  const userInfo = useOwnUserInfo()
+  return userInfo?.attributes.email
 }
