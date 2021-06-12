@@ -1,4 +1,4 @@
-import { VFC, FC, useEffect, useState } from 'react'
+import { VFC, FC, useState } from 'react'
 import {
   useRefresh,
   FunctionField,
@@ -18,11 +18,14 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  Avatar,
   makeStyles
 } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
-import { Auth } from 'aws-amplify'
+import { useOwnEmail } from '../../../hooks/use-own-email'
+import { useOwnUserInfo } from 'apps/admin/src/hooks/use-own-user-info'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,26 +39,30 @@ export const CollaboratorTabInner: VFC<ShowProps> = (props) => {
   const classes = useStyles()
   const refresh = useRefresh()
   const remove = useCollaboratorRemove(props, refresh)
-  const [myEmail, setMyEmail] = useState<string | null>(null)
-  useEffect(() => {
-    Auth.currentUserInfo().then(({ attributes }) =>
-      setMyEmail(attributes.email)
-    )
-  }, [])
+  const myEmail = useOwnEmail()
+  const myInfo = useOwnUserInfo()
 
   return (
     <FunctionField<Session>
       source="collaborators"
       render={(record) => (
         <div className={classes.root}>
+          <Chip
+            icon={<AccountCircle />}
+            label="オーナー"
+            color="primary"
+            variant={record.owner === myInfo?.username ? 'default' : 'outlined'}
+          />
           {record?.collaborators?.map((email) => (
             <Chip
               key={email}
+              avatar={<Avatar>{email[0]}</Avatar>}
               label={email}
               {...(myEmail && email !== myEmail
                 ? { onDelete: () => remove(email) }
                 : {})}
               color="primary"
+              variant={email === myEmail ? 'default' : 'outlined'}
             />
           ))}
           <InviteDialogWithChipButton />
@@ -65,10 +72,10 @@ export const CollaboratorTabInner: VFC<ShowProps> = (props) => {
   )
 }
 
-const customValidation = (values: Session | undefined) => async (
-  value: string
-) => {
-  const myEmail = (await Auth.currentUserInfo()).attributes.email
+const customValidation = (
+  values: Session | undefined,
+  myEmail: string | null
+) => async (value: string) => {
   if (myEmail === value) return '自分のメールアドレスは追加できません。'
   if (values.collaborators?.includes(value))
     return 'すでに追加されているメールアドレスです。'
@@ -88,6 +95,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
     handleClose()
   })
   const session = useShowContext<Session>(props)
+  const myEmail = useOwnEmail()
 
   return (
     <>
@@ -111,7 +119,7 @@ const InviteDialogWithChipButton: FC<ShowProps> = (props) => {
                   validate={[
                     required(),
                     email(),
-                    customValidation(session?.record)
+                    customValidation(session?.record, myEmail)
                   ]}
                   fullWidth
                 />

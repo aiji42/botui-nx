@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import {
   TextInput,
   required,
@@ -12,6 +12,7 @@ import { useForm } from 'react-final-form'
 import { ec, inquiry, custom } from './proposalTemplates'
 import ThemeColorSelector from './ThemeColorSelector'
 import { Launcher, Images } from '@botui/types'
+import { useOwnEmail } from '../../../hooks/use-own-email'
 
 const proposalsChoices = [
   {
@@ -49,6 +50,12 @@ const FormInner: FC = () => {
     'launcher',
     JSON.stringify({ size: 'auto', defaultOpen: false } as Launcher)
   )
+  const myEmail = useOwnEmail()
+  useEffect(() => {
+    change('email', myEmail)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myEmail])
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={5}>
