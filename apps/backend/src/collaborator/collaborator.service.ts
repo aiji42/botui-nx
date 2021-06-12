@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { RemoveInputDTO, InviteInputDTO } from './collaborator.dto'
-import { mutations, queries } from '@botui/api'
+import { mutations } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
 import Amplify from 'aws-amplify'
-import { CollaboratorInvitation, Session } from '@botui/types'
 import sgMail = require('@sendgrid/mail')
+import { GetInvitationAndSession, getInvitationAndSession, mutateInvitationAndSession } from './queries'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
 if (process.env.AWS_EXPORTS)
@@ -16,23 +16,20 @@ if (process.env.AWS_EXPORTS)
 
 @Injectable()
 export class CollaboratorService {
-  async invite(input: InviteInputDTO): Promise<{ message: string }> {
+  async invite(
+    input: InviteInputDTO
+  ): Promise<{ message: string; statusCode?: number }> {
     const { data } = (await API.graphql({
-      query: queries.listCollaboratorInvitationsBySession,
+      query: getInvitationAndSession,
       variables: {
         sessionId: input.sessionId,
-        email: { eq: input.email }
+        email: input.email
       }
-    })) as GraphQLResult<{
-      listCollaboratorInvitationsBySession: {
-        items: Array<CollaboratorInvitation>
-      }
-    }>
+    })) as GraphQLResult<GetInvitationAndSession>
 
-    const [invitation] = data.listCollaboratorInvitationsBySession.items
-    if (invitation) {
-      return { message: '対象のコラボレータはすでに参加しています。' }
-    } else {
+    const { invitation, session } = data
+    if (!session) return { message: 'シナリオが存在しません', statusCode: 404 }
+    if (invitation.items.length < 1)
       await API.graphql({
         query: mutations.createCollaboratorInvitation,
         variables: {
@@ -42,18 +39,6 @@ export class CollaboratorService {
           }
         }
       })
-    }
-
-    const {
-      data: { getSession: session }
-    } = (await API.graphql({
-      query: queries.getSession,
-      variables: {
-        id: input.sessionId
-      }
-    })) as GraphQLResult<{
-      getSession: Session
-    }>
 
     await API.graphql({
       query: mutations.updateSession,
@@ -61,71 +46,47 @@ export class CollaboratorService {
         input: {
           id: session.id,
           collaborators: [
-            ...(session.collaborators ?? []).filter(
-              (email) => email !== input.email
-            ),
-            input.email
+            ...new Set([...(session.collaborators ?? []), input.email])
           ]
         }
       }
     })
 
-    await sgMail.send({
-      to: input.email,
-      from: 'no-reply@survaq.com',
-      templateId: 'd-9899e84b861d46a881628503dadc0bf9',
-      dynamicTemplateData: {
-        session_title: session.title
-      }
-    })
+    if (invitation.items.length < 1)
+      await sgMail.send({
+        to: input.email,
+        from: 'no-reply@survaq.com',
+        templateId: 'd-9899e84b861d46a881628503dadc0bf9',
+        dynamicTemplateData: {
+          session_title: session.title
+        }
+      })
 
     return { message: 'コラポレーターを追加しました。' }
   }
 
-  async remove(input: RemoveInputDTO): Promise<{ message: string }> {
-    const {
-      data: { getSession: session }
-    } = (await API.graphql({
-      query: queries.getSession,
+  async remove(input: RemoveInputDTO): Promise<{ message: string; statusCode?: 404 }> {
+    const { data } = (await API.graphql({
+      query: getInvitationAndSession,
       variables: {
-        id: input.sessionId
+        email: input.email,
+        sessionId: input.sessionId
       }
-    })) as GraphQLResult<{
-      getSession: Session
-    }>
+    })) as GraphQLResult<GetInvitationAndSession>
+
+    const { session, invitation } = data
+    if (!session) return { message: 'シナリオが存在しません', statusCode: 404 }
+
     await API.graphql({
-      query: mutations.updateSession,
+      query: mutateInvitationAndSession,
       variables: {
-        input: {
-          id: input.sessionId,
-          collaborators: session.collaborators.filter(
-            (email) => email !== input.email
-          )
-        }
+        sessionId: session.id,
+        newCollaborators: (session.collaborators ?? []).filter(
+          (email) => email !== input.email
+        ),
+        invitationId: invitation.items[0]?.id ?? 'noInvitation'
       }
     })
-
-    const { data } = (await API.graphql({
-      query: queries.listCollaboratorInvitationsBySession,
-      variables: {
-        sessionId: input.sessionId,
-        email: { eq: input.email }
-      }
-    })) as GraphQLResult<{
-      listCollaboratorInvitationsBySession: {
-        items: Array<CollaboratorInvitation>
-      }
-    }>
-
-    const [invitation] = data.listCollaboratorInvitationsBySession.items
-    if (invitation) {
-      await API.graphql({
-        query: mutations.deleteCollaboratorInvitation,
-        variables: {
-          input: { id: invitation.id }
-        }
-      })
-    }
 
     return { message: 'コラポレーターを削除しました。' }
   }
