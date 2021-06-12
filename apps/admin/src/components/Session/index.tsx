@@ -78,7 +78,7 @@ export const SessionEdit: FC = (props) => {
 
 export const SessionShow: FC<ShowProps> = (props) => {
   return (
-    <Show {...props} >
+    <Show {...props}>
       <ShowInner />
     </Show>
   )

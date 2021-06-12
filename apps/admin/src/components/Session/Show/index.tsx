@@ -1,9 +1,5 @@
 import { VFC } from 'react'
-import {
-  TabbedShowLayout,
-  Tab,
-  ShowProps,
-} from 'react-admin'
+import { TabbedShowLayout, Tab, ShowProps } from 'react-admin'
 import { AnalyticsTabInner } from './AnalyticsTabInner'
 import { PreviewTabInner } from './PreviewTabInner'
 import { CollaboratorTabInner } from './CollaboratorTabInner'

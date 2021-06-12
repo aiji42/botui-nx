@@ -32,7 +32,7 @@ export const createSession = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteSession = /* GraphQL */ `
   mutation DeleteSession(
     $input: DeleteSessionInput!
@@ -63,7 +63,7 @@ export const deleteSession = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateEntry = /* GraphQL */ `
   mutation UpdateEntry(
     $input: UpdateEntryInput!
@@ -78,7 +78,7 @@ export const updateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteEntry = /* GraphQL */ `
   mutation DeleteEntry(
     $input: DeleteEntryInput!
@@ -93,7 +93,7 @@ export const deleteEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateSession = /* GraphQL */ `
   mutation UpdateSession(
     $input: UpdateSessionInput!
@@ -124,7 +124,7 @@ export const updateSession = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCollaboratorInvitation = /* GraphQL */ `
   mutation CreateCollaboratorInvitation(
     $input: CreateCollaboratorInvitationInput!
@@ -155,7 +155,7 @@ export const createCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateCollaboratorInvitation = /* GraphQL */ `
   mutation UpdateCollaboratorInvitation(
     $input: UpdateCollaboratorInvitationInput!
@@ -186,7 +186,7 @@ export const updateCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteCollaboratorInvitation = /* GraphQL */ `
   mutation DeleteCollaboratorInvitation(
     $input: DeleteCollaboratorInvitationInput!
@@ -217,7 +217,7 @@ export const deleteCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createEntry = /* GraphQL */ `
   mutation CreateEntry(
     $input: CreateEntryInput!
@@ -232,4 +232,4 @@ export const createEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

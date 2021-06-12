@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import {Box, Typography, makeStyles} from '@material-ui/core';
+import { Box, Typography, makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
   img: {
@@ -11,7 +11,11 @@ const Empty: FC = () => {
   const classes = useStyles()
   return (
     <Box textAlign="center" m={1}>
-      <img src="/assets/customer-data.png" alt="no entry" className={classes.img} />
+      <img
+        src="/assets/customer-data.png"
+        alt="no entry"
+        className={classes.img}
+      />
       <Typography variant="h6" paragraph>
         お客さ様からの反響がまだありません
       </Typography>

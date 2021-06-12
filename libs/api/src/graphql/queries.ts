@@ -13,7 +13,7 @@ export const getEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listEntrys = /* GraphQL */ `
   query ListEntrys(
     $filter: ModelEntryFilterInput
@@ -32,7 +32,7 @@ export const listEntrys = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const entryBySessionAndCreatedAt = /* GraphQL */ `
   query EntryBySessionAndCreatedAt(
     $sessionId: ID
@@ -61,7 +61,7 @@ export const entryBySessionAndCreatedAt = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const listSessions = /* GraphQL */ `
   query ListSessions(
     $filter: ModelSessionFilterInput
@@ -89,7 +89,7 @@ export const listSessions = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getSession = /* GraphQL */ `
   query GetSession($id: ID!) {
     getSession(id: $id) {
@@ -117,7 +117,7 @@ export const getSession = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listSessionsByOwner = /* GraphQL */ `
   query ListSessionsByOwner(
     $owner: String
@@ -153,7 +153,7 @@ export const listSessionsByOwner = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCollaboratorInvitation = /* GraphQL */ `
   query GetCollaboratorInvitation($id: ID!) {
     getCollaboratorInvitation(id: $id) {
@@ -181,7 +181,7 @@ export const getCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listCollaboratorInvitations = /* GraphQL */ `
   query ListCollaboratorInvitations(
     $filter: ModelCollaboratorInvitationFilterInput
@@ -217,7 +217,7 @@ export const listCollaboratorInvitations = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const listCollaboratorInvitationsBySession = /* GraphQL */ `
   query ListCollaboratorInvitationsBySession(
     $sessionId: ID
@@ -259,7 +259,7 @@ export const listCollaboratorInvitationsBySession = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const listCoraboratorInvitationsByEmail = /* GraphQL */ `
   query ListCoraboratorInvitationsByEmail(
     $email: String
@@ -299,4 +299,4 @@ export const listCoraboratorInvitationsByEmail = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`

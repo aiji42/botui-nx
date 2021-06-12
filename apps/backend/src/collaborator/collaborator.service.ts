@@ -4,7 +4,11 @@ import { mutations } from '@botui/api'
 import API, { GraphQLResult } from '@aws-amplify/api'
 import Amplify from 'aws-amplify'
 import sgMail = require('@sendgrid/mail')
-import { GetInvitationAndSession, getInvitationAndSession, mutateInvitationAndSession } from './queries'
+import {
+  GetInvitationAndSession,
+  getInvitationAndSession,
+  mutateInvitationAndSession
+} from './queries'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '')
 if (process.env.AWS_EXPORTS)
@@ -65,7 +69,9 @@ export class CollaboratorService {
     return { message: 'コラポレーターを追加しました。' }
   }
 
-  async remove(input: RemoveInputDTO): Promise<{ message: string; statusCode?: 404 }> {
+  async remove(
+    input: RemoveInputDTO
+  ): Promise<{ message: string; statusCode?: 404 }> {
     const { data } = (await API.graphql({
       query: getInvitationAndSession,
       variables: {

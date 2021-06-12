@@ -1,5 +1,12 @@
 import { FC } from 'react'
-import {List, Datagrid, ReferenceField, TextField, ListProps, BooleanField} from 'react-admin';
+import {
+  List,
+  Datagrid,
+  ReferenceField,
+  TextField,
+  ListProps,
+  BooleanField
+} from 'react-admin'
 import Empty from './Empty'
 
 export const CollaboratorinvitationList: FC<ListProps> = (props) => (

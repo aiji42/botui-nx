@@ -1,9 +1,6 @@
 import { Controller, Post, Body, Res } from '@nestjs/common'
 import { Response } from 'express'
-import {
-  RemoveInputDTO,
-  InviteInputDTO
-} from './collaborator.dto'
+import { RemoveInputDTO, InviteInputDTO } from './collaborator.dto'
 import { CollaboratorService } from './collaborator.service'
 
 @Controller('collaborator')

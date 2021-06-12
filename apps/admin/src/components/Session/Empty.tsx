@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import {Box, Typography, makeStyles} from '@material-ui/core';
+import { Box, Typography, makeStyles } from '@material-ui/core'
 import { CreateButton, useListContext } from 'react-admin'
 
 const useStyles = makeStyles(() => ({

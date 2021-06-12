@@ -1,4 +1,4 @@
-import {Box, Typography, makeStyles} from '@material-ui/core';
+import { Box, Typography, makeStyles } from '@material-ui/core'
 import { FC } from 'react'
 
 const useStyles = makeStyles(() => ({
