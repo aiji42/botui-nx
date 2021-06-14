@@ -110,6 +110,7 @@
     "@types/aws-serverless-express": "^3.3.3",
     "@types/deep-equal": "^1.0.1",
     "@types/express": "^4.17.12",
+    "@types/gtag.js": "^0.0.5",
     "@types/is-color": "^1.0.0",
     "@types/jest": "26.0.8",
     "@types/node": "14.14.33",

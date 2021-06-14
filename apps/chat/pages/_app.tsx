@@ -6,9 +6,7 @@ import Head from 'next/head'
 function CustomApp({ Component, pageProps }: AppProps) {
   const analyticsId = pageProps.session?.analyticsId
   useEffect(() => {
-    analyticsId &&
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).gtag('config', analyticsId)
+    analyticsId && gtag('config', analyticsId)
   }, [analyticsId])
   return (
     <Fragment>
