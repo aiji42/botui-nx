@@ -25,7 +25,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import { useCollaboratorInvite } from './hooks/use-collaborator-invite'
 import { useCollaboratorRemove } from './hooks/use-collaborator-remove'
 import { useOwnEmail } from '../../../hooks/use-own-email'
-import { useOwnUserInfo } from 'apps/admin/src/hooks/use-own-user-info'
+import { useOwnUserInfo } from '../../../hooks/use-own-user-info'
 
 const useStyles = makeStyles((theme) => ({
   root: {
