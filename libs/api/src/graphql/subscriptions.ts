@@ -13,7 +13,7 @@ export const onCreateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
 export const onUpdateEntry = /* GraphQL */ `
   subscription OnUpdateEntry($owner: String!) {
     onUpdateEntry(owner: $owner) {
@@ -25,7 +25,7 @@ export const onUpdateEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
 export const onDeleteEntry = /* GraphQL */ `
   subscription OnDeleteEntry($owner: String!) {
     onDeleteEntry(owner: $owner) {
@@ -37,7 +37,7 @@ export const onDeleteEntry = /* GraphQL */ `
       updatedAt
     }
   }
-`
+`;
 export const onCreateSession = /* GraphQL */ `
   subscription OnCreateSession($owner: String, $collaborators: String) {
     onCreateSession(owner: $owner, collaborators: $collaborators) {
@@ -51,6 +51,7 @@ export const onCreateSession = /* GraphQL */ `
       email
       launcher
       collaborators
+      googleAnalyticsId
       createdAt
       updatedAt
       collaboratorInvitations {
@@ -65,7 +66,7 @@ export const onCreateSession = /* GraphQL */ `
       }
     }
   }
-`
+`;
 export const onUpdateSession = /* GraphQL */ `
   subscription OnUpdateSession($owner: String, $collaborators: String) {
     onUpdateSession(owner: $owner, collaborators: $collaborators) {
@@ -79,6 +80,7 @@ export const onUpdateSession = /* GraphQL */ `
       email
       launcher
       collaborators
+      googleAnalyticsId
       createdAt
       updatedAt
       collaboratorInvitations {
@@ -93,7 +95,7 @@ export const onUpdateSession = /* GraphQL */ `
       }
     }
   }
-`
+`;
 export const onDeleteSession = /* GraphQL */ `
   subscription OnDeleteSession($owner: String, $collaborators: String) {
     onDeleteSession(owner: $owner, collaborators: $collaborators) {
@@ -107,6 +109,7 @@ export const onDeleteSession = /* GraphQL */ `
       email
       launcher
       collaborators
+      googleAnalyticsId
       createdAt
       updatedAt
       collaboratorInvitations {
@@ -121,7 +124,7 @@ export const onDeleteSession = /* GraphQL */ `
       }
     }
   }
-`
+`;
 export const onCreateCollaboratorInvitation = /* GraphQL */ `
   subscription OnCreateCollaboratorInvitation {
     onCreateCollaboratorInvitation {
@@ -141,6 +144,7 @@ export const onCreateCollaboratorInvitation = /* GraphQL */ `
         email
         launcher
         collaborators
+        googleAnalyticsId
         createdAt
         updatedAt
         collaboratorInvitations {
@@ -149,7 +153,7 @@ export const onCreateCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`
+`;
 export const onUpdateCollaboratorInvitation = /* GraphQL */ `
   subscription OnUpdateCollaboratorInvitation {
     onUpdateCollaboratorInvitation {
@@ -169,6 +173,7 @@ export const onUpdateCollaboratorInvitation = /* GraphQL */ `
         email
         launcher
         collaborators
+        googleAnalyticsId
         createdAt
         updatedAt
         collaboratorInvitations {
@@ -177,7 +182,7 @@ export const onUpdateCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`
+`;
 export const onDeleteCollaboratorInvitation = /* GraphQL */ `
   subscription OnDeleteCollaboratorInvitation {
     onDeleteCollaboratorInvitation {
@@ -197,6 +202,7 @@ export const onDeleteCollaboratorInvitation = /* GraphQL */ `
         email
         launcher
         collaborators
+        googleAnalyticsId
         createdAt
         updatedAt
         collaboratorInvitations {
@@ -205,4 +211,4 @@ export const onDeleteCollaboratorInvitation = /* GraphQL */ `
       }
     }
   }
-`
+`;
