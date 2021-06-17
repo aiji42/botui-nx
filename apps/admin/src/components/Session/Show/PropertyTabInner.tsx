@@ -1,72 +1,85 @@
-import { VFC, useState, useReducer } from 'react'
-import { FunctionField, TextInput, required, email } from 'react-admin'
+import { VFC, useReducer } from 'react'
+import { FunctionField, TextInput, useRefresh, regex } from 'react-admin'
 import { Session } from '@botui/types'
 import {
   Button,
   Typography,
-  makeStyles,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  Box,
+  Grid
 } from '@material-ui/core'
 import { Form } from 'react-final-form'
-
-const useStyles = makeStyles(() => ({
-  img: {
-    width: '100%',
-    maxWidth: 600
-  }
-}))
+import { useEditGoogleAnalyticsId } from './hooks/use-edit-google-analytics-id'
 
 export const PropertyTabInner: VFC = () => {
-  const classes = useStyles()
-
   return (
     <FunctionField<Session>
       source="googleAnalyticsId"
       label="Google Analytics"
       render={(record) => (
-        <>
-          <Typography variant="body2" color="textPrimary">
-            {record?.googleAnalyticsId}
-          </Typography>
-          <GoogleAnalyticsIdEditModalWithButton
-            value={record?.googleAnalyticsId}
-          />
-        </>
+        <Grid container component={Box} p={2}>
+          <Grid container item component={Box} pb={1}>
+            <Typography variant="subtitle1" color="textSecondary">
+              Google Analytics
+            </Typography>
+          </Grid>
+          <Grid container item>
+            <Box display="flex">
+              <Box pr={2} pt={1}>
+                {record?.googleAnalyticsId || 'IDが設定されていません'}
+              </Box>
+              <GoogleAnalyticsIdEditModalWithButton record={record} />
+            </Box>
+          </Grid>
+        </Grid>
       )}
     />
   )
 }
 
 const GoogleAnalyticsIdEditModalWithButton: VFC<{
-  value: string | null | undefined
-}> = ({ value: defaultValue }) => {
+  record: Session
+}> = ({ record }) => {
   const [isOpen, toggle] = useReducer((prev) => !prev, false)
+  const refresh = useRefresh()
+  const handleSubmit = useEditGoogleAnalyticsId(record, () => {
+    refresh()
+    toggle()
+  })
 
   return (
     <>
-      <Button>トラッキングIDを設定</Button>
+      <Button variant="contained" onClick={toggle}>
+        トラッキングIDを設定
+      </Button>
       <Dialog onClose={toggle} open={isOpen}>
         <Form
-          onSubmit={console.log}
+          onSubmit={handleSubmit}
           render={({ invalid, submitting, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <DialogTitle>コラボレーターを追加</DialogTitle>
+              <DialogTitle>トラッキングIDを設定</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  コラボレーションしたいユーザのメールアドレスを入力してください。
+                  トラッキングIDを入力してください。
                   <br />
-                  対象ユーザがチャチャットに未登録でも問題ありません。(登録用の案内がメールで送信されます)
+                  {`「${process.env.NX_PREVIEW_HOST}/session/${record.id}」でのユーザ行動が計測されるようになります。`}
                 </DialogContentText>
                 <TextInput
                   source="googleAnalyticsId"
                   type="text"
                   label="トラッキングID"
-                  validate={[required()]}
-                  defaultValue={defaultValue}
+                  placeholder="G- もしくは UA- で始まるID"
+                  validate={[
+                    regex(
+                      /(^(G|UA)-[a-zA-Z0-9-]+$|^$)/,
+                      'G- もしくは UA- で始まるIDを入力してください。'
+                    )
+                  ]}
+                  defaultValue={record.googleAnalyticsId}
                   fullWidth
                 />
               </DialogContent>
