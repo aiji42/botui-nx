@@ -11,11 +11,11 @@ export const chatTracker = (sessionId: string, preview = false) => ({
         event_category: sessionId
       })
   },
-  process: (progress: 10 | 20 | 30 | 40 | 50 | 60 | 70 | 90) => {
+  process: (progress: number) => {
     !preview &&
       gtag('event', 'progress', {
         event_category: sessionId,
-        event_label: String(progress)
+        event_label: `${Math.floor(progress * 10) * 10}%`
       })
   },
   checkpoint: (action: 'in' | 'out', name: string) => {
