@@ -41,6 +41,7 @@ interface ChatContollorServerContextValue {
   proposals: Proposals
   session: Session
   progressPercentage: number
+  preview: boolean
 }
 
 export const ChatControllerServerContext = createContext<ChatContollorServerContextValue>(
@@ -56,7 +57,8 @@ export const ChatControllerServerContext = createContext<ChatContollorServerCont
     values: {},
     proposals: [],
     session: {} as Session,
-    progressPercentage: 0
+    progressPercentage: 0,
+    preview: false
   }
 )
 
@@ -77,7 +79,7 @@ interface ChatControllerServerProviderValue {
 export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue> = ({
   children,
   session: originSession,
-  preview
+  preview = false
 }) => {
   const [session, setSession] = useState<Session | undefined>(originSession)
   const [proposals, setProposals] = useState<Proposals>([])
@@ -206,7 +208,8 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
         proposals,
         progressPercentage,
         values,
-        store
+        store,
+        preview
       }}
     />
   )
