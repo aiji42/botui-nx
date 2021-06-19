@@ -14,7 +14,11 @@ const eventTrack: NextApiHandler = async (req, res) => {
     return
   }
   try {
-    await client.query(makeQuery(req.body))
+    await client.query({
+      query: makeQuery(req.body),
+      dryRun: process.env.VERCEL_ENV !== 'production'
+    })
+
     res.status(200).json({ message: 'succeed' })
   } catch (e) {
     res.status(400).json({ message: e?.message ?? '' })
@@ -39,4 +43,3 @@ const makeQuery = ({
     INSERT INTO chachat.session_events (sessionId, userId, eventLabel, eventValue, createdAt)
     VALUES ('${sessionId}', '${userId}', '${eventLabel}', '${eventValue}', CURRENT_TIMESTAMP())
   `
-
