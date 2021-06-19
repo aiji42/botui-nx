@@ -21,7 +21,8 @@ export const chatTracker = (sessionId: string, preview = false) => ({
   },
   process: (progress: number) => {
     if (preview) return
-    const label = `${Math.floor(progress * 10) * 10}%`
+    const label = `${Math.floor(progress * 100 / 25) * 25}%`
+    if (label === '0%') return
     const cacheKey = `${sessionId}_progress_${label}`
     if (trackedCache.has(cacheKey)) return
     gtag('event', 'progress', {

@@ -7,7 +7,8 @@ export const Tracker: VFC = () => {
     proposals,
     progressPercentage,
     session,
-    preview
+    preview,
+    addCallbacksOnComplete
   } = useChatControllerServer()
 
   const tracker = useMemo(() => chatTracker(session.id, preview), [
@@ -20,11 +21,15 @@ export const Tracker: VFC = () => {
   }, [tracker])
 
   useEffect(() => {
+    addCallbacksOnComplete(tracker.complete)
+  }, [addCallbacksOnComplete, tracker])
+
+  useEffect(() => {
     tracker.process(progressPercentage)
   }, [progressPercentage, tracker])
 
   useEffect(() => {
-    const [last, prev] = proposals.slice(-2)
+    const [last, prev] = proposals.slice(-2).reverse()
     last?.type === 'message' &&
       last.data.content.type === 'form' &&
       tracker.checkpoint(
