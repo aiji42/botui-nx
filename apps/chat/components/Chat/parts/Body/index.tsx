@@ -142,7 +142,6 @@ const CloserComponent: FC<{ proposal: ProposalCloser }> = ({ proposal }) => {
   }, [])
 
   useEffect(() => {
-    console.log(complete, loading)
     if (complete && loading) handleComplete()
   }, [complete, handleComplete, loading])
 

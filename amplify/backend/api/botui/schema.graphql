@@ -34,6 +34,7 @@ type Session
   collaborators: [String]
   collaboratorInvitations: [CollaboratorInvitation]
     @connection(keyName: "bySession", fields: ["id"])
+  googleAnalyticsId: String
 }
 
 type CollaboratorInvitation

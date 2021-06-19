@@ -4,7 +4,10 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useState
+  useReducer,
+  useState,
+  Reducer,
+  Dispatch
 } from 'react'
 import {
   ChildHandshake,
@@ -36,11 +39,13 @@ interface ChatContollorServerContextValue {
   formPush: (j: JobFormPush) => Promise<void>
   addEntry: () => void
   complete: () => void
+  addCallbacksOnComplete: Dispatch<() => void>
   store: Store
   values: Values
   proposals: Proposals
   session: Session
   progressPercentage: number
+  preview: boolean
 }
 
 export const ChatControllerServerContext = createContext<ChatContollorServerContextValue>(
@@ -52,11 +57,13 @@ export const ChatControllerServerContext = createContext<ChatContollorServerCont
     formPush: () => Promise.resolve(),
     addEntry: noop,
     complete: noop,
+    addCallbacksOnComplete: noop,
     store: {} as Store,
     values: {},
     proposals: [],
     session: {} as Session,
-    progressPercentage: 0
+    progressPercentage: 0,
+    preview: false
   }
 )
 
@@ -77,10 +84,11 @@ interface ChatControllerServerProviderValue {
 export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue> = ({
   children,
   session: originSession,
-  preview
+  preview = false
 }) => {
   const [session, setSession] = useState<Session | undefined>(originSession)
   const [proposals, setProposals] = useState<Proposals>([])
+  const [callbacksOnComplete, addCallbacksOnComplete] = useReducer(addCallbacksOnCompleteReduce, [])
   const [progressPercentage, setProgressPercentage] = useState<number>(0)
   const { query, replace, pathname, asPath } = useRouter()
 
@@ -126,8 +134,9 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
   const complete = useCallback<
     ChatContollorServerContextValue['complete']
   >(() => {
+    callbacksOnComplete.forEach((cb) => cb())
     localHandle?.emit('onComplete', {})
-  }, [localHandle])
+  }, [callbacksOnComplete, localHandle])
 
   const evalFunction = useCallback<
     ChatContollorServerContextValue['evalFunction']
@@ -202,11 +211,13 @@ export const ChatControllerServerProvider: FC<ChatControllerServerProviderValue>
         formPush,
         addEntry,
         complete,
+        addCallbacksOnComplete,
         session,
         proposals,
         progressPercentage,
         values,
-        store
+        store,
+        preview
       }}
     />
   )
@@ -226,3 +237,8 @@ const getNextProposal = (
   if (index === proposals.length - 1) return null
   return proposals[index + 1 + skipNum] ?? proposals.slice(-1)[0]
 }
+
+const addCallbacksOnCompleteReduce: Reducer<Array<() => void>, () => void> = (
+  prev,
+  callback
+) => [...prev, callback]

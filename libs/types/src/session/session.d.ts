@@ -52,10 +52,11 @@ export interface Session<T = Proposals, U = Theme, V = Images, W = Launcher> {
   theme: U
   proposals: T
   images: V
-  email?: string
+  email: string | null
   launcher: W
   collaboratorInvitations?: { items: Array<CollaboratorInvitation> } | null
   collaborators: string[] | null
+  googleAnalyticsId: string | null
 }
 
 export interface ChatConfig extends Omit<Session, 'proposals'> {
