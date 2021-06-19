@@ -40,6 +40,8 @@ const makeQuery = ({
   eventLabel,
   eventValue
 }: EventTrackQueryArg) => `
-    INSERT INTO chachat.session_events (sessionId, userId, eventLabel, eventValue, createdAt)
-    VALUES ('${sessionId}', '${userId}', '${eventLabel}', '${eventValue}', CURRENT_TIMESTAMP())
+    INSERT INTO chachat.session_events
+    (sessionId, userId, eventLabel, eventValue, createdAt)
+    VALUES
+    ('${sessionId}', '${userId}', '${eventLabel}', '${eventValue}', CURRENT_TIMESTAMP())
   `
