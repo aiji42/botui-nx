@@ -11,7 +11,6 @@ export const useEditGoogleAnalyticsId = (
 
   return useCallback(
     async ({ googleAnalyticsId }) => {
-      console.log(googleAnalyticsId)
       try {
         await update<Session>('sessions', {
           id: record.id,
