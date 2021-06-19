@@ -14,6 +14,7 @@ const getSession = /* GraphQL */ `
       email
       launcher
       collaborators
+      googleAnalyticsId
       createdAt
       updatedAt
     }
