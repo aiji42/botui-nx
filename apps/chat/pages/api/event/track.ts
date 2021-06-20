@@ -1,5 +1,6 @@
 import { NextApiHandler } from 'next'
 import { BigQuery } from '@google-cloud/bigquery'
+import sql from 'sqlstring'
 
 const credentials = JSON.parse(
   process.env.BIGQUERY_CREDENTIALS ??
@@ -13,6 +14,7 @@ const eventTrack: NextApiHandler = async (req, res) => {
     res.status(405).json({ message: '405 Method Not Allowed' })
     return
   }
+
   try {
     await client.query({
       query: makeQuery(req.body),
@@ -39,9 +41,11 @@ const makeQuery = ({
   userId,
   eventLabel,
   eventValue
-}: EventTrackQueryArg) => `
-    INSERT INTO chachat.session_events
-    (sessionId, userId, eventLabel, eventValue, createdAt)
-    VALUES
-    ('${sessionId}', '${userId}', '${eventLabel}', '${eventValue}', CURRENT_TIMESTAMP())
-  `
+}: EventTrackQueryArg) =>
+  sql.format(
+    `
+    INSERT INTO chachat.session_events (sessionId, userId, eventLabel, eventValue, createdAt)
+    VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP())
+  `,
+    [sessionId, userId, eventLabel, String(eventValue)]
+  )
