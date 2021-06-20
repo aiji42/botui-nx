@@ -31,7 +31,7 @@ export interface EventTrackQueryArg {
   sessionId: string
   userId: string
   eventLabel: string
-  eventValue: string
+  eventValue: string | number
 }
 
 const makeQuery = ({
