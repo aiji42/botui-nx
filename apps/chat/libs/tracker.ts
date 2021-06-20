@@ -48,7 +48,6 @@ export const chatTracker = (sessionId: string, preview = false) => ({
         event_category: sessionId,
         event_label: `${percentage}%`
       })
-    console.log(percentage, progress % 10)
     if (percentage > 0 && percentage % 10 === 0)
       requestTrack({
         sessionId,
