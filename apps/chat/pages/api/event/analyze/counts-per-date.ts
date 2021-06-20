@@ -29,7 +29,7 @@ const analyze: NextApiHandler = async (req, res) => {
 
 export default analyze
 
-export interface QueryArg {
+interface QueryArg {
   sessionId: string
   begin: string
   end: string
@@ -41,15 +41,30 @@ const valid = (query: Partial<QueryArg>): query is QueryArg =>
 const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
   sql.format(
     `
-    WITH openedPerDay AS (
-      SELECT userId, date(createdAt) as createdOn FROM chachat.session_events
+    WITH
+    openedPerDay AS (
+      SELECT userId, date(createdAt) AS createdOn FROM chachat.session_events
       WHERE eventLabel = 'start'
         AND sessionid = ?
         AND createdAt BETWEEN ? AND ?
       GROUP BY date(createdAt), userId
+    ),
+    completedPerDay AS (
+      SELECT userId, date(createdAt) AS createdOn FROM chachat.session_events
+      WHERE eventLabel = 'complete'
+        AND sessionid = ?
+        AND createdAt BETWEEN ? AND ?
+      GROUP BY date(createdAt), userId
     )
-    SELECT createdOn, count(*) as \`count\` FROM openedPerDay
-    GROUP BY createdOn
+    SELECT
+      o.createdOn,
+      count(o.createdOn) AS open,
+      count(c.createdOn) AS complete,
+      count(c.createdOn) / count(o.createdOn) AS cvr
+    FROM openedPerDay o
+    LEFT JOIN completedPerDay c
+      ON o.createdOn = c.createdOn
+    GROUP BY o.createdOn, c.createdOn
   `,
-    [sessionId, begin, end]
+    [sessionId, begin, end, sessionId, begin, end]
   )
