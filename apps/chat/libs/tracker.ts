@@ -1,4 +1,4 @@
-import { EventTrackQueryArg } from '../pages/api/event-track'
+import { EventTrackQueryArg } from '../pages/api/event/track'
 import { v4 as uuid } from 'uuid'
 import store from 'store2'
 
@@ -48,7 +48,8 @@ export const chatTracker = (sessionId: string, preview = false) => ({
         event_category: sessionId,
         event_label: `${percentage}%`
       })
-    if (progress > 0 && progress % 10 === 0)
+    console.log(percentage, progress % 10)
+    if (percentage > 0 && percentage % 10 === 0)
       requestTrack({
         sessionId,
         userId,
@@ -80,7 +81,7 @@ export const requestTrack = (arg: EventTrackQueryArg) => {
     Accept: 'application/json',
     'Content-Type': 'application/json'
   }
-  fetch('/api/event-track', {
+  fetch('/api/event/track', {
     method: 'POST',
     headers,
     body: JSON.stringify(arg)
