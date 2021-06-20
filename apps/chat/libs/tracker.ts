@@ -41,21 +41,20 @@ export const chatTracker = (sessionId: string, preview = false) => ({
   process: (progress: number) => {
     if (preview) return
     const percentage = Math.floor((progress * 100) / 5) * 5
-    const label = `${percentage}%`
-    if (label === '0%') return
-    const cacheKey = `${sessionId}_progress_${label}`
+    const cacheKey = `${sessionId}_progress_${percentage}`
     if (trackedCache.has(cacheKey)) return
-    if (['25%', '50%', '27%', '100%'].includes(label))
+    if ([25, 50, 75, 100].includes(percentage))
       gtag('event', 'progress', {
         event_category: sessionId,
-        event_label: label
+        event_label: `${percentage}%`
       })
-    requestTrack({
-      sessionId,
-      userId,
-      eventLabel: 'progress',
-      eventValue: String(percentage)
-    })
+    if (progress > 0 && progress % 10 === 0)
+      requestTrack({
+        sessionId,
+        userId,
+        eventLabel: 'progress',
+        eventValue: percentage
+      })
     trackedCache.add(cacheKey)
   },
   checkpoint: (action: 'in' | 'out', name: string) => {
@@ -66,10 +65,10 @@ export const chatTracker = (sessionId: string, preview = false) => ({
       event_category: sessionId,
       event_label: name
     })
-    requestTrack({
+    action === 'out' && requestTrack({
       sessionId,
       userId,
-      eventLabel: action === 'in' ? 'checkin' : 'checkout',
+      eventLabel: 'passed',
       eventValue: name
     })
     trackedCache.add(cacheKey)
