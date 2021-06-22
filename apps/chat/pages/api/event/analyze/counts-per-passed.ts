@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next'
 import { BigQuery } from '@google-cloud/bigquery'
 import sql from 'sqlstring'
-import NextCors from 'nextjs-cors';
+import NextCors from 'nextjs-cors'
 
 const credentials = JSON.parse(
   process.env.BIGQUERY_CREDENTIALS ??
@@ -57,6 +57,7 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
     )
     SELECT passed, count(passed) AS \`count\` FROM passedPerUser
     GROUP BY passed
+    ORDER BY count(passed) DESC
   `,
     [sessionId, begin, end]
   )

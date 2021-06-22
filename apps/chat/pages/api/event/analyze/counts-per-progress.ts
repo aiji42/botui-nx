@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next'
 import { BigQuery } from '@google-cloud/bigquery'
 import sql from 'sqlstring'
-import NextCors from 'nextjs-cors';
+import NextCors from 'nextjs-cors'
 
 const credentials = JSON.parse(
   process.env.BIGQUERY_CREDENTIALS ??
@@ -57,6 +57,7 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
     )
     SELECT progress, count(progress) AS \`count\` FROM progressPerUser
     GROUP BY progress
+    ORDER BY count(progress) ASC
   `,
     [sessionId, begin, end]
   )

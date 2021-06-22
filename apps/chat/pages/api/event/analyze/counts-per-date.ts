@@ -72,6 +72,7 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
     LEFT JOIN completedPerDay c
       ON o.createdOn = c.createdOn
     GROUP BY o.createdOn, c.createdOn
+    ORDER BY c.createdOn ASC
   `,
     [sessionId, begin, end, sessionId, begin, end]
   )
