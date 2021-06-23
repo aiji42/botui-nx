@@ -2,10 +2,14 @@ import { VFC, lazy, Suspense } from 'react'
 import { FunctionField } from 'react-admin'
 import { Session } from '@botui/types'
 import { Box, Grid, Typography } from '@material-ui/core'
+import dayjs from 'dayjs'
 
 const DateAreaChart = lazy(() => import('./AnalyticsChart/DateAreaChart'))
 const PassedCountBar = lazy(() => import('./AnalyticsChart/PassedCountBar'))
 const ProgressChart = lazy(() => import('./AnalyticsChart/ProgressChart'))
+
+const begin = dayjs().add(-10, 'day').format('YYYY-MM-DD')
+const end = dayjs().add(1, 'day').format('YYYY-MM-DD')
 
 export const AnalyticsTabInner: VFC = () => {
   return (
@@ -22,14 +26,11 @@ export const AnalyticsTabInner: VFC = () => {
               pb={8}
               height="400px"
               width="100px"
+              position="relative"
             >
-              <Typography>開始・完了カウンタ/CVR</Typography>
+              <Typography color="primary">開始・完了カウンタ/CVR</Typography>
               <Suspense fallback={null}>
-                <DateAreaChart
-                  sessionId={record.id}
-                  begin="2021-06-19"
-                  end="2021-06-23"
-                />
+                <DateAreaChart sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
               </Suspense>
             </Grid>
             <Grid
@@ -40,14 +41,11 @@ export const AnalyticsTabInner: VFC = () => {
               pb={8}
               height="320px"
               width="100px"
+              position="relative"
             >
-              <Typography>フォーム入力完了カウンタ</Typography>
+              <Typography color="primary">フォーム入力完了カウンタ</Typography>
               <Suspense fallback={null}>
-                <PassedCountBar
-                  sessionId={record.id}
-                  begin="2021-06-19"
-                  end="2021-06-23"
-                />
+                <PassedCountBar sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
               </Suspense>
             </Grid>
             <Grid
@@ -58,14 +56,11 @@ export const AnalyticsTabInner: VFC = () => {
               pb={8}
               height="320px"
               width="100px"
+              position="relative"
             >
-              <Typography>進捗率カウンタ</Typography>
+              <Typography color="primary">進捗率カウンタ</Typography>
               <Suspense fallback={null}>
-                <ProgressChart
-                  sessionId={record.id}
-                  begin="2021-06-19"
-                  end="2021-06-23"
-                />
+                <ProgressChart sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
               </Suspense>
             </Grid>
           </Grid>
