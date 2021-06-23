@@ -24,7 +24,7 @@ const analyze: NextApiHandler = async (req, res) => {
   }
 
   try {
-    const response = await client.query({
+    const [response] = await client.query({
       query: makeQuery(query)
     })
 

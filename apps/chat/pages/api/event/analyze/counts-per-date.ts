@@ -2,6 +2,7 @@ import { NextApiHandler } from 'next'
 import { BigQuery } from '@google-cloud/bigquery'
 import sql from 'sqlstring'
 import NextCors from 'nextjs-cors'
+import dayjs from 'dayjs'
 
 const credentials = JSON.parse(
   process.env.BIGQUERY_CREDENTIALS ??
@@ -22,13 +23,26 @@ const analyze: NextApiHandler = async (req, res) => {
     res.status(400).json({ message: '400 Bad Request' })
     return
   }
+  const range: string[] = [query.begin]
+  while (query.end !== range.slice(-1)[0]) {
+    range.push(dayjs(range.slice(-1)[0]).add(1, 'day').format('YYYY-MM-DD'))
+  }
 
   try {
     const response = await client.query({
       query: makeQuery(query)
     })
+    const data = range.map((date) => {
+      const data = response[0].find(
+        ({ createdOn: { value } }) => value === date
+      )
+      return {
+        createdOn: { value: date },
+        ...(data ?? { open: 0, complete: 0, cvr: 0 })
+      }
+    })
 
-    res.status(200).json({ message: 'succeed', data: response })
+    res.status(200).json({ message: 'succeed', data })
   } catch (e) {
     res.status(400).json({ message: e?.message ?? '' })
   }
