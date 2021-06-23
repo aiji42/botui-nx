@@ -55,9 +55,11 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
         AND createdAt BETWEEN ? AND ?
       GROUP BY userId, eventValue
     )
-    SELECT passed, count(passed) AS \`count\` FROM passedPerUser
-    GROUP BY passed
-    ORDER BY count(passed) DESC
+    SELECT * FROM (
+      SELECT passed, count(passed) AS \`count\` FROM passedPerUser
+      GROUP BY passed
+    ) tmp
+    ORDER BY tmp.count DESC
   `,
     [sessionId, begin, end]
   )

@@ -63,16 +63,18 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
         AND createdAt BETWEEN ? AND ?
       GROUP BY date(createdAt), userId
     )
-    SELECT
-      o.createdOn,
-      count(o.createdOn) AS open,
-      count(c.createdOn) AS complete,
-      count(c.createdOn) / count(o.createdOn) AS cvr
-    FROM openedPerDay o
-    LEFT JOIN completedPerDay c
-      ON o.createdOn = c.createdOn
-    GROUP BY o.createdOn, c.createdOn
-    ORDER BY c.createdOn ASC
+    SELECT * FROM (
+      SELECT
+        o.createdOn,
+        count(o.createdOn) AS open,
+        count(c.createdOn) AS complete,
+        count(c.createdOn) / count(o.createdOn) AS cvr
+      FROM openedPerDay o
+      LEFT JOIN completedPerDay c
+        ON o.createdOn = c.createdOn
+      GROUP BY o.createdOn, c.createdOn
+    ) tmp
+    ORDER BY tmp.createdOn ASC
   `,
     [sessionId, begin, end, sessionId, begin, end]
   )

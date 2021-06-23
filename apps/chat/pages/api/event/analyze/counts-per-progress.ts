@@ -55,9 +55,11 @@ const makeQuery = ({ sessionId, begin, end }: QueryArg) =>
         AND createdAt BETWEEN ? AND ?
       GROUP BY userId
     )
-    SELECT progress, count(progress) AS \`count\` FROM progressPerUser
-    GROUP BY progress
-    ORDER BY count(progress) ASC
+    SELECT * FROM (
+      SELECT progress, count(progress) AS \`count\` FROM progressPerUser
+      GROUP BY progress
+    ) tmp
+    ORDER BY tmp.progress ASC
   `,
     [sessionId, begin, end]
   )
