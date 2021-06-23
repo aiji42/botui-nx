@@ -30,7 +30,7 @@ const PassedCountBar: VFC<Props> = ({ sessionId, begin, end }) => {
       }
     )
       .then((res) => res.json())
-      .then(({ data }) => setDataSet(data[0]))
+      .then(({ data }) => setDataSet(data))
   }, [begin, end, sessionId])
 
   return (
