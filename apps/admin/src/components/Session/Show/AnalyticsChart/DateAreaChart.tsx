@@ -34,7 +34,7 @@ const DateAreaChart: VFC<Props> = ({ sessionId, begin, end }) => {
       }
     )
       .then((res) => res.json())
-      .then(({ data }) => setDataSet(data[0]))
+      .then(({ data }) => setDataSet(data))
   }, [begin, end, sessionId])
 
   return (
@@ -73,7 +73,7 @@ const DateAreaChart: VFC<Props> = ({ sessionId, begin, end }) => {
           <Line dataKey="cvr" stroke="#3f51b5" yAxisId="rate" />
         </ComposedChart>
       </ResponsiveContainer>
-      {dataSet?.map(({ open }) => open > 3)?.length < 3 && (
+      {dataSet?.filter(({ open }) => open > 3)?.length < 3 && (
         <Box
           width="100%"
           height="100%"
