@@ -37,6 +37,7 @@ export const AnalyticsTabInner: VFC = () => {
               item
               sm={12}
               md={6}
+              mt={6}
               component={Box}
               pb={8}
               height="320px"
@@ -52,6 +53,7 @@ export const AnalyticsTabInner: VFC = () => {
               item
               sm={12}
               md={6}
+              mt={6}
               component={Box}
               pb={8}
               height="320px"

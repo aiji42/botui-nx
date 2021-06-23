@@ -73,7 +73,7 @@ const DateAreaChart: VFC<Props> = ({ sessionId, begin, end }) => {
           <Line dataKey="cvr" stroke="#3f51b5" yAxisId="rate" />
         </ComposedChart>
       </ResponsiveContainer>
-      {dataSet?.filter(({ open }) => open > 3)?.length < 3 && (
+      {dataSet?.filter(({ open }) => open > 1)?.length < 3 && (
         <Box
           width="100%"
           height="100%"
