@@ -35,6 +35,7 @@ export const AnalyticsTabInner: VFC = () => {
             </Grid>
             <Grid
               item
+              xs={12}
               sm={12}
               md={6}
               mt={6}
@@ -51,6 +52,7 @@ export const AnalyticsTabInner: VFC = () => {
             </Grid>
             <Grid
               item
+              xs={12}
               sm={12}
               md={6}
               mt={6}
