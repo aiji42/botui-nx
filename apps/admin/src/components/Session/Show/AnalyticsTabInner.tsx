@@ -9,7 +9,7 @@ const PassedCountBar = lazy(() => import('./AnalyticsChart/PassedCountBar'))
 const ProgressChart = lazy(() => import('./AnalyticsChart/ProgressChart'))
 
 const begin = dayjs().add(-10, 'day').format('YYYY-MM-DD')
-const end = dayjs().add(1, 'day').format('YYYY-MM-DD')
+const end = dayjs().format('YYYY-MM-DD')
 
 export const AnalyticsTabInner: VFC = () => {
   return (
@@ -30,7 +30,7 @@ export const AnalyticsTabInner: VFC = () => {
             >
               <Typography color="primary">開始・完了カウンタ/CVR</Typography>
               <Suspense fallback={null}>
-                <DateAreaChart sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
+                <DateAreaChart sessionId={record.id} begin={begin} end={end} />
               </Suspense>
             </Grid>
             <Grid
@@ -45,7 +45,7 @@ export const AnalyticsTabInner: VFC = () => {
             >
               <Typography color="primary">フォーム入力完了カウンタ</Typography>
               <Suspense fallback={null}>
-                <PassedCountBar sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
+                <PassedCountBar sessionId={record.id} begin={begin} end={end} />
               </Suspense>
             </Grid>
             <Grid
@@ -60,7 +60,7 @@ export const AnalyticsTabInner: VFC = () => {
             >
               <Typography color="primary">進捗率カウンタ</Typography>
               <Suspense fallback={null}>
-                <ProgressChart sessionId={"8e1d3124-7213-4c8b-9138-7d726ff989dd"} begin={begin} end={end} />
+                <ProgressChart sessionId={record.id} begin={begin} end={end} />
               </Suspense>
             </Grid>
           </Grid>
