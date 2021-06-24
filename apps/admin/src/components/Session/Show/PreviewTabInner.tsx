@@ -10,7 +10,7 @@ export const PreviewTabInner: VFC = () => {
       source="id"
       label=""
       render={(record) => (
-        <Box width={320} height={560} mb={4}>
+        <Box width={375} height={812} m={4}>
           <ChatControllerClient
             onClose={noop}
             onComplete={noop}
