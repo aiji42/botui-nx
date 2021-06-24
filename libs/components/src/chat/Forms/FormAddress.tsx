@@ -36,7 +36,7 @@ const Form: FC<FormikProps<FormAddressValues>> = (props) => {
   useEffect(() => {
     const { prefectureCode, address1, address2, address3, address4 } = address
     if (prefectureCode) {
-      prefectureIdHelper.setValue(prefectureCode)
+      prefectureIdHelper.setValue(Number(prefectureCode))
       prefectureIdHelper.setTouched(true)
     }
     if (address1) {
