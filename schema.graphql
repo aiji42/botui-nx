@@ -1,0 +1,1174 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+scalar jsonb
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "scenarios"
+  """
+  delete_scenarios(
+    """filter the rows which have to be deleted"""
+    where: scenarios_bool_exp!
+  ): scenarios_mutation_response
+
+  """
+  delete single row from the table: "scenarios"
+  """
+  delete_scenarios_by_pk(id: uuid!): scenarios
+
+  """
+  delete data from the table: "stories"
+  """
+  delete_stories(
+    """filter the rows which have to be deleted"""
+    where: stories_bool_exp!
+  ): stories_mutation_response
+
+  """
+  delete single row from the table: "stories"
+  """
+  delete_stories_by_pk(id: uuid!): stories
+
+  """
+  insert data into the table: "scenarios"
+  """
+  insert_scenarios(
+    """the rows to be inserted"""
+    objects: [scenarios_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: scenarios_on_conflict
+  ): scenarios_mutation_response
+
+  """
+  insert a single row into the table: "scenarios"
+  """
+  insert_scenarios_one(
+    """the row to be inserted"""
+    object: scenarios_insert_input!
+
+    """on conflict condition"""
+    on_conflict: scenarios_on_conflict
+  ): scenarios
+
+  """
+  insert data into the table: "stories"
+  """
+  insert_stories(
+    """the rows to be inserted"""
+    objects: [stories_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: stories_on_conflict
+  ): stories_mutation_response
+
+  """
+  insert a single row into the table: "stories"
+  """
+  insert_stories_one(
+    """the row to be inserted"""
+    object: stories_insert_input!
+
+    """on conflict condition"""
+    on_conflict: stories_on_conflict
+  ): stories
+
+  """
+  update data of the table: "scenarios"
+  """
+  update_scenarios(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: scenarios_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: scenarios_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: scenarios_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: scenarios_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: scenarios_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: scenarios_set_input
+
+    """filter the rows which have to be updated"""
+    where: scenarios_bool_exp!
+  ): scenarios_mutation_response
+
+  """
+  update single row of the table: "scenarios"
+  """
+  update_scenarios_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: scenarios_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: scenarios_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: scenarios_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: scenarios_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: scenarios_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: scenarios_set_input
+    pk_columns: scenarios_pk_columns_input!
+  ): scenarios
+
+  """
+  update data of the table: "stories"
+  """
+  update_stories(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: stories_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: stories_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: stories_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: stories_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: stories_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: stories_set_input
+
+    """filter the rows which have to be updated"""
+    where: stories_bool_exp!
+  ): stories_mutation_response
+
+  """
+  update single row of the table: "stories"
+  """
+  update_stories_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: stories_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: stories_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: stories_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: stories_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: stories_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: stories_set_input
+    pk_columns: stories_pk_columns_input!
+  ): stories
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "scenarios"
+  """
+  scenarios(
+    """distinct select on columns"""
+    distinct_on: [scenarios_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [scenarios_order_by!]
+
+    """filter the rows returned"""
+    where: scenarios_bool_exp
+  ): [scenarios!]!
+
+  """
+  fetch aggregated fields from the table: "scenarios"
+  """
+  scenarios_aggregate(
+    """distinct select on columns"""
+    distinct_on: [scenarios_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [scenarios_order_by!]
+
+    """filter the rows returned"""
+    where: scenarios_bool_exp
+  ): scenarios_aggregate!
+
+  """fetch data from the table: "scenarios" using primary key columns"""
+  scenarios_by_pk(id: uuid!): scenarios
+
+  """An array relationship"""
+  stories(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): [stories!]!
+
+  """An aggregate relationship"""
+  stories_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): stories_aggregate!
+
+  """fetch data from the table: "stories" using primary key columns"""
+  stories_by_pk(id: uuid!): stories
+}
+
+"""
+columns and relationships of "scenarios"
+"""
+type scenarios {
+  active: Boolean!
+  collaborator(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  created_at: timestamptz!
+  email: String!
+  googleAnalyticsId: String
+  id: uuid!
+  images(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  launcher(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  owner: String!
+
+  """An array relationship"""
+  stories(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): [stories!]!
+
+  """An aggregate relationship"""
+  stories_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): stories_aggregate!
+  theme(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  title: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "scenarios"
+"""
+type scenarios_aggregate {
+  aggregate: scenarios_aggregate_fields
+  nodes: [scenarios!]!
+}
+
+"""
+aggregate fields of "scenarios"
+"""
+type scenarios_aggregate_fields {
+  count(columns: [scenarios_select_column!], distinct: Boolean): Int!
+  max: scenarios_max_fields
+  min: scenarios_min_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input scenarios_append_input {
+  collaborator: jsonb
+  images: jsonb
+  launcher: jsonb
+  theme: jsonb
+}
+
+"""
+Boolean expression to filter rows from the table "scenarios". All fields are combined with a logical 'AND'.
+"""
+input scenarios_bool_exp {
+  _and: [scenarios_bool_exp!]
+  _not: scenarios_bool_exp
+  _or: [scenarios_bool_exp!]
+  active: Boolean_comparison_exp
+  collaborator: jsonb_comparison_exp
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  googleAnalyticsId: String_comparison_exp
+  id: uuid_comparison_exp
+  images: jsonb_comparison_exp
+  launcher: jsonb_comparison_exp
+  owner: String_comparison_exp
+  stories: stories_bool_exp
+  theme: jsonb_comparison_exp
+  title: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "scenarios"
+"""
+enum scenarios_constraint {
+  """unique or primary key constraint"""
+  sessions_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input scenarios_delete_at_path_input {
+  collaborator: [String!]
+  images: [String!]
+  launcher: [String!]
+  theme: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input scenarios_delete_elem_input {
+  collaborator: Int
+  images: Int
+  launcher: Int
+  theme: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input scenarios_delete_key_input {
+  collaborator: String
+  images: String
+  launcher: String
+  theme: String
+}
+
+"""
+input type for inserting data into table "scenarios"
+"""
+input scenarios_insert_input {
+  active: Boolean
+  collaborator: jsonb
+  created_at: timestamptz
+  email: String
+  googleAnalyticsId: String
+  id: uuid
+  images: jsonb
+  launcher: jsonb
+  owner: String
+  stories: stories_arr_rel_insert_input
+  theme: jsonb
+  title: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type scenarios_max_fields {
+  created_at: timestamptz
+  email: String
+  googleAnalyticsId: String
+  id: uuid
+  owner: String
+  title: String
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type scenarios_min_fields {
+  created_at: timestamptz
+  email: String
+  googleAnalyticsId: String
+  id: uuid
+  owner: String
+  title: String
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "scenarios"
+"""
+type scenarios_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [scenarios!]!
+}
+
+"""
+input type for inserting object relation for remote table "scenarios"
+"""
+input scenarios_obj_rel_insert_input {
+  data: scenarios_insert_input!
+
+  """on conflict condition"""
+  on_conflict: scenarios_on_conflict
+}
+
+"""
+on conflict condition type for table "scenarios"
+"""
+input scenarios_on_conflict {
+  constraint: scenarios_constraint!
+  update_columns: [scenarios_update_column!]! = []
+  where: scenarios_bool_exp
+}
+
+"""Ordering options when selecting data from "scenarios"."""
+input scenarios_order_by {
+  active: order_by
+  collaborator: order_by
+  created_at: order_by
+  email: order_by
+  googleAnalyticsId: order_by
+  id: order_by
+  images: order_by
+  launcher: order_by
+  owner: order_by
+  stories_aggregate: stories_aggregate_order_by
+  theme: order_by
+  title: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: scenarios"""
+input scenarios_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input scenarios_prepend_input {
+  collaborator: jsonb
+  images: jsonb
+  launcher: jsonb
+  theme: jsonb
+}
+
+"""
+select columns of table "scenarios"
+"""
+enum scenarios_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  collaborator
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  googleAnalyticsId
+
+  """column name"""
+  id
+
+  """column name"""
+  images
+
+  """column name"""
+  launcher
+
+  """column name"""
+  owner
+
+  """column name"""
+  theme
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "scenarios"
+"""
+input scenarios_set_input {
+  active: Boolean
+  collaborator: jsonb
+  created_at: timestamptz
+  email: String
+  googleAnalyticsId: String
+  id: uuid
+  images: jsonb
+  launcher: jsonb
+  owner: String
+  theme: jsonb
+  title: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "scenarios"
+"""
+enum scenarios_update_column {
+  """column name"""
+  active
+
+  """column name"""
+  collaborator
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  googleAnalyticsId
+
+  """column name"""
+  id
+
+  """column name"""
+  images
+
+  """column name"""
+  launcher
+
+  """column name"""
+  owner
+
+  """column name"""
+  theme
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+}
+
+"""
+columns and relationships of "stories"
+"""
+type stories {
+  active: Boolean!
+  created_at: timestamptz!
+  id: uuid!
+  label: String!
+
+  """An object relationship"""
+  scenario: scenarios
+  scenario_id: uuid!
+  story(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  strategy: String
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "stories"
+"""
+type stories_aggregate {
+  aggregate: stories_aggregate_fields
+  nodes: [stories!]!
+}
+
+"""
+aggregate fields of "stories"
+"""
+type stories_aggregate_fields {
+  count(columns: [stories_select_column!], distinct: Boolean): Int!
+  max: stories_max_fields
+  min: stories_min_fields
+}
+
+"""
+order by aggregate values of table "stories"
+"""
+input stories_aggregate_order_by {
+  count: order_by
+  max: stories_max_order_by
+  min: stories_min_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input stories_append_input {
+  story: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "stories"
+"""
+input stories_arr_rel_insert_input {
+  data: [stories_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: stories_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "stories". All fields are combined with a logical 'AND'.
+"""
+input stories_bool_exp {
+  _and: [stories_bool_exp!]
+  _not: stories_bool_exp
+  _or: [stories_bool_exp!]
+  active: Boolean_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  label: String_comparison_exp
+  scenario: scenarios_bool_exp
+  scenario_id: uuid_comparison_exp
+  story: jsonb_comparison_exp
+  strategy: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "stories"
+"""
+enum stories_constraint {
+  """unique or primary key constraint"""
+  stories_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input stories_delete_at_path_input {
+  story: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input stories_delete_elem_input {
+  story: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input stories_delete_key_input {
+  story: String
+}
+
+"""
+input type for inserting data into table "stories"
+"""
+input stories_insert_input {
+  active: Boolean
+  created_at: timestamptz
+  id: uuid
+  label: String
+  scenario: scenarios_obj_rel_insert_input
+  scenario_id: uuid
+  story: jsonb
+  strategy: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type stories_max_fields {
+  created_at: timestamptz
+  id: uuid
+  label: String
+  scenario_id: uuid
+  strategy: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "stories"
+"""
+input stories_max_order_by {
+  created_at: order_by
+  id: order_by
+  label: order_by
+  scenario_id: order_by
+  strategy: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type stories_min_fields {
+  created_at: timestamptz
+  id: uuid
+  label: String
+  scenario_id: uuid
+  strategy: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "stories"
+"""
+input stories_min_order_by {
+  created_at: order_by
+  id: order_by
+  label: order_by
+  scenario_id: order_by
+  strategy: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "stories"
+"""
+type stories_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [stories!]!
+}
+
+"""
+on conflict condition type for table "stories"
+"""
+input stories_on_conflict {
+  constraint: stories_constraint!
+  update_columns: [stories_update_column!]! = []
+  where: stories_bool_exp
+}
+
+"""Ordering options when selecting data from "stories"."""
+input stories_order_by {
+  active: order_by
+  created_at: order_by
+  id: order_by
+  label: order_by
+  scenario: scenarios_order_by
+  scenario_id: order_by
+  story: order_by
+  strategy: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: stories"""
+input stories_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input stories_prepend_input {
+  story: jsonb
+}
+
+"""
+select columns of table "stories"
+"""
+enum stories_select_column {
+  """column name"""
+  active
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  label
+
+  """column name"""
+  scenario_id
+
+  """column name"""
+  story
+
+  """column name"""
+  strategy
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "stories"
+"""
+input stories_set_input {
+  active: Boolean
+  created_at: timestamptz
+  id: uuid
+  label: String
+  scenario_id: uuid
+  story: jsonb
+  strategy: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "stories"
+"""
+enum stories_update_column {
+  """column name"""
+  active
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  label
+
+  """column name"""
+  scenario_id
+
+  """column name"""
+  story
+
+  """column name"""
+  strategy
+
+  """column name"""
+  updated_at
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "scenarios"
+  """
+  scenarios(
+    """distinct select on columns"""
+    distinct_on: [scenarios_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [scenarios_order_by!]
+
+    """filter the rows returned"""
+    where: scenarios_bool_exp
+  ): [scenarios!]!
+
+  """
+  fetch aggregated fields from the table: "scenarios"
+  """
+  scenarios_aggregate(
+    """distinct select on columns"""
+    distinct_on: [scenarios_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [scenarios_order_by!]
+
+    """filter the rows returned"""
+    where: scenarios_bool_exp
+  ): scenarios_aggregate!
+
+  """fetch data from the table: "scenarios" using primary key columns"""
+  scenarios_by_pk(id: uuid!): scenarios
+
+  """An array relationship"""
+  stories(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): [stories!]!
+
+  """An aggregate relationship"""
+  stories_aggregate(
+    """distinct select on columns"""
+    distinct_on: [stories_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [stories_order_by!]
+
+    """filter the rows returned"""
+    where: stories_bool_exp
+  ): stories_aggregate!
+
+  """fetch data from the table: "stories" using primary key columns"""
+  stories_by_pk(id: uuid!): stories
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+

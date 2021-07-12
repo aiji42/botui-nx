@@ -1,0 +1,14 @@
+overwrite: true
+schema:
+  - "https://botui.hasura.app/v1/graphql":
+    x-hasura-admin-secret: ${HASURA_ADMIN_SECRET}
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
