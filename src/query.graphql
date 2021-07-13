@@ -1,0 +1,13 @@
+query MyQuery($id: uuid!) {
+  scenarios_by_pk(id: $id) {
+    active
+    collaborator
+    created_at
+    email
+    googleAnalyticsId
+    id
+    images
+    launcher
+    owner
+  }
+}
