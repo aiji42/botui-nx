@@ -1,5 +1,5 @@
-query MyQuery($id: uuid!) {
-  scenarios_by_pk(id: $id) {
+query getOneScenario($id: uuid!) {
+  scenario: getScenarioById(id: $id) {
     active
     collaborator
     created_at
@@ -9,5 +9,11 @@ query MyQuery($id: uuid!) {
     images
     launcher
     owner
+  }
+}
+
+mutation newScenario($input: scenario_insert_input!) {
+  insertScenario(object: $input) {
+    id
   }
 }

@@ -90,130 +90,130 @@ export type Jsonb_Comparison_Exp = {
 
 /** mutation root */
 export type Mutation_Root = {
-  /** delete data from the table: "scenarios" */
-  delete_scenarios?: Maybe<Scenarios_Mutation_Response>;
   /** delete single row from the table: "scenarios" */
-  delete_scenarios_by_pk?: Maybe<Scenarios>;
+  deleteScenarioById?: Maybe<Scenario>;
+  /** delete data from the table: "scenarios" */
+  deleteScenarios?: Maybe<Scenario_Mutation_Response>;
   /** delete data from the table: "stories" */
-  delete_stories?: Maybe<Stories_Mutation_Response>;
+  deleteStories?: Maybe<Story_Mutation_Response>;
   /** delete single row from the table: "stories" */
-  delete_stories_by_pk?: Maybe<Stories>;
-  /** insert data into the table: "scenarios" */
-  insert_scenarios?: Maybe<Scenarios_Mutation_Response>;
+  deleteStoryById?: Maybe<Story>;
   /** insert a single row into the table: "scenarios" */
-  insert_scenarios_one?: Maybe<Scenarios>;
+  insertScenario?: Maybe<Scenario>;
+  /** insert data into the table: "scenarios" */
+  insertScenarios?: Maybe<Scenario_Mutation_Response>;
   /** insert data into the table: "stories" */
-  insert_stories?: Maybe<Stories_Mutation_Response>;
+  insertStories?: Maybe<Story_Mutation_Response>;
   /** insert a single row into the table: "stories" */
-  insert_stories_one?: Maybe<Stories>;
-  /** update data of the table: "scenarios" */
-  update_scenarios?: Maybe<Scenarios_Mutation_Response>;
+  insertStory?: Maybe<Story>;
   /** update single row of the table: "scenarios" */
-  update_scenarios_by_pk?: Maybe<Scenarios>;
+  updateScenarioById?: Maybe<Scenario>;
+  /** update data of the table: "scenarios" */
+  updateScenarios?: Maybe<Scenario_Mutation_Response>;
   /** update data of the table: "stories" */
-  update_stories?: Maybe<Stories_Mutation_Response>;
+  updateStories?: Maybe<Story_Mutation_Response>;
   /** update single row of the table: "stories" */
-  update_stories_by_pk?: Maybe<Stories>;
+  updateStoryById?: Maybe<Story>;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_ScenariosArgs = {
-  where: Scenarios_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Scenarios_By_PkArgs = {
+export type Mutation_RootDeleteScenarioByIdArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_StoriesArgs = {
-  where: Stories_Bool_Exp;
+export type Mutation_RootDeleteScenariosArgs = {
+  where: Scenario_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Stories_By_PkArgs = {
+export type Mutation_RootDeleteStoriesArgs = {
+  where: Story_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteStoryByIdArgs = {
   id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_ScenariosArgs = {
-  objects: Array<Scenarios_Insert_Input>;
-  on_conflict?: Maybe<Scenarios_On_Conflict>;
+export type Mutation_RootInsertScenarioArgs = {
+  object: Scenario_Insert_Input;
+  on_conflict?: Maybe<Scenario_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Scenarios_OneArgs = {
-  object: Scenarios_Insert_Input;
-  on_conflict?: Maybe<Scenarios_On_Conflict>;
+export type Mutation_RootInsertScenariosArgs = {
+  objects: Array<Scenario_Insert_Input>;
+  on_conflict?: Maybe<Scenario_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_StoriesArgs = {
-  objects: Array<Stories_Insert_Input>;
-  on_conflict?: Maybe<Stories_On_Conflict>;
+export type Mutation_RootInsertStoriesArgs = {
+  objects: Array<Story_Insert_Input>;
+  on_conflict?: Maybe<Story_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Stories_OneArgs = {
-  object: Stories_Insert_Input;
-  on_conflict?: Maybe<Stories_On_Conflict>;
+export type Mutation_RootInsertStoryArgs = {
+  object: Story_Insert_Input;
+  on_conflict?: Maybe<Story_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_ScenariosArgs = {
-  _append?: Maybe<Scenarios_Append_Input>;
-  _delete_at_path?: Maybe<Scenarios_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Scenarios_Delete_Elem_Input>;
-  _delete_key?: Maybe<Scenarios_Delete_Key_Input>;
-  _prepend?: Maybe<Scenarios_Prepend_Input>;
-  _set?: Maybe<Scenarios_Set_Input>;
-  where: Scenarios_Bool_Exp;
+export type Mutation_RootUpdateScenarioByIdArgs = {
+  _append?: Maybe<Scenario_Append_Input>;
+  _delete_at_path?: Maybe<Scenario_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Scenario_Delete_Elem_Input>;
+  _delete_key?: Maybe<Scenario_Delete_Key_Input>;
+  _prepend?: Maybe<Scenario_Prepend_Input>;
+  _set?: Maybe<Scenario_Set_Input>;
+  pk_columns: Scenario_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Scenarios_By_PkArgs = {
-  _append?: Maybe<Scenarios_Append_Input>;
-  _delete_at_path?: Maybe<Scenarios_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Scenarios_Delete_Elem_Input>;
-  _delete_key?: Maybe<Scenarios_Delete_Key_Input>;
-  _prepend?: Maybe<Scenarios_Prepend_Input>;
-  _set?: Maybe<Scenarios_Set_Input>;
-  pk_columns: Scenarios_Pk_Columns_Input;
+export type Mutation_RootUpdateScenariosArgs = {
+  _append?: Maybe<Scenario_Append_Input>;
+  _delete_at_path?: Maybe<Scenario_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Scenario_Delete_Elem_Input>;
+  _delete_key?: Maybe<Scenario_Delete_Key_Input>;
+  _prepend?: Maybe<Scenario_Prepend_Input>;
+  _set?: Maybe<Scenario_Set_Input>;
+  where: Scenario_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_StoriesArgs = {
-  _append?: Maybe<Stories_Append_Input>;
-  _delete_at_path?: Maybe<Stories_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Stories_Delete_Elem_Input>;
-  _delete_key?: Maybe<Stories_Delete_Key_Input>;
-  _prepend?: Maybe<Stories_Prepend_Input>;
-  _set?: Maybe<Stories_Set_Input>;
-  where: Stories_Bool_Exp;
+export type Mutation_RootUpdateStoriesArgs = {
+  _append?: Maybe<Story_Append_Input>;
+  _delete_at_path?: Maybe<Story_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Story_Delete_Elem_Input>;
+  _delete_key?: Maybe<Story_Delete_Key_Input>;
+  _prepend?: Maybe<Story_Prepend_Input>;
+  _set?: Maybe<Story_Set_Input>;
+  where: Story_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Stories_By_PkArgs = {
-  _append?: Maybe<Stories_Append_Input>;
-  _delete_at_path?: Maybe<Stories_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Stories_Delete_Elem_Input>;
-  _delete_key?: Maybe<Stories_Delete_Key_Input>;
-  _prepend?: Maybe<Stories_Prepend_Input>;
-  _set?: Maybe<Stories_Set_Input>;
-  pk_columns: Stories_Pk_Columns_Input;
+export type Mutation_RootUpdateStoryByIdArgs = {
+  _append?: Maybe<Story_Append_Input>;
+  _delete_at_path?: Maybe<Story_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Story_Delete_Elem_Input>;
+  _delete_key?: Maybe<Story_Delete_Key_Input>;
+  _prepend?: Maybe<Story_Prepend_Input>;
+  _set?: Maybe<Story_Set_Input>;
+  pk_columns: Story_Pk_Columns_Input;
 };
 
 /** column ordering options */
@@ -233,68 +233,68 @@ export enum Order_By {
 }
 
 export type Query_Root = {
-  /** fetch data from the table: "scenarios" */
-  scenarios: Array<Scenarios>;
   /** fetch aggregated fields from the table: "scenarios" */
-  scenarios_aggregate: Scenarios_Aggregate;
+  aggregateScenarios: Scenario_Aggregate;
+  /** fetch aggregated fields from the table: "stories" */
+  aggtegateStories: Story_Aggregate;
   /** fetch data from the table: "scenarios" using primary key columns */
-  scenarios_by_pk?: Maybe<Scenarios>;
-  /** An array relationship */
-  stories: Array<Stories>;
-  /** An aggregate relationship */
-  stories_aggregate: Stories_Aggregate;
+  getScenarioById?: Maybe<Scenario>;
   /** fetch data from the table: "stories" using primary key columns */
-  stories_by_pk?: Maybe<Stories>;
+  getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "scenarios" */
+  listScenarios: Array<Scenario>;
+  /** fetch data from the table: "stories" */
+  listStories: Array<Story>;
 };
 
 
-export type Query_RootScenariosArgs = {
-  distinct_on?: Maybe<Array<Scenarios_Select_Column>>;
+export type Query_RootAggregateScenariosArgs = {
+  distinct_on?: Maybe<Array<Scenario_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Scenarios_Order_By>>;
-  where?: Maybe<Scenarios_Bool_Exp>;
+  order_by?: Maybe<Array<Scenario_Order_By>>;
+  where?: Maybe<Scenario_Bool_Exp>;
 };
 
 
-export type Query_RootScenarios_AggregateArgs = {
-  distinct_on?: Maybe<Array<Scenarios_Select_Column>>;
+export type Query_RootAggtegateStoriesArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Scenarios_Order_By>>;
-  where?: Maybe<Scenarios_Bool_Exp>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 
-export type Query_RootScenarios_By_PkArgs = {
+export type Query_RootGetScenarioByIdArgs = {
   id: Scalars['uuid'];
 };
 
 
-export type Query_RootStoriesArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
-};
-
-
-export type Query_RootStories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
-};
-
-
-export type Query_RootStories_By_PkArgs = {
+export type Query_RootGetStoryByIdArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Query_RootListScenariosArgs = {
+  distinct_on?: Maybe<Array<Scenario_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scenario_Order_By>>;
+  where?: Maybe<Scenario_Bool_Exp>;
+};
+
+
+export type Query_RootListStoriesArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 /** columns and relationships of "scenarios" */
-export type Scenarios = {
+export type Scenario = {
   active: Scalars['Boolean'];
   collaborator: Scalars['jsonb'];
   created_at: Scalars['timestamptz'];
@@ -305,9 +305,9 @@ export type Scenarios = {
   launcher: Scalars['jsonb'];
   owner: Scalars['String'];
   /** An array relationship */
-  stories: Array<Stories>;
+  stories: Array<Story>;
   /** An aggregate relationship */
-  stories_aggregate: Stories_Aggregate;
+  stories_aggregate: Story_Aggregate;
   theme: Scalars['jsonb'];
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -315,70 +315,70 @@ export type Scenarios = {
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosCollaboratorArgs = {
+export type ScenarioCollaboratorArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosImagesArgs = {
+export type ScenarioImagesArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosLauncherArgs = {
+export type ScenarioLauncherArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosStoriesArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
+export type ScenarioStoriesArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosStories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
+export type ScenarioStories_AggregateArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenariosThemeArgs = {
+export type ScenarioThemeArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
 /** aggregated selection of "scenarios" */
-export type Scenarios_Aggregate = {
-  aggregate?: Maybe<Scenarios_Aggregate_Fields>;
-  nodes: Array<Scenarios>;
+export type Scenario_Aggregate = {
+  aggregate?: Maybe<Scenario_Aggregate_Fields>;
+  nodes: Array<Scenario>;
 };
 
 /** aggregate fields of "scenarios" */
-export type Scenarios_Aggregate_Fields = {
+export type Scenario_Aggregate_Fields = {
   count: Scalars['Int'];
-  max?: Maybe<Scenarios_Max_Fields>;
-  min?: Maybe<Scenarios_Min_Fields>;
+  max?: Maybe<Scenario_Max_Fields>;
+  min?: Maybe<Scenario_Min_Fields>;
 };
 
 
 /** aggregate fields of "scenarios" */
-export type Scenarios_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Scenarios_Select_Column>>;
+export type Scenario_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Scenario_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
 /** append existing jsonb value of filtered columns with new jsonb value */
-export type Scenarios_Append_Input = {
+export type Scenario_Append_Input = {
   collaborator?: Maybe<Scalars['jsonb']>;
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
@@ -386,10 +386,10 @@ export type Scenarios_Append_Input = {
 };
 
 /** Boolean expression to filter rows from the table "scenarios". All fields are combined with a logical 'AND'. */
-export type Scenarios_Bool_Exp = {
-  _and?: Maybe<Array<Scenarios_Bool_Exp>>;
-  _not?: Maybe<Scenarios_Bool_Exp>;
-  _or?: Maybe<Array<Scenarios_Bool_Exp>>;
+export type Scenario_Bool_Exp = {
+  _and?: Maybe<Array<Scenario_Bool_Exp>>;
+  _not?: Maybe<Scenario_Bool_Exp>;
+  _or?: Maybe<Array<Scenario_Bool_Exp>>;
   active?: Maybe<Boolean_Comparison_Exp>;
   collaborator?: Maybe<Jsonb_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -399,20 +399,20 @@ export type Scenarios_Bool_Exp = {
   images?: Maybe<Jsonb_Comparison_Exp>;
   launcher?: Maybe<Jsonb_Comparison_Exp>;
   owner?: Maybe<String_Comparison_Exp>;
-  stories?: Maybe<Stories_Bool_Exp>;
+  stories?: Maybe<Story_Bool_Exp>;
   theme?: Maybe<Jsonb_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "scenarios" */
-export enum Scenarios_Constraint {
+export enum Scenario_Constraint {
   /** unique or primary key constraint */
   SessionsPkey = 'sessions_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Scenarios_Delete_At_Path_Input = {
+export type Scenario_Delete_At_Path_Input = {
   collaborator?: Maybe<Array<Scalars['String']>>;
   images?: Maybe<Array<Scalars['String']>>;
   launcher?: Maybe<Array<Scalars['String']>>;
@@ -420,7 +420,7 @@ export type Scenarios_Delete_At_Path_Input = {
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Scenarios_Delete_Elem_Input = {
+export type Scenario_Delete_Elem_Input = {
   collaborator?: Maybe<Scalars['Int']>;
   images?: Maybe<Scalars['Int']>;
   launcher?: Maybe<Scalars['Int']>;
@@ -428,7 +428,7 @@ export type Scenarios_Delete_Elem_Input = {
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Scenarios_Delete_Key_Input = {
+export type Scenario_Delete_Key_Input = {
   collaborator?: Maybe<Scalars['String']>;
   images?: Maybe<Scalars['String']>;
   launcher?: Maybe<Scalars['String']>;
@@ -436,7 +436,7 @@ export type Scenarios_Delete_Key_Input = {
 };
 
 /** input type for inserting data into table "scenarios" */
-export type Scenarios_Insert_Input = {
+export type Scenario_Insert_Input = {
   active?: Maybe<Scalars['Boolean']>;
   collaborator?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -446,14 +446,14 @@ export type Scenarios_Insert_Input = {
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
   owner?: Maybe<Scalars['String']>;
-  stories?: Maybe<Stories_Arr_Rel_Insert_Input>;
+  stories?: Maybe<Story_Arr_Rel_Insert_Input>;
   theme?: Maybe<Scalars['jsonb']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
-export type Scenarios_Max_Fields = {
+export type Scenario_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   googleAnalyticsId?: Maybe<Scalars['String']>;
@@ -464,7 +464,7 @@ export type Scenarios_Max_Fields = {
 };
 
 /** aggregate min on columns */
-export type Scenarios_Min_Fields = {
+export type Scenario_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   googleAnalyticsId?: Maybe<Scalars['String']>;
@@ -475,29 +475,29 @@ export type Scenarios_Min_Fields = {
 };
 
 /** response of any mutation on the table "scenarios" */
-export type Scenarios_Mutation_Response = {
+export type Scenario_Mutation_Response = {
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Scenarios>;
+  returning: Array<Scenario>;
 };
 
 /** input type for inserting object relation for remote table "scenarios" */
-export type Scenarios_Obj_Rel_Insert_Input = {
-  data: Scenarios_Insert_Input;
+export type Scenario_Obj_Rel_Insert_Input = {
+  data: Scenario_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Scenarios_On_Conflict>;
+  on_conflict?: Maybe<Scenario_On_Conflict>;
 };
 
 /** on conflict condition type for table "scenarios" */
-export type Scenarios_On_Conflict = {
-  constraint: Scenarios_Constraint;
-  update_columns?: Array<Scenarios_Update_Column>;
-  where?: Maybe<Scenarios_Bool_Exp>;
+export type Scenario_On_Conflict = {
+  constraint: Scenario_Constraint;
+  update_columns?: Array<Scenario_Update_Column>;
+  where?: Maybe<Scenario_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "scenarios". */
-export type Scenarios_Order_By = {
+export type Scenario_Order_By = {
   active?: Maybe<Order_By>;
   collaborator?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
@@ -507,19 +507,19 @@ export type Scenarios_Order_By = {
   images?: Maybe<Order_By>;
   launcher?: Maybe<Order_By>;
   owner?: Maybe<Order_By>;
-  stories_aggregate?: Maybe<Stories_Aggregate_Order_By>;
+  stories_aggregate?: Maybe<Story_Aggregate_Order_By>;
   theme?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: scenarios */
-export type Scenarios_Pk_Columns_Input = {
+/** primary key columns input for table: scenario */
+export type Scenario_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Scenarios_Prepend_Input = {
+export type Scenario_Prepend_Input = {
   collaborator?: Maybe<Scalars['jsonb']>;
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
@@ -527,7 +527,7 @@ export type Scenarios_Prepend_Input = {
 };
 
 /** select columns of table "scenarios" */
-export enum Scenarios_Select_Column {
+export enum Scenario_Select_Column {
   /** column name */
   Active = 'active',
   /** column name */
@@ -555,7 +555,7 @@ export enum Scenarios_Select_Column {
 }
 
 /** input type for updating data in table "scenarios" */
-export type Scenarios_Set_Input = {
+export type Scenario_Set_Input = {
   active?: Maybe<Scalars['Boolean']>;
   collaborator?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
@@ -571,7 +571,7 @@ export type Scenarios_Set_Input = {
 };
 
 /** update columns of table "scenarios" */
-export enum Scenarios_Update_Column {
+export enum Scenario_Update_Column {
   /** column name */
   Active = 'active',
   /** column name */
@@ -599,13 +599,13 @@ export enum Scenarios_Update_Column {
 }
 
 /** columns and relationships of "stories" */
-export type Stories = {
+export type Story = {
   active: Scalars['Boolean'];
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
   label: Scalars['String'];
   /** An object relationship */
-  scenario?: Maybe<Scenarios>;
+  scenario?: Maybe<Scenario>;
   scenario_id: Scalars['uuid'];
   story: Scalars['jsonb'];
   strategy?: Maybe<Scalars['String']>;
@@ -614,59 +614,59 @@ export type Stories = {
 
 
 /** columns and relationships of "stories" */
-export type StoriesStoryArgs = {
+export type StoryStoryArgs = {
   path?: Maybe<Scalars['String']>;
 };
 
 /** aggregated selection of "stories" */
-export type Stories_Aggregate = {
-  aggregate?: Maybe<Stories_Aggregate_Fields>;
-  nodes: Array<Stories>;
+export type Story_Aggregate = {
+  aggregate?: Maybe<Story_Aggregate_Fields>;
+  nodes: Array<Story>;
 };
 
 /** aggregate fields of "stories" */
-export type Stories_Aggregate_Fields = {
+export type Story_Aggregate_Fields = {
   count: Scalars['Int'];
-  max?: Maybe<Stories_Max_Fields>;
-  min?: Maybe<Stories_Min_Fields>;
+  max?: Maybe<Story_Max_Fields>;
+  min?: Maybe<Story_Min_Fields>;
 };
 
 
 /** aggregate fields of "stories" */
-export type Stories_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Stories_Select_Column>>;
+export type Story_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Story_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "stories" */
-export type Stories_Aggregate_Order_By = {
+export type Story_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Stories_Max_Order_By>;
-  min?: Maybe<Stories_Min_Order_By>;
+  max?: Maybe<Story_Max_Order_By>;
+  min?: Maybe<Story_Min_Order_By>;
 };
 
 /** append existing jsonb value of filtered columns with new jsonb value */
-export type Stories_Append_Input = {
+export type Story_Append_Input = {
   story?: Maybe<Scalars['jsonb']>;
 };
 
 /** input type for inserting array relation for remote table "stories" */
-export type Stories_Arr_Rel_Insert_Input = {
-  data: Array<Stories_Insert_Input>;
+export type Story_Arr_Rel_Insert_Input = {
+  data: Array<Story_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Stories_On_Conflict>;
+  on_conflict?: Maybe<Story_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "stories". All fields are combined with a logical 'AND'. */
-export type Stories_Bool_Exp = {
-  _and?: Maybe<Array<Stories_Bool_Exp>>;
-  _not?: Maybe<Stories_Bool_Exp>;
-  _or?: Maybe<Array<Stories_Bool_Exp>>;
+export type Story_Bool_Exp = {
+  _and?: Maybe<Array<Story_Bool_Exp>>;
+  _not?: Maybe<Story_Bool_Exp>;
+  _or?: Maybe<Array<Story_Bool_Exp>>;
   active?: Maybe<Boolean_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   label?: Maybe<String_Comparison_Exp>;
-  scenario?: Maybe<Scenarios_Bool_Exp>;
+  scenario?: Maybe<Scenario_Bool_Exp>;
   scenario_id?: Maybe<Uuid_Comparison_Exp>;
   story?: Maybe<Jsonb_Comparison_Exp>;
   strategy?: Maybe<String_Comparison_Exp>;
@@ -674,33 +674,33 @@ export type Stories_Bool_Exp = {
 };
 
 /** unique or primary key constraints on table "stories" */
-export enum Stories_Constraint {
+export enum Story_Constraint {
   /** unique or primary key constraint */
   StoriesPkey = 'stories_pkey'
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Stories_Delete_At_Path_Input = {
+export type Story_Delete_At_Path_Input = {
   story?: Maybe<Array<Scalars['String']>>;
 };
 
 /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Stories_Delete_Elem_Input = {
+export type Story_Delete_Elem_Input = {
   story?: Maybe<Scalars['Int']>;
 };
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Stories_Delete_Key_Input = {
+export type Story_Delete_Key_Input = {
   story?: Maybe<Scalars['String']>;
 };
 
 /** input type for inserting data into table "stories" */
-export type Stories_Insert_Input = {
+export type Story_Insert_Input = {
   active?: Maybe<Scalars['Boolean']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   label?: Maybe<Scalars['String']>;
-  scenario?: Maybe<Scenarios_Obj_Rel_Insert_Input>;
+  scenario?: Maybe<Scenario_Obj_Rel_Insert_Input>;
   scenario_id?: Maybe<Scalars['uuid']>;
   story?: Maybe<Scalars['jsonb']>;
   strategy?: Maybe<Scalars['String']>;
@@ -708,7 +708,7 @@ export type Stories_Insert_Input = {
 };
 
 /** aggregate max on columns */
-export type Stories_Max_Fields = {
+export type Story_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   label?: Maybe<Scalars['String']>;
@@ -718,7 +718,7 @@ export type Stories_Max_Fields = {
 };
 
 /** order by max() on columns of table "stories" */
-export type Stories_Max_Order_By = {
+export type Story_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   label?: Maybe<Order_By>;
@@ -728,7 +728,7 @@ export type Stories_Max_Order_By = {
 };
 
 /** aggregate min on columns */
-export type Stories_Min_Fields = {
+export type Story_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   label?: Maybe<Scalars['String']>;
@@ -738,7 +738,7 @@ export type Stories_Min_Fields = {
 };
 
 /** order by min() on columns of table "stories" */
-export type Stories_Min_Order_By = {
+export type Story_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   label?: Maybe<Order_By>;
@@ -748,45 +748,45 @@ export type Stories_Min_Order_By = {
 };
 
 /** response of any mutation on the table "stories" */
-export type Stories_Mutation_Response = {
+export type Story_Mutation_Response = {
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Stories>;
+  returning: Array<Story>;
 };
 
 /** on conflict condition type for table "stories" */
-export type Stories_On_Conflict = {
-  constraint: Stories_Constraint;
-  update_columns?: Array<Stories_Update_Column>;
-  where?: Maybe<Stories_Bool_Exp>;
+export type Story_On_Conflict = {
+  constraint: Story_Constraint;
+  update_columns?: Array<Story_Update_Column>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "stories". */
-export type Stories_Order_By = {
+export type Story_Order_By = {
   active?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   label?: Maybe<Order_By>;
-  scenario?: Maybe<Scenarios_Order_By>;
+  scenario?: Maybe<Scenario_Order_By>;
   scenario_id?: Maybe<Order_By>;
   story?: Maybe<Order_By>;
   strategy?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: stories */
-export type Stories_Pk_Columns_Input = {
+/** primary key columns input for table: story */
+export type Story_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Stories_Prepend_Input = {
+export type Story_Prepend_Input = {
   story?: Maybe<Scalars['jsonb']>;
 };
 
 /** select columns of table "stories" */
-export enum Stories_Select_Column {
+export enum Story_Select_Column {
   /** column name */
   Active = 'active',
   /** column name */
@@ -806,7 +806,7 @@ export enum Stories_Select_Column {
 }
 
 /** input type for updating data in table "stories" */
-export type Stories_Set_Input = {
+export type Story_Set_Input = {
   active?: Maybe<Scalars['Boolean']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
@@ -818,7 +818,7 @@ export type Stories_Set_Input = {
 };
 
 /** update columns of table "stories" */
-export enum Stories_Update_Column {
+export enum Story_Update_Column {
   /** column name */
   Active = 'active',
   /** column name */
@@ -838,64 +838,64 @@ export enum Stories_Update_Column {
 }
 
 export type Subscription_Root = {
-  /** fetch data from the table: "scenarios" */
-  scenarios: Array<Scenarios>;
   /** fetch aggregated fields from the table: "scenarios" */
-  scenarios_aggregate: Scenarios_Aggregate;
+  aggregateScenarios: Scenario_Aggregate;
+  /** fetch aggregated fields from the table: "stories" */
+  aggtegateStories: Story_Aggregate;
   /** fetch data from the table: "scenarios" using primary key columns */
-  scenarios_by_pk?: Maybe<Scenarios>;
-  /** An array relationship */
-  stories: Array<Stories>;
-  /** An aggregate relationship */
-  stories_aggregate: Stories_Aggregate;
+  getScenarioById?: Maybe<Scenario>;
   /** fetch data from the table: "stories" using primary key columns */
-  stories_by_pk?: Maybe<Stories>;
+  getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "scenarios" */
+  listScenarios: Array<Scenario>;
+  /** fetch data from the table: "stories" */
+  listStories: Array<Story>;
 };
 
 
-export type Subscription_RootScenariosArgs = {
-  distinct_on?: Maybe<Array<Scenarios_Select_Column>>;
+export type Subscription_RootAggregateScenariosArgs = {
+  distinct_on?: Maybe<Array<Scenario_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Scenarios_Order_By>>;
-  where?: Maybe<Scenarios_Bool_Exp>;
+  order_by?: Maybe<Array<Scenario_Order_By>>;
+  where?: Maybe<Scenario_Bool_Exp>;
 };
 
 
-export type Subscription_RootScenarios_AggregateArgs = {
-  distinct_on?: Maybe<Array<Scenarios_Select_Column>>;
+export type Subscription_RootAggtegateStoriesArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Scenarios_Order_By>>;
-  where?: Maybe<Scenarios_Bool_Exp>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 
-export type Subscription_RootScenarios_By_PkArgs = {
+export type Subscription_RootGetScenarioByIdArgs = {
   id: Scalars['uuid'];
 };
 
 
-export type Subscription_RootStoriesArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
-};
-
-
-export type Subscription_RootStories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Stories_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Stories_Order_By>>;
-  where?: Maybe<Stories_Bool_Exp>;
-};
-
-
-export type Subscription_RootStories_By_PkArgs = {
+export type Subscription_RootGetStoryByIdArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootListScenariosArgs = {
+  distinct_on?: Maybe<Array<Scenario_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scenario_Order_By>>;
+  where?: Maybe<Scenario_Bool_Exp>;
+};
+
+
+export type Subscription_RootListStoriesArgs = {
+  distinct_on?: Maybe<Array<Story_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Story_Order_By>>;
+  where?: Maybe<Story_Bool_Exp>;
 };
 
 
@@ -926,17 +926,24 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type MyQueryQueryVariables = Exact<{
+export type GetOneScenarioQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type MyQueryQuery = { scenarios_by_pk?: Maybe<Pick<Scenarios, 'active' | 'collaborator' | 'created_at' | 'email' | 'googleAnalyticsId' | 'id' | 'images' | 'launcher' | 'owner'>> };
+export type GetOneScenarioQuery = { scenario?: Maybe<Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'googleAnalyticsId' | 'id' | 'images' | 'launcher' | 'owner'>> };
+
+export type NewScenarioMutationVariables = Exact<{
+  input: Scenario_Insert_Input;
+}>;
 
 
-export const MyQueryDocument = gql`
-    query MyQuery($id: uuid!) {
-  scenarios_by_pk(id: $id) {
+export type NewScenarioMutation = { insertScenario?: Maybe<Pick<Scenario, 'id'>> };
+
+
+export const GetOneScenarioDocument = gql`
+    query getOneScenario($id: uuid!) {
+  scenario: getScenarioById(id: $id) {
     active
     collaborator
     created_at
@@ -951,29 +958,62 @@ export const MyQueryDocument = gql`
     `;
 
 /**
- * __useMyQueryQuery__
+ * __useGetOneScenarioQuery__
  *
- * To run a query within a React component, call `useMyQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetOneScenarioQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneScenarioQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMyQueryQuery({
+ * const { data, loading, error } = useGetOneScenarioQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useMyQueryQuery(baseOptions: Apollo.QueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
+export function useGetOneScenarioQuery(baseOptions: Apollo.QueryHookOptions<GetOneScenarioQuery, GetOneScenarioQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
+        return Apollo.useQuery<GetOneScenarioQuery, GetOneScenarioQueryVariables>(GetOneScenarioDocument, options);
       }
-export function useMyQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
+export function useGetOneScenarioLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOneScenarioQuery, GetOneScenarioQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
+          return Apollo.useLazyQuery<GetOneScenarioQuery, GetOneScenarioQueryVariables>(GetOneScenarioDocument, options);
         }
-export type MyQueryQueryHookResult = ReturnType<typeof useMyQueryQuery>;
-export type MyQueryLazyQueryHookResult = ReturnType<typeof useMyQueryLazyQuery>;
-export type MyQueryQueryResult = Apollo.QueryResult<MyQueryQuery, MyQueryQueryVariables>;
+export type GetOneScenarioQueryHookResult = ReturnType<typeof useGetOneScenarioQuery>;
+export type GetOneScenarioLazyQueryHookResult = ReturnType<typeof useGetOneScenarioLazyQuery>;
+export type GetOneScenarioQueryResult = Apollo.QueryResult<GetOneScenarioQuery, GetOneScenarioQueryVariables>;
+export const NewScenarioDocument = gql`
+    mutation newScenario($input: scenario_insert_input!) {
+  insertScenario(object: $input) {
+    id
+  }
+}
+    `;
+export type NewScenarioMutationFn = Apollo.MutationFunction<NewScenarioMutation, NewScenarioMutationVariables>;
+
+/**
+ * __useNewScenarioMutation__
+ *
+ * To run a mutation, you first call `useNewScenarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useNewScenarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [newScenarioMutation, { data, loading, error }] = useNewScenarioMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useNewScenarioMutation(baseOptions?: Apollo.MutationHookOptions<NewScenarioMutation, NewScenarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<NewScenarioMutation, NewScenarioMutationVariables>(NewScenarioDocument, options);
+      }
+export type NewScenarioMutationHookResult = ReturnType<typeof useNewScenarioMutation>;
+export type NewScenarioMutationResult = Apollo.MutationResult<NewScenarioMutation>;
+export type NewScenarioMutationOptions = Apollo.BaseMutationOptions<NewScenarioMutation, NewScenarioMutationVariables>;
