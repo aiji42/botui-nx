@@ -9,6 +9,11 @@ query getOneScenario($id: uuid!) {
     images
     launcher
     owner
+    stories {
+      active
+      story
+      strategy
+    }
   }
 }
 

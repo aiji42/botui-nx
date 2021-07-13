@@ -1282,7 +1282,10 @@ export type GetOneScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetOneScenarioQuery = { scenario?: Maybe<Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'googleAnalyticsId' | 'id' | 'images' | 'launcher' | 'owner'>> };
+export type GetOneScenarioQuery = { scenario?: Maybe<(
+    Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'googleAnalyticsId' | 'id' | 'images' | 'launcher' | 'owner'>
+    & { stories: Array<Pick<Story, 'active' | 'story' | 'strategy'>> }
+  )> };
 
 export type NewScenarioMutationVariables = Exact<{
   input: Scenario_Insert_Input;
@@ -1311,6 +1314,11 @@ export const GetOneScenarioDocument = gql`
     images
     launcher
     owner
+    stories {
+      active
+      story
+      strategy
+    }
   }
 }
     `;
