@@ -64,6 +64,210 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+/** columns and relationships of "entries" */
+export type Entry = {
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  inputs: Scalars['jsonb'];
+  /** An object relationship */
+  scenario?: Maybe<Scenario>;
+  scenario_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "entries" */
+export type EntryInputsArgs = {
+  path?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "entries" */
+export type Entry_Aggregate = {
+  aggregate?: Maybe<Entry_Aggregate_Fields>;
+  nodes: Array<Entry>;
+};
+
+/** aggregate fields of "entries" */
+export type Entry_Aggregate_Fields = {
+  count: Scalars['Int'];
+  max?: Maybe<Entry_Max_Fields>;
+  min?: Maybe<Entry_Min_Fields>;
+};
+
+
+/** aggregate fields of "entries" */
+export type Entry_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Entry_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "entries" */
+export type Entry_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Entry_Max_Order_By>;
+  min?: Maybe<Entry_Min_Order_By>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Entry_Append_Input = {
+  inputs?: Maybe<Scalars['jsonb']>;
+};
+
+/** input type for inserting array relation for remote table "entries" */
+export type Entry_Arr_Rel_Insert_Input = {
+  data: Array<Entry_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Entry_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "entries". All fields are combined with a logical 'AND'. */
+export type Entry_Bool_Exp = {
+  _and?: Maybe<Array<Entry_Bool_Exp>>;
+  _not?: Maybe<Entry_Bool_Exp>;
+  _or?: Maybe<Array<Entry_Bool_Exp>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  inputs?: Maybe<Jsonb_Comparison_Exp>;
+  scenario?: Maybe<Scenario_Bool_Exp>;
+  scenario_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "entries" */
+export enum Entry_Constraint {
+  /** unique or primary key constraint */
+  EntriesPkey = 'entries_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Entry_Delete_At_Path_Input = {
+  inputs?: Maybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Entry_Delete_Elem_Input = {
+  inputs?: Maybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Entry_Delete_Key_Input = {
+  inputs?: Maybe<Scalars['String']>;
+};
+
+/** input type for inserting data into table "entries" */
+export type Entry_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  inputs?: Maybe<Scalars['jsonb']>;
+  scenario?: Maybe<Scenario_Obj_Rel_Insert_Input>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Entry_Max_Fields = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "entries" */
+export type Entry_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Entry_Min_Fields = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "entries" */
+export type Entry_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "entries" */
+export type Entry_Mutation_Response = {
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Entry>;
+};
+
+/** on conflict condition type for table "entries" */
+export type Entry_On_Conflict = {
+  constraint: Entry_Constraint;
+  update_columns?: Array<Entry_Update_Column>;
+  where?: Maybe<Entry_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "entries". */
+export type Entry_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  inputs?: Maybe<Order_By>;
+  scenario?: Maybe<Scenario_Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: entry */
+export type Entry_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Entry_Prepend_Input = {
+  inputs?: Maybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "entries" */
+export enum Entry_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Inputs = 'inputs',
+  /** column name */
+  ScenarioId = 'scenario_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "entries" */
+export type Entry_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  inputs?: Maybe<Scalars['jsonb']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "entries" */
+export enum Entry_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Inputs = 'inputs',
+  /** column name */
+  ScenarioId = 'scenario_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
@@ -90,6 +294,10 @@ export type Jsonb_Comparison_Exp = {
 
 /** mutation root */
 export type Mutation_Root = {
+  /** delete data from the table: "entries" */
+  deleteEntries?: Maybe<Entry_Mutation_Response>;
+  /** delete single row from the table: "entries" */
+  deleteEntryById?: Maybe<Entry>;
   /** delete single row from the table: "scenarios" */
   deleteScenarioById?: Maybe<Scenario>;
   /** delete data from the table: "scenarios" */
@@ -98,6 +306,10 @@ export type Mutation_Root = {
   deleteStories?: Maybe<Story_Mutation_Response>;
   /** delete single row from the table: "stories" */
   deleteStoryById?: Maybe<Story>;
+  /** insert data into the table: "entries" */
+  insertEntries?: Maybe<Entry_Mutation_Response>;
+  /** insert a single row into the table: "entries" */
+  insertEntry?: Maybe<Entry>;
   /** insert a single row into the table: "scenarios" */
   insertScenario?: Maybe<Scenario>;
   /** insert data into the table: "scenarios" */
@@ -106,6 +318,10 @@ export type Mutation_Root = {
   insertStories?: Maybe<Story_Mutation_Response>;
   /** insert a single row into the table: "stories" */
   insertStory?: Maybe<Story>;
+  /** update data of the table: "entries" */
+  updateEntries?: Maybe<Entry_Mutation_Response>;
+  /** update single row of the table: "entries" */
+  updateEntryById?: Maybe<Entry>;
   /** update single row of the table: "scenarios" */
   updateScenarioById?: Maybe<Scenario>;
   /** update data of the table: "scenarios" */
@@ -114,6 +330,18 @@ export type Mutation_Root = {
   updateStories?: Maybe<Story_Mutation_Response>;
   /** update single row of the table: "stories" */
   updateStoryById?: Maybe<Story>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteEntriesArgs = {
+  where: Entry_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteEntryByIdArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -142,6 +370,20 @@ export type Mutation_RootDeleteStoryByIdArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsertEntriesArgs = {
+  objects: Array<Entry_Insert_Input>;
+  on_conflict?: Maybe<Entry_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertEntryArgs = {
+  object: Entry_Insert_Input;
+  on_conflict?: Maybe<Entry_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsertScenarioArgs = {
   object: Scenario_Insert_Input;
   on_conflict?: Maybe<Scenario_On_Conflict>;
@@ -166,6 +408,30 @@ export type Mutation_RootInsertStoriesArgs = {
 export type Mutation_RootInsertStoryArgs = {
   object: Story_Insert_Input;
   on_conflict?: Maybe<Story_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateEntriesArgs = {
+  _append?: Maybe<Entry_Append_Input>;
+  _delete_at_path?: Maybe<Entry_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Entry_Delete_Elem_Input>;
+  _delete_key?: Maybe<Entry_Delete_Key_Input>;
+  _prepend?: Maybe<Entry_Prepend_Input>;
+  _set?: Maybe<Entry_Set_Input>;
+  where: Entry_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateEntryByIdArgs = {
+  _append?: Maybe<Entry_Append_Input>;
+  _delete_at_path?: Maybe<Entry_Delete_At_Path_Input>;
+  _delete_elem?: Maybe<Entry_Delete_Elem_Input>;
+  _delete_key?: Maybe<Entry_Delete_Key_Input>;
+  _prepend?: Maybe<Entry_Prepend_Input>;
+  _set?: Maybe<Entry_Set_Input>;
+  pk_columns: Entry_Pk_Columns_Input;
 };
 
 
@@ -233,18 +499,33 @@ export enum Order_By {
 }
 
 export type Query_Root = {
+  /** fetch aggregated fields from the table: "entries" */
+  aggregateEntries: Entry_Aggregate;
   /** fetch aggregated fields from the table: "scenarios" */
   aggregateScenarios: Scenario_Aggregate;
   /** fetch aggregated fields from the table: "stories" */
   aggtegateStories: Story_Aggregate;
+  /** fetch data from the table: "entries" using primary key columns */
+  getEntryById?: Maybe<Entry>;
   /** fetch data from the table: "scenarios" using primary key columns */
   getScenarioById?: Maybe<Scenario>;
   /** fetch data from the table: "stories" using primary key columns */
   getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "entries" */
+  listEntries: Array<Entry>;
   /** fetch data from the table: "scenarios" */
   listScenarios: Array<Scenario>;
   /** fetch data from the table: "stories" */
   listStories: Array<Story>;
+};
+
+
+export type Query_RootAggregateEntriesArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
 };
 
 
@@ -266,6 +547,11 @@ export type Query_RootAggtegateStoriesArgs = {
 };
 
 
+export type Query_RootGetEntryByIdArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootGetScenarioByIdArgs = {
   id: Scalars['uuid'];
 };
@@ -273,6 +559,15 @@ export type Query_RootGetScenarioByIdArgs = {
 
 export type Query_RootGetStoryByIdArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Query_RootListEntriesArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
 };
 
 
@@ -299,6 +594,10 @@ export type Scenario = {
   collaborator: Scalars['jsonb'];
   created_at: Scalars['timestamptz'];
   email: Scalars['String'];
+  /** An array relationship */
+  entries: Array<Entry>;
+  /** An aggregate relationship */
+  entries_aggregate: Entry_Aggregate;
   googleAnalyticsId?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   images: Scalars['jsonb'];
@@ -317,6 +616,26 @@ export type Scenario = {
 /** columns and relationships of "scenarios" */
 export type ScenarioCollaboratorArgs = {
   path?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "scenarios" */
+export type ScenarioEntriesArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
+};
+
+
+/** columns and relationships of "scenarios" */
+export type ScenarioEntries_AggregateArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
 };
 
 
@@ -394,6 +713,7 @@ export type Scenario_Bool_Exp = {
   collaborator?: Maybe<Jsonb_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
+  entries?: Maybe<Entry_Bool_Exp>;
   googleAnalyticsId?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   images?: Maybe<Jsonb_Comparison_Exp>;
@@ -441,6 +761,7 @@ export type Scenario_Insert_Input = {
   collaborator?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
+  entries?: Maybe<Entry_Arr_Rel_Insert_Input>;
   googleAnalyticsId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   images?: Maybe<Scalars['jsonb']>;
@@ -502,6 +823,7 @@ export type Scenario_Order_By = {
   collaborator?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
+  entries_aggregate?: Maybe<Entry_Aggregate_Order_By>;
   googleAnalyticsId?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   images?: Maybe<Order_By>;
@@ -838,18 +1160,33 @@ export enum Story_Update_Column {
 }
 
 export type Subscription_Root = {
+  /** fetch aggregated fields from the table: "entries" */
+  aggregateEntries: Entry_Aggregate;
   /** fetch aggregated fields from the table: "scenarios" */
   aggregateScenarios: Scenario_Aggregate;
   /** fetch aggregated fields from the table: "stories" */
   aggtegateStories: Story_Aggregate;
+  /** fetch data from the table: "entries" using primary key columns */
+  getEntryById?: Maybe<Entry>;
   /** fetch data from the table: "scenarios" using primary key columns */
   getScenarioById?: Maybe<Scenario>;
   /** fetch data from the table: "stories" using primary key columns */
   getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "entries" */
+  listEntries: Array<Entry>;
   /** fetch data from the table: "scenarios" */
   listScenarios: Array<Scenario>;
   /** fetch data from the table: "stories" */
   listStories: Array<Story>;
+};
+
+
+export type Subscription_RootAggregateEntriesArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
 };
 
 
@@ -871,6 +1208,11 @@ export type Subscription_RootAggtegateStoriesArgs = {
 };
 
 
+export type Subscription_RootGetEntryByIdArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootGetScenarioByIdArgs = {
   id: Scalars['uuid'];
 };
@@ -878,6 +1220,15 @@ export type Subscription_RootGetScenarioByIdArgs = {
 
 export type Subscription_RootGetStoryByIdArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootListEntriesArgs = {
+  distinct_on?: Maybe<Array<Entry_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entry_Order_By>>;
+  where?: Maybe<Entry_Bool_Exp>;
 };
 
 
