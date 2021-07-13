@@ -1289,7 +1289,14 @@ export type NewScenarioMutationVariables = Exact<{
 }>;
 
 
-export type NewScenarioMutation = { insertScenario?: Maybe<Pick<Scenario, 'id'>> };
+export type NewScenarioMutation = { scenario?: Maybe<Pick<Scenario, 'id'>> };
+
+export type NewEntryMutationVariables = Exact<{
+  input: Entry_Insert_Input;
+}>;
+
+
+export type NewEntryMutation = { entry?: Maybe<Pick<Entry, 'id' | 'scenario_id'>> };
 
 
 export const GetOneScenarioDocument = gql`
@@ -1337,7 +1344,7 @@ export type GetOneScenarioLazyQueryHookResult = ReturnType<typeof useGetOneScena
 export type GetOneScenarioQueryResult = Apollo.QueryResult<GetOneScenarioQuery, GetOneScenarioQueryVariables>;
 export const NewScenarioDocument = gql`
     mutation newScenario($input: scenario_insert_input!) {
-  insertScenario(object: $input) {
+  scenario: insertScenario(object: $input) {
     id
   }
 }
@@ -1368,3 +1375,37 @@ export function useNewScenarioMutation(baseOptions?: Apollo.MutationHookOptions<
 export type NewScenarioMutationHookResult = ReturnType<typeof useNewScenarioMutation>;
 export type NewScenarioMutationResult = Apollo.MutationResult<NewScenarioMutation>;
 export type NewScenarioMutationOptions = Apollo.BaseMutationOptions<NewScenarioMutation, NewScenarioMutationVariables>;
+export const NewEntryDocument = gql`
+    mutation newEntry($input: entry_insert_input!) {
+  entry: insertEntry(object: $input) {
+    id
+    scenario_id
+  }
+}
+    `;
+export type NewEntryMutationFn = Apollo.MutationFunction<NewEntryMutation, NewEntryMutationVariables>;
+
+/**
+ * __useNewEntryMutation__
+ *
+ * To run a mutation, you first call `useNewEntryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useNewEntryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [newEntryMutation, { data, loading, error }] = useNewEntryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useNewEntryMutation(baseOptions?: Apollo.MutationHookOptions<NewEntryMutation, NewEntryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<NewEntryMutation, NewEntryMutationVariables>(NewEntryDocument, options);
+      }
+export type NewEntryMutationHookResult = ReturnType<typeof useNewEntryMutation>;
+export type NewEntryMutationResult = Apollo.MutationResult<NewEntryMutation>;
+export type NewEntryMutationOptions = Apollo.BaseMutationOptions<NewEntryMutation, NewEntryMutationVariables>;

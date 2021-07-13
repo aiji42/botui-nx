@@ -13,7 +13,14 @@ query getOneScenario($id: uuid!) {
 }
 
 mutation newScenario($input: scenario_insert_input!) {
-  insertScenario(object: $input) {
+  scenario: insertScenario(object: $input) {
     id
+  }
+}
+
+mutation newEntry($input: entry_insert_input!) {
+  entry: insertEntry(object: $input) {
+    id
+    scenario_id
   }
 }
