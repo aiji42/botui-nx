@@ -65,6 +65,7 @@
     "nextjs-cors": "^1.0.5",
     "post-me": "^0.4.5",
     "ra-data-graphql": "^3.11.4",
+    "ra-data-hasura": "^0.2.0",
     "ra-i18n-polyglot": "^3.14.5",
     "react": "17.0.2",
     "react-ace": "^9.4.0",
