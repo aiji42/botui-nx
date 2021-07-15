@@ -1,0 +1,153 @@
+table:
+  name: scenarios
+  schema: public
+configuration:
+  custom_column_names: {}
+  custom_name: scenario
+  custom_root_fields:
+    delete: deleteScenarios
+    delete_by_pk: deleteScenarioById
+    insert: insertScenarios
+    insert_one: insertScenario
+    select: listScenarios
+    select_aggregate: aggregateScenarios
+    select_by_pk: getScenarioById
+    update: updateScenarios
+    update_by_pk: updateScenarioById
+array_relationships:
+- name: entries
+  using:
+    manual_configuration:
+      column_mapping:
+        id: scenario_id
+      insertion_order: null
+      remote_table:
+        name: entries
+        schema: public
+- name: stories
+  using:
+    manual_configuration:
+      column_mapping:
+        id: scenario_id
+      insertion_order: null
+      remote_table:
+        name: stories
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      owner:
+        _eq: X-Hasura-User-Id
+    columns:
+    - active
+    - collaborator
+    - created_at
+    - email
+    - google_analytics_id
+    - id
+    - images
+    - launcher
+    - owner
+    - theme
+    - title
+    - updated_at
+  role: owner
+select_permissions:
+- permission:
+    columns:
+    - email
+    - google_analytics_id
+    - id
+    - images
+    - launcher
+    - theme
+    - title
+    filter:
+      active:
+        _eq: true
+  role: anonymous
+- permission:
+    columns:
+    - id
+    - owner
+    - title
+    - active
+    - theme
+    - images
+    - launcher
+    - google_analytics_id
+    - email
+    - created_at
+    - updated_at
+    - collaborator
+    filter:
+      collaborator:
+        _has_key: X-Hasura-User-Id
+  role: collaborator
+- permission:
+    columns:
+    - id
+    - owner
+    - title
+    - active
+    - theme
+    - images
+    - launcher
+    - google_analytics_id
+    - email
+    - created_at
+    - updated_at
+    - collaborator
+    filter:
+      owner:
+        _eq: X-Hasura-User-Id
+  role: owner
+update_permissions:
+- permission:
+    check:
+      collaborator:
+        _contains: X-Hasura-User-Id
+    columns:
+    - active
+    - collaborator
+    - created_at
+    - email
+    - google_analytics_id
+    - id
+    - images
+    - launcher
+    - theme
+    - title
+    - updated_at
+    filter:
+      collaborator:
+        _has_key: X-Hasura-User-Id
+  role: collaborator
+- permission:
+    check:
+      owner:
+        _eq: X-Hasura-User-Id
+    columns:
+    - active
+    - collaborator
+    - images
+    - launcher
+    - theme
+    - email
+    - google_analytics_id
+    - owner
+    - title
+    - created_at
+    - updated_at
+    - id
+    filter:
+      owner:
+        _eq: X-Hasura-User-Id
+  role: owner
+delete_permissions:
+- permission:
+    filter:
+      owner:
+        _eq: X-Hasura-User-Id
+  role: owner
