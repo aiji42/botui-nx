@@ -14,6 +14,7 @@ import { Auth } from 'aws-amplify'
 import gql from 'graphql-tag'
 import buildHasuraProvider, { buildFields } from 'ra-data-hasura'
 import { DocumentNode } from '@apollo/client'
+import { SelectionSetNode } from 'graphql'
 
 const sessionParse = (
   data: Session<string, string, string, string>
@@ -178,13 +179,34 @@ const useCollaborator = () => {
   return dataProvider
 }
 
-const extractFieldsFromQuery = (queryAst: DocumentNode) => {
+const extractFieldsFromQuery = (
+  queryAst: DocumentNode
+): SelectionSetNode['selections'] | never => {
   const [definition] = queryAst.definitions
-  if (!('selectionSet' in definition)) throw new Error
+  if (!('selectionSet' in definition)) throw new Error()
   return definition.selectionSet.selections
 }
 
-const customBuildFields = (type, fetchType) => {
+const GET_ONE_SCENARIO = gql`
+  {
+    active
+    collaborator
+    created_at
+    email
+    googleAnalyticsId
+    id
+    images
+    launcher
+    owner
+    stories {
+      active
+      story
+      strategy
+    }
+  }
+`
+
+const customBuildFields = (type: { name: string }, fetchType: string) => {
   const resourceName = type.name
 
   if (resourceName === 'users' && fetchType === 'GET_ONE') {
