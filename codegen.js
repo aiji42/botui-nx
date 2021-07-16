@@ -6,7 +6,7 @@ dotenv.config()
 module.exports = {
   schema: [
     {
-      'https://botui.hasura.app/v1/graphql': {
+      'https://botui-dev.hasura.app/v1/graphql': {
         headers: {
           'x-hasura-admin-secret': process.env.HASURA_GRAPHQL_ADMIN_SECRET
         }
@@ -20,7 +20,7 @@ module.exports = {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-react-apollo'
+        'typescript-graphql-request'
       ],
       config: {
         skipTypename: true,
@@ -28,6 +28,9 @@ module.exports = {
         withHOC: false,
         withComponent: false
       }
+    },
+    './graphql.schema.json': {
+      plugins: ['introspection']
     }
   }
 }

@@ -4,7 +4,7 @@ query getOneScenario($id: uuid!) {
     collaborator
     created_at
     email
-    googleAnalyticsId
+    google_analytics_id
     id
     images
     launcher

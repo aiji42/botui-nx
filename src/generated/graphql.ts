@@ -1,10 +1,10 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -598,7 +598,7 @@ export type Scenario = {
   entries: Array<Entry>;
   /** An aggregate relationship */
   entries_aggregate: Entry_Aggregate;
-  googleAnalyticsId?: Maybe<Scalars['String']>;
+  google_analytics_id?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   images: Scalars['jsonb'];
   launcher: Scalars['jsonb'];
@@ -714,7 +714,7 @@ export type Scenario_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   entries?: Maybe<Entry_Bool_Exp>;
-  googleAnalyticsId?: Maybe<String_Comparison_Exp>;
+  google_analytics_id?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   images?: Maybe<Jsonb_Comparison_Exp>;
   launcher?: Maybe<Jsonb_Comparison_Exp>;
@@ -762,7 +762,7 @@ export type Scenario_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   entries?: Maybe<Entry_Arr_Rel_Insert_Input>;
-  googleAnalyticsId?: Maybe<Scalars['String']>;
+  google_analytics_id?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
@@ -777,7 +777,7 @@ export type Scenario_Insert_Input = {
 export type Scenario_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
-  googleAnalyticsId?: Maybe<Scalars['String']>;
+  google_analytics_id?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   owner?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
@@ -788,7 +788,7 @@ export type Scenario_Max_Fields = {
 export type Scenario_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
-  googleAnalyticsId?: Maybe<Scalars['String']>;
+  google_analytics_id?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   owner?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
@@ -824,7 +824,7 @@ export type Scenario_Order_By = {
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   entries_aggregate?: Maybe<Entry_Aggregate_Order_By>;
-  googleAnalyticsId?: Maybe<Order_By>;
+  google_analytics_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   images?: Maybe<Order_By>;
   launcher?: Maybe<Order_By>;
@@ -859,7 +859,7 @@ export enum Scenario_Select_Column {
   /** column name */
   Email = 'email',
   /** column name */
-  GoogleAnalyticsId = 'googleAnalyticsId',
+  GoogleAnalyticsId = 'google_analytics_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -882,7 +882,7 @@ export type Scenario_Set_Input = {
   collaborator?: Maybe<Scalars['jsonb']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
-  googleAnalyticsId?: Maybe<Scalars['String']>;
+  google_analytics_id?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
@@ -903,7 +903,7 @@ export enum Scenario_Update_Column {
   /** column name */
   Email = 'email',
   /** column name */
-  GoogleAnalyticsId = 'googleAnalyticsId',
+  GoogleAnalyticsId = 'google_analytics_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1283,7 +1283,7 @@ export type GetOneScenarioQueryVariables = Exact<{
 
 
 export type GetOneScenarioQuery = { scenario?: Maybe<(
-    Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'googleAnalyticsId' | 'id' | 'images' | 'launcher' | 'owner'>
+    Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'google_analytics_id' | 'id' | 'images' | 'launcher' | 'owner'>
     & { stories: Array<Pick<Story, 'active' | 'story' | 'strategy'>> }
   )> };
 
@@ -1309,7 +1309,7 @@ export const GetOneScenarioDocument = gql`
     collaborator
     created_at
     email
-    googleAnalyticsId
+    google_analytics_id
     id
     images
     launcher
@@ -1322,34 +1322,6 @@ export const GetOneScenarioDocument = gql`
   }
 }
     `;
-
-/**
- * __useGetOneScenarioQuery__
- *
- * To run a query within a React component, call `useGetOneScenarioQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOneScenarioQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOneScenarioQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetOneScenarioQuery(baseOptions: Apollo.QueryHookOptions<GetOneScenarioQuery, GetOneScenarioQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOneScenarioQuery, GetOneScenarioQueryVariables>(GetOneScenarioDocument, options);
-      }
-export function useGetOneScenarioLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOneScenarioQuery, GetOneScenarioQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOneScenarioQuery, GetOneScenarioQueryVariables>(GetOneScenarioDocument, options);
-        }
-export type GetOneScenarioQueryHookResult = ReturnType<typeof useGetOneScenarioQuery>;
-export type GetOneScenarioLazyQueryHookResult = ReturnType<typeof useGetOneScenarioLazyQuery>;
-export type GetOneScenarioQueryResult = Apollo.QueryResult<GetOneScenarioQuery, GetOneScenarioQueryVariables>;
 export const NewScenarioDocument = gql`
     mutation newScenario($input: scenario_insert_input!) {
   scenario: insertScenario(object: $input) {
@@ -1357,32 +1329,6 @@ export const NewScenarioDocument = gql`
   }
 }
     `;
-export type NewScenarioMutationFn = Apollo.MutationFunction<NewScenarioMutation, NewScenarioMutationVariables>;
-
-/**
- * __useNewScenarioMutation__
- *
- * To run a mutation, you first call `useNewScenarioMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useNewScenarioMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [newScenarioMutation, { data, loading, error }] = useNewScenarioMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useNewScenarioMutation(baseOptions?: Apollo.MutationHookOptions<NewScenarioMutation, NewScenarioMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<NewScenarioMutation, NewScenarioMutationVariables>(NewScenarioDocument, options);
-      }
-export type NewScenarioMutationHookResult = ReturnType<typeof useNewScenarioMutation>;
-export type NewScenarioMutationResult = Apollo.MutationResult<NewScenarioMutation>;
-export type NewScenarioMutationOptions = Apollo.BaseMutationOptions<NewScenarioMutation, NewScenarioMutationVariables>;
 export const NewEntryDocument = gql`
     mutation newEntry($input: entry_insert_input!) {
   entry: insertEntry(object: $input) {
@@ -1391,29 +1337,23 @@ export const NewEntryDocument = gql`
   }
 }
     `;
-export type NewEntryMutationFn = Apollo.MutationFunction<NewEntryMutation, NewEntryMutationVariables>;
 
-/**
- * __useNewEntryMutation__
- *
- * To run a mutation, you first call `useNewEntryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useNewEntryMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [newEntryMutation, { data, loading, error }] = useNewEntryMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useNewEntryMutation(baseOptions?: Apollo.MutationHookOptions<NewEntryMutation, NewEntryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<NewEntryMutation, NewEntryMutationVariables>(NewEntryDocument, options);
-      }
-export type NewEntryMutationHookResult = ReturnType<typeof useNewEntryMutation>;
-export type NewEntryMutationResult = Apollo.MutationResult<NewEntryMutation>;
-export type NewEntryMutationOptions = Apollo.BaseMutationOptions<NewEntryMutation, NewEntryMutationVariables>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    getOneScenario(variables: GetOneScenarioQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOneScenarioQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetOneScenarioQuery>(GetOneScenarioDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOneScenario');
+    },
+    newScenario(variables: NewScenarioMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NewScenarioMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NewScenarioMutation>(NewScenarioDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'newScenario');
+    },
+    newEntry(variables: NewEntryMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<NewEntryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<NewEntryMutation>(NewEntryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'newEntry');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
