@@ -1,3 +1,16 @@
+query listScenarios($email: String!) {
+  scenarios: listScenarios(
+    where: {
+      _or: { owner: { _eq: $email }, collaborator: { _has_key: $email } }
+    }
+    order_by: { created_at: asc }
+  ) {
+    id
+    title
+    active
+  }
+}
+
 query getOneScenario($id: uuid!) {
   scenario: getScenarioById(id: $id) {
     active
