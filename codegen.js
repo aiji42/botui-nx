@@ -13,10 +13,10 @@ module.exports = {
       }
     }
   ],
-  documents: ['./src/**/*.graphql'],
+  documents: ['./libs/graphql/src/**/*.graphql'],
   overwrite: true,
   generates: {
-    './src/generated/graphql.ts': {
+    './libs/graphql/src/generated/graphql.ts': {
       plugins: [
         'typescript',
         'typescript-operations',
@@ -29,7 +29,7 @@ module.exports = {
         withComponent: false
       }
     },
-    './graphql.schema.json': {
+    './libs/graphql/graphql.schema.json': {
       plugins: ['introspection']
     }
   }

@@ -25,7 +25,8 @@
       "@botui/chat-controller/common": [
         "libs/chat-controller/src/common/index.ts"
       ],
-      "@botui/types": ["libs/types/src/index.d.ts"]
+      "@botui/types": ["libs/types/src/index.d.ts"],
+      "@botui/graphql": ["libs/graphql/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
