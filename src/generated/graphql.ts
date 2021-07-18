@@ -302,10 +302,14 @@ export type Mutation_Root = {
   deleteScenarioById?: Maybe<Scenario>;
   /** delete data from the table: "scenarios" */
   deleteScenarios?: Maybe<Scenario_Mutation_Response>;
-  /** delete data from the table: "stories" */
-  deleteStories?: Maybe<Story_Mutation_Response>;
-  /** delete single row from the table: "stories" */
-  deleteStoryById?: Maybe<Story>;
+  /** delete single row from the table: "talk_sctipts" */
+  deleteTalkScriptById?: Maybe<TalkScript>;
+  /** delete data from the table: "talk_sctipts" */
+  deleteTalkScripts?: Maybe<TalkScript_Mutation_Response>;
+  /** delete data from the table: "scripts" */
+  delete_scripts?: Maybe<Scripts_Mutation_Response>;
+  /** delete single row from the table: "scripts" */
+  delete_scripts_by_pk?: Maybe<Scripts>;
   /** insert data into the table: "entries" */
   insertEntries?: Maybe<Entry_Mutation_Response>;
   /** insert a single row into the table: "entries" */
@@ -314,10 +318,14 @@ export type Mutation_Root = {
   insertScenario?: Maybe<Scenario>;
   /** insert data into the table: "scenarios" */
   insertScenarios?: Maybe<Scenario_Mutation_Response>;
-  /** insert data into the table: "stories" */
-  insertStories?: Maybe<Story_Mutation_Response>;
-  /** insert a single row into the table: "stories" */
-  insertStory?: Maybe<Story>;
+  /** insert a single row into the table: "talk_sctipts" */
+  insertTalkScript?: Maybe<TalkScript>;
+  /** insert data into the table: "talk_sctipts" */
+  insertTalkScripts?: Maybe<TalkScript_Mutation_Response>;
+  /** insert data into the table: "scripts" */
+  insert_scripts?: Maybe<Scripts_Mutation_Response>;
+  /** insert a single row into the table: "scripts" */
+  insert_scripts_one?: Maybe<Scripts>;
   /** update data of the table: "entries" */
   updateEntries?: Maybe<Entry_Mutation_Response>;
   /** update single row of the table: "entries" */
@@ -326,10 +334,14 @@ export type Mutation_Root = {
   updateScenarioById?: Maybe<Scenario>;
   /** update data of the table: "scenarios" */
   updateScenarios?: Maybe<Scenario_Mutation_Response>;
-  /** update data of the table: "stories" */
-  updateStories?: Maybe<Story_Mutation_Response>;
-  /** update single row of the table: "stories" */
-  updateStoryById?: Maybe<Story>;
+  /** update single row of the table: "talk_sctipts" */
+  updateTalkScriptById?: Maybe<TalkScript>;
+  /** update data of the table: "talk_sctipts" */
+  updateTalkScripts?: Maybe<TalkScript_Mutation_Response>;
+  /** update data of the table: "scripts" */
+  update_scripts?: Maybe<Scripts_Mutation_Response>;
+  /** update single row of the table: "scripts" */
+  update_scripts_by_pk?: Maybe<Scripts>;
 };
 
 
@@ -358,13 +370,25 @@ export type Mutation_RootDeleteScenariosArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDeleteStoriesArgs = {
-  where: Story_Bool_Exp;
+export type Mutation_RootDeleteTalkScriptByIdArgs = {
+  id: Scalars['uuid'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDeleteStoryByIdArgs = {
+export type Mutation_RootDeleteTalkScriptsArgs = {
+  where: TalkScript_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ScriptsArgs = {
+  where: Scripts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Scripts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -398,16 +422,30 @@ export type Mutation_RootInsertScenariosArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsertStoriesArgs = {
-  objects: Array<Story_Insert_Input>;
-  on_conflict?: Maybe<Story_On_Conflict>;
+export type Mutation_RootInsertTalkScriptArgs = {
+  object: TalkScript_Insert_Input;
+  on_conflict?: Maybe<TalkScript_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsertStoryArgs = {
-  object: Story_Insert_Input;
-  on_conflict?: Maybe<Story_On_Conflict>;
+export type Mutation_RootInsertTalkScriptsArgs = {
+  objects: Array<TalkScript_Insert_Input>;
+  on_conflict?: Maybe<TalkScript_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ScriptsArgs = {
+  objects: Array<Scripts_Insert_Input>;
+  on_conflict?: Maybe<Scripts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Scripts_OneArgs = {
+  object: Scripts_Insert_Input;
+  on_conflict?: Maybe<Scripts_On_Conflict>;
 };
 
 
@@ -460,26 +498,30 @@ export type Mutation_RootUpdateScenariosArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdateStoriesArgs = {
-  _append?: Maybe<Story_Append_Input>;
-  _delete_at_path?: Maybe<Story_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Story_Delete_Elem_Input>;
-  _delete_key?: Maybe<Story_Delete_Key_Input>;
-  _prepend?: Maybe<Story_Prepend_Input>;
-  _set?: Maybe<Story_Set_Input>;
-  where: Story_Bool_Exp;
+export type Mutation_RootUpdateTalkScriptByIdArgs = {
+  _set?: Maybe<TalkScript_Set_Input>;
+  pk_columns: TalkScript_Pk_Columns_Input;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdateStoryByIdArgs = {
-  _append?: Maybe<Story_Append_Input>;
-  _delete_at_path?: Maybe<Story_Delete_At_Path_Input>;
-  _delete_elem?: Maybe<Story_Delete_Elem_Input>;
-  _delete_key?: Maybe<Story_Delete_Key_Input>;
-  _prepend?: Maybe<Story_Prepend_Input>;
-  _set?: Maybe<Story_Set_Input>;
-  pk_columns: Story_Pk_Columns_Input;
+export type Mutation_RootUpdateTalkScriptsArgs = {
+  _set?: Maybe<TalkScript_Set_Input>;
+  where: TalkScript_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ScriptsArgs = {
+  _set?: Maybe<Scripts_Set_Input>;
+  where: Scripts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Scripts_By_PkArgs = {
+  _set?: Maybe<Scripts_Set_Input>;
+  pk_columns: Scripts_Pk_Columns_Input;
 };
 
 /** column ordering options */
@@ -503,20 +545,26 @@ export type Query_Root = {
   aggregateEntries: Entry_Aggregate;
   /** fetch aggregated fields from the table: "scenarios" */
   aggregateScenarios: Scenario_Aggregate;
-  /** fetch aggregated fields from the table: "stories" */
-  aggtegateStories: Story_Aggregate;
+  /** fetch aggregated fields from the table: "talk_sctipts" */
+  aggtegateTalkScripts: TalkScript_Aggregate;
   /** fetch data from the table: "entries" using primary key columns */
   getEntryById?: Maybe<Entry>;
   /** fetch data from the table: "scenarios" using primary key columns */
   getScenarioById?: Maybe<Scenario>;
-  /** fetch data from the table: "stories" using primary key columns */
-  getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "talk_sctipts" using primary key columns */
+  getTalkScriptId?: Maybe<TalkScript>;
   /** fetch data from the table: "entries" */
   listEntries: Array<Entry>;
   /** fetch data from the table: "scenarios" */
   listScenarios: Array<Scenario>;
-  /** fetch data from the table: "stories" */
-  listStories: Array<Story>;
+  /** fetch data from the table: "talk_sctipts" */
+  listTalkScripts: Array<TalkScript>;
+  /** An array relationship */
+  scripts: Array<Scripts>;
+  /** An aggregate relationship */
+  scripts_aggregate: Scripts_Aggregate;
+  /** fetch data from the table: "scripts" using primary key columns */
+  scripts_by_pk?: Maybe<Scripts>;
 };
 
 
@@ -538,12 +586,12 @@ export type Query_RootAggregateScenariosArgs = {
 };
 
 
-export type Query_RootAggtegateStoriesArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type Query_RootAggtegateTalkScriptsArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
 };
 
 
@@ -557,7 +605,7 @@ export type Query_RootGetScenarioByIdArgs = {
 };
 
 
-export type Query_RootGetStoryByIdArgs = {
+export type Query_RootGetTalkScriptIdArgs = {
   id: Scalars['uuid'];
 };
 
@@ -580,12 +628,35 @@ export type Query_RootListScenariosArgs = {
 };
 
 
-export type Query_RootListStoriesArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type Query_RootListTalkScriptsArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
+};
+
+
+export type Query_RootScriptsArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+
+export type Query_RootScripts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+
+export type Query_RootScripts_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 /** columns and relationships of "scenarios" */
@@ -604,9 +675,9 @@ export type Scenario = {
   launcher: Scalars['jsonb'];
   owner: Scalars['String'];
   /** An array relationship */
-  stories: Array<Story>;
+  talk_scripts: Array<TalkScript>;
   /** An aggregate relationship */
-  stories_aggregate: Story_Aggregate;
+  talk_scripts_aggregate: TalkScript_Aggregate;
   theme: Scalars['jsonb'];
   title: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -652,22 +723,22 @@ export type ScenarioLauncherArgs = {
 
 
 /** columns and relationships of "scenarios" */
-export type ScenarioStoriesArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type ScenarioTalk_ScriptsArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
 };
 
 
 /** columns and relationships of "scenarios" */
-export type ScenarioStories_AggregateArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type ScenarioTalk_Scripts_AggregateArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
 };
 
 
@@ -719,7 +790,7 @@ export type Scenario_Bool_Exp = {
   images?: Maybe<Jsonb_Comparison_Exp>;
   launcher?: Maybe<Jsonb_Comparison_Exp>;
   owner?: Maybe<String_Comparison_Exp>;
-  stories?: Maybe<Story_Bool_Exp>;
+  talk_scripts?: Maybe<TalkScript_Bool_Exp>;
   theme?: Maybe<Jsonb_Comparison_Exp>;
   title?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -767,7 +838,7 @@ export type Scenario_Insert_Input = {
   images?: Maybe<Scalars['jsonb']>;
   launcher?: Maybe<Scalars['jsonb']>;
   owner?: Maybe<Scalars['String']>;
-  stories?: Maybe<Story_Arr_Rel_Insert_Input>;
+  talk_scripts?: Maybe<TalkScript_Arr_Rel_Insert_Input>;
   theme?: Maybe<Scalars['jsonb']>;
   title?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -829,7 +900,7 @@ export type Scenario_Order_By = {
   images?: Maybe<Order_By>;
   launcher?: Maybe<Order_By>;
   owner?: Maybe<Order_By>;
-  stories_aggregate?: Maybe<Story_Aggregate_Order_By>;
+  talk_scripts_aggregate?: Maybe<TalkScript_Aggregate_Order_By>;
   theme?: Maybe<Order_By>;
   title?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -920,243 +991,163 @@ export enum Scenario_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
-/** columns and relationships of "stories" */
-export type Story = {
-  active: Scalars['Boolean'];
-  created_at: Scalars['timestamptz'];
+/** columns and relationships of "scripts" */
+export type Scripts = {
+  follow_script_id: Scalars['uuid'];
   id: Scalars['uuid'];
-  label: Scalars['String'];
-  /** An object relationship */
-  scenario?: Maybe<Scenario>;
-  scenario_id: Scalars['uuid'];
-  story: Scalars['jsonb'];
-  strategy?: Maybe<Scalars['String']>;
-  updated_at: Scalars['timestamptz'];
+  snippet: Scalars['String'];
+  talk_script_id: Scalars['uuid'];
 };
 
-
-/** columns and relationships of "stories" */
-export type StoryStoryArgs = {
-  path?: Maybe<Scalars['String']>;
+/** aggregated selection of "scripts" */
+export type Scripts_Aggregate = {
+  aggregate?: Maybe<Scripts_Aggregate_Fields>;
+  nodes: Array<Scripts>;
 };
 
-/** aggregated selection of "stories" */
-export type Story_Aggregate = {
-  aggregate?: Maybe<Story_Aggregate_Fields>;
-  nodes: Array<Story>;
-};
-
-/** aggregate fields of "stories" */
-export type Story_Aggregate_Fields = {
+/** aggregate fields of "scripts" */
+export type Scripts_Aggregate_Fields = {
   count: Scalars['Int'];
-  max?: Maybe<Story_Max_Fields>;
-  min?: Maybe<Story_Min_Fields>;
+  max?: Maybe<Scripts_Max_Fields>;
+  min?: Maybe<Scripts_Min_Fields>;
 };
 
 
-/** aggregate fields of "stories" */
-export type Story_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Story_Select_Column>>;
+/** aggregate fields of "scripts" */
+export type Scripts_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Scripts_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
-/** order by aggregate values of table "stories" */
-export type Story_Aggregate_Order_By = {
+/** order by aggregate values of table "scripts" */
+export type Scripts_Aggregate_Order_By = {
   count?: Maybe<Order_By>;
-  max?: Maybe<Story_Max_Order_By>;
-  min?: Maybe<Story_Min_Order_By>;
+  max?: Maybe<Scripts_Max_Order_By>;
+  min?: Maybe<Scripts_Min_Order_By>;
 };
 
-/** append existing jsonb value of filtered columns with new jsonb value */
-export type Story_Append_Input = {
-  story?: Maybe<Scalars['jsonb']>;
-};
-
-/** input type for inserting array relation for remote table "stories" */
-export type Story_Arr_Rel_Insert_Input = {
-  data: Array<Story_Insert_Input>;
+/** input type for inserting array relation for remote table "scripts" */
+export type Scripts_Arr_Rel_Insert_Input = {
+  data: Array<Scripts_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Story_On_Conflict>;
+  on_conflict?: Maybe<Scripts_On_Conflict>;
 };
 
-/** Boolean expression to filter rows from the table "stories". All fields are combined with a logical 'AND'. */
-export type Story_Bool_Exp = {
-  _and?: Maybe<Array<Story_Bool_Exp>>;
-  _not?: Maybe<Story_Bool_Exp>;
-  _or?: Maybe<Array<Story_Bool_Exp>>;
-  active?: Maybe<Boolean_Comparison_Exp>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+/** Boolean expression to filter rows from the table "scripts". All fields are combined with a logical 'AND'. */
+export type Scripts_Bool_Exp = {
+  _and?: Maybe<Array<Scripts_Bool_Exp>>;
+  _not?: Maybe<Scripts_Bool_Exp>;
+  _or?: Maybe<Array<Scripts_Bool_Exp>>;
+  follow_script_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
-  label?: Maybe<String_Comparison_Exp>;
-  scenario?: Maybe<Scenario_Bool_Exp>;
-  scenario_id?: Maybe<Uuid_Comparison_Exp>;
-  story?: Maybe<Jsonb_Comparison_Exp>;
-  strategy?: Maybe<String_Comparison_Exp>;
-  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  snippet?: Maybe<String_Comparison_Exp>;
+  talk_script_id?: Maybe<Uuid_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "stories" */
-export enum Story_Constraint {
+/** unique or primary key constraints on table "scripts" */
+export enum Scripts_Constraint {
   /** unique or primary key constraint */
-  StoriesPkey = 'stories_pkey'
+  ScriptsPkey = 'scripts_pkey'
 }
 
-/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
-export type Story_Delete_At_Path_Input = {
-  story?: Maybe<Array<Scalars['String']>>;
-};
-
-/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
-export type Story_Delete_Elem_Input = {
-  story?: Maybe<Scalars['Int']>;
-};
-
-/** delete key/value pair or string element. key/value pairs are matched based on their key value */
-export type Story_Delete_Key_Input = {
-  story?: Maybe<Scalars['String']>;
-};
-
-/** input type for inserting data into table "stories" */
-export type Story_Insert_Input = {
-  active?: Maybe<Scalars['Boolean']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+/** input type for inserting data into table "scripts" */
+export type Scripts_Insert_Input = {
+  follow_script_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  label?: Maybe<Scalars['String']>;
-  scenario?: Maybe<Scenario_Obj_Rel_Insert_Input>;
-  scenario_id?: Maybe<Scalars['uuid']>;
-  story?: Maybe<Scalars['jsonb']>;
-  strategy?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
+  snippet?: Maybe<Scalars['String']>;
+  talk_script_id?: Maybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
-export type Story_Max_Fields = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+export type Scripts_Max_Fields = {
+  follow_script_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  label?: Maybe<Scalars['String']>;
-  scenario_id?: Maybe<Scalars['uuid']>;
-  strategy?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
+  snippet?: Maybe<Scalars['String']>;
+  talk_script_id?: Maybe<Scalars['uuid']>;
 };
 
-/** order by max() on columns of table "stories" */
-export type Story_Max_Order_By = {
-  created_at?: Maybe<Order_By>;
+/** order by max() on columns of table "scripts" */
+export type Scripts_Max_Order_By = {
+  follow_script_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  label?: Maybe<Order_By>;
-  scenario_id?: Maybe<Order_By>;
-  strategy?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
+  snippet?: Maybe<Order_By>;
+  talk_script_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
-export type Story_Min_Fields = {
-  created_at?: Maybe<Scalars['timestamptz']>;
+export type Scripts_Min_Fields = {
+  follow_script_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  label?: Maybe<Scalars['String']>;
-  scenario_id?: Maybe<Scalars['uuid']>;
-  strategy?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
+  snippet?: Maybe<Scalars['String']>;
+  talk_script_id?: Maybe<Scalars['uuid']>;
 };
 
-/** order by min() on columns of table "stories" */
-export type Story_Min_Order_By = {
-  created_at?: Maybe<Order_By>;
+/** order by min() on columns of table "scripts" */
+export type Scripts_Min_Order_By = {
+  follow_script_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  label?: Maybe<Order_By>;
-  scenario_id?: Maybe<Order_By>;
-  strategy?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
+  snippet?: Maybe<Order_By>;
+  talk_script_id?: Maybe<Order_By>;
 };
 
-/** response of any mutation on the table "stories" */
-export type Story_Mutation_Response = {
+/** response of any mutation on the table "scripts" */
+export type Scripts_Mutation_Response = {
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int'];
   /** data from the rows affected by the mutation */
-  returning: Array<Story>;
+  returning: Array<Scripts>;
 };
 
-/** on conflict condition type for table "stories" */
-export type Story_On_Conflict = {
-  constraint: Story_Constraint;
-  update_columns?: Array<Story_Update_Column>;
-  where?: Maybe<Story_Bool_Exp>;
+/** on conflict condition type for table "scripts" */
+export type Scripts_On_Conflict = {
+  constraint: Scripts_Constraint;
+  update_columns?: Array<Scripts_Update_Column>;
+  where?: Maybe<Scripts_Bool_Exp>;
 };
 
-/** Ordering options when selecting data from "stories". */
-export type Story_Order_By = {
-  active?: Maybe<Order_By>;
-  created_at?: Maybe<Order_By>;
+/** Ordering options when selecting data from "scripts". */
+export type Scripts_Order_By = {
+  follow_script_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  label?: Maybe<Order_By>;
-  scenario?: Maybe<Scenario_Order_By>;
-  scenario_id?: Maybe<Order_By>;
-  story?: Maybe<Order_By>;
-  strategy?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
+  snippet?: Maybe<Order_By>;
+  talk_script_id?: Maybe<Order_By>;
 };
 
-/** primary key columns input for table: story */
-export type Story_Pk_Columns_Input = {
+/** primary key columns input for table: scripts */
+export type Scripts_Pk_Columns_Input = {
   id: Scalars['uuid'];
 };
 
-/** prepend existing jsonb value of filtered columns with new jsonb value */
-export type Story_Prepend_Input = {
-  story?: Maybe<Scalars['jsonb']>;
-};
-
-/** select columns of table "stories" */
-export enum Story_Select_Column {
+/** select columns of table "scripts" */
+export enum Scripts_Select_Column {
   /** column name */
-  Active = 'active',
-  /** column name */
-  CreatedAt = 'created_at',
+  FollowScriptId = 'follow_script_id',
   /** column name */
   Id = 'id',
   /** column name */
-  Label = 'label',
+  Snippet = 'snippet',
   /** column name */
-  ScenarioId = 'scenario_id',
-  /** column name */
-  Story = 'story',
-  /** column name */
-  Strategy = 'strategy',
-  /** column name */
-  UpdatedAt = 'updated_at'
+  TalkScriptId = 'talk_script_id'
 }
 
-/** input type for updating data in table "stories" */
-export type Story_Set_Input = {
-  active?: Maybe<Scalars['Boolean']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
+/** input type for updating data in table "scripts" */
+export type Scripts_Set_Input = {
+  follow_script_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
-  label?: Maybe<Scalars['String']>;
-  scenario_id?: Maybe<Scalars['uuid']>;
-  story?: Maybe<Scalars['jsonb']>;
-  strategy?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
+  snippet?: Maybe<Scalars['String']>;
+  talk_script_id?: Maybe<Scalars['uuid']>;
 };
 
-/** update columns of table "stories" */
-export enum Story_Update_Column {
+/** update columns of table "scripts" */
+export enum Scripts_Update_Column {
   /** column name */
-  Active = 'active',
-  /** column name */
-  CreatedAt = 'created_at',
+  FollowScriptId = 'follow_script_id',
   /** column name */
   Id = 'id',
   /** column name */
-  Label = 'label',
+  Snippet = 'snippet',
   /** column name */
-  ScenarioId = 'scenario_id',
-  /** column name */
-  Story = 'story',
-  /** column name */
-  Strategy = 'strategy',
-  /** column name */
-  UpdatedAt = 'updated_at'
+  TalkScriptId = 'talk_script_id'
 }
 
 export type Subscription_Root = {
@@ -1164,20 +1155,26 @@ export type Subscription_Root = {
   aggregateEntries: Entry_Aggregate;
   /** fetch aggregated fields from the table: "scenarios" */
   aggregateScenarios: Scenario_Aggregate;
-  /** fetch aggregated fields from the table: "stories" */
-  aggtegateStories: Story_Aggregate;
+  /** fetch aggregated fields from the table: "talk_sctipts" */
+  aggtegateTalkScripts: TalkScript_Aggregate;
   /** fetch data from the table: "entries" using primary key columns */
   getEntryById?: Maybe<Entry>;
   /** fetch data from the table: "scenarios" using primary key columns */
   getScenarioById?: Maybe<Scenario>;
-  /** fetch data from the table: "stories" using primary key columns */
-  getStoryById?: Maybe<Story>;
+  /** fetch data from the table: "talk_sctipts" using primary key columns */
+  getTalkScriptId?: Maybe<TalkScript>;
   /** fetch data from the table: "entries" */
   listEntries: Array<Entry>;
   /** fetch data from the table: "scenarios" */
   listScenarios: Array<Scenario>;
-  /** fetch data from the table: "stories" */
-  listStories: Array<Story>;
+  /** fetch data from the table: "talk_sctipts" */
+  listTalkScripts: Array<TalkScript>;
+  /** An array relationship */
+  scripts: Array<Scripts>;
+  /** An aggregate relationship */
+  scripts_aggregate: Scripts_Aggregate;
+  /** fetch data from the table: "scripts" using primary key columns */
+  scripts_by_pk?: Maybe<Scripts>;
 };
 
 
@@ -1199,12 +1196,12 @@ export type Subscription_RootAggregateScenariosArgs = {
 };
 
 
-export type Subscription_RootAggtegateStoriesArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type Subscription_RootAggtegateTalkScriptsArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
 };
 
 
@@ -1218,7 +1215,7 @@ export type Subscription_RootGetScenarioByIdArgs = {
 };
 
 
-export type Subscription_RootGetStoryByIdArgs = {
+export type Subscription_RootGetTalkScriptIdArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1241,13 +1238,249 @@ export type Subscription_RootListScenariosArgs = {
 };
 
 
-export type Subscription_RootListStoriesArgs = {
-  distinct_on?: Maybe<Array<Story_Select_Column>>;
+export type Subscription_RootListTalkScriptsArgs = {
+  distinct_on?: Maybe<Array<TalkScript_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Story_Order_By>>;
-  where?: Maybe<Story_Bool_Exp>;
+  order_by?: Maybe<Array<TalkScript_Order_By>>;
+  where?: Maybe<TalkScript_Bool_Exp>;
 };
+
+
+export type Subscription_RootScriptsArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+
+export type Subscription_RootScripts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+
+export type Subscription_RootScripts_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+/** columns and relationships of "talk_sctipts" */
+export type TalkScript = {
+  active: Scalars['Boolean'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  label: Scalars['String'];
+  /** An object relationship */
+  scenario?: Maybe<Scenario>;
+  scenario_id: Scalars['uuid'];
+  /** An array relationship */
+  scripts: Array<Scripts>;
+  /** An aggregate relationship */
+  scripts_aggregate: Scripts_Aggregate;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "talk_sctipts" */
+export type TalkScriptScriptsArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+
+/** columns and relationships of "talk_sctipts" */
+export type TalkScriptScripts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Scripts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Scripts_Order_By>>;
+  where?: Maybe<Scripts_Bool_Exp>;
+};
+
+/** aggregated selection of "talk_sctipts" */
+export type TalkScript_Aggregate = {
+  aggregate?: Maybe<TalkScript_Aggregate_Fields>;
+  nodes: Array<TalkScript>;
+};
+
+/** aggregate fields of "talk_sctipts" */
+export type TalkScript_Aggregate_Fields = {
+  count: Scalars['Int'];
+  max?: Maybe<TalkScript_Max_Fields>;
+  min?: Maybe<TalkScript_Min_Fields>;
+};
+
+
+/** aggregate fields of "talk_sctipts" */
+export type TalkScript_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<TalkScript_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "talk_sctipts" */
+export type TalkScript_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<TalkScript_Max_Order_By>;
+  min?: Maybe<TalkScript_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "talk_sctipts" */
+export type TalkScript_Arr_Rel_Insert_Input = {
+  data: Array<TalkScript_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<TalkScript_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "talk_sctipts". All fields are combined with a logical 'AND'. */
+export type TalkScript_Bool_Exp = {
+  _and?: Maybe<Array<TalkScript_Bool_Exp>>;
+  _not?: Maybe<TalkScript_Bool_Exp>;
+  _or?: Maybe<Array<TalkScript_Bool_Exp>>;
+  active?: Maybe<Boolean_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  label?: Maybe<String_Comparison_Exp>;
+  scenario?: Maybe<Scenario_Bool_Exp>;
+  scenario_id?: Maybe<Uuid_Comparison_Exp>;
+  scripts?: Maybe<Scripts_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "talk_sctipts" */
+export enum TalkScript_Constraint {
+  /** unique or primary key constraint */
+  StoriesPkey = 'stories_pkey'
+}
+
+/** input type for inserting data into table "talk_sctipts" */
+export type TalkScript_Insert_Input = {
+  active?: Maybe<Scalars['Boolean']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  label?: Maybe<Scalars['String']>;
+  scenario?: Maybe<Scenario_Obj_Rel_Insert_Input>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  scripts?: Maybe<Scripts_Arr_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type TalkScript_Max_Fields = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  label?: Maybe<Scalars['String']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "talk_sctipts" */
+export type TalkScript_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type TalkScript_Min_Fields = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  label?: Maybe<Scalars['String']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "talk_sctipts" */
+export type TalkScript_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "talk_sctipts" */
+export type TalkScript_Mutation_Response = {
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<TalkScript>;
+};
+
+/** on conflict condition type for table "talk_sctipts" */
+export type TalkScript_On_Conflict = {
+  constraint: TalkScript_Constraint;
+  update_columns?: Array<TalkScript_Update_Column>;
+  where?: Maybe<TalkScript_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "talk_sctipts". */
+export type TalkScript_Order_By = {
+  active?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  label?: Maybe<Order_By>;
+  scenario?: Maybe<Scenario_Order_By>;
+  scenario_id?: Maybe<Order_By>;
+  scripts_aggregate?: Maybe<Scripts_Aggregate_Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: talkScript */
+export type TalkScript_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "talk_sctipts" */
+export enum TalkScript_Select_Column {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label',
+  /** column name */
+  ScenarioId = 'scenario_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "talk_sctipts" */
+export type TalkScript_Set_Input = {
+  active?: Maybe<Scalars['Boolean']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  label?: Maybe<Scalars['String']>;
+  scenario_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "talk_sctipts" */
+export enum TalkScript_Update_Column {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label',
+  /** column name */
+  ScenarioId = 'scenario_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
 
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -1284,7 +1517,10 @@ export type GetOneScenarioQueryVariables = Exact<{
 
 export type GetOneScenarioQuery = { scenario?: Maybe<(
     Pick<Scenario, 'active' | 'collaborator' | 'created_at' | 'email' | 'google_analytics_id' | 'id' | 'images' | 'launcher' | 'owner'>
-    & { stories: Array<Pick<Story, 'active' | 'story' | 'strategy'>> }
+    & { talk_scripts: Array<(
+      Pick<TalkScript, 'label' | 'active'>
+      & { scripts: Array<Pick<Scripts, 'snippet'>> }
+    )> }
   )> };
 
 export type NewScenarioMutationVariables = Exact<{
@@ -1314,10 +1550,12 @@ export const GetOneScenarioDocument = gql`
     images
     launcher
     owner
-    stories {
+    talk_scripts {
+      label
       active
-      story
-      strategy
+      scripts {
+        snippet
+      }
     }
   }
 }

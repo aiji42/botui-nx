@@ -9,10 +9,12 @@ query getOneScenario($id: uuid!) {
     images
     launcher
     owner
-    stories {
+    talk_scripts {
+      label
       active
-      story
-      strategy
+      scripts {
+        snippet
+      }
     }
   }
 }

@@ -2085,37 +2085,8 @@
             "deprecationReason": null
           },
           {
-            "name": "deleteStories",
-            "description": "delete data from the table: \"stories\"",
-            "args": [
-              {
-                "name": "where",
-                "description": "filter the rows which have to be deleted",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "story_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "story_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "deleteStoryById",
-            "description": "delete single row from the table: \"stories\"",
+            "name": "deleteTalkScriptById",
+            "description": "delete single row from the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "id",
@@ -2136,7 +2107,94 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story",
+              "name": "talkScript",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deleteTalkScripts",
+            "description": "delete data from the table: \"talk_sctipts\"",
+            "args": [
+              {
+                "name": "where",
+                "description": "filter the rows which have to be deleted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "talkScript_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "delete_scripts",
+            "description": "delete data from the table: \"scripts\"",
+            "args": [
+              {
+                "name": "where",
+                "description": "filter the rows which have to be deleted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "scripts_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "delete_scripts_by_pk",
+            "description": "delete single row from the table: \"scripts\"",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "uuid",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2323,8 +2381,49 @@
             "deprecationReason": null
           },
           {
-            "name": "insertStories",
-            "description": "insert data into the table: \"stories\"",
+            "name": "insertTalkScript",
+            "description": "insert a single row into the table: \"talk_sctipts\"",
+            "args": [
+              {
+                "name": "object",
+                "description": "the row to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "talkScript_insert_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "on conflict condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "talkScript_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insertTalkScripts",
+            "description": "insert data into the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "objects",
@@ -2340,7 +2439,7 @@
                       "name": null,
                       "ofType": {
                         "kind": "INPUT_OBJECT",
-                        "name": "story_insert_input",
+                        "name": "talkScript_insert_input",
                         "ofType": null
                       }
                     }
@@ -2355,7 +2454,7 @@
                 "description": "on conflict condition",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_on_conflict",
+                  "name": "talkScript_on_conflict",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2365,15 +2464,64 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story_mutation_response",
+              "name": "talkScript_mutation_response",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "insertStory",
-            "description": "insert a single row into the table: \"stories\"",
+            "name": "insert_scripts",
+            "description": "insert data into the table: \"scripts\"",
+            "args": [
+              {
+                "name": "objects",
+                "description": "the rows to be inserted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "scripts_insert_input",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "on_conflict",
+                "description": "on conflict condition",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_on_conflict",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insert_scripts_one",
+            "description": "insert a single row into the table: \"scripts\"",
             "args": [
               {
                 "name": "object",
@@ -2383,7 +2531,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "story_insert_input",
+                    "name": "scripts_insert_input",
                     "ofType": null
                   }
                 },
@@ -2396,7 +2544,7 @@
                 "description": "on conflict condition",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_on_conflict",
+                  "name": "scripts_on_conflict",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -2406,7 +2554,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story",
+              "name": "scripts",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2817,176 +2965,15 @@
             "deprecationReason": null
           },
           {
-            "name": "updateStories",
-            "description": "update data of the table: \"stories\"",
+            "name": "updateTalkScriptById",
+            "description": "update single row of the table: \"talk_sctipts\"",
             "args": [
-              {
-                "name": "_append",
-                "description": "append existing jsonb value of filtered columns with new jsonb value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_append_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_at_path",
-                "description": "delete the field or element with specified path (for JSON arrays, negative integers count from the end)",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_at_path_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_elem",
-                "description": "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_elem_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_key",
-                "description": "delete key/value pair or string element. key/value pairs are matched based on their key value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_key_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_prepend",
-                "description": "prepend existing jsonb value of filtered columns with new jsonb value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_prepend_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
               {
                 "name": "_set",
                 "description": "sets the columns of the filtered rows to the given values",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "where",
-                "description": "filter the rows which have to be updated",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "story_bool_exp",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "story_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updateStoryById",
-            "description": "update single row of the table: \"stories\"",
-            "args": [
-              {
-                "name": "_append",
-                "description": "append existing jsonb value of filtered columns with new jsonb value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_append_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_at_path",
-                "description": "delete the field or element with specified path (for JSON arrays, negative integers count from the end)",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_at_path_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_elem",
-                "description": "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_elem_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_delete_key",
-                "description": "delete key/value pair or string element. key/value pairs are matched based on their key value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_delete_key_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_prepend",
-                "description": "prepend existing jsonb value of filtered columns with new jsonb value",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_prepend_input",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "story_set_input",
+                  "name": "talkScript_set_input",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -3001,7 +2988,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "story_pk_columns_input",
+                    "name": "talkScript_pk_columns_input",
                     "ofType": null
                   }
                 },
@@ -3012,7 +2999,130 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story",
+              "name": "talkScript",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateTalkScripts",
+            "description": "update data of the table: \"talk_sctipts\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "talkScript_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows which have to be updated",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "talkScript_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_scripts",
+            "description": "update data of the table: \"scripts\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows which have to be updated",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "scripts_bool_exp",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts_mutation_response",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_scripts_by_pk",
+            "description": "update single row of the table: \"scripts\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pk_columns",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "scripts_pk_columns_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3263,8 +3373,8 @@
             "deprecationReason": null
           },
           {
-            "name": "aggtegateStories",
-            "description": "fetch aggregated fields from the table: \"stories\"",
+            "name": "aggtegateTalkScripts",
+            "description": "fetch aggregated fields from the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -3277,7 +3387,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -3321,7 +3431,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -3335,7 +3445,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -3348,7 +3458,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "story_aggregate",
+                "name": "talkScript_aggregate",
                 "ofType": null
               }
             },
@@ -3414,8 +3524,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getStoryById",
-            "description": "fetch data from the table: \"stories\" using primary key columns",
+            "name": "getTalkScriptId",
+            "description": "fetch data from the table: \"talk_sctipts\" using primary key columns",
             "args": [
               {
                 "name": "id",
@@ -3436,7 +3546,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story",
+              "name": "talkScript",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3645,8 +3755,8 @@
             "deprecationReason": null
           },
           {
-            "name": "listStories",
-            "description": "fetch data from the table: \"stories\"",
+            "name": "listTalkScripts",
+            "description": "fetch data from the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -3659,7 +3769,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -3703,7 +3813,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -3717,7 +3827,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -3736,11 +3846,234 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "story",
+                    "name": "talkScript",
                     "ofType": null
                   }
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts",
+            "description": "An array relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "scripts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_aggregate",
+            "description": "An aggregate relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "scripts_aggregate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_by_pk",
+            "description": "fetch data from the table: \"scripts\" using primary key columns",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "uuid",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4130,7 +4463,7 @@
             "deprecationReason": null
           },
           {
-            "name": "stories",
+            "name": "talk_scripts",
             "description": "An array relationship",
             "args": [
               {
@@ -4144,7 +4477,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -4188,7 +4521,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -4202,7 +4535,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -4221,7 +4554,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "story",
+                    "name": "talkScript",
                     "ofType": null
                   }
                 }
@@ -4231,7 +4564,7 @@
             "deprecationReason": null
           },
           {
-            "name": "stories_aggregate",
+            "name": "talk_scripts_aggregate",
             "description": "An aggregate relationship",
             "args": [
               {
@@ -4245,7 +4578,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -4289,7 +4622,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -4303,7 +4636,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -4316,7 +4649,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "story_aggregate",
+                "name": "talkScript_aggregate",
                 "ofType": null
               }
             },
@@ -4759,11 +5092,11 @@
             "deprecationReason": null
           },
           {
-            "name": "stories",
+            "name": "talk_scripts",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_bool_exp",
+              "name": "talkScript_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -5164,11 +5497,11 @@
             "deprecationReason": null
           },
           {
-            "name": "stories",
+            "name": "talk_scripts",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_arr_rel_insert_input",
+              "name": "talkScript_arr_rel_insert_input",
               "ofType": null
             },
             "defaultValue": null,
@@ -5686,11 +6019,11 @@
             "deprecationReason": null
           },
           {
-            "name": "stories_aggregate",
+            "name": "talk_scripts_aggregate",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_aggregate_order_by",
+              "name": "talkScript_aggregate_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -6147,11 +6480,11 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story",
-        "description": "columns and relationships of \"stories\"",
+        "name": "scripts",
+        "description": "columns and relationships of \"scripts\"",
         "fields": [
           {
-            "name": "active",
+            "name": "follow_script_id",
             "description": null,
             "args": [],
             "type": {
@@ -6159,23 +6492,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "timestamptz",
+                "name": "uuid",
                 "ofType": null
               }
             },
@@ -6199,7 +6516,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "args": [],
             "type": {
@@ -6215,19 +6532,7 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario",
-            "description": "An object relationship",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "scenario",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "args": [],
             "type": {
@@ -6236,63 +6541,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "uuid",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": null,
-            "args": [
-              {
-                "name": "path",
-                "description": "JSON select path",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "jsonb",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "timestamptz",
                 "ofType": null
               }
             },
@@ -6307,8 +6555,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story_aggregate",
-        "description": "aggregated selection of \"stories\"",
+        "name": "scripts_aggregate",
+        "description": "aggregated selection of \"scripts\"",
         "fields": [
           {
             "name": "aggregate",
@@ -6316,7 +6564,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "story_aggregate_fields",
+              "name": "scripts_aggregate_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6337,7 +6585,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "story",
+                    "name": "scripts",
                     "ofType": null
                   }
                 }
@@ -6354,8 +6602,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story_aggregate_fields",
-        "description": "aggregate fields of \"stories\"",
+        "name": "scripts_aggregate_fields",
+        "description": "aggregate fields of \"scripts\"",
         "fields": [
           {
             "name": "count",
@@ -6372,7 +6620,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "scripts_select_column",
                       "ofType": null
                     }
                   }
@@ -6412,7 +6660,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "story_max_fields",
+              "name": "scripts_max_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6424,7 +6672,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "story_min_fields",
+              "name": "scripts_min_fields",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6438,8 +6686,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_aggregate_order_by",
-        "description": "order by aggregate values of table \"stories\"",
+        "name": "scripts_aggregate_order_by",
+        "description": "order by aggregate values of table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
@@ -6459,7 +6707,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_max_order_by",
+              "name": "scripts_max_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -6471,7 +6719,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_min_order_by",
+              "name": "scripts_min_order_by",
               "ofType": null
             },
             "defaultValue": null,
@@ -6485,31 +6733,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_append_input",
-        "description": "append existing jsonb value of filtered columns with new jsonb value",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "story_arr_rel_insert_input",
-        "description": "input type for inserting array relation for remote table \"stories\"",
+        "name": "scripts_arr_rel_insert_input",
+        "description": "input type for inserting array relation for remote table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
@@ -6526,7 +6751,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "story_insert_input",
+                    "name": "scripts_insert_input",
                     "ofType": null
                   }
                 }
@@ -6541,7 +6766,7 @@
             "description": "on conflict condition",
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_on_conflict",
+              "name": "scripts_on_conflict",
               "ofType": null
             },
             "defaultValue": null,
@@ -6555,8 +6780,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_bool_exp",
-        "description": "Boolean expression to filter rows from the table \"stories\". All fields are combined with a logical 'AND'.",
+        "name": "scripts_bool_exp",
+        "description": "Boolean expression to filter rows from the table \"scripts\". All fields are combined with a logical 'AND'.",
         "fields": null,
         "inputFields": [
           {
@@ -6570,7 +6795,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "scripts_bool_exp",
                   "ofType": null
                 }
               }
@@ -6584,7 +6809,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_bool_exp",
+              "name": "scripts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -6602,7 +6827,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "scripts_bool_exp",
                   "ofType": null
                 }
               }
@@ -6612,23 +6837,11 @@
             "deprecationReason": null
           },
           {
-            "name": "active",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "Boolean_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "timestamptz_comparison_exp",
+              "name": "uuid_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -6648,7 +6861,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
@@ -6660,59 +6873,11 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "scenario_bool_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "uuid_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "jsonb_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "String_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "timestamptz_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -6726,14 +6891,14 @@
       },
       {
         "kind": "ENUM",
-        "name": "story_constraint",
-        "description": "unique or primary key constraints on table \"stories\"",
+        "name": "scripts_constraint",
+        "description": "unique or primary key constraints on table \"scripts\"",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "stories_pkey",
+            "name": "scripts_pkey",
             "description": "unique or primary key constraint",
             "isDeprecated": false,
             "deprecationReason": null
@@ -6743,105 +6908,16 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_delete_at_path_input",
-        "description": "delete the field or element with specified path (for JSON arrays, negative integers count from the end)",
+        "name": "scripts_insert_input",
+        "description": "input type for inserting data into table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "story_delete_elem_input",
-        "description": "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "story",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "story_delete_key_input",
-        "description": "delete key/value pair or string element. key/value pairs are matched based on their key value",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "story_insert_input",
-        "description": "input type for inserting data into table \"stories\"",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "active",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
+              "name": "uuid",
               "ofType": null
             },
             "defaultValue": null,
@@ -6861,7 +6937,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -6873,59 +6949,11 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "scenario_obj_rel_insert_input",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
               "ofType": null
             },
             "defaultValue": null,
@@ -6939,16 +6967,16 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story_max_fields",
+        "name": "scripts_max_fields",
         "description": "aggregate max on columns",
         "fields": [
           {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "timestamptz",
+              "name": "uuid",
               "ofType": null
             },
             "isDeprecated": false,
@@ -6967,7 +6995,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "args": [],
             "type": {
@@ -6979,36 +7007,12 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
               "ofType": null
             },
             "isDeprecated": false,
@@ -7022,12 +7026,12 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_max_order_by",
-        "description": "order by max() on columns of table \"stories\"",
+        "name": "scripts_max_order_by",
+        "description": "order by max() on columns of table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7051,7 +7055,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7063,31 +7067,7 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7105,16 +7085,16 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story_min_fields",
+        "name": "scripts_min_fields",
         "description": "aggregate min on columns",
         "fields": [
           {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "timestamptz",
+              "name": "uuid",
               "ofType": null
             },
             "isDeprecated": false,
@@ -7133,7 +7113,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "args": [],
             "type": {
@@ -7145,36 +7125,12 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
               "ofType": null
             },
             "isDeprecated": false,
@@ -7188,12 +7144,12 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_min_order_by",
-        "description": "order by min() on columns of table \"stories\"",
+        "name": "scripts_min_order_by",
+        "description": "order by min() on columns of table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7217,7 +7173,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7229,31 +7185,7 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7271,8 +7203,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "story_mutation_response",
-        "description": "response of any mutation on the table \"stories\"",
+        "name": "scripts_mutation_response",
+        "description": "response of any mutation on the table \"scripts\"",
         "fields": [
           {
             "name": "affected_rows",
@@ -7305,7 +7237,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "story",
+                    "name": "scripts",
                     "ofType": null
                   }
                 }
@@ -7322,8 +7254,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_on_conflict",
-        "description": "on conflict condition type for table \"stories\"",
+        "name": "scripts_on_conflict",
+        "description": "on conflict condition type for table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
@@ -7334,7 +7266,7 @@
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "story_constraint",
+                "name": "scripts_constraint",
                 "ofType": null
               }
             },
@@ -7356,7 +7288,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "ENUM",
-                    "name": "story_update_column",
+                    "name": "scripts_update_column",
                     "ofType": null
                   }
                 }
@@ -7371,7 +7303,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "story_bool_exp",
+              "name": "scripts_bool_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -7385,24 +7317,12 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_order_by",
-        "description": "Ordering options when selecting data from \"stories\".",
+        "name": "scripts_order_by",
+        "description": "Ordering options when selecting data from \"scripts\".",
         "fields": null,
         "inputFields": [
           {
-            "name": "active",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7426,7 +7346,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7438,55 +7358,7 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "scenario_order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "scenario_id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -7504,8 +7376,8 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_pk_columns_input",
-        "description": "primary key columns input for table: story",
+        "name": "scripts_pk_columns_input",
+        "description": "primary key columns input for table: scripts",
         "fields": null,
         "inputFields": [
           {
@@ -7530,44 +7402,15 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "story_prepend_input",
-        "description": "prepend existing jsonb value of filtered columns with new jsonb value",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "ENUM",
-        "name": "story_select_column",
-        "description": "select columns of table \"stories\"",
+        "name": "scripts_select_column",
+        "description": "select columns of table \"scripts\"",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "active",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -7579,31 +7422,13 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
+            "name": "talk_script_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -7613,28 +7438,16 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "story_set_input",
-        "description": "input type for updating data in table \"stories\"",
+        "name": "scripts_set_input",
+        "description": "input type for updating data in table \"scripts\"",
         "fields": null,
         "inputFields": [
           {
-            "name": "active",
+            "name": "follow_script_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
+              "name": "uuid",
               "ofType": null
             },
             "defaultValue": null,
@@ -7654,7 +7467,7 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -7666,47 +7479,11 @@
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
+            "name": "talk_script_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "jsonb",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "timestamptz",
               "ofType": null
             },
             "defaultValue": null,
@@ -7720,20 +7497,14 @@
       },
       {
         "kind": "ENUM",
-        "name": "story_update_column",
-        "description": "update columns of table \"stories\"",
+        "name": "scripts_update_column",
+        "description": "update columns of table \"scripts\"",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "active",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "created_at",
+            "name": "follow_script_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -7745,31 +7516,13 @@
             "deprecationReason": null
           },
           {
-            "name": "label",
+            "name": "snippet",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "scenario_id",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "story",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "strategy",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "updated_at",
+            "name": "talk_script_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -7969,8 +7722,8 @@
             "deprecationReason": null
           },
           {
-            "name": "aggtegateStories",
-            "description": "fetch aggregated fields from the table: \"stories\"",
+            "name": "aggtegateTalkScripts",
+            "description": "fetch aggregated fields from the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -7983,7 +7736,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -8027,7 +7780,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -8041,7 +7794,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -8054,7 +7807,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "story_aggregate",
+                "name": "talkScript_aggregate",
                 "ofType": null
               }
             },
@@ -8120,8 +7873,8 @@
             "deprecationReason": null
           },
           {
-            "name": "getStoryById",
-            "description": "fetch data from the table: \"stories\" using primary key columns",
+            "name": "getTalkScriptId",
+            "description": "fetch data from the table: \"talk_sctipts\" using primary key columns",
             "args": [
               {
                 "name": "id",
@@ -8142,7 +7895,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "story",
+              "name": "talkScript",
               "ofType": null
             },
             "isDeprecated": false,
@@ -8351,8 +8104,8 @@
             "deprecationReason": null
           },
           {
-            "name": "listStories",
-            "description": "fetch data from the table: \"stories\"",
+            "name": "listTalkScripts",
+            "description": "fetch data from the table: \"talk_sctipts\"",
             "args": [
               {
                 "name": "distinct_on",
@@ -8365,7 +8118,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "ENUM",
-                      "name": "story_select_column",
+                      "name": "talkScript_select_column",
                       "ofType": null
                     }
                   }
@@ -8409,7 +8162,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "story_order_by",
+                      "name": "talkScript_order_by",
                       "ofType": null
                     }
                   }
@@ -8423,7 +8176,7 @@
                 "description": "filter the rows returned",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "story_bool_exp",
+                  "name": "talkScript_bool_exp",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -8442,7 +8195,590 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "story",
+                    "name": "talkScript",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts",
+            "description": "An array relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "scripts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_aggregate",
+            "description": "An aggregate relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "scripts_aggregate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_by_pk",
+            "description": "fetch data from the table: \"scripts\" using primary key columns",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "uuid",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scripts",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript",
+        "description": "columns and relationships of \"talk_sctipts\"",
+        "fields": [
+          {
+            "name": "active",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario",
+            "description": "An object relationship",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "scenario",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts",
+            "description": "An array relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "scripts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_aggregate",
+            "description": "An aggregate relationship",
+            "args": [
+              {
+                "name": "distinct_on",
+                "description": "distinct select on columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "scripts_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "limit",
+                "description": "limit the number of rows returned",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "offset",
+                "description": "skip the first n rows. Use only with order_by",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "order_by",
+                "description": "sort the rows by one or more columns",
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "scripts_order_by",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "filter the rows returned",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "scripts_bool_exp",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "scripts_aggregate",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "timestamptz",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript_aggregate",
+        "description": "aggregated selection of \"talk_sctipts\"",
+        "fields": [
+          {
+            "name": "aggregate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript_aggregate_fields",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nodes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "talkScript",
                     "ofType": null
                   }
                 }
@@ -8455,6 +8791,1176 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript_aggregate_fields",
+        "description": "aggregate fields of \"talk_sctipts\"",
+        "fields": [
+          {
+            "name": "count",
+            "description": null,
+            "args": [
+              {
+                "name": "columns",
+                "description": null,
+                "type": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "talkScript_select_column",
+                      "ofType": null
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "distinct",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "max",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript_max_fields",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "min",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "talkScript_min_fields",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_aggregate_order_by",
+        "description": "order by aggregate values of table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "count",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "max",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "talkScript_max_order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "min",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "talkScript_min_order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_arr_rel_insert_input",
+        "description": "input type for inserting array relation for remote table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "data",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "talkScript_insert_input",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "on_conflict",
+            "description": "on conflict condition",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "talkScript_on_conflict",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_bool_exp",
+        "description": "Boolean expression to filter rows from the table \"talk_sctipts\". All fields are combined with a logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_and",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "talkScript_bool_exp",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_not",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "talkScript_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "_or",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "talkScript_bool_exp",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "active",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "Boolean_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "timestamptz_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "uuid_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "String_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scenario_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "uuid_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scripts_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "timestamptz_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "talkScript_constraint",
+        "description": "unique or primary key constraints on table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "stories_pkey",
+            "description": "unique or primary key constraint",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_insert_input",
+        "description": "input type for inserting data into table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "active",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scenario_obj_rel_insert_input",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scripts_arr_rel_insert_input",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript_max_fields",
+        "description": "aggregate max on columns",
+        "fields": [
+          {
+            "name": "created_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_max_order_by",
+        "description": "order by max() on columns of table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript_min_fields",
+        "description": "aggregate min on columns",
+        "fields": [
+          {
+            "name": "created_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_min_order_by",
+        "description": "order by min() on columns of table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "talkScript_mutation_response",
+        "description": "response of any mutation on the table \"talk_sctipts\"",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "description": "number of rows affected by the mutation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "returning",
+            "description": "data from the rows affected by the mutation",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "talkScript",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_on_conflict",
+        "description": "on conflict condition type for table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "constraint",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "talkScript_constraint",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "update_columns",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "talkScript_update_column",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": "[]",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "where",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "talkScript_bool_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_order_by",
+        "description": "Ordering options when selecting data from \"talk_sctipts\".",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "active",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scenario_order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scripts_aggregate",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "scripts_aggregate_order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_pk_columns_input",
+        "description": "primary key columns input for table: talkScript",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "talkScript_select_column",
+        "description": "select columns of table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "active",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "talkScript_set_input",
+        "description": "input type for updating data in table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "active",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "uuid",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "talkScript_update_column",
+        "description": "update columns of table \"talk_sctipts\"",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "active",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "created_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "scenario_id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updated_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
