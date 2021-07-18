@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   CreateParams,
   GetListParams,
@@ -10,6 +11,10 @@ import { DataProvider } from 'react-admin-amplify/build/providers/DataProvider'
 import { Session } from '@botui/types'
 import { mutations, queries } from '@botui/api'
 import { Auth } from 'aws-amplify'
+import gql from 'graphql-tag'
+import buildHasuraProvider, { buildFields } from 'ra-data-hasura'
+import { DocumentNode } from '@apollo/client'
+import { SelectionSetNode } from 'graphql'
 
 const sessionParse = (
   data: Session<string, string, string, string>
@@ -119,3 +124,95 @@ const dataProvider = {
 } as DataProvider
 
 export const useDataProvider = (): DataProvider => dataProvider
+
+const useOwner = () => {
+  const [dataProvider, setDataProvider] = useState(null)
+
+  useEffect(() => {
+    const buildDataProvider = async () => {
+      const userInfo = await Auth.currentUserInfo()
+      const dp = await buildHasuraProvider(
+        {
+          clientOptions: {
+            uri: 'https://botui.hasura.app/v1/graphql',
+            headers: {
+              'x-hasura-admin-secret': process.env.NX_HASURA_ADMIN_SECRET,
+              'x-hasura-role': 'owner',
+              'x-hasura-user-id': userInfo.attributes.email
+            }
+          }
+        },
+        { buildFields: customBuildFields }
+      )
+      setDataProvider(() => dp)
+    }
+    buildDataProvider()
+  }, [])
+
+  return dataProvider
+}
+
+const useCollaborator = () => {
+  const [dataProvider, setDataProvider] = useState(null)
+
+  useEffect(() => {
+    const buildDataProvider = async () => {
+      const userInfo = await Auth.currentUserInfo()
+      const dp = await buildHasuraProvider(
+        {
+          clientOptions: {
+            uri: 'https://botui.hasura.app/v1/graphql',
+            headers: {
+              'x-hasura-admin-secret': process.env.NX_HASURA_ADMIN_SECRET,
+              'x-hasura-role': 'collaborator',
+              'x-hasura-user-id': userInfo.attributes.email
+            }
+          }
+        },
+        { buildFields: customBuildFields }
+      )
+      setDataProvider(() => dp)
+    }
+    buildDataProvider()
+  }, [])
+
+  return dataProvider
+}
+
+const extractFieldsFromQuery = (
+  queryAst: DocumentNode
+): SelectionSetNode['selections'] | never => {
+  const [definition] = queryAst.definitions
+  if (!('selectionSet' in definition)) throw new Error()
+  return definition.selectionSet.selections
+}
+
+const GET_ONE_SCENARIO = gql`
+  {
+    active
+    collaborator
+    created_at
+    email
+    googleAnalyticsId
+    id
+    images
+    launcher
+    owner
+    stories {
+      active
+      story
+      strategy
+    }
+  }
+`
+
+const customBuildFields = (type: { name: string }, fetchType: string) => {
+  const resourceName = type.name
+
+  if (resourceName === 'users' && fetchType === 'GET_ONE') {
+    return extractFieldsFromQuery(GET_ONE_USER)
+  }
+
+  // No custom query defined, so use the default query fields (all, but no related/nested).
+  return buildFields(type, fetchType)
+}

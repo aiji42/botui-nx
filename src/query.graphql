@@ -1,0 +1,33 @@
+query getOneScenario($id: uuid!) {
+  scenario: getScenarioById(id: $id) {
+    active
+    collaborator
+    created_at
+    email
+    google_analytics_id
+    id
+    images
+    launcher
+    owner
+    talk_scripts {
+      label
+      active
+      scripts {
+        snippet
+      }
+    }
+  }
+}
+
+mutation newScenario($input: scenario_insert_input!) {
+  scenario: insertScenario(object: $input) {
+    id
+  }
+}
+
+mutation newEntry($input: entry_insert_input!) {
+  entry: insertEntry(object: $input) {
+    id
+    scenario_id
+  }
+}

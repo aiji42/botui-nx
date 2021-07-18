@@ -1,0 +1,154 @@
+table:
+  name: talk_sctipts
+  schema: public
+configuration:
+  custom_column_names: {}
+  custom_name: talkScript
+  custom_root_fields:
+    delete: deleteTalkScripts
+    delete_by_pk: deleteTalkScriptById
+    insert: insertTalkScripts
+    insert_one: insertTalkScript
+    select: listTalkScripts
+    select_aggregate: aggtegateTalkScripts
+    select_by_pk: getTalkScriptId
+    update: updateTalkScripts
+    update_by_pk: updateTalkScriptById
+object_relationships:
+- name: scenario
+  using:
+    manual_configuration:
+      column_mapping:
+        scenario_id: id
+      insertion_order: null
+      remote_table:
+        name: scenarios
+        schema: public
+array_relationships:
+- name: scripts
+  using:
+    manual_configuration:
+      column_mapping:
+        id: talk_script_id
+      insertion_order: null
+      remote_table:
+        name: scripts
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      scenario:
+        collaborator:
+          _contains: X-Hasura-User-Id
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+  role: collaborator
+- permission:
+    backend_only: false
+    check:
+      scenario:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+  role: owner
+select_permissions:
+- permission:
+    columns:
+    - id
+    - label
+    - scenario_id
+    filter:
+      scenario:
+        _and:
+        - active:
+            _eq: true
+        - talk_scripts:
+            active:
+              _eq: true
+  role: anonymous
+- permission:
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+    filter:
+      scenario:
+        collaborator:
+          _contains: X-Hasura-User-Id
+  role: collaborator
+- permission:
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+    filter:
+      scenario:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: owner
+update_permissions:
+- permission:
+    check:
+      scenario:
+        collaborator:
+          _contains: X-Hasura-User-Id
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+    filter:
+      scenario:
+        collaborator:
+          _contains: X-Hasura-User-Id
+  role: collaborator
+- permission:
+    check:
+      scenario:
+        owner:
+          _eq: X-Hasura-User-Id
+    columns:
+    - active
+    - created_at
+    - id
+    - label
+    - scenario_id
+    - updated_at
+    filter:
+      scenario:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: owner
+delete_permissions:
+- permission:
+    filter:
+      scenario:
+        collaborator:
+          _contains: X-Hasura-User-Id
+  role: collaborator
+- permission:
+    filter:
+      scenario:
+        owner:
+          _eq: X-Hasura-User-Id
+  role: owner

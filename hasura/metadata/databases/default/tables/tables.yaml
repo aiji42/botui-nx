@@ -1,0 +1,4 @@
+- "!include public_entries.yaml"
+- "!include public_scenarios.yaml"
+- "!include public_scripts.yaml"
+- "!include public_talk_sctipts.yaml"
