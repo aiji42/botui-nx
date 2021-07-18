@@ -24,14 +24,14 @@ array_relationships:
       remote_table:
         name: entries
         schema: public
-- name: stories
+- name: talk_scripts
   using:
     manual_configuration:
       column_mapping:
         id: scenario_id
       insertion_order: null
       remote_table:
-        name: stories
+        name: talk_sctipts
         schema: public
 insert_permissions:
 - permission:
