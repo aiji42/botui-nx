@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from 'react'
 import { AppProps } from 'next/app'
 import { GlobalStyle } from '../components/GrobalStyle'
+import '../styles/styles.css'
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const analyticsId = pageProps.session?.googleAnalyticsId

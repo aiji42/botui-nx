@@ -23,7 +23,26 @@
     }
   },
   "projects": {
+    "admin": {
+      "tags": []
+    },
+    "admin-e2e": {
+      "tags": [],
+      "implicitDependencies": ["admin"]
+    },
+    "api": {
+      "tags": []
+    },
+    "backend": {
+      "tags": []
+    },
+    "botui": {
+      "tags": []
+    },
     "chat": {
+      "tags": []
+    },
+    "chat-controller": {
       "tags": []
     },
     "chat-e2e": {
@@ -33,33 +52,22 @@
     "components": {
       "tags": []
     },
+    "graphql": {
+      "tags": []
+    },
     "hooks": {
       "tags": []
     },
-    "api": {
-      "tags": []
-    },
-    "botui": {
-      "tags": []
-    },
-    "chat-controller": {
-      "tags": []
-    },
-    "admin": {
-      "tags": []
-    },
-    "admin-e2e": {
-      "tags": [],
-      "implicitDependencies": ["admin"]
-    },
     "types": {
       "tags": []
-    },
-    "backend": {
-      "tags": []
-    },
-    "graphql": {
-      "tags": []
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }

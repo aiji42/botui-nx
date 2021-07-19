@@ -27,233 +27,6 @@
     }
   },
   "projects": {
-    "chat": {
-      "root": "apps/chat",
-      "sourceRoot": "apps/chat",
-      "projectType": "application",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/next:build",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "root": "apps/chat",
-            "outputPath": "dist/apps/chat"
-          },
-          "configurations": {
-            "production": {}
-          }
-        },
-        "serve": {
-          "executor": "@nrwl/next:server",
-          "options": {
-            "buildTarget": "chat:build",
-            "dev": true
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "chat:build:production",
-              "dev": false
-            }
-          }
-        },
-        "export": {
-          "executor": "@nrwl/next:export",
-          "options": {
-            "buildTarget": "chat:build:production"
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/chat"],
-          "options": {
-            "jestConfig": "apps/chat/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/chat/**/*.{ts,tsx,js,jsx}"],
-            "ignorePath": "apps/chat/.eslintignore"
-          }
-        }
-      }
-    },
-    "chat-e2e": {
-      "root": "apps/chat-e2e",
-      "sourceRoot": "apps/chat-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/chat-e2e/cypress.json",
-            "tsConfig": "apps/chat-e2e/tsconfig.e2e.json",
-            "devServerTarget": "chat:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "chat:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/chat-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
-    "components": {
-      "root": "libs/components",
-      "sourceRoot": "libs/components/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/components/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/components"],
-          "options": {
-            "jestConfig": "libs/components/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "hooks": {
-      "root": "libs/hooks",
-      "sourceRoot": "libs/hooks/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/hooks/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/hooks"],
-          "options": {
-            "jestConfig": "libs/hooks/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "api": {
-      "root": "libs/api",
-      "sourceRoot": "libs/api/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/api/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api"],
-          "options": {
-            "jestConfig": "libs/api/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "botui": {
-      "root": "apps/botui",
-      "sourceRoot": "apps/botui/src",
-      "projectType": "application",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "apps/chat/public/dist/botui",
-            "index": "apps/botui/src/index.html",
-            "main": "apps/botui/src/index.tsx",
-            "polyfills": "",
-            "tsConfig": "apps/botui/tsconfig.app.json",
-            "assets": [],
-            "styles": [],
-            "scripts": [],
-            "webpackConfig": "apps/botui/webpack.config.js"
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "botui:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "botui:build:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/botui/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/botui"],
-          "options": {
-            "jestConfig": "apps/botui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "chat-controller": {
-      "root": "libs/chat-controller",
-      "sourceRoot": "libs/chat-controller/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/chat-controller/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/chat-controller"],
-          "options": {
-            "jestConfig": "libs/chat-controller/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "admin": {
       "root": "apps/admin",
       "sourceRoot": "apps/admin/src",
@@ -351,15 +124,23 @@
         }
       }
     },
-    "types": {
-      "root": "libs/types",
-      "sourceRoot": "libs/types/src",
+    "api": {
+      "root": "libs/api",
+      "sourceRoot": "libs/api/src",
       "projectType": "library",
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/types/**/*.ts"]
+            "lintFilePatterns": ["libs/api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api"],
+          "options": {
+            "jestConfig": "libs/api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
@@ -417,6 +198,191 @@
         }
       }
     },
+    "botui": {
+      "root": "apps/botui",
+      "sourceRoot": "apps/botui/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "apps/chat/public/dist/botui",
+            "index": "apps/botui/src/index.html",
+            "main": "apps/botui/src/index.tsx",
+            "polyfills": "",
+            "tsConfig": "apps/botui/tsconfig.app.json",
+            "assets": [],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "apps/botui/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "botui:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "botui:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/botui/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/botui"],
+          "options": {
+            "jestConfig": "apps/botui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "chat": {
+      "root": "apps/chat",
+      "sourceRoot": "apps/chat",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/chat",
+            "outputPath": "dist/apps/chat"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "chat:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "chat:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "chat:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/chat"],
+          "options": {
+            "jestConfig": "apps/chat/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/chat/**/*.{ts,tsx,js,jsx}"],
+            "ignorePath": "apps/chat/.eslintignore"
+          }
+        }
+      }
+    },
+    "chat-controller": {
+      "root": "libs/chat-controller",
+      "sourceRoot": "libs/chat-controller/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/chat-controller/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/chat-controller"],
+          "options": {
+            "jestConfig": "libs/chat-controller/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "chat-e2e": {
+      "root": "apps/chat-e2e",
+      "sourceRoot": "apps/chat-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/chat-e2e/cypress.json",
+            "tsConfig": "apps/chat-e2e/tsconfig.e2e.json",
+            "devServerTarget": "chat:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "chat:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/chat-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "components": {
+      "root": "libs/components",
+      "sourceRoot": "libs/components/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/components/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components"],
+          "options": {
+            "jestConfig": "libs/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "graphql": {
       "root": "libs/graphql",
       "sourceRoot": "libs/graphql/src",
@@ -434,6 +400,40 @@
           "options": {
             "jestConfig": "libs/graphql/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "hooks": {
+      "root": "libs/hooks",
+      "sourceRoot": "libs/hooks/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/hooks/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/hooks"],
+          "options": {
+            "jestConfig": "libs/hooks/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "types": {
+      "root": "libs/types",
+      "sourceRoot": "libs/types/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/types/**/*.ts"]
           }
         }
       }

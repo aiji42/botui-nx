@@ -5,9 +5,6 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "parserOptions": {
-        "project": ["apps/chat-e2e/tsconfig.*?.json"]
-      },
       "rules": {}
     },
     {
