@@ -7,6 +7,7 @@ module.exports = {
     '<rootDir>/apps/admin',
     '<rootDir>/apps/botui',
     '<rootDir>/libs/chat-controller',
-    '<rootDir>/apps/backend'
+    '<rootDir>/apps/backend',
+    '<rootDir>/libs/graphql'
   ]
 }

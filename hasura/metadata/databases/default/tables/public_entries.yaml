@@ -24,36 +24,3 @@ object_relationships:
       remote_table:
         name: scenarios
         schema: public
-insert_permissions:
-- permission:
-    backend_only: false
-    check: {}
-    columns:
-    - inputs
-    - scenario_id
-  role: anonymous
-select_permissions:
-- permission:
-    columns:
-    - inputs
-    - created_at
-    - updated_at
-    - id
-    - scenario_id
-    filter:
-      scenario:
-        collaborator:
-          _has_key: X-Hasura-User-Id
-  role: collaborator
-- permission:
-    columns:
-    - id
-    - scenario_id
-    - inputs
-    - created_at
-    - updated_at
-    filter:
-      scenario:
-        owner:
-          _eq: X-Hasura-User-Id
-  role: owner

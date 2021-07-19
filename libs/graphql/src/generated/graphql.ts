@@ -1510,6 +1510,13 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type ListScenariosQueryVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type ListScenariosQuery = { scenarios: Array<Pick<Scenario, 'id' | 'title' | 'active'>> };
+
 export type GetOneScenarioQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
@@ -1538,6 +1545,18 @@ export type NewEntryMutationVariables = Exact<{
 export type NewEntryMutation = { entry?: Maybe<Pick<Entry, 'id' | 'scenario_id'>> };
 
 
+export const ListScenariosDocument = gql`
+    query listScenarios($email: String!) {
+  scenarios: listScenarios(
+    where: {_or: {owner: {_eq: $email}, collaborator: {_has_key: $email}}}
+    order_by: {created_at: asc}
+  ) {
+    id
+    title
+    active
+  }
+}
+    `;
 export const GetOneScenarioDocument = gql`
     query getOneScenario($id: uuid!) {
   scenario: getScenarioById(id: $id) {
@@ -1583,6 +1602,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    listScenarios(variables: ListScenariosQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<ListScenariosQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ListScenariosQuery>(ListScenariosDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'listScenarios');
+    },
     getOneScenario(variables: GetOneScenarioQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOneScenarioQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetOneScenarioQuery>(GetOneScenarioDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOneScenario');
     },
